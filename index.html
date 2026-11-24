@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KOSAME •°• website | commission •°•</title>
+    
+    <!-- Google Fonts: Mali, Prompt, Quicksand, Cormorant Garamond สำหรับโลโก้ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Mali:wght@400;500;600;700&family=Prompt:wght@300;400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'prompt': ['Prompt', 'sans-serif'],
+                        'mali': ['Mali', 'cursive'],
+                        'quicksand': ['Quicksand', 'sans-serif'],
+                        'serif-logo': ['"Cormorant Garamond"', 'serif'],
+                    },
+                    colors: {
+                        'sky-bg': '#F4F8FD',
+                        'sky-soft': '#E6F0FA',
+                        'sky-blue': '#8AB4E8',
+                        'sky-deep': '#6B95CC',
+                        'text-main': '#647996',
+                        'text-sub': '#8FA2BD',
+                        'star-yellow': '#FFF1A8',
+                    },
+                    boxShadow: {
+                        'pastel': '0 10px 30px -5px rgba(138, 180, 232, 0.18), 0 4px 12px -2px rgba(138, 180, 232, 0.10)',
+                        'pastel-hover': '0 18px 36px -5px rgba(138, 180, 232, 0.28), 0 8px 16px -4px rgba(138, 180, 232, 0.15)',
+                        'pill': '0 4px 15px rgba(138, 180, 232, 0.15)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #F4F8FD;
+            color: #647996;
+            font-family: 'Prompt', sans-serif;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(255, 255, 255, 0.9) 0%, transparent 45%),
+                radial-gradient(circle at 85% 30%, rgba(230, 240, 250, 0.8) 0%, transparent 50%),
+                radial-gradient(circle at 20% 75%, rgba(255, 255, 255, 0.85) 0%, transparent 40%),
+                radial-gradient(circle at 80% 85%, rgba(226, 238, 252, 0.7) 0%, transparent 45%);
+        }
+
+        /* Floating & Twinkle Animations */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-7px); }
+        }
+        @keyframes floatDelayed {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-5px) rotate(2deg); }
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.4; transform: scale(0.85); }
+            50% { opacity: 1; transform: scale(1.15); }
+        }
+
+        .animate-float {
+            animation: floatSlow 4.5s ease-in-out infinite;
+        }
+        .animate-float-delay {
+            animation: floatDelayed 5.2s ease-in-out 1.2s infinite;
+        }
+        .animate-twinkle {
+            animation: twinkle 3s ease-in-out infinite;
+        }
+        .animate-twinkle-delay {
+            animation: twinkle 3.6s ease-in-out 1.5s infinite;
+        }
+
+        /* Custom Cloud Card Pattern */
+        .cloud-card-bg {
+            background: linear-gradient(180deg, #FFFFFF 0%, #F7FBFF 55%, #E7F1FC 100%);
+            position: relative;
+        }
+
+        /* Hero Banner Sky Gradient */
+        .hero-sky-bg {
+            background: linear-gradient(180deg, #BCCEE7 0%, #CFDDF0 45%, #E8F0FA 80%, #FFFFFF 100%);
+        }
+
+        /* Soft Text Glow & Outline for Hero Logo */
+        .kawaii-logo-text {
+            color: #FFFFFF;
+            text-shadow: 
+                0 3px 10px rgba(120, 155, 204, 0.35),
+                0 0 2px rgba(138, 180, 232, 0.6);
+        }
+
+        /* Custom Scrollbar for Modals */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F4F8FD;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #C4D9F2;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9CC0EA;
+        }
+
+        /* Range Slider Styling */
+        input[type=range].music-slider {
+            -webkit-appearance: none;
+            background: transparent;
+        }
+        input[type=range].music-slider::-webkit-slider-runnable-track {
+            height: 4px;
+            border-radius: 999px;
+            background: #DCE8F8;
+        }
+        input[type=range].music-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 12px;
+            width: 12px;
+            border-radius: 50%;
+            background: #8AB4E8;
+            border: 2px solid #FFFFFF;
+            box-shadow: 0 2px 5px rgba(138, 180, 232, 0.5);
+            margin-top: -4px;
+            cursor: pointer;
+            transition: transform 0.15s ease;
+        }
+        input[type=range].music-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.25);
+        }
+    </style>
+</head>
+<body class="min-h-screen relative selection:bg-sky-blue/30 selection:text-sky-deep">
+
+    <!-- ==================== BACKGROUND FLOATING CLOUDS & SPARKLES ==================== -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0" aria-hidden="true">
+        <!-- Top Left Cloud -->
+        <svg class="absolute -top-6 -left-16 w-64 h-40 text-white/85 blur-[1px] animate-float" viewBox="0 0 200 120" fill="currentColor">
+            <path d="M40,100 C18,100 5,85 10,65 C14,48 30,42 45,45 C52,22 80,15 100,28 C118,18 145,25 152,48 C170,48 185,62 182,80 C180,94 166,100 150,100 Z"/>
+        </svg>
+
+        <!-- Mid Left Soft Cloud -->
+        <svg class="absolute top-[38%] -left-20 w-56 h-36 text-white/70 blur-[2px]" viewBox="0 0 200 120" fill="currentColor">
+            <circle cx="55" cy="70" r="35"/>
+            <circle cx="95" cy="55" r="42"/>
+            <circle cx="135" cy="72" r="32"/>
+            <rect x="45" y="70" width="95" height="35" rx="17"/>
+        </svg>
+
+        <!-- Bottom Left Cloud -->
+        <svg class="absolute bottom-24 -left-10 w-64 h-40 text-white/85 blur-[1px] animate-float-delay" viewBox="0 0 200 120" fill="currentColor">
+            <path d="M35,105 C15,105 5,90 12,72 C18,56 34,52 48,56 C56,32 86,25 106,40 C124,28 152,36 158,58 C176,58 190,72 186,90 C183,100 170,105 154,105 Z"/>
+        </svg>
+
+        <!-- Top Right Cloud -->
+        <svg class="absolute top-12 -right-20 w-72 h-44 text-white/75 blur-[1.5px] animate-float-delay" viewBox="0 0 200 120" fill="currentColor">
+            <circle cx="60" cy="72" r="34"/>
+            <circle cx="105" cy="54" r="44"/>
+            <circle cx="148" cy="70" r="34"/>
+            <rect x="50" y="72" width="105" height="34" rx="17"/>
+        </svg>
+
+        <!-- Mid Right Cloud -->
+        <svg class="absolute top-[52%] -right-12 w-64 h-40 text-white/90 blur-[0.5px] animate-float" viewBox="0 0 200 120" fill="currentColor">
+            <path d="M40,100 C18,100 5,85 10,65 C14,48 30,42 45,45 C52,22 80,15 100,28 C118,18 145,25 152,48 C170,48 185,62 182,80 C180,94 166,100 150,100 Z"/>
+        </svg>
+
+        <!-- Ambient Sparkles -->
+        <svg class="absolute top-[22%] left-[14%] w-5 h-5 text-sky-blue/40 animate-twinkle" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5L12 0Z"/>
+        </svg>
+        <svg class="absolute top-[18%] right-[16%] w-4 h-4 text-amber-200/80 animate-twinkle-delay" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5L12 0Z"/>
+        </svg>
+        <svg class="absolute bottom-[28%] right-[12%] w-5 h-5 text-sky-blue/35 animate-twinkle" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5L12 0Z"/>
+        </svg>
+    </div>
+
+    <!-- ==================== MAIN CONTAINER ==================== -->
+    <main class="relative z-10 max-w-[660px] mx-auto px-4 sm:px-6 pt-8 pb-14 flex flex-col items-center">
+
+        <!-- 1. HEADER SECTION -->
+        <header class="w-full flex flex-col items-center text-center mb-6">
+            
+            <!-- Circular Cloud Emblem with Floating Tags -->
+            <div class="relative w-56 h-40 flex items-center justify-center mb-1">
+                
+                <!-- Decorative Yellow Stars around Emblem -->
+                <svg class="absolute top-1 left-[48%] w-4 h-4 text-[#FFE680] drop-shadow-sm animate-twinkle" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2l2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01L12 2z"/>
+                </svg>
+                <svg class="absolute top-14 left-6 w-3.5 h-3.5 text-[#FFE680] drop-shadow-sm animate-twinkle-delay" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2l2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01L12 2z"/>
+                </svg>
+                <svg class="absolute bottom-6 right-8 w-3 h-3 text-[#FFE680] animate-twinkle" viewBox="0 0 24 24" fill="currentColor">
+                    <circle cx="12" cy="12" r="6"/>
+                </svg>
+                <!-- Tiny Four-point Sparkles -->
+                <svg class="absolute top-5 left-12 w-3.5 h-3.5 text-sky-blue/70 animate-twinkle" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0L14 10L24 12L14 14L12 24L10 14L0 12L10 10L12 0Z"/>
+                </svg>
+                <svg class="absolute bottom-3 left-20 w-3 h-3 text-sky-blue/60 animate-twinkle-delay" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0L14 10L24 12L14 14L12 24L10 14L0 12L10 10L12 0Z"/>
+                </svg>
+
+                <!-- Left Floating Pill Tag: Emotes ♡ -->
+                <button onclick="openModal('exampleModal')" class="absolute left-0 bottom-7 z-20 bg-white/95 hover:bg-white text-text-main hover:text-sky-deep text-[11px] font-quicksand font-bold px-3 py-1 rounded-full shadow-pill border border-sky-soft/80 transition-all duration-300 hover:-translate-y-0.5 flex items-center gap-1 animate-float">
+                    <span>Emotes</span>
+                    <span class="text-sky-blue text-xs">♡</span>
+                </button>
+
+                <!-- Right Floating Pill Tag: Website ✿ -->
+                <button onclick="openModal('exampleModal')" class="absolute right-0 top-7 z-20 bg-white/95 hover:bg-white text-text-main hover:text-sky-deep text-[11px] font-quicksand font-bold px-3 py-1 rounded-full shadow-pill border border-sky-soft/80 transition-all duration-300 hover:-translate-y-0.5 flex items-center gap-1 animate-float-delay">
+                    <span>Website</span>
+                    <span class="text-sky-blue text-xs">✿</span>
+                </button>
+
+                <!-- Main Emblem Circle -->
+                <div class="relative w-32 h-32 rounded-full bg-gradient-to-b from-white via-[#F5FAFF] to-[#DFECFA] shadow-[0_8px_25px_rgba(138,180,232,0.28)] border-2 border-white flex items-center justify-center">
+                    
+                    <!-- Top-Right Mini Cloud on Circle -->
+                    <svg class="absolute -top-2 right-2 w-12 h-8 text-white drop-shadow-[0_2px_4px_rgba(138,180,232,0.18)]" viewBox="0 0 100 60" fill="currentColor">
+                        <circle cx="30" cy="38" r="16"/>
+                        <circle cx="52" cy="28" r="20"/>
+                        <circle cx="72" cy="38" r="15"/>
+                        <rect x="26" y="36" width="48" height="18" rx="9"/>
+                    </svg>
+
+                    <!-- Stylised Stacked KOSAME Logo -->
+                    <div class="relative select-none flex items-center justify-center tracking-tighter text-[#7E9CC2]">
+                        <span class="font-serif-logo font-bold text-3xl leading-none drop-shadow-[0_1px_1px_rgba(255,255,255,0.9)]">K</span>
+                        <span class="font-serif-logo font-semibold text-xl -ml-0.5 mt-1">O</span>
+                        <span class="font-serif-logo font-bold text-2xl -ml-0.5">S</span>
+                        <span class="font-serif-logo font-bold text-3xl -ml-0.5 text-[#6D8EB8]">A</span>
+                        <div class="flex flex-col -ml-0.5 leading-[0.82] text-left">
+                            <span class="font-serif-logo font-bold text-sm">M</span>
+                            <span class="font-serif-logo font-bold text-sm">E</span>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Fluffy Cloud Overlapping Circle -->
+                    <svg class="absolute -bottom-3 -left-3 w-24 h-14 text-white drop-shadow-[0_4px_8px_rgba(138,180,232,0.2)]" viewBox="0 0 140 80" fill="currentColor">
+                        <circle cx="32" cy="52" r="20"/>
+                        <circle cx="62" cy="40" r="26"/>
+                        <circle cx="95" cy="48" r="22"/>
+                        <circle cx="115" cy="56" r="16"/>
+                        <rect x="25" y="48" width="95" height="24" rx="12"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Brand Title -->
+            <h1 class="font-quicksand font-bold italic text-2xl sm:text-[26px] tracking-wider text-sky-blue drop-shadow-[0_2px_6px_rgba(138,180,232,0.25)]">
+                KOSAME
+            </h1>
+
+            <!-- Caption Pill -->
+            <div class="mt-1.5 inline-flex items-center gap-1.5 bg-white/90 px-4 py-1 rounded-full shadow-pill border border-white text-[11px] sm:text-xs font-quicksand font-semibold text-text-main">
+                <span class="text-sky-blue">✿°•</span>
+                <span>website | commission</span>
+                <span class="text-sky-blue">•°✿</span>
+            </div>
+        </header>
+
+        <!-- 2. HERO BANNER CARD -->
+        <section class="w-full mb-5">
+            <div class="hero-sky-bg relative w-full h-52 sm:h-64 rounded-[28px] border-2 border-white shadow-pastel overflow-hidden p-6 sm:p-8 flex flex-col justify-center items-end transition-transform duration-300 hover:shadow-pastel-hover">
+                
+                <!-- Subtle Ambient Glow in Sky -->
+                <div class="absolute top-6 left-10 w-36 h-36 bg-white/25 rounded-full blur-2xl pointer-events-none"></div>
+
+                <!-- Right Side Cute Bubble Logo Group -->
+                <div class="relative z-10 flex flex-col items-end pr-1 sm:pr-4">
+                    
+                    <!-- Cute Bubbly "KOSAME" Logo -->
+                    <div class="relative flex items-center select-none">
+                        <!-- Cloud Outline behind K & O -->
+                        <svg class="absolute -top-6 -left-3 w-36 h-24 text-white/95 pointer-events-none drop-shadow-[0_4px_10px_rgba(138,180,232,0.25)]" viewBox="0 0 180 110" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round">
+                            <path d="M22,68 C10,55 18,32 38,32 C46,12 78,8 92,26 C112,22 126,38 120,56"/>
+                        </svg>
+
+                        <!-- Four-point Star Left of K -->
+                        <svg class="w-4 h-4 text-white mr-1 -mt-2 drop-shadow-sm animate-twinkle" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5L12 0Z"/>
+                        </svg>
+
+                        <!-- Letter K -->
+                        <span class="font-mali font-bold text-4xl sm:text-5xl kawaii-logo-text tracking-tight">K</span>
+
+                        <!-- Letter O = Pastel Yellow Star inside Glowing Cloud Bubble -->
+                        <div class="relative w-12 h-12 sm:w-14 sm:h-14 mx-0.5 rounded-full bg-white/75 backdrop-blur-sm border-2 border-white shadow-[0_4px_15px_rgba(255,241,168,0.65)] flex items-center justify-center animate-float">
+                            <svg class="w-8 h-8 sm:w-9 sm:h-9 text-[#FFF199] drop-shadow-[0_2px_4px_rgba(218,195,105,0.4)]" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2.5c.6 0 1.1.3 1.4.9l2.1 4.3 4.7.7c.6.1 1.1.5 1.3 1.1.2.6 0 1.2-.4 1.6l-3.4 3.3.8 4.7c.1.6-.1 1.2-.6 1.6-.5.4-1.1.4-1.7.1L12 18.6l-4.2 2.2c-.5.3-1.2.2-1.7-.1-.5-.4-.7-1-.6-1.6l.8-4.7-3.4-3.3c-.4-.4-.6-1-.4-1.6.2-.6.7-1 1.3-1.1l4.7-.7 2.1-4.3c.3-.6.8-.9 1.4-.9z"/>
+                            </svg>
+                        </div>
+
+                        <!-- Stacked S & A -->
+                        <div class="flex flex-col leading-[0.85] mx-0.5 -mt-1">
+                            <span class="font-mali font-bold text-xl sm:text-2xl kawaii-logo-text">S</span>
+                            <span class="font-mali font-bold text-xl sm:text-2xl kawaii-logo-text">A</span>
+                        </div>
+
+                        <!-- Letter M (with tiny cloud perched on top) -->
+                        <div class="relative">
+                            <svg class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-6 text-white drop-shadow-sm" viewBox="0 0 80 50" fill="currentColor">
+                                <circle cx="24" cy="30" r="12"/>
+                                <circle cx="40" cy="22" r="15"/>
+                                <circle cx="56" cy="30" r="12"/>
+                                <rect x="20" y="28" width="40" height="14" rx="7"/>
+                            </svg>
+                            <span class="font-mali font-bold text-4xl sm:text-5xl kawaii-logo-text">M</span>
+                        </div>
+
+                        <!-- Letter e (with sparkle above) -->
+                        <div class="relative">
+                            <svg class="absolute -top-3 right-0 w-4 h-4 text-white animate-twinkle-delay" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5L12 0Z"/>
+                            </svg>
+                            <span class="font-mali font-bold text-3xl sm:text-4xl kawaii-logo-text">e</span>
+                        </div>
+                    </div>
+
+                    <!-- Subtitle under Hero Logo -->
+                    <div class="mt-2 flex items-center gap-2 text-white/95 drop-shadow-[0_1px_4px_rgba(107,149,204,0.45)]">
+                        <div class="text-right leading-tight">
+                            <p class="font-quicksand font-bold text-xs sm:text-sm tracking-wide">website / emote / chibi</p>
+                            <p class="font-quicksand font-semibold text-[10px] sm:text-xs opacity-90">commission</p>
+                        </div>
+                        <div class="w-[2px] h-7 bg-white/80 rounded-full"></div>
+                    </div>
+                </div>
+
+                <!-- Fluffy Layered Clouds at Bottom of Banner -->
+                <div class="absolute inset-x-0 bottom-0 h-24 pointer-events-none">
+                    <!-- Back Cloud Layer -->
+                    <svg class="w-full h-full text-white/60" preserveAspectRatio="none" viewBox="0 0 600 120" fill="currentColor">
+                        <circle cx="40" cy="95" r="45"/>
+                        <circle cx="110" cy="80" r="55"/>
+                        <circle cx="195" cy="90" r="48"/>
+                        <circle cx="280" cy="75" r="58"/>
+                        <circle cx="370" cy="88" r="50"/>
+                        <circle cx="455" cy="72" r="56"/>
+                        <circle cx="545" cy="85" r="52"/>
+                        <rect x="0" y="85" width="600" height="40"/>
+                    </svg>
+                    <!-- Front Bright White Cloud Layer -->
+                    <svg class="w-full h-20 absolute bottom-0 text-white" preserveAspectRatio="none" viewBox="0 0 600 100" fill="currentColor">
+                        <circle cx="25" cy="85" r="42"/>
+                        <circle cx="95" cy="75" r="48"/>
+                        <circle cx="175" cy="82" r="44"/>
+                        <circle cx="255" cy="68" r="52"/>
+                        <circle cx="345" cy="80" r="46"/>
+                        <circle cx="430" cy="66" r="52"/>
+                        <circle cx="515" cy="78" r="46"/>
+                        <circle cx="585" cy="82" r="40"/>
+                        <rect x="0" y="75" width="600" height="30"/>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. MAIN FEATURE CARDS (2 COLUMNS) -->
+        <section class="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+            
+            <!-- Left Card: EXAMPLE WORK -->
+            <button onclick="openModal('exampleModal')" class="group cloud-card-bg relative rounded-[26px] border-2 border-white shadow-pastel hover:shadow-pastel-hover p-5 pt-4 pb-10 text-center flex flex-col items-center justify-between min-h-[235px] transition-all duration-300 hover:-translate-y-1 overflow-hidden cursor-pointer">
+                
+                <!-- Top Left Mini Logo -->
+                <div class="w-full flex justify-start items-center">
+                    <div class="flex items-center tracking-tighter text-[#7E9CC2]/85 select-none">
+                        <span class="font-serif-logo font-bold text-xl leading-none">K</span>
+                        <span class="font-serif-logo font-semibold text-sm -ml-0.5 mt-0.5">O</span>
+                        <span class="font-serif-logo font-bold text-base -ml-0.5">S</span>
+                        <span class="font-serif-logo font-bold text-xl -ml-0.5">A</span>
+                        <div class="flex flex-col -ml-0.5 leading-[0.8] text-left text-[9px]">
+                            <span class="font-serif-logo font-bold">M</span>
+                            <span class="font-serif-logo font-bold">E</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Center Content -->
+                <div class="relative z-10 my-auto py-3 px-2 bg-white/60 backdrop-blur-[2px] rounded-2xl w-full">
+                    <h2 class="font-quicksand font-bold italic text-xl sm:text-[22px] tracking-wide text-sky-blue group-hover:text-sky-deep transition-colors">
+                        EXAMPLE WORK
+                    </h2>
+                    <div class="w-4/5 h-[1.5px] bg-sky-soft mx-auto my-1.5 rounded-full"></div>
+                    <p class="font-prompt font-semibold text-sm text-text-main">
+                        ตัวอย่างงานของทางร้าน
+                    </p>
+                    <p class="mt-3 text-[10px] leading-relaxed text-text-sub font-prompt">
+                        don't use without permission<br>
+                        ห้ามคัดลอก และแอบอ้างไปใช้งาน
+                    </p>
+                </div>
+
+                <!-- Bottom Fluffy Clouds -->
+                <svg class="absolute inset-x-0 bottom-0 w-full h-14 text-[#DCEAF9]/80 pointer-events-none" preserveAspectRatio="none" viewBox="0 0 300 70" fill="currentColor">
+                    <circle cx="30" cy="55" r="30"/>
+                    <circle cx="85" cy="45" r="35"/>
+                    <circle cx="150" cy="52" r="32"/>
+                    <circle cx="215" cy="44" r="36"/>
+                    <circle cx="275" cy="54" r="30"/>
+                    <rect x="0" y="50" width="300" height="25"/>
+                </svg>
+                <svg class="absolute inset-x-0 bottom-0 w-full h-10 text-white pointer-events-none" preserveAspectRatio="none" viewBox="0 0 300 50" fill="currentColor">
+                    <circle cx="20" cy="42" r="24"/>
+                    <circle cx="70" cy="36" r="28"/>
+                    <circle cx="130" cy="40" r="26"/>
+                    <circle cx="195" cy="34" r="28"/>
+                    <circle cx="260" cy="40" r="25"/>
+                    <rect x="0" y="38" width="300" height="15"/>
+                </svg>
+            </button>
+
+            <!-- Right Card: GIVEAWAY -->
+            <button onclick="openModal('giveawayModal')" class="group cloud-card-bg relative rounded-[26px] border-2 border-white shadow-pastel hover:shadow-pastel-hover p-5 pt-4 pb-10 text-center flex flex-col items-center justify-between min-h-[235px] transition-all duration-300 hover:-translate-y-1 overflow-hidden cursor-pointer">
+                
+                <!-- Top Left Mini Logo -->
+                <div class="w-full flex justify-start items-center">
+                    <div class="flex items-center tracking-tighter text-[#7E9CC2]/85 select-none">
+                        <span class="font-serif-logo font-bold text-xl leading-none">K</span>
+                        <span class="font-serif-logo font-semibold text-sm -ml-0.5 mt-0.5">O</span>
+                        <span class="font-serif-logo font-bold text-base -ml-0.5">S</span>
+                        <span class="font-serif-logo font-bold text-xl -ml-0.5">A</span>
+                        <div class="flex flex-col -ml-0.5 leading-[0.8] text-left text-[9px]">
+                            <span class="font-serif-logo font-bold">M</span>
+                            <span class="font-serif-logo font-bold">E</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Center Content -->
+                <div class="relative z-10 my-auto py-3 px-2 bg-white/60 backdrop-blur-[2px] rounded-2xl w-full">
+                    <h2 class="font-quicksand font-bold italic text-xl sm:text-[22px] tracking-wide text-sky-blue group-hover:text-sky-deep transition-colors">
+                        GIVEAWAY
+                    </h2>
+                    <div class="w-4/5 h-[1.5px] bg-sky-soft mx-auto my-1.5 rounded-full"></div>
+                    <p class="font-prompt font-semibold text-sm text-text-main">
+                        รวมงานแจกของทางร้าน
+                    </p>
+                    <p class="mt-3 text-[10px] leading-relaxed text-text-sub font-prompt">
+                        Thankyou for your support<br>
+                        ใช้ส่วนตัว ห้ามดัดแปลงนำไปจำหน่ายต่อ
+                    </p>
+                </div>
+
+                <!-- Bottom Fluffy Clouds -->
+                <svg class="absolute inset-x-0 bottom-0 w-full h-14 text-[#DCEAF9]/80 pointer-events-none" preserveAspectRatio="none" viewBox="0 0 300 70" fill="currentColor">
+                    <circle cx="25" cy="54" r="30"/>
+                    <circle cx="90" cy="44" r="35"/>
+                    <circle cx="155" cy="50" r="32"/>
+                    <circle cx="220" cy="45" r="36"/>
+                    <circle cx="280" cy="54" r="30"/>
+                    <rect x="0" y="50" width="300" height="25"/>
+                </svg>
+                <svg class="absolute inset-x-0 bottom-0 w-full h-10 text-white pointer-events-none" preserveAspectRatio="none" viewBox="0 0 300 50" fill="currentColor">
+                    <circle cx="30" cy="42" r="24"/>
+                    <circle cx="85" cy="35" r="28"/>
+                    <circle cx="145" cy="40" r="26"/>
+                    <circle cx="210" cy="35" r="28"/>
+                    <circle cx="270" cy="41" r="25"/>
+                    <rect x="0" y="38" width="300" height="15"/>
+                </svg>
+            </button>
+        </section>
+
+        <!-- 4. ACTION BUTTONS GRID (2x2) -->
+        <section class="w-full grid grid-cols-1 sm:grid-cols-2 gap-3.5 mb-5">
+            
+            <!-- Button 1: เช็กคิว -->
+            <button onclick="openModal('queueModal')" class="group bg-white/95 hover:bg-white rounded-[22px] p-3.5 px-4 border border-white shadow-pastel hover:shadow-pastel-hover flex items-center justify-between text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer">
+                <div class="flex items-center gap-3.5">
+                    <!-- Cute Pastel Envelope/Calendar Icon -->
+                    <div class="w-12 h-12 rounded-2xl bg-[#F0F6FD] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                        <svg class="w-8 h-8" viewBox="0 0 48 48" fill="none">
+                            <!-- Envelope Back -->
+                            <path d="M8 18L24 8L40 18V36C40 38.2091 38.2091 40 36 40H12C9.79086 40 8 38.2091 8 36V18Z" fill="#CFE2F9"/>
+                            <!-- Letter Card Inside -->
+                            <rect x="13" y="13" width="22" height="18" rx="3" fill="#FFFFFF"/>
+                            <path d="M18 19H30M18 23H26" stroke="#9BBCE6" stroke-width="2" stroke-linecap="round"/>
+                            <!-- Envelope Front Flaps -->
+                            <path d="M8 20L24 31L40 20V36C40 38.2091 38.2091 40 36 40H12C9.79086 40 8 38.2091 8 36V20Z" fill="#B5D2F5"/>
+                            <!-- Cute Blue Ribbon Bow -->
+                            <circle cx="24" cy="31" r="3" fill="#7CA7DF"/>
+                            <path d="M24 31C20 28 17 30 18 33C19 35 22 33 24 31Z" fill="#8AB4E8"/>
+                            <path d="M24 31C28 28 31 30 30 33C29 35 26 33 24 31Z" fill="#8AB4E8"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-prompt font-semibold text-sm text-text-main group-hover:text-sky-deep transition-colors">เช็กคิว</h3>
+                        <p class="font-prompt text-[11px] text-text-sub">ดูคิวงานและสถานะงานของคุณ</p>
+                    </div>
+                </div>
+                <svg class="w-4 h-4 text-text-sub group-hover:text-sky-blue group-hover:translate-x-0.5 transition-all shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+
+            <!-- Button 2: Terms of Service -->
+            <button onclick="openModal('tosModal')" class="group bg-white/95 hover:bg-white rounded-[22px] p-3.5 px-4 border border-white shadow-pastel hover:shadow-pastel-hover flex items-center justify-between text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer">
+                <div class="flex items-center gap-3.5">
+                    <!-- Cute Pastel Teddy Bear Icon -->
+                    <div class="w-12 h-12 rounded-2xl bg-[#F0F6FD] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                        <svg class="w-8 h-8" viewBox="0 0 48 48" fill="none">
+                            <!-- Ears -->
+                            <circle cx="15" cy="14" r="4.5" fill="#C4DAF5"/>
+                            <circle cx="33" cy="14" r="4.5" fill="#C4DAF5"/>
+                            <circle cx="15" cy="14" r="2.2" fill="#FFFFFF"/>
+                            <circle cx="33" cy="14" r="2.2" fill="#FFFFFF"/>
+                            <!-- Body -->
+                            <ellipse cx="24" cy="32" rx="9" ry="8" fill="#D5E5F9"/>
+                            <ellipse cx="24" cy="32" rx="5" ry="4.5" fill="#FFFFFF"/>
+                            <!-- Arms & Legs -->
+                            <circle cx="14" cy="29" r="3.5" fill="#C4DAF5"/>
+                            <circle cx="34" cy="29" r="3.5" fill="#C4DAF5"/>
+                            <circle cx="17" cy="39" r="3.8" fill="#C4DAF5"/>
+                            <circle cx="31" cy="39" r="3.8" fill="#C4DAF5"/>
+                            <!-- Head -->
+                            <circle cx="24" cy="20" r="9" fill="#DCE9FA"/>
+                            <!-- Muzzle & Eyes -->
+                            <ellipse cx="24" cy="22" rx="4" ry="3" fill="#FFFFFF"/>
+                            <circle cx="24" cy="21" r="1.2" fill="#7C9EC9"/>
+                            <circle cx="20.5" cy="19" r="1.2" fill="#647996"/>
+                            <circle cx="27.5" cy="19" r="1.2" fill="#647996"/>
+                            <!-- Blue Bowtie -->
+                            <path d="M24 27L20 25V29L24 27ZM24 27L28 25V29L24 27Z" fill="#7CA7DF"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-quicksand font-bold text-sm text-text-main group-hover:text-sky-deep transition-colors">Terms of Service</h3>
+                        <p class="font-prompt text-[11px] text-text-sub">ข้อตกลงและเงื่อนไขสำหรับงานวาด</p>
+                    </div>
+                </div>
+                <svg class="w-4 h-4 text-text-sub group-hover:text-sky-blue group-hover:translate-x-0.5 transition-all shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+
+            <!-- Button 3: ราคางาน -->
+            <button onclick="openModal('pricingModal')" class="group bg-white/95 hover:bg-white rounded-[22px] p-3.5 px-4 border border-white shadow-pastel hover:shadow-pastel-hover flex items-center justify-between text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer">
+                <div class="flex items-center gap-3.5">
+                    <!-- Cute Pastel Paw / Price Tag Icon -->
+                    <div class="w-12 h-12 rounded-2xl bg-[#F0F6FD] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                        <svg class="w-8 h-8" viewBox="0 0 48 48" fill="none">
+                            <!-- Soft Paw Shape -->
+                            <ellipse cx="24" cy="30" rx="10" ry="8" fill="#FFFFFF" stroke="#B5D2F5" stroke-width="2.2"/>
+                            <circle cx="14" cy="21" r="3.5" fill="#FFFFFF" stroke="#B5D2F5" stroke-width="2"/>
+                            <circle cx="20.5" cy="16" r="3.5" fill="#FFFFFF" stroke="#B5D2F5" stroke-width="2"/>
+                            <circle cx="27.5" cy="16" r="3.5" fill="#FFFFFF" stroke="#B5D2F5" stroke-width="2"/>
+                            <circle cx="34" cy="21" r="3.5" fill="#FFFFFF" stroke="#B5D2F5" stroke-width="2"/>
+                            <!-- Inner Pink/Blue Pads -->
+                            <ellipse cx="24" cy="30.5" rx="5.5" ry="4" fill="#D4E5FA"/>
+                            <circle cx="14" cy="21" r="1.5" fill="#D4E5FA"/>
+                            <circle cx="20.5" cy="16" r="1.5" fill="#D4E5FA"/>
+                            <circle cx="27.5" cy="16" r="1.5" fill="#D4E5FA"/>
+                            <circle cx="34" cy="21" r="1.5" fill="#D4E5FA"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-prompt font-semibold text-sm text-text-main group-hover:text-sky-deep transition-colors">ราคางาน</h3>
+                        <p class="font-prompt text-[11px] text-text-sub">ดูเรทราคาและคำนวณราคาเบื้องต้น</p>
+                    </div>
+                </div>
+                <svg class="w-4 h-4 text-text-sub group-hover:text-sky-blue group-hover:translate-x-0.5 transition-all shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+
+            <!-- Button 4: ส่งบรีฟงาน -->
+            <button onclick="openModal('briefModal')" class="group bg-white/95 hover:bg-white rounded-[22px] p-3.5 px-4 border border-white shadow-pastel hover:shadow-pastel-hover flex items-center justify-between text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer">
+                <div class="flex items-center gap-3.5">
+                    <!-- Cute Pastel Cloud & Stars Icon -->
+                    <div class="w-12 h-12 rounded-2xl bg-[#F0F6FD] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                        <svg class="w-8 h-8" viewBox="0 0 48 48" fill="none">
+                            <!-- Fluffy Blue Cloud -->
+                            <path d="M14 35H35C39.4183 35 43 31.4183 43 27C43 22.8936 39.9061 19.5112 35.9189 19.0518C34.5021 14.3894 30.1684 11 25 11C18.9249 11 14 15.9249 14 22C14 22.3455 14.0159 22.6873 14.047 23.0246C10.6327 23.4894 8 26.4161 8 29.9583C8 32.7428 10.6863 35 14 35Z" fill="#A9CCF3"/>
+                            <!-- White Inner Highlight Cloud -->
+                            <path d="M16 33H33C36.3137 33 39 30.3137 39 27C39 23.9202 36.6796 21.3834 33.6892 21.0389C32.6266 17.5421 29.3763 15 25.5 15C20.9437 15 17.25 18.6937 17.25 23.25C17.25 23.5091 17.2619 23.7655 17.2853 24.0185C14.7245 24.3671 12.75 26.5621 12.75 29.2188C12.75 31.3071 14.7647 33 16 33Z" fill="#EBF4FE"/>
+                            <!-- Little Sparkle Stars -->
+                            <path d="M13 13L14 16L17 17L14 18L13 21L12 18L9 17L12 16L13 13Z" fill="#8AB4E8"/>
+                            <circle cx="38" cy="13" r="1.8" fill="#FFE680"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-prompt font-semibold text-sm text-text-main group-hover:text-sky-deep transition-colors">ส่งบรีฟงาน</h3>
+                        <p class="font-prompt text-[11px] text-text-sub">เลือกแบบและส่งรายละเอียดงาน</p>
+                    </div>
+                </div>
+                <svg class="w-4 h-4 text-text-sub group-hover:text-sky-blue group-hover:translate-x-0.5 transition-all shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+
+        </section>
+
+        <!-- 5. MINI MUSIC PLAYER WIDGET -->
+        <section class="w-full max-w-[440px] mx-auto mt-1">
+            <div class="bg-white/95 rounded-[22px] p-3 px-4 border border-white shadow-pastel flex items-center gap-3.5">
+                
+                <!-- Left: Cute Chibi Mascot Avatar -->
+                <div class="relative w-14 h-14 rounded-2xl bg-[#EEF5FD] border border-sky-soft overflow-hidden shrink-0 flex items-center justify-center shadow-inner">
+                    <!-- Custom Cute Chibi Character SVG (Inspired by white fluffy mascot drinking boba) -->
+                    <svg class="w-13 h-13" viewBox="0 0 64 64" fill="none">
+                        <!-- Sky Sparkles BG -->
+                        <circle cx="12" cy="14" r="1.5" fill="#A9CCF3"/>
+                        <circle cx="52" cy="18" r="2" fill="#FFE680"/>
+                        <!-- Ears -->
+                        <ellipse cx="22" cy="18" rx="5.5" ry="7" transform="rotate(-15 22 18)" fill="#FFFFFF" stroke="#7A6B63" stroke-width="2"/>
+                        <ellipse cx="42" cy="18" rx="5.5" ry="7" transform="rotate(15 42 18)" fill="#FFFFFF" stroke="#7A6B63" stroke-width="2"/>
+                        <!-- Head -->
+                        <path d="M16 32C16 21 22 16 32 16C42 16 48 21 48 32C48 41 42 46 32 46C22 46 16 41 16 32Z" fill="#FFFFFF" stroke="#7A6B63" stroke-width="2"/>
+                        <!-- Rosy Cheeks -->
+                        <ellipse cx="22" cy="34" rx="3" ry="1.8" fill="#FFC4D0"/>
+                        <ellipse cx="42" cy="34" rx="3" ry="1.8" fill="#FFC4D0"/>
+                        <!-- Cute Eyes -->
+                        <circle cx="25" cy="30" r="2.2" fill="#5A4D46"/>
+                        <circle cx="25.7" cy="29.3" r="0.8" fill="#FFFFFF"/>
+                        <circle cx="39" cy="30" r="2.2" fill="#5A4D46"/>
+                        <circle cx="39.7" cy="29.3" r="0.8" fill="#FFFFFF"/>
+                        <!-- Cute Cat Mouth -->
+                        <path d="M30 33.5C30.5 34.5 31.5 34.5 32 33.5C32.5 34.5 33.5 34.5 34 33.5" stroke="#7A6B63" stroke-width="1.6" stroke-linecap="round"/>
+                        <!-- Boba Drink Cup -->
+                        <path d="M27 42H37L35.5 54H28.5L27 42Z" fill="#D9B39C" stroke="#7A6B63" stroke-width="1.6"/>
+                        <path d="M26 42H38" stroke="#7A6B63" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M32 42V35" stroke="#8AB4E8" stroke-width="2" stroke-linecap="round"/>
+                        <!-- Little Paws Holding Cup -->
+                        <circle cx="26.5" cy="46" r="2.8" fill="#FFFFFF" stroke="#7A6B63" stroke-width="1.6"/>
+                        <circle cx="37.5" cy="46" r="2.8" fill="#FFFFFF" stroke="#7A6B63" stroke-width="1.6"/>
+                    </svg>
+                    <!-- Playing Indicator Dot -->
+                    <span id="playingDot" class="hidden absolute bottom-1 right-1 w-2.5 h-2.5 rounded-full bg-sky-blue border border-white animate-ping"></span>
+                </div>
+
+                <!-- Right: Track Info, Controls & Progress Bar -->
+                <div class="flex-1 min-w-0 flex flex-col justify-between">
+                    
+                    <!-- Song Title Pill Bar -->
+                    <div class="w-full bg-[#EEF5FD] rounded-full px-3 py-1 flex items-center justify-between mb-1.5">
+                        <span id="trackTitle" class="text-[11px] font-quicksand font-bold text-text-main truncate">
+                            ☁️ Pastel Cloud Lullaby - Kosame Music Box
+                        </span>
+                        <span id="audioStatusBadge" class="text-[9px] font-quicksand font-semibold text-sky-deep bg-white px-1.5 py-0.2 rounded-full ml-1 shrink-0">
+                            Ready
+                        </span>
+                    </div>
+
+                    <!-- Playback Control Buttons -->
+                    <div class="flex items-center justify-center gap-4 my-0.5">
+                        <!-- Prev Button -->
+                        <button onclick="prevTrack()" title="เพลงก่อนหน้า" class="text-sky-blue/80 hover:text-sky-deep transition-colors p-1 cursor-pointer">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="19 20 9 12 19 4 19 20"></polygon>
+                                <line x1="5" y1="19" x2="5" y2="5"></line>
+                            </svg>
+                        </button>
+
+                        <!-- Play / Pause Circular Button -->
+                        <button id="playPauseBtn" onclick="togglePlay()" title="เล่น / หยุดเพลง" class="w-8 h-8 rounded-full bg-sky-blue hover:bg-sky-deep text-white shadow-[0_3px_10px_rgba(138,180,232,0.5)] flex items-center justify-center transition-all active:scale-95 cursor-pointer">
+                            <!-- Play Icon (Default) -->
+                            <svg id="playIcon" class="w-3.5 h-3.5 ml-0.5" viewBox="0 0 24 24" fill="currentColor">
+                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                            </svg>
+                            <!-- Pause Icon (Hidden initially) -->
+                            <svg id="pauseIcon" class="w-3.5 h-3.5 hidden" viewBox="0 0 24 24" fill="currentColor">
+                                <rect x="6" y="4" width="4" height="16" rx="1"></rect>
+                                <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+                            </svg>
+                        </button>
+
+                        <!-- Next Button -->
+                        <button onclick="nextTrack()" title="เพลงถัดไป" class="text-sky-blue/80 hover:text-sky-deep transition-colors p-1 cursor-pointer">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="5 4 15 12 5 20 5 4"></polygon>
+                                <line x1="19" y1="5" x2="19" y2="19"></line>
+                            </svg>
+                        </button>
+
+                        <!-- Repeat Toggle Button -->
+                        <button id="repeatBtn" onclick="toggleRepeat()" title="เล่นซ้ำ" class="text-sky-blue hover:text-sky-deep transition-colors p-1 cursor-pointer">
+                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="17 1 21 5 17 9"></polyline>
+                                <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+                                <polyline points="7 23 3 19 7 15"></polyline>
+                                <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Progress Scrubber & Timestamps -->
+                    <div class="flex items-center gap-2 mt-0.5">
+                        <span id="currentTimeDisplay" class="text-[9px] font-quicksand font-semibold text-text-sub w-6 text-right">0:22</span>
+                        <input id="progressSlider" type="range" min="0" max="186" value="22" oninput="seekAudio(this.value)" class="music-slider flex-1">
+                        <span id="durationDisplay" class="text-[9px] font-quicksand font-semibold text-text-sub w-6">3:06</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer Credit -->
+        <footer class="mt-6 text-center text-[11px] font-quicksand text-text-sub/80">
+            © 2026 KOSAME Studio • All Rights Reserved ☁️
+        </footer>
+
+    </main>
+
+    <!-- ==================== INTERACTIVE MODALS ==================== -->
+
+    <!-- Modal Backdrop -->
+    <div id="modalBackdrop" onclick="closeAllModals()" class="fixed inset-0 bg-[#516A8A]/30 backdrop-blur-xs z-40 hidden opacity-0 transition-opacity duration-300"></div>
+
+    <!-- 1. EXAMPLE WORK MODAL -->
+    <div id="exampleModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
+        <div class="bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-xl w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-300">
+            <!-- Header -->
+            <div class="p-5 pb-3 border-b border-sky-soft flex items-center justify-between bg-gradient-to-r from-[#F4F8FD] to-white">
+                <div>
+                    <h3 class="font-quicksand font-bold italic text-xl text-sky-deep">EXAMPLE WORK ✿</h3>
+                    <p class="text-xs text-text-sub">ตัวอย่างผลงานคอมมิชชันของทางร้าน KOSAME</p>
+                </div>
+                <button onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-sky-soft/70 hover:bg-sky-blue hover:text-white text-text-main flex items-center justify-center transition-colors cursor-pointer">✕</button>
+            </div>
+            
+            <!-- Filter Tabs -->
+            <div class="px-5 pt-3 flex gap-2 flex-wrap">
+                <button onclick="filterExamples('all')" class="example-tab active-tab px-3 py-1 rounded-full text-xs font-medium bg-sky-blue text-white transition-all cursor-pointer">ทั้งหมด</button>
+                <button onclick="filterExamples('website')" class="example-tab px-3 py-1 rounded-full text-xs font-medium bg-sky-soft/70 text-text-main hover:bg-sky-soft transition-all cursor-pointer">Website / Link-in-bio</button>
+                <button onclick="filterExamples('emote')" class="example-tab px-3 py-1 rounded-full text-xs font-medium bg-sky-soft/70 text-text-main hover:bg-sky-soft transition-all cursor-pointer">Emotes</button>
+                <button onclick="filterExamples('chibi')" class="example-tab px-3 py-1 rounded-full text-xs font-medium bg-sky-soft/70 text-text-main hover:bg-sky-soft transition-all cursor-pointer">Chibi</button>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div id="exampleGrid" class="p-5 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Item 1 -->
+                <div data-category="website" class="example-item bg-[#F8FBFF] border border-sky-soft rounded-2xl p-3 flex flex-col gap-2">
+                    <div class="h-32 rounded-xl bg-gradient-to-br from-[#CBE0F8] to-[#EEF5FD] flex flex-col items-center justify-center p-3 text-center relative overflow-hidden">
+                        <span class="text-2xl mb-1">☁️✨</span>
+                        <span class="font-quicksand font-bold text-sm text-sky-deep">Pastel Sky Portal</span>
+                        <span class="text-[10px] text-text-main">Custom Commission Web</span>
+                    </div>
+                    <div class="flex justify-between items-center px-1">
+                        <span class="text-xs font-semibold text-text-main">เว็บรับงานสไตล์ท้องฟ้า</span>
+                        <span class="text-[10px] bg-sky-soft text-sky-deep px-2 py-0.5 rounded-full font-quicksand font-bold">Website</span>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div data-category="emote" class="example-item bg-[#F8FBFF] border border-sky-soft rounded-2xl p-3 flex flex-col gap-2">
+                    <div class="h-32 rounded-xl bg-gradient-to-br from-[#FFF4CC] to-[#F4F8FD] flex items-center justify-center gap-3 p-3">
+                        <div class="w-12 h-12 rounded-2xl bg-white shadow-xs flex items-center justify-center text-2xl">🥺</div>
+                        <div class="w-12 h-12 rounded-2xl bg-white shadow-xs flex items-center justify-center text-2xl">🥰</div>
+                        <div class="w-12 h-12 rounded-2xl bg-white shadow-xs flex items-center justify-center text-2xl">🧋</div>
+                    </div>
+                    <div class="flex justify-between items-center px-1">
+                        <span class="text-xs font-semibold text-text-main">เซ็ตอิโมติคอน Twitch/Discord</span>
+                        <span class="text-[10px] bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-quicksand font-bold">Emotes</span>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div data-category="chibi" class="example-item bg-[#F8FBFF] border border-sky-soft rounded-2xl p-3 flex flex-col gap-2">
+                    <div class="h-32 rounded-xl bg-gradient-to-br from-[#E2EEFC] to-[#FCEBF1] flex flex-col items-center justify-center p-3">
+                        <span class="text-3xl mb-1">🧸🎀</span>
+                        <span class="font-mali font-bold text-xs text-text-main">Chibi Full Color + Prop</span>
+                    </div>
+                    <div class="flex justify-between items-center px-1">
+                        <span class="text-xs font-semibold text-text-main">จิบิเต็มตัวพร้อมพร็อพ</span>
+                        <span class="text-[10px] bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full font-quicksand font-bold">Chibi</span>
+                    </div>
+                </div>
+
+                <!-- Item 4 -->
+                <div data-category="website" class="example-item bg-[#F8FBFF] border border-sky-soft rounded-2xl p-3 flex flex-col gap-2">
+                    <div class="h-32 rounded-xl bg-gradient-to-br from-[#D4E6FA] to-[#FFFFFF] flex flex-col items-center justify-center p-3">
+                        <span class="text-2xl mb-1">🎵🤍</span>
+                        <span class="font-quicksand font-bold text-sm text-sky-deep">Link-in-Bio + Music Box</span>
+                    </div>
+                    <div class="flex justify-between items-center px-1">
+                        <span class="text-xs font-semibold text-text-main">หน้ารวมลิงก์ + เครื่องเล่นเพลง</span>
+                        <span class="text-[10px] bg-sky-soft text-sky-deep px-2 py-0.5 rounded-full font-quicksand font-bold">Website</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-3 bg-[#F4F8FD] text-center text-[11px] text-text-sub border-t border-sky-soft">
+                ⚠️ ภาพทั้งหมดมีลายน้ำและลิขสิทธิ์ ห้ามนำไปใช้โดยไม่ได้รับอนุญาต
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. GIVEAWAY MODAL -->
+    <div id="giveawayModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
+        <div class="bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-lg w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-300">
+            <div class="p-5 pb-3 border-b border-sky-soft flex items-center justify-between bg-gradient-to-r from-[#F4F8FD] to-white">
+                <div>
+                    <h3 class="font-quicksand font-bold italic text-xl text-sky-deep">GIVEAWAY ♡</h3>
+                    <p class="text-xs text-text-sub">รวมของแจกฟรีน่ารักๆ สำหรับผู้ติดตามร้าน KOSAME</p>
+                </div>
+                <button onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-sky-soft/70 hover:bg-sky-blue hover:text-white text-text-main flex items-center justify-center transition-colors cursor-pointer">✕</button>
+            </div>
+
+            <div class="p-5 overflow-y-auto space-y-3">
+                <!-- Giveaway Item 1 -->
+                <div class="bg-[#F8FBFF] border border-sky-soft rounded-2xl p-4 flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-xl bg-white shadow-xs flex items-center justify-center text-2xl">☁️</div>
+                        <div>
+                            <h4 class="font-semibold text-sm text-text-main">Pastel Cloud Wallpaper Pack</h4>
+                            <p class="text-[11px] text-text-sub">วอลเปเปอร์มือถือ & iPad โทนฟ้าพาสเทล (4 รูป)</p>
+                        </div>
+                    </div>
+                    <button onclick="showToast('ดาวน์โหลดไฟล์ Pastel Cloud Wallpaper เรียบร้อยแล้ว ♡')" class="px-3.5 py-1.5 rounded-full bg-sky-blue hover:bg-sky-deep text-white text-xs font-medium shadow-xs transition-colors shrink-0 cursor-pointer">
+                        รับฟรี
+                    </button>
+                </div>
+
+                <!-- Giveaway Item 2 -->
+                <div class="bg-[#F8FBFF] border border-sky-soft rounded-2xl p-4 flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-xl bg-white shadow-xs flex items-center justify-center text-2xl">🧸</div>
+                        <div>
+                            <h4 class="font-semibold text-sm text-text-main">Free Chibi Base & Icon Frame</h4>
+                            <p class="text-[11px] text-text-sub">กรอบรูปโปรไฟล์ก้อนเมฆ + ดาววิบวับ (PNG โปร่งใส)</p>
+                        </div>
+                    </div>
+                    <button onclick="showToast('ดาวน์โหลดไฟล์ Icon Frame เรียบร้อยแล้ว ✿')" class="px-3.5 py-1.5 rounded-full bg-sky-blue hover:bg-sky-deep text-white text-xs font-medium shadow-xs transition-colors shrink-0 cursor-pointer">
+                        รับฟรี
+                    </button>
+                </div>
+
+                <!-- Giveaway Item 3 -->
+                <div class="bg-[#F8FBFF] border border-sky-soft rounded-2xl p-4 flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-xl bg-white shadow-xs flex items-center justify-center text-2xl">🎀</div>
+                        <div>
+                            <h4 class="font-semibold text-sm text-text-main">Mini Schedule Template</h4>
+                            <p class="text-[11px] text-text-sub">เทมเพลตตารางไลฟ์ / ตารางงานน่ารักๆ</p>
+                        </div>
+                    </div>
+                    <button onclick="showToast('ดาวน์โหลดไฟล์ Schedule Template เรียบร้อยแล้ว ☁️')" class="px-3.5 py-1.5 rounded-full bg-sky-blue hover:bg-sky-deep text-white text-xs font-medium shadow-xs transition-colors shrink-0 cursor-pointer">
+                        รับฟรี
+                    </button>
+                </div>
+            </div>
+
+            <div class="p-3 bg-[#F4F8FD] text-center text-[11px] text-text-sub border-t border-sky-soft">
+                Thank you for your support! ใช้ส่วนตัวเท่านั้น ห้ามดัดแปลงหรือนำไปจำหน่ายต่อ
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. QUEUE STATUS MODAL (เช็กคิว) -->
+    <div id="queueModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
+        <div class="bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-lg w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-300">
+            <div class="p-5 pb-3 border-b border-sky-soft flex items-center justify-between bg-gradient-to-r from-[#F4F8FD] to-white">
+                <div>
+                    <h3 class="font-prompt font-bold text-lg text-sky-deep">📅 เช็กคิวงาน (Queue Status)</h3>
+                    <p class="text-xs text-text-sub">สถานะคิวปัจจุบัน: <span class="text-emerald-500 font-semibold">● เปิดรับคิวว่าง (ว่าง 2 คิว)</span></p>
+                </div>
+                <button onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-sky-soft/70 hover:bg-sky-blue hover:text-white text-text-main flex items-center justify-center transition-colors cursor-pointer">✕</button>
+            </div>
+
+            <div class="p-5 overflow-y-auto space-y-2.5">
+                <!-- Queue Row 1 -->
+                <div class="bg-[#F8FBFF] border border-sky-soft rounded-2xl p-3.5 flex items-center justify-between">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-quicksand font-bold bg-sky-blue text-white px-2 py-0.5 rounded-full">#Q01</span>
+                            <span class="text-sm font-semibold text-text-main">คุณ Mochi_Cloud</span>
+                        </div>
+                        <p class="text-[11px] text-text-sub mt-0.5">Website Commission (Full Custom)</p>
+                    </div>
+                    <span class="text-[11px] font-medium bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full">กำลังลงสี / โค้ด 80%</span>
+                </div>
+
+                <!-- Queue Row 2 -->
+                <div class="bg-[#F8FBFF] border border-sky-soft rounded-2xl p-3.5 flex items-center justify-between">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-quicksand font-bold bg-sky-blue text-white px-2 py-0.5 rounded-full">#Q02</span>
+                            <span class="text-sm font-semibold text-text-main">คุณ SoraChibi</span>
+                        </div>
+                        <p class="text-[11px] text-text-sub mt-0.5">Emote Pack (6 ตัว) + Chibi 1</p>
+                    </div>
+                    <span class="text-[11px] font-medium bg-sky-soft text-sky-deep px-2.5 py-1 rounded-full">ส่งร่างสเก็ตช์แล้ว</span>
+                </div>
+
+                <!-- Queue Row 3 -->
+                <div class="bg-[#F8FBFF] border border-sky-soft rounded-2xl p-3.5 flex items-center justify-between">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-quicksand font-bold bg-emerald-400 text-white px-2 py-0.5 rounded-full">#Q03</span>
+                            <span class="text-sm font-semibold text-text-main">คุณ Hana_VT</span>
+                        </div>
+                        <p class="text-[11px] text-text-sub mt-0.5">Link-in-bio Portal</p>
+                    </div>
+                    <span class="text-[11px] font-medium bg-emerald-100 text-emerald-700 px-2.5 py-1 rounded-full">เสร็จสมบูรณ์ ✓</span>
+                </div>
+
+                <!-- Available Slot -->
+                <div class="border-2 border-dashed border-sky-blue/50 rounded-2xl p-3.5 flex items-center justify-between bg-white">
+                    <div>
+                        <span class="text-xs font-semibold text-sky-deep">✨ คิวว่างพร้อมรับงาน (#Q04 - #Q05)</span>
+                        <p class="text-[11px] text-text-sub">สามารถกดส่งบรีฟเพื่อจองคิวได้ทันที</p>
+                    </div>
+                    <button onclick="closeAllModals(); setTimeout(()=>openModal('briefModal'), 200)" class="px-3 py-1.5 rounded-full bg-sky-blue hover:bg-sky-deep text-white text-xs font-medium transition-colors cursor-pointer">
+                        จองคิว
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. TERMS OF SERVICE MODAL -->
+    <div id="tosModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
+        <div class="bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-lg w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-300">
+            <div class="p-5 pb-3 border-b border-sky-soft flex items-center justify-between bg-gradient-to-r from-[#F4F8FD] to-white">
+                <div>
+                    <h3 class="font-quicksand font-bold text-lg text-sky-deep">🧸 Terms of Service</h3>
+                    <p class="text-xs text-text-sub">ข้อตกลงและเงื่อนไขการสั่งงานร้าน KOSAME</p>
+                </div>
+                <button onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-sky-soft/70 hover:bg-sky-blue hover:text-white text-text-main flex items-center justify-center transition-colors cursor-pointer">✕</button>
+            </div>
+
+            <div class="p-5 overflow-y-auto space-y-3 text-xs leading-relaxed text-text-main">
+                <div class="bg-[#F8FBFF] p-3.5 rounded-2xl border border-sky-soft">
+                    <h4 class="font-bold text-sky-deep mb-1">1. การชำระเงินและมัดจำ</h4>
+                    <p>• ชำระมัดจำ 50% เพื่อจองคิวงาน และชำระส่วนที่เหลือ 50% เมื่ออนุมัติภาพร่าง/โครงสร้างเว็บเรียบร้อยแล้ว</p>
+                    <p>• หากยกเลิกงานหลังจากเริ่มร่างภาพแล้ว ขอสงวนสิทธิ์ไม่คืนเงินมัดจำทุกกรณี</p>
+                </div>
+
+                <div class="bg-[#F8FBFF] p-3.5 rounded-2xl border border-sky-soft">
+                    <h4 class="font-bold text-sky-deep mb-1">2. การแก้ไขงาน (Revision)</h4>
+                    <p>• สามารถแก้ไขงานในขั้นตอน Sketch / Wireframe ได้ฟรี 3 ครั้ง (ครั้งต่อไปคิดเพิ่มครั้งละ 50 - 100 บาท)</p>
+                    <p>• ขั้นตอนลงสี / โค้ดจริง สามารถปรับแก้สีหรือรายละเอียดเล็กน้อยได้ 2 ครั้ง</p>
+                </div>
+
+                <div class="bg-[#F8FBFF] p-3.5 rounded-2xl border border-sky-soft">
+                    <h4 class="font-bold text-sky-deep mb-1">3. ลิขสิทธิ์และการใช้งาน</h4>
+                    <p>• ราคาเริ่มต้นสำหรับใช้งานส่วนตัว (Personal Use) หากนำไปใช้เชิงพาณิชย์ (Commercial Use / สตรีมสร้างรายได้ / ขายของ) คิดเพิ่ม x1.5 - x2 ของราคาปกติ</p>
+                    <p>• ห้ามนำผลงานไปเทรน AI หรือแอบอ้างเป็นผลงานตนเองเด็ดขาด</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. PRICING & CALCULATOR MODAL (ราคางาน) -->
+    <div id="pricingModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
+        <div class="bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-lg w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-300">
+            <div class="p-5 pb-3 border-b border-sky-soft flex items-center justify-between bg-gradient-to-r from-[#F4F8FD] to-white">
+                <div>
+                    <h3 class="font-prompt font-bold text-lg text-sky-deep">🐾 เรทราคา & คำนวณราคาเบื้องต้น</h3>
+                    <p class="text-xs text-text-sub">เลือกประเภทงานเพื่อคำนวณงบประมาณคร่าวๆ</p>
+                </div>
+                <button onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-sky-soft/70 hover:bg-sky-blue hover:text-white text-text-main flex items-center justify-center transition-colors cursor-pointer">✕</button>
+            </div>
+
+            <div class="p-5 overflow-y-auto space-y-4">
+                <!-- Service Type Selection -->
+                <div>
+                    <label class="block text-xs font-semibold text-text-main mb-1.5">1. เลือกประเภทงานหลัก</label>
+                    <select id="calcService" onchange="calculatePrice()" class="w-full rounded-xl border border-sky-soft bg-[#F8FBFF] px-3.5 py-2.5 text-xs text-text-main focus:outline-none focus:border-sky-blue">
+                        <option value="850">Website / Link-in-bio Portal (เริ่มต้น 850 ฿)</option>
+                        <option value="250">Emote ตัวละครน่ารัก (ตัวละ 250 ฿)</option>
+                        <option value="450">Chibi Full Body ลงสีเต็ม (ตัวละ 450 ฿)</option>
+                        <option value="1200">Set Emote 5 ตัว แถมฟรี 1 ตัว (1,200 ฿)</option>
+                    </select>
+                </div>
+
+                <!-- Quantity -->
+                <div>
+                    <label class="block text-xs font-semibold text-text-main mb-1.5">2. จำนวน (ชิ้น / ตัว / หน้า)</label>
+                    <input id="calcQty" type="number" min="1" max="20" value="1" oninput="calculatePrice()" class="w-full rounded-xl border border-sky-soft bg-[#F8FBFF] px-3.5 py-2 text-xs text-text-main focus:outline-none focus:border-sky-blue">
+                </div>
+
+                <!-- Add-ons -->
+                <div class="space-y-2">
+                    <label class="block text-xs font-semibold text-text-main">3. ตัวเลือกเพิ่มเติม (Add-ons)</label>
+                    <label class="flex items-center gap-2 text-xs text-text-main cursor-pointer">
+                        <input id="calcCommercial" type="checkbox" onchange="calculatePrice()" class="rounded text-sky-blue focus:ring-sky-blue">
+                        <span>ใช้งานเชิงพาณิชย์ / Commercial Use (x1.5)</span>
+                    </label>
+                    <label class="flex items-center gap-2 text-xs text-text-main cursor-pointer">
+                        <input id="calcRush" type="checkbox" onchange="calculatePrice()" class="rounded text-sky-blue focus:ring-sky-blue">
+                        <span>งานด่วนพิเศษภายใน 3 วัน (+300 ฿)</span>
+                    </label>
+                </div>
+
+                <!-- Price Summary Box -->
+                <div class="bg-gradient-to-r from-[#EBF4FE] to-[#F4F8FD] border border-sky-blue/40 rounded-2xl p-4 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-text-sub block">ราคาประเมินเบื้องต้น</span>
+                        <span class="text-[10px] text-text-sub">*ราคาอาจปรับตามความละเอียดของบรีฟ</span>
+                    </div>
+                    <div class="text-right">
+                        <span id="calcTotalDisplay" class="font-quicksand font-bold text-2xl text-sky-deep">850</span>
+                        <span class="text-xs font-semibold text-sky-deep"> บาท</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. SEND BRIEF MODAL (ส่งบรีฟงาน) -->
+    <div id="briefModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
+        <div class="bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-lg w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-300">
+            <div class="p-5 pb-3 border-b border-sky-soft flex items-center justify-between bg-gradient-to-r from-[#F4F8FD] to-white">
+                <div>
+                    <h3 class="font-prompt font-bold text-lg text-sky-deep">☁️ ส่งบรีฟงาน (Commission Brief)</h3>
+                    <p class="text-xs text-text-sub">กรอกรายละเอียดงานเพื่อให้ทางร้านประเมินราคาและคิว</p>
+                </div>
+                <button onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-sky-soft/70 hover:bg-sky-blue hover:text-white text-text-main flex items-center justify-center transition-colors cursor-pointer">✕</button>
+            </div>
+
+            <form onsubmit="submitBrief(event)" class="p-5 overflow-y-auto space-y-3.5">
+                <div>
+                    <label class="block text-xs font-semibold text-text-main mb-1">ชื่อลูกค้า / ชื่อแอคเคาท์ (X, Discord, Line)</label>
+                    <input required type="text" placeholder="เช่น @kosame_fan / Discord: kosame#1234" class="w-full rounded-xl border border-sky-soft bg-[#F8FBFF] px-3.5 py-2 text-xs text-text-main focus:outline-none focus:border-sky-blue">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-text-main mb-1">ประเภทงานที่ต้องการสั่ง</label>
+                    <select class="w-full rounded-xl border border-sky-soft bg-[#F8FBFF] px-3.5 py-2 text-xs text-text-main focus:outline-none focus:border-sky-blue">
+                        <option>Website / Link-in-bio Commission</option>
+                        <option>Emote Commission</option>
+                        <option>Chibi Character Commission</option>
+                        <option>อื่นๆ (ระบุในรายละเอียด)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-text-main mb-1">รายละเอียดงาน / โทนสี / ลิงก์ Reference</label>
+                    <textarea required rows="3" placeholder="อธิบายลักษณะตัวละคร ท่าทาง โทนสี หรือแนบลิงก์ Google Drive..." class="w-full rounded-xl border border-sky-soft bg-[#F8FBFF] px-3.5 py-2 text-xs text-text-main focus:outline-none focus:border-sky-blue"></textarea>
+                </div>
+
+                <button type="submit" class="w-full py-2.5 rounded-full bg-sky-blue hover:bg-sky-deep text-white font-prompt font-semibold text-xs shadow-pastel transition-all cursor-pointer">
+                    ส่งบรีฟงานให้ร้าน KOSAME ☁️✨
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION (Replaces alert()) -->
+    <div id="toastBox" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-white/95 border border-sky-blue/40 text-text-main px-4 py-2.5 rounded-full shadow-pastel-hover text-xs font-prompt font-medium flex items-center gap-2 opacity-0 pointer-events-none transition-all duration-300 translate-y-3">
+        <span class="text-sky-blue text-sm">☁️</span>
+        <span id="toastMessage">แจ้งเตือน</span>
+    </div>
+
+    <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+    <script>
+        /* ---------------- 1. MODAL MANAGEMENT ---------------- */
+        const backdrop = document.getElementById('modalBackdrop');
+        const allModalIds = ['exampleModal', 'giveawayModal', 'queueModal', 'tosModal', 'pricingModal', 'briefModal'];
+
+        function openModal(modalId) {
+            closeAllModals(true);
+            const modal = document.getElementById(modalId);
+            if (!modal) return;
+
+            backdrop.classList.remove('hidden');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            requestAnimationFrame(() => {
+                backdrop.classList.remove('opacity-0');
+                const inner = modal.firstElementChild;
+                inner.classList.remove('scale-95');
+                inner.classList.add('scale-100');
+            });
+        }
+
+        function closeAllModals(immediate = false) {
+            backdrop.classList.add('opacity-0');
+            allModalIds.forEach(id => {
+                const modal = document.getElementById(id);
+                if (modal && !modal.classList.contains('hidden')) {
+                    const inner = modal.firstElementChild;
+                    inner.classList.remove('scale-100');
+                    inner.classList.add('scale-95');
+                    if (immediate) {
+                        modal.classList.add('hidden');
+                        modal.classList.remove('flex');
+                    } else {
+                        setTimeout(() => {
+                            modal.classList.add('hidden');
+                            modal.classList.remove('flex');
+                        }, 200);
+                    }
+                }
+            });
+            if (immediate) {
+                backdrop.classList.add('hidden');
+            } else {
+                setTimeout(() => backdrop.classList.add('hidden'), 200);
+            }
+        }
+
+        /* ---------------- 2. TOAST NOTIFICATION ---------------- */
+        let toastTimeout;
+        function showToast(msg) {
+            const toast = document.getElementById('toastBox');
+            const toastMsg = document.getElementById('toastMessage');
+            toastMsg.textContent = msg;
+
+            toast.classList.remove('opacity-0', 'translate-y-3');
+            toast.classList.add('opacity-100', 'translate-y-0');
+
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('opacity-100', 'translate-y-0');
+                toast.classList.add('opacity-0', 'translate-y-3');
+            }, 3000);
+        }
+
+        /* ---------------- 3. EXAMPLE GALLERY FILTER ---------------- */
+        function filterExamples(category) {
+            const tabs = document.querySelectorAll('.example-tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('bg-sky-blue', 'text-white');
+                tab.classList.add('bg-sky-soft/70', 'text-text-main');
+            });
+            event.target.classList.remove('bg-sky-soft/70', 'text-text-main');
+            event.target.classList.add('bg-sky-blue', 'text-white');
+
+            const items = document.querySelectorAll('.example-item');
+            items.forEach(item => {
+                if (category === 'all' || item.dataset.category === category) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        /* ---------------- 4. PRICE CALCULATOR & BRIEF FORM ---------------- */
+        function calculatePrice() {
+            const basePrice = parseFloat(document.getElementById('calcService').value) || 0;
+            const qty = Math.max(1, parseInt(document.getElementById('calcQty').value) || 1);
+            const isCommercial = document.getElementById('calcCommercial').checked;
+            const isRush = document.getElementById('calcRush').checked;
+
+            let total = basePrice * qty;
+            if (isCommercial) total *= 1.5;
+            if (isRush) total += 300;
+
+            document.getElementById('calcTotalDisplay').textContent = Math.round(total).toLocaleString();
+        }
+
+        function submitBrief(e) {
+            e.preventDefault();
+            closeAllModals();
+            showToast('ส่งบรีฟงานเรียบร้อยแล้ว! ทางร้านจะติดต่อกลับโดยเร็วที่สุด ♡');
+            e.target.reset();
+        }
+
+        /* ---------------- 5. MINI MUSIC PLAYER & WEB AUDIO SYNTH ---------------- */
+        const tracks = [
+            {
+                title: "☁️ Pastel Cloud Lullaby - Kosame Music Box",
+                duration: 186, // 3:06
+                notes: [523.25, 659.25, 783.99, 987.77, 783.99, 659.25, 587.33, 698.46, 880.00, 1046.50, 880.00, 698.46] // Cmaj7 -> Dm7 music box
+            },
+            {
+                title: "✿ Fluffy Cotton Sky - Lo-Fi Breeze",
+                duration: 164, // 2:44
+                notes: [440.00, 523.25, 659.25, 783.99, 659.25, 523.25, 392.00, 493.88, 587.33, 783.99, 587.33, 493.88] // Am7 -> G6
+            },
+            {
+                title: "⭐ Starlight Tea Time - Soft Chime",
+                duration: 195, // 3:15
+                notes: [698.46, 880.00, 1046.50, 1318.51, 1046.50, 880.00, 659.25, 783.99, 987.77, 1174.66, 987.77, 783.99] // Fmaj7 -> Em7
+            }
+        ];
+
+        let currentTrackIndex = 0;
+        let isPlaying = false;
+        let isRepeat = true;
+        let currentSeconds = 22; // เริ่มต้นที่ 0:22 เหมือนในภาพตัวอย่าง
+        let timerInterval = null;
+        let audioCtx = null;
+        let melodyInterval = null;
+        let noteStep = 0;
+
+        function formatTime(sec) {
+            const m = Math.floor(sec / 60);
+            const s = Math.floor(sec % 60);
+            return `${m}:${s < 10 ? '0' : ''}${s}`;
+        }
+
+        function updatePlayerUI() {
+            const track = tracks[currentTrackIndex];
+            document.getElementById('trackTitle').textContent = track.title;
+            document.getElementById('durationDisplay').textContent = formatTime(track.duration);
+            document.getElementById('currentTimeDisplay').textContent = formatTime(currentSeconds);
+
+            const slider = document.getElementById('progressSlider');
+            slider.max = track.duration;
+            slider.value = currentSeconds;
+
+            const playIcon = document.getElementById('playIcon');
+            const pauseIcon = document.getElementById('pauseIcon');
+            const playingDot = document.getElementById('playingDot');
+            const statusBadge = document.getElementById('audioStatusBadge');
+
+            if (isPlaying) {
+                playIcon.classList.add('hidden');
+                pauseIcon.classList.remove('hidden');
+                playingDot.classList.remove('hidden');
+                statusBadge.textContent = 'Playing ♪';
+            } else {
+                playIcon.classList.remove('hidden');
+                pauseIcon.classList.add('hidden');
+                playingDot.classList.add('hidden');
+                statusBadge.textContent = 'Paused';
+            }
+        }
+
+        // Soft Music Box Tone Generator (Web Audio API)
+        function playMusicBoxNote(freq) {
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+                // Soft bell-like envelope
+                gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.045, audioCtx.currentTime + 0.03);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.1);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start();
+                osc.stop(audioCtx.currentTime + 1.15);
+            } catch (err) {
+                // Fallback silently if browser restricts audio
+            }
+        }
+
+        function startAudioLoop() {
+            stopAudioLoop();
+            // Progress timer (1s)
+            timerInterval = setInterval(() => {
+                const maxDur = tracks[currentTrackIndex].duration;
+                if (currentSeconds < maxDur) {
+                    currentSeconds++;
+                    updatePlayerUI();
+                } else {
+                    if (isRepeat) {
+                        currentSeconds = 0;
+                        updatePlayerUI();
+                    } else {
+                        nextTrack();
+                    }
+                }
+            }, 1000);
+
+            // Music box chime melody (every 650ms)
+            const playStep = () => {
+                const notes = tracks[currentTrackIndex].notes;
+                playMusicBoxNote(notes[noteStep % notes.length]);
+                noteStep++;
+            };
+            playStep();
+            melodyInterval = setInterval(playStep, 650);
+        }
+
+        function stopAudioLoop() {
+            clearInterval(timerInterval);
+            clearInterval(melodyInterval);
+        }
+
+        function togglePlay() {
+            isPlaying = !isPlaying;
+            if (isPlaying) {
+                startAudioLoop();
+            } else {
+                stopAudioLoop();
+            }
+            updatePlayerUI();
+        }
+
+        function prevTrack() {
+            currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
+            currentSeconds = 0;
+            noteStep = 0;
+            updatePlayerUI();
+            if (isPlaying) startAudioLoop();
+        }
+
+        function nextTrack() {
+            currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+            currentSeconds = 0;
+            noteStep = 0;
+            updatePlayerUI();
+            if (isPlaying) startAudioLoop();
+        }
+
+        function toggleRepeat() {
+            isRepeat = !isRepeat;
+            const btn = document.getElementById('repeatBtn');
+            btn.classList.toggle('opacity-40', !isRepeat);
+            showToast(isRepeat ? 'เปิดโหมดเล่นเพลงซ้ำแล้ว 🔁' : 'ปิดโหมดเล่นเพลงซ้ำ');
+        }
+
+        function seekAudio(val) {
+            currentSeconds = parseInt(val);
+            document.getElementById('currentTimeDisplay').textContent = formatTime(currentSeconds);
+        }
+
+        // Initialize UI on load
+        updatePlayerUI();
+    </script>
+</body>
+</html>
