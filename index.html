@@ -143,35 +143,103 @@
             box-shadow: 0 8px 18px -8px rgba(204, 116, 156, 0.35);
         }
 
-        .pink-audio-slider {
+        .mini-player-card {
+            background: linear-gradient(180deg, #FFFDFC 0%, #FFF5F9 72%, #FFEBF2 100%);
+            border: 3px solid #FFFFFF;
+            box-shadow:
+                0 12px 26px -10px rgba(212, 126, 162, 0.28),
+                0 4px 12px -4px rgba(255, 178, 210, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 1);
+        }
+
+        .mini-player-cover {
+            background: linear-gradient(145deg, #FFF6FA 0%, #FFE6F0 100%);
+            border: 2.5px solid #FFFFFF;
+            box-shadow: 0 8px 16px -8px rgba(206, 118, 158, 0.32);
+        }
+
+        .mini-player-subbtn {
+            width: 26px;
+            height: 26px;
+            border-radius: 999px;
+            background: linear-gradient(180deg, #FFFFFF 0%, #FFF7FA 100%);
+            border: 2px solid #FFE4EE;
+            color: #9C5A79;
+            box-shadow: 0 4px 10px -6px rgba(202, 120, 156, 0.32);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            line-height: 1;
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+        }
+
+        .mini-player-subbtn:hover {
+            transform: translateY(-2px);
+            border-color: #FFC0D8;
+            color: #E06897;
+        }
+
+        .mini-player-subbtn.is-active {
+            background: #FFEAF2;
+            border-color: #F4A7C6;
+            color: #E06897;
+        }
+
+        .mini-player-playbtn {
+            background: linear-gradient(180deg, #F694B9 0%, #E86D9C 100%);
+            border: 2.5px solid #FFFFFF;
+            box-shadow:
+                0 8px 16px -6px rgba(214, 102, 146, 0.45),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.22s ease;
+        }
+
+        .mini-player-playbtn:hover {
+            transform: translateY(-2px) scale(1.04);
+            box-shadow:
+                0 10px 20px -6px rgba(214, 102, 146, 0.52),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+        }
+
+        .mini-player-playbtn:active {
+            transform: scale(0.97);
+        }
+
+        .mini-player-slider {
             -webkit-appearance: none;
             appearance: none;
-            height: 5px;
+            height: 4px;
             border-radius: 999px;
-            background: #FFE2EE;
+            background: #F9CEE0;
             outline: none;
             cursor: pointer;
         }
 
-        .pink-audio-slider::-webkit-slider-thumb {
+        .mini-player-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
             width: 12px;
             height: 12px;
             border-radius: 999px;
-            background: #E86D9C;
-            border: 2px solid #FFFFFF;
-            box-shadow: 0 2px 5px rgba(214, 108, 150, 0.45);
+            background: #FFFFFF;
+            border: 2.5px solid #E86D9C;
+            box-shadow: 0 3px 8px rgba(206, 118, 158, 0.35);
             cursor: pointer;
+            transition: transform 0.15s ease;
         }
 
-        .pink-audio-slider::-moz-range-thumb {
+        .mini-player-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.12);
+        }
+
+        .mini-player-slider::-moz-range-thumb {
             width: 12px;
             height: 12px;
             border-radius: 999px;
-            background: #E86D9C;
-            border: 2px solid #FFFFFF;
-            box-shadow: 0 2px 5px rgba(214, 108, 150, 0.45);
+            background: #FFFFFF;
+            border: 2.5px solid #E86D9C;
+            box-shadow: 0 3px 8px rgba(206, 118, 158, 0.35);
             cursor: pointer;
         }
 
@@ -190,11 +258,6 @@
             50% { opacity: 1; transform: scale(1.15); }
         }
 
-        @keyframes eqWave {
-            0%, 100% { transform: scaleY(0.35); }
-            50% { transform: scaleY(1); }
-        }
-
         .cloud-float {
             animation: floatCloud 4.8s ease-in-out infinite;
         }
@@ -209,11 +272,6 @@
 
         .twinkle-delay {
             animation: twinkleStar 3.8s ease-in-out 1.4s infinite;
-        }
-
-        .eq-bar {
-            transform-origin: bottom;
-            animation: eqWave 0.9s ease-in-out infinite;
         }
 
         .mobile-shell-bg {
@@ -419,16 +477,9 @@
                     <button
                         type="button"
                         onclick="openModal('exampleModal')"
-                        class="cute-panel relative w-full rounded-[24px] pt-3 pb-8 px-3 text-center overflow-hidden cursor-pointer group flex flex-col justify-between min-h-[168px]"
+                        class="cute-panel relative w-full rounded-[24px] py-6 px-3 text-center overflow-hidden cursor-pointer group flex flex-col justify-center items-center min-h-[156px]"
                     >
-                        <div class="flex items-center justify-between leading-none mb-1">
-                            <div class="text-left">
-                                <div class="font-serif italic font-bold text-xs text-[#B77B95]">JaoMeow</div>
-                                <div class="text-[7px] tracking-[0.2em] font-bold text-[#CCA0B4]">STORE</div>
-                            </div>
-                            <span class="px-2 py-0.5 rounded-full bg-white/90 text-[9px] font-bold text-[#B85E88]">SOLO</span>
-                        </div>
-                        <div class="py-1 space-y-1.5">
+                        <div class="space-y-1.5 relative z-10">
                             <div class="font-serif italic font-bold text-base text-[#E68BB3] group-hover:text-pink-500 transition-colors leading-tight">
                                 EXAMPLE WORK
                             </div>
@@ -448,16 +499,9 @@
                     <button
                         type="button"
                         onclick="openModal('groupModal')"
-                        class="cute-panel relative w-full rounded-[24px] pt-3 pb-8 px-3 text-center overflow-hidden cursor-pointer group flex flex-col justify-between min-h-[168px]"
+                        class="cute-panel relative w-full rounded-[24px] py-6 px-3 text-center overflow-hidden cursor-pointer group flex flex-col justify-center items-center min-h-[156px]"
                     >
-                        <div class="flex items-center justify-between leading-none mb-1">
-                            <div class="text-left">
-                                <div class="font-serif italic font-bold text-xs text-[#B77B95]">JaoMeow</div>
-                                <div class="text-[7px] tracking-[0.2em] font-bold text-[#CCA0B4]">STORE</div>
-                            </div>
-                            <span class="px-2 py-0.5 rounded-full bg-white/90 text-[9px] font-bold text-[#B85E88]">SET</span>
-                        </div>
-                        <div class="py-1 space-y-1.5">
+                        <div class="space-y-1.5 relative z-10">
                             <div class="font-serif italic font-bold text-base text-[#E68BB3] group-hover:text-pink-500 transition-colors leading-tight">
                                 GROUP WORK
                             </div>
@@ -526,69 +570,97 @@
                     © 2026 JaoMeowStore Studio All Rights Reserved ☁
                 </footer>
 
-                <!-- Bottom Audio Bar -->
-                <div class="w-full bg-white/95 border-2 border-white rounded-2xl px-3 py-2.5 shadow-[0_8px_18px_-10px_rgba(202,120,156,0.35)]">
-                    <div class="flex items-center justify-between gap-2">
-                        <button
-                            type="button"
-                            id="musicToggleBtn"
-                            onclick="toggleMusicPlayer()"
-                            aria-label="เล่นหรือหยุดเพลง"
-                            class="w-7 h-7 rounded-full bg-gradient-to-r from-[#F48FB6] to-[#E86D9C] text-white text-xs font-bold shadow-2xs hover:opacity-95 transition cursor-pointer shrink-0 flex items-center justify-center"
-                        >
-                            <span id="musicToggleIcon">▶</span>
-                        </button>
+                <!-- Mini Music Player Card at Bottom -->
+                <div class="mini-player-card w-full rounded-[24px] p-3 flex items-center gap-3">
+                    <div class="mini-player-cover relative w-12 h-12 rounded-2xl flex items-center justify-center text-base shrink-0 select-none">
+                        <span>🌸</span>
+                        <span class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-white border border-pink-200 text-[9px] text-[#D46293] flex items-center justify-center shadow-2xs">♡</span>
+                    </div>
 
-                        <div class="min-w-0 flex-1 leading-tight">
-                            <div class="flex items-center gap-1.5">
-                                <span class="text-[11px] font-bold text-[#6B4257] truncate">อย่ามากกว่าฉันก็พอ</span>
-                                <span id="musicEqBars" class="inline-flex items-end gap-[2px] h-2.5 shrink-0 opacity-40">
-                                    <span class="eq-bar w-[2px] h-full rounded-full bg-[#E86D9C]" style="animation-delay:0s"></span>
-                                    <span class="eq-bar w-[2px] h-full rounded-full bg-[#E86D9C]" style="animation-delay:0.2s"></span>
-                                    <span class="eq-bar w-[2px] h-full rounded-full bg-[#E86D9C]" style="animation-delay:0.4s"></span>
-                                </span>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-1.5 mb-1.5">
+                            <span class="text-[10px] text-[#E07AA8] shrink-0">❀</span>
+                            <div class="text-[11px] font-bold text-[#6D536E] truncate">
+                                อย่ามากกว่าฉันก็พอ — GAVIN:D x Violette Wautier
                             </div>
-                            <div class="text-[9px] font-medium text-[#A5788E] truncate">GAVIN:D × Violette Wautier</div>
                         </div>
 
-                        <div class="flex items-center gap-1 shrink-0">
+                        <div class="flex items-center justify-center gap-2 mb-1.5">
                             <button
                                 type="button"
-                                id="musicMuteBtn"
-                                onclick="toggleMusicMute()"
-                                aria-label="ปิดหรือเปิดเสียง"
-                                title="ปิด/เปิดเสียง"
-                                class="w-6 h-6 rounded-full bg-[#FFF2F7] hover:bg-[#FFE3EE] text-[#B85E88] text-[10px] font-bold flex items-center justify-center cursor-pointer transition"
+                                onclick="restartMusicTrack()"
+                                title="เริ่มเพลงใหม่"
+                                aria-label="เริ่มเพลงใหม่"
+                                class="mini-player-subbtn cursor-pointer select-none"
                             >
-                                <span id="musicMuteIcon">🔊</span>
+                                <svg class="w-3 h-3" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M5 4v12"/>
+                                    <path d="M15 5l-7 5 7 5V5z"/>
+                                </svg>
                             </button>
+
+                            <button
+                                type="button"
+                                id="musicToggleBtn"
+                                onclick="toggleMusicPlayer()"
+                                title="เล่นหรือหยุดเพลง"
+                                aria-label="เล่นหรือหยุดเพลง"
+                                class="mini-player-playbtn w-8 h-8 rounded-full text-white flex items-center justify-center cursor-pointer shrink-0 select-none"
+                            >
+                                <svg id="musicPlaySvg" class="w-3.5 h-3.5 translate-x-[0.5px]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path d="M6.5 4.5l9 5.5-9 5.5v-11z"/>
+                                </svg>
+                                <svg id="musicPauseSvg" class="w-3.5 h-3.5 hidden" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <rect x="5.5" y="4.5" width="3" height="11" rx="1"/>
+                                    <rect x="11.5" y="4.5" width="3" height="11" rx="1"/>
+                                </svg>
+                            </button>
+
+                            <button
+                                type="button"
+                                onclick="skipMusicForward()"
+                                title="ข้ามไปข้างหน้า 10 วินาที"
+                                aria-label="ข้ามไปข้างหน้า 10 วินาที"
+                                class="mini-player-subbtn cursor-pointer select-none"
+                            >
+                                <svg class="w-3 h-3" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M5 5l7 5-7 5V5z"/>
+                                    <path d="M15 4v12"/>
+                                </svg>
+                            </button>
+
+                            <button
+                                type="button"
+                                id="musicLoopBtn"
+                                onclick="toggleMusicLoop()"
+                                title="เล่นซ้ำเพลง"
+                                aria-label="เล่นซ้ำเพลง"
+                                class="mini-player-subbtn cursor-pointer select-none"
+                            >
+                                <svg class="w-3 h-3" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M14 4l2 2-2 2"/>
+                                    <path d="M4 10V8a2 2 0 0 1 2-2h10"/>
+                                    <path d="M6 16l-2-2 2-2"/>
+                                    <path d="M16 10v2a2 2 0 0 1-2 2H4"/>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <span id="musicCurrentTime" class="text-[9px] font-semibold text-[#9A798B] tabular-nums shrink-0">0:00</span>
                             <input
-                                id="musicVolumeSlider"
+                                id="musicSeekSlider"
                                 type="range"
                                 min="0"
                                 max="100"
-                                value="100"
-                                oninput="setMusicVolume(this.value)"
-                                aria-label="ระดับเสียง"
-                                class="pink-audio-slider w-14"
+                                value="0"
+                                step="0.1"
+                                oninput="seekMusicBySlider(this.value)"
+                                aria-label="แถบเวลาเพลง"
+                                class="mini-player-slider flex-1"
                             >
+                            <span id="musicTotalTime" class="text-[9px] font-semibold text-[#9A798B] tabular-nums shrink-0">3:47</span>
                         </div>
-                    </div>
-
-                    <div class="mt-1.5 flex items-center gap-2">
-                        <span id="musicCurrentTime" class="text-[9px] font-semibold text-[#A5788E] tabular-nums shrink-0">0:00</span>
-                        <input
-                            id="musicSeekSlider"
-                            type="range"
-                            min="0"
-                            max="100"
-                            value="0"
-                            step="0.1"
-                            oninput="seekMusicBySlider(this.value)"
-                            aria-label="แถบเวลาเพลง"
-                            class="pink-audio-slider flex-1"
-                        >
-                        <span id="musicDurationTime" class="text-[9px] font-semibold text-[#A5788E] tabular-nums shrink-0">3:47</span>
                     </div>
                 </div>
             </div>
@@ -852,12 +924,12 @@
 
                 <!-- Section 2: Add Artwork -->
                 <form id="adminArtworkForm" onsubmit="handleAddArtwork(event)" class="p-4 rounded-2xl bg-white border border-pink-100 space-y-3.5">
-                    <div class="font-bold text-[#6B4257]">2. เพิ่มรูปภาพ ชื่อรูปภาพ และลิงก์</div>
+                    <div class="font-bold text-[#6B4257]">2. เพิ่มรูปภาพ (เลือกได้หลายรูป ไม่ต้องใส่ชื่อรูปก็ได้)</div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
-                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ชื่อรูปภาพ / ชื่องาน</label>
-                            <input id="artworkTitleInput" type="text" required placeholder="เช่น ป้ายร้านคาเฟ่พาสเทล" class="w-full px-3.5 py-2 rounded-xl border border-pink-200 bg-[#FFFDFC] focus:outline-none focus:border-pink-400">
+                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ชื่อรูปภาพ (ไม่บังคับ)</label>
+                            <input id="artworkTitleInput" type="text" placeholder="เว้นว่างได้ ระบบตั้งชื่ออัตโนมัติ" class="w-full px-3.5 py-2 rounded-xl border border-pink-200 bg-[#FFFDFC] focus:outline-none focus:border-pink-400">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-[#8A5A72] mb-1">แนบลิงก์ (ถ้ามี)</label>
@@ -867,8 +939,8 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 items-start">
                         <div>
-                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">อัปโหลดไฟล์รูปภาพ</label>
-                            <input id="artworkFileInput" type="file" accept="image/*" onchange="handleFilePreview(event)" class="w-full text-xs text-[#8A5A72] file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs font-bold file:bg-[#FFE6F0] file:text-[#B84D7B] hover:file:bg-[#FFD6E6] cursor-pointer">
+                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">อัปโหลดไฟล์รูปภาพ (เลือกได้หลายรูป)</label>
+                            <input id="artworkFileInput" type="file" accept="image/*" multiple onchange="handleFilePreview(event)" class="w-full text-xs text-[#8A5A72] file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs font-bold file:bg-[#FFE6F0] file:text-[#B84D7B] hover:file:bg-[#FFD6E6] cursor-pointer">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-[#8A5A72] mb-1">หรือวางลิงก์รูปภาพโดยตรง</label>
@@ -876,13 +948,15 @@
                         </div>
                     </div>
 
-                    <div class="flex items-center gap-3.5">
+                    <div class="flex items-start gap-3.5">
                         <div class="w-20 h-20 rounded-2xl border-2 border-dashed border-pink-200 bg-[#FFF7FA] flex items-center justify-center overflow-hidden shrink-0">
                             <img id="artworkPreviewImg" src="" alt="Preview" class="hidden w-full h-full object-cover">
                             <span id="artworkPreviewPlaceholder" class="text-[11px] text-[#B08398] text-center px-1">1:1 Preview</span>
                         </div>
-                        <div class="flex-1">
-                            <div id="multiCatLabel" class="text-xs font-semibold text-[#8A5A72] mb-1.5">เลือกหมวดย่อย (เลือกได้มากกว่า 1 หมวด)</div>
+                        <div class="flex-1 min-w-0 space-y-1.5">
+                            <div id="multiSelectedImagesInfo" class="hidden text-[11px] font-semibold text-[#A85A7E]"></div>
+                            <div id="multiSelectedImagesStrip" class="hidden flex flex-wrap gap-1.5"></div>
+                            <div id="multiCatLabel" class="text-xs font-semibold text-[#8A5A72]">เลือกหมวดย่อย (เลือกได้มากกว่า 1 หมวด)</div>
                             <div id="multiCategoryCheckboxes" class="flex flex-wrap gap-2"></div>
                         </div>
                     </div>
@@ -997,7 +1071,8 @@
             selectedExampleLeaf: 'ทั้งหมด',
             selectedGroupSubcat: 'ทั้งหมด',
             isAdminLoggedIn: false,
-            previewImageData: ''
+            previewImageData: '',
+            selectedBatchImages: []
         };
 
         let db = null;
@@ -1405,7 +1480,7 @@
 
             containerEl.innerHTML = items.map((item) => {
                 const safeImg = item.image || 'https://placehold.co/400x400/FFE6F0/A85A7E?text=JaoMeow';
-                const safeTitle = escapeHtml(item.title || 'ผลงาน');
+                const safeTitle = escapeHtml(item.title || '');
                 const safeLink = item.link ? escapeHtml(item.link) : '';
                 const tagsText = Array.isArray(item.categories) && item.categories.length > 0
                     ? escapeHtml(item.categories.join(', '))
@@ -1415,14 +1490,14 @@
                     <div class="bg-white rounded-2xl border border-pink-100 p-2.5 shadow-2xs flex flex-col justify-between gap-2">
                         <div class="space-y-1.5">
                             <div class="aspect-square w-full rounded-xl overflow-hidden bg-[#FFF4F8]">
-                                <img src="${safeImg}" alt="${safeTitle}" onerror="this.src='https://placehold.co/400x400/FFE6F0/A85A7E?text=JaoMeow'" class="w-full h-full object-cover">
+                                <img src="${safeImg}" alt="${safeTitle || 'ผลงาน'}" onerror="this.src='https://placehold.co/400x400/FFE6F0/A85A7E?text=JaoMeow'" class="w-full h-full object-cover">
                             </div>
-                            <div class="font-bold text-xs text-[#6B4257] line-clamp-1">${safeTitle}</div>
+                            ${safeTitle ? `<div class="font-bold text-xs text-[#6B4257] line-clamp-1">${safeTitle}</div>` : ''}
                             ${tagsText ? `<div class="text-[10px] text-[#A87A90] line-clamp-1">${tagsText}</div>` : ''}
                         </div>
                         ${safeLink
                             ? `<a href="${safeLink}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-full py-1.5 rounded-xl bg-[#FFF0F6] hover:bg-[#FFE0EC] text-[#B84D7B] text-[11px] font-bold transition">เปิดลิงก์งาน ↗</a>`
-                            : `<div class="text-center py-1 text-[10px] text-[#C29BB0]">ไม่มีลิงก์แนบ</div>`
+                            : ''
                         }
                     </div>
                 `;
@@ -1515,75 +1590,66 @@
                 if (!Array.isArray(state.categories.group)) {
                     state.categories.group = [];
                 }
-                if (!state.categories.group.includes(newName)) {
-                    state.categories.group.push(newName);
-                }
+        function renderBatchPreviewStrip() {
+            const infoEl = document.getElementById('multiSelectedImagesInfo');
+            const stripEl = document.getElementById('multiSelectedImagesStrip');
+            if (!infoEl || !stripEl) return;
+
+            const batch = state.selectedBatchImages || [];
+            if (batch.length <= 1) {
+                infoEl.classList.add('hidden');
+                stripEl.classList.add('hidden');
+                stripEl.innerHTML = '';
+                return;
             }
 
-            if (inputEl) inputEl.value = '';
-            renderAdminCategoryControls();
-            refreshActiveViews();
-            await persistStoreToFirestore();
-            showAdminCategoryNotice(`เพิ่มหมวดย่อย "${newName}" เรียบร้อยแล้วครับ`);
+            infoEl.textContent = `เลือกรูปไว้แล้ว ${batch.length} รูป`;
+            infoEl.classList.remove('hidden');
+
+            stripEl.innerHTML = batch.map((imgItem) => (
+                `<img src="${imgItem.dataUrl}" alt="${escapeHtml(imgItem.name)}" class="w-10 h-10 rounded-lg object-cover border border-pink-200 bg-[#FFF4F8]">`
+            )).join('');
+            stripEl.classList.remove('hidden');
         }
 
-        async function deleteCustomCategory(mainCat, subCat, catNameToDelete) {
-            if (mainCat === 'example') {
-                const list = state.categories.example?.[subCat];
-                if (!Array.isArray(list)) return;
-                state.categories.example[subCat] = list.filter((c) => c !== catNameToDelete);
-                if (state.selectedExampleLeaf === catNameToDelete) {
-                    state.selectedExampleLeaf = 'ทั้งหมด';
-                }
-            } else {
-                const list = state.categories.group;
-                if (!Array.isArray(list)) return;
-                state.categories.group = list.filter((c) => c !== catNameToDelete);
-                if (state.selectedGroupSubcat === catNameToDelete) {
-                    state.selectedGroupSubcat = 'ทั้งหมด';
-                }
-            }
-
-            renderAdminCategoryControls();
-            refreshActiveViews();
-            await persistStoreToFirestore();
-            showAdminCategoryNotice(`ลบหมวดย่อย "${catNameToDelete}" เรียบร้อยแล้วครับ`);
+        function readFileAsDataUrl(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(String(reader.result || ''));
+                reader.onerror = () => reject(reader.error || new Error('File read error'));
+                reader.readAsDataURL(file);
+            });
         }
 
-        async function handleHeroCardFileUpload(event) {
-            const file = event.target.files?.[0];
-            if (!file) return;
-            const statusEl = document.getElementById('adminHeroCardStatus');
-            const reader = new FileReader();
-            reader.onload = async () => {
-                state.heroCardImage = String(reader.result || '');
-                renderHeroCardBanner();
-                await persistStoreToFirestore();
-                if (statusEl) {
-                    statusEl.textContent = 'อัปเดตรูปในการ์ดแบนเนอร์เรียบร้อยแล้วครับ';
-                    statusEl.classList.remove('hidden');
-                }
-            };
-            reader.readAsDataURL(file);
-        }
+        async function handleFilePreview(event) {
+            const files = Array.from(event.target.files || []);
+            if (files.length === 0) return;
 
-        function handleFilePreview(event) {
-            const file = event.target.files?.[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = () => {
-                state.previewImageData = String(reader.result || '');
+            try {
+                const results = await Promise.all(
+                    files.map(async (file) => ({
+                        name: file.name || 'image',
+                        dataUrl: await readFileAsDataUrl(file)
+                    }))
+                );
+                const validItems = results.filter((r) => Boolean(r.dataUrl));
+                state.selectedBatchImages = validItems;
+                state.previewImageData = validItems[0]?.dataUrl || '';
                 updateAdminPreviewImage(state.previewImageData);
-            };
-            reader.readAsDataURL(file);
+                renderBatchPreviewStrip();
+            } catch (err) {
+                console.error('Multi-file read error:', err);
+            }
         }
 
         function handleDirectUrlPreview() {
             const urlInput = document.getElementById('artworkImageUrlInput');
             const val = (urlInput?.value || '').trim();
             if (val) {
+                state.selectedBatchImages = [];
                 state.previewImageData = val;
                 updateAdminPreviewImage(val);
+                renderBatchPreviewStrip();
             }
         }
 
@@ -1609,19 +1675,22 @@
             if (errEl) errEl.classList.add('hidden');
             if (okEl) okEl.classList.add('hidden');
 
-            const title = (document.getElementById('artworkTitleInput')?.value || '').trim();
+            const rawTitle = (document.getElementById('artworkTitleInput')?.value || '').trim();
             const link = (document.getElementById('artworkLinkInput')?.value || '').trim();
             const urlDirect = (document.getElementById('artworkImageUrlInput')?.value || '').trim();
-            const imageSrc = state.previewImageData || urlDirect;
 
-            if (!title) {
-                if (errEl) {
-                    errEl.textContent = 'กรุณากรอกชื่อรูปภาพหรือชื่องานครับ';
-                    errEl.classList.remove('hidden');
-                }
-                return;
-            }
-            if (!imageSrc) {
+            const imagesToSave = state.selectedBatchImages.length > 0
+                ? state.selectedBatchImages.map((item, idx) => ({
+                    src: item.dataUrl,
+                    title: rawTitle
+                        ? (state.selectedBatchImages.length > 1 ? `${rawTitle} (${idx + 1})` : rawTitle)
+                        : ''
+                }))
+                : ((state.previewImageData || urlDirect)
+                    ? [{ src: state.previewImageData || urlDirect, title: rawTitle }]
+                    : []);
+
+            if (imagesToSave.length === 0) {
                 if (errEl) {
                     errEl.textContent = 'กรุณาอัปโหลดรูปภาพหรือวางลิงก์รูปภาพครับ';
                     errEl.classList.remove('hidden');
@@ -1637,19 +1706,22 @@
             const checkedBoxes = Array.from(document.querySelectorAll('input[name="adminArtCat"]:checked'));
             const selectedCats = checkedBoxes.map((cb) => cb.value);
 
-            const newItem = {
-                id: 'art-' + Date.now(),
-                title,
+            const nowStamp = Date.now();
+            const newItems = imagesToSave.map((imgEntry, idx) => ({
+                id: `art-${nowStamp}-${idx}`,
+                title: imgEntry.title,
                 link,
-                image: imageSrc,
+                image: imgEntry.src,
                 mainCat,
                 subCat,
                 categories: selectedCats
-            };
+            }));
 
-            state.artworks.unshift(newItem);
+            state.artworks.unshift(...newItems);
             state.previewImageData = '';
+            state.selectedBatchImages = [];
             updateAdminPreviewImage('');
+            renderBatchPreviewStrip();
             document.getElementById('adminArtworkForm')?.reset();
 
             renderAdminArtworkList();
@@ -1657,7 +1729,9 @@
             await persistStoreToFirestore();
 
             if (okEl) {
-                okEl.textContent = 'บันทึกรายการและเผยแพร่เรียบร้อยแล้วครับ';
+                okEl.textContent = newItems.length > 1
+                    ? `บันทึกรูปภาพ ${newItems.length} รายการและเผยแพร่เรียบร้อยแล้วครับ`
+                    : 'บันทึกรายการและเผยแพร่เรียบร้อยแล้วครับ';
                 okEl.classList.remove('hidden');
             }
         }
@@ -1686,13 +1760,14 @@
                     ? `ตัวอย่างงาน / ${escapeHtml(item.subCat || '')}`
                     : 'ตัวอย่างกลุ่ม';
                 const safeImg = item.image || 'https://placehold.co/100x100/FFE6F0/A85A7E?text=Art';
+                const displayTitle = item.title ? escapeHtml(item.title) : 'รูปภาพ (ไม่ระบุชื่อ)';
 
                 return `
                     <div class="flex items-center justify-between gap-2.5 p-2 rounded-2xl bg-white border border-pink-100">
                         <div class="flex items-center gap-2.5 min-w-0">
-                            <img src="${safeImg}" alt="${escapeHtml(item.title)}" onerror="this.src='https://placehold.co/100x100/FFE6F0/A85A7E?text=Art'" class="w-11 h-11 rounded-xl object-cover bg-[#FFF4F8] shrink-0">
+                            <img src="${safeImg}" alt="${displayTitle}" onerror="this.src='https://placehold.co/100x100/FFE6F0/A85A7E?text=Art'" class="w-11 h-11 rounded-xl object-cover bg-[#FFF4F8] shrink-0">
                             <div class="min-w-0 space-y-0.5">
-                                <div class="font-bold text-xs text-[#6B4257] truncate">${escapeHtml(item.title)}</div>
+                                <div class="font-bold text-xs text-[#6B4257] truncate">${displayTitle}</div>
                                 <div class="text-[10px] text-[#A5788E] truncate">${scopeLabel}${item.categories?.length ? ' · ' + escapeHtml(item.categories.join(', ')) : ''}</div>
                             </div>
                         </div>
@@ -1748,14 +1823,15 @@
         }
 
         const MUSIC_VIDEO_ID = '8XXPxLLgwt8';
+        const RELAXED_DEFAULT_VOLUME = 28; // ระดับเสียงคลอฟังสบายๆ (0-100)
         let isMusicPlaying = false;
-        let isMusicMuted = false;
-        let currentVolume = 100;
+        let isMusicLooping = true; // เล่นวนคลอฟังสบายๆ ต่อเนื่องเป็นค่าเริ่มต้น
         let ytPlayerReady = false;
         let ytPlayerInstance = null;
-        let pendingAutoPlay = false;
+        let pendingAutoPlay = true;
         let progressTimer = null;
         let isSeekingSlider = false;
+        let unlockGestureBound = false;
 
         function formatClock(sec) {
             const total = Math.max(0, Math.floor(Number(sec) || 0));
@@ -1764,47 +1840,10 @@
             return `${m}:${String(s).padStart(2, '0')}`;
         }
 
-        function updateVolumeUi() {
-            const muteIcon = document.getElementById('musicMuteIcon');
-            const slider = document.getElementById('musicVolumeSlider');
-            if (muteIcon) {
-                muteIcon.textContent = (isMusicMuted || Number(currentVolume) === 0) ? '🔇' : '🔊';
-            }
-            if (slider && document.activeElement !== slider) {
-                slider.value = isMusicMuted ? '0' : String(currentVolume);
-            }
-        }
-
-        function setMusicVolume(val) {
-            const num = Math.max(0, Math.min(100, Number(val) || 0));
-            currentVolume = num;
-            isMusicMuted = num === 0;
-            updateVolumeUi();
-            if (ytPlayerInstance && ytPlayerReady) {
-                try {
-                    if (isMusicMuted) {
-                        ytPlayerInstance.mute();
-                    } else {
-                        ytPlayerInstance.unMute();
-                        ytPlayerInstance.setVolume(num);
-                    }
-                } catch (_) {}
-            }
-        }
-
-        function toggleMusicMute() {
-            isMusicMuted = !isMusicMuted;
-            updateVolumeUi();
-            if (ytPlayerInstance && ytPlayerReady) {
-                try {
-                    if (isMusicMuted) {
-                        ytPlayerInstance.mute();
-                    } else {
-                        ytPlayerInstance.unMute();
-                        ytPlayerInstance.setVolume(currentVolume > 0 ? currentVolume : 80);
-                        if (currentVolume === 0) currentVolume = 80;
-                    }
-                } catch (_) {}
+        function syncLoopButtonUi() {
+            const btn = document.getElementById('musicLoopBtn');
+            if (btn) {
+                btn.classList.toggle('is-active', isMusicLooping);
             }
         }
 
@@ -1821,6 +1860,40 @@
             } catch (_) {}
         }
 
+        function restartMusicTrack() {
+            if (!ytPlayerInstance || !ytPlayerReady) {
+                ensureYouTubePlayer(true);
+                return;
+            }
+            try {
+                ytPlayerInstance.seekTo(0, true);
+                ytPlayerInstance.unMute();
+                ytPlayerInstance.setVolume(RELAXED_DEFAULT_VOLUME);
+                ytPlayerInstance.playVideo();
+                setMusicUiState(true);
+            } catch (_) {}
+        }
+
+        function skipMusicForward() {
+            if (!ytPlayerInstance || !ytPlayerReady) return;
+            try {
+                const dur = ytPlayerInstance.getDuration() || 0;
+                const cur = ytPlayerInstance.getCurrentTime() || 0;
+                const nextSec = dur > 0 ? Math.min(dur, cur + 10) : cur + 10;
+                ytPlayerInstance.seekTo(nextSec, true);
+            } catch (_) {}
+        }
+
+        function toggleMusicLoop() {
+            isMusicLooping = !isMusicLooping;
+            syncLoopButtonUi();
+            if (ytPlayerInstance && ytPlayerReady && typeof ytPlayerInstance.setLoop === 'function') {
+                try {
+                    ytPlayerInstance.setLoop(isMusicLooping);
+                } catch (_) {}
+            }
+        }
+
         function startProgressLoop() {
             if (progressTimer) clearInterval(progressTimer);
             progressTimer = setInterval(() => {
@@ -1829,10 +1902,10 @@
                     const dur = ytPlayerInstance.getDuration() || 0;
                     const cur = ytPlayerInstance.getCurrentTime() || 0;
                     const curEl = document.getElementById('musicCurrentTime');
-                    const durEl = document.getElementById('musicDurationTime');
+                    const totEl = document.getElementById('musicTotalTime');
                     const seekEl = document.getElementById('musicSeekSlider');
                     if (curEl) curEl.textContent = formatClock(cur);
-                    if (durEl && dur > 0) durEl.textContent = formatClock(dur);
+                    if (totEl && dur > 0) totEl.textContent = formatClock(dur);
                     if (seekEl && dur > 0) {
                         seekEl.value = String((cur / dur) * 100);
                     }
@@ -1842,13 +1915,36 @@
 
         function setMusicUiState(playing) {
             isMusicPlaying = Boolean(playing);
-            const iconEl = document.getElementById('musicToggleIcon');
-            const eqEl = document.getElementById('musicEqBars');
-            if (iconEl) iconEl.textContent = isMusicPlaying ? '❚❚' : '▶';
-            if (eqEl) {
-                eqEl.classList.toggle('opacity-100', isMusicPlaying);
-                eqEl.classList.toggle('opacity-40', !isMusicPlaying);
+            const playSvg = document.getElementById('musicPlaySvg');
+            const pauseSvg = document.getElementById('musicPauseSvg');
+            if (playSvg && pauseSvg) {
+                playSvg.classList.toggle('hidden', isMusicPlaying);
+                pauseSvg.classList.toggle('hidden', !isMusicPlaying);
             }
+        }
+
+        function bindFirstGestureAudioUnlock() {
+            if (unlockGestureBound) return;
+            unlockGestureBound = true;
+
+            const onFirstGesture = () => {
+                if (!pendingAutoPlay && isMusicPlaying) return;
+                try {
+                    if (ytPlayerInstance && ytPlayerReady) {
+                        ytPlayerInstance.unMute();
+                        ytPlayerInstance.setVolume(RELAXED_DEFAULT_VOLUME);
+                        ytPlayerInstance.playVideo();
+                        pendingAutoPlay = false;
+                        setMusicUiState(true);
+                    } else {
+                        ensureYouTubePlayer(true);
+                    }
+                } catch (_) {}
+            };
+
+            ['pointerdown', 'keydown', 'touchstart'].forEach((evtName) => {
+                document.addEventListener(evtName, onFirstGesture, { passive: true, once: true });
+            });
         }
 
         function ensureYouTubePlayer(autoPlayAfterLoad = false) {
@@ -1860,7 +1956,8 @@
                 const originParam = window.location.origin && window.location.origin.startsWith('http')
                     ? `&origin=${encodeURIComponent(window.location.origin)}`
                     : '';
-                hostEl.innerHTML = `<iframe id="jaomeowMusicFrame" width="200" height="120" src="https://www.youtube.com/embed/${MUSIC_VIDEO_ID}?enablejsapi=1&playsinline=1&autoplay=${autoPlayAfterLoad ? 1 : 0}&rel=0${originParam}" title="อย่ามากกว่าฉันก็พอ - GAVIN:D x Violette Wautier" allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+                const loopParam = isMusicLooping ? `&loop=1&playlist=${MUSIC_VIDEO_ID}` : '';
+                hostEl.innerHTML = `<iframe id="jaomeowMusicFrame" width="200" height="120" src="https://www.youtube.com/embed/${MUSIC_VIDEO_ID}?enablejsapi=1&playsinline=1&autoplay=${autoPlayAfterLoad ? 1 : 0}${loopParam}&rel=0${originParam}" title="อย่ามากกว่าฉันก็พอ - GAVIN:D x Violette Wautier" allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
             }
 
             if (window.YT && typeof window.YT.Player === 'function') {
@@ -1871,25 +1968,42 @@
                                 ytPlayerReady = true;
                                 try {
                                     event.target.unMute();
-                                    event.target.setVolume(currentVolume);
+                                    event.target.setVolume(RELAXED_DEFAULT_VOLUME);
+                                    if (typeof event.target.setLoop === 'function') {
+                                        event.target.setLoop(isMusicLooping);
+                                    }
                                     const dur = event.target.getDuration() || 0;
-                                    const durEl = document.getElementById('musicDurationTime');
-                                    if (durEl && dur > 0) durEl.textContent = formatClock(dur);
+                                    const totEl = document.getElementById('musicTotalTime');
+                                    if (totEl && dur > 0) totEl.textContent = formatClock(dur);
                                 } catch (_) {}
                                 startProgressLoop();
                                 if (pendingAutoPlay) {
-                                    pendingAutoPlay = false;
                                     try {
                                         event.target.playVideo();
                                     } catch (_) {}
-                                    setMusicUiState(true);
                                 }
                             },
                             onStateChange: (event) => {
                                 if (event.data === window.YT.PlayerState.PLAYING) {
+                                    pendingAutoPlay = false;
+                                    try {
+                                        event.target.unMute();
+                                        event.target.setVolume(RELAXED_DEFAULT_VOLUME);
+                                    } catch (_) {}
                                     setMusicUiState(true);
                                     startProgressLoop();
-                                } else if (event.data === window.YT.PlayerState.PAUSED || event.data === window.YT.PlayerState.ENDED) {
+                                } else if (event.data === window.YT.PlayerState.ENDED) {
+                                    if (isMusicLooping) {
+                                        try {
+                                            event.target.seekTo(0, true);
+                                            event.target.unMute();
+                                            event.target.setVolume(RELAXED_DEFAULT_VOLUME);
+                                            event.target.playVideo();
+                                        } catch (_) {}
+                                    } else {
+                                        setMusicUiState(false);
+                                    }
+                                } else if (event.data === window.YT.PlayerState.PAUSED) {
                                     setMusicUiState(false);
                                 }
                             }
@@ -1898,10 +2012,9 @@
                 } else if (ytPlayerReady && autoPlayAfterLoad) {
                     try {
                         ytPlayerInstance.unMute();
-                        ytPlayerInstance.setVolume(currentVolume);
+                        ytPlayerInstance.setVolume(RELAXED_DEFAULT_VOLUME);
                         ytPlayerInstance.playVideo();
                     } catch (_) {}
-                    setMusicUiState(true);
                 }
                 return;
             }
@@ -1920,19 +2033,16 @@
                 }
                 ensureYouTubePlayer(pendingAutoPlay);
             };
-
-            if (autoPlayAfterLoad) {
-                setMusicUiState(true);
-            }
         }
 
         function toggleMusicPlayer() {
             if (!isMusicPlaying) {
+                pendingAutoPlay = true;
                 ensureYouTubePlayer(true);
                 if (ytPlayerInstance && ytPlayerReady && typeof ytPlayerInstance.playVideo === 'function') {
                     try {
                         ytPlayerInstance.unMute();
-                        ytPlayerInstance.setVolume(currentVolume);
+                        ytPlayerInstance.setVolume(RELAXED_DEFAULT_VOLUME);
                         ytPlayerInstance.playVideo();
                     } catch (_) {}
                 }
@@ -1954,6 +2064,10 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            syncLoopButtonUi();
+            bindFirstGestureAudioUnlock();
+            ensureYouTubePlayer(true);
+
             const seekEl = document.getElementById('musicSeekSlider');
             if (seekEl) {
                 seekEl.addEventListener('pointerdown', () => { isSeekingSlider = true; });
@@ -1987,9 +2101,10 @@
         window.deleteArtwork = deleteArtwork;
         window.handleBriefSubmit = handleBriefSubmit;
         window.toggleMusicPlayer = toggleMusicPlayer;
-        window.toggleMusicMute = toggleMusicMute;
-        window.setMusicVolume = setMusicVolume;
         window.seekMusicBySlider = seekMusicBySlider;
+        window.restartMusicTrack = restartMusicTrack;
+        window.skipMusicForward = skipMusicForward;
+        window.toggleMusicLoop = toggleMusicLoop;
 
         initFirebaseDatabase();
     </script>
