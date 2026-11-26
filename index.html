@@ -126,6 +126,14 @@
 </head>
 <body class="min-h-screen w-full overflow-x-hidden overflow-y-auto relative selection:bg-sky-blue/30 selection:text-sky-deep">
 
+    <!-- Top Right Admin Button -->
+    <div class="fixed top-4 right-4 z-30">
+        <button id="topAdminBtn" onclick="handleTopAdminClick()" class="bg-white/95 hover:bg-[#FCE4EE] text-text-main hover:text-sky-deep border-2 border-white shadow-pill px-4 py-1.5 rounded-full text-xs font-prompt font-semibold transition-all duration-300 hover:-translate-y-0.5 flex items-center gap-1.5 cursor-pointer">
+            <span>🐾</span>
+            <span id="topAdminBtnLabel">แอดมิน</span>
+        </button>
+    </div>
+
     <!-- ==================== BACKGROUND MILK PINK & CAT PAW ==================== -->
     <div class="fixed inset-0 pointer-events-none overflow-hidden z-0" aria-hidden="true">
         <!-- Soft Milk Pink Glow Orbs -->
@@ -567,64 +575,13 @@
             </div>
             
             <!-- Filter Tabs -->
-            <div class="px-5 pt-3 flex gap-2 flex-wrap">
-                <button onclick="filterExamples('all')" class="example-tab active-tab px-3 py-1 rounded-full text-xs font-medium bg-sky-blue text-white transition-all cursor-pointer">ทั้งหมด</button>
-                <button onclick="filterExamples('website')" class="example-tab px-3 py-1 rounded-full text-xs font-medium bg-sky-soft/70 text-text-main hover:bg-sky-soft transition-all cursor-pointer">Website / Link-in-bio</button>
-                <button onclick="filterExamples('emote')" class="example-tab px-3 py-1 rounded-full text-xs font-medium bg-sky-soft/70 text-text-main hover:bg-sky-soft transition-all cursor-pointer">Emotes</button>
-                <button onclick="filterExamples('chibi')" class="example-tab px-3 py-1 rounded-full text-xs font-medium bg-sky-soft/70 text-text-main hover:bg-sky-soft transition-all cursor-pointer">Chibi</button>
+            <div id="exampleFilterTabs" class="px-5 pt-3 flex gap-2 flex-wrap">
+                <button onclick="filterExamples('all', this)" class="example-tab active-tab px-3 py-1 rounded-full text-xs font-medium bg-sky-blue text-white transition-all cursor-pointer">ทั้งหมด</button>
             </div>
 
             <!-- Gallery Grid -->
             <div id="exampleGrid" class="p-5 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <!-- Item 1 -->
-                <div data-category="website" class="example-item bg-[#FFF9FB] border border-sky-soft rounded-2xl p-3 flex flex-col gap-2">
-                    <div class="h-32 rounded-xl bg-gradient-to-br from-[#FAD2E2] to-[#FFF0F6] flex flex-col items-center justify-center p-3 text-center relative overflow-hidden">
-                        <span class="text-2xl mb-1">☁️✨</span>
-                        <span class="font-quicksand font-bold text-sm text-sky-deep">Milk Pink Portal</span>
-                        <span class="text-[10px] text-text-main">Custom Commission Web</span>
-                    </div>
-                    <div class="flex justify-between items-center px-1">
-                        <span class="text-xs font-semibold text-text-main">เว็บรับงานสไตล์ชมพูนม</span>
-                        <span class="text-[10px] bg-sky-soft text-sky-deep px-2 py-0.5 rounded-full font-quicksand font-bold">Website</span>
-                    </div>
-                </div>
-
-                <!-- Item 2 -->
-                <div data-category="emote" class="example-item bg-[#FFF9FB] border border-sky-soft rounded-2xl p-3 flex flex-col gap-2">
-                    <div class="h-32 rounded-xl bg-gradient-to-br from-[#FFF4CC] to-[#FFF6F9] flex items-center justify-center gap-3 p-3">
-                        <div class="w-12 h-12 rounded-2xl bg-white shadow-xs flex items-center justify-center text-2xl">🥺</div>
-                        <div class="w-12 h-12 rounded-2xl bg-white shadow-xs flex items-center justify-center text-2xl">🥰</div>
-                        <div class="w-12 h-12 rounded-2xl bg-white shadow-xs flex items-center justify-center text-2xl">🧋</div>
-                    </div>
-                    <div class="flex justify-between items-center px-1">
-                        <span class="text-xs font-semibold text-text-main">เซ็ตอิโมติคอน Twitch/Discord</span>
-                        <span class="text-[10px] bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-quicksand font-bold">Emotes</span>
-                    </div>
-                </div>
-
-                <!-- Item 3 -->
-                <div data-category="chibi" class="example-item bg-[#FFF9FB] border border-sky-soft rounded-2xl p-3 flex flex-col gap-2">
-                    <div class="h-32 rounded-xl bg-gradient-to-br from-[#FCE4EE] to-[#FFF2F7] flex flex-col items-center justify-center p-3">
-                        <span class="text-3xl mb-1">🧸🎀</span>
-                        <span class="font-mali font-bold text-xs text-text-main">Chibi Full Color + Prop</span>
-                    </div>
-                    <div class="flex justify-between items-center px-1">
-                        <span class="text-xs font-semibold text-text-main">จิบิเต็มตัวพร้อมพร็อพ</span>
-                        <span class="text-[10px] bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full font-quicksand font-bold">Chibi</span>
-                    </div>
-                </div>
-
-                <!-- Item 4 -->
-                <div data-category="website" class="example-item bg-[#FFF9FB] border border-sky-soft rounded-2xl p-3 flex flex-col gap-2">
-                    <div class="h-32 rounded-xl bg-gradient-to-br from-[#FADCE8] to-[#FFFFFF] flex flex-col items-center justify-center p-3">
-                        <span class="text-2xl mb-1">✨🤍</span>
-                        <span class="font-quicksand font-bold text-sm text-sky-deep">Link-in-Bio + Cloud</span>
-                    </div>
-                    <div class="flex justify-between items-center px-1">
-                        <span class="text-xs font-semibold text-text-main">หน้ารวมลิงก์โทนชมพูนม</span>
-                        <span class="text-[10px] bg-sky-soft text-sky-deep px-2 py-0.5 rounded-full font-quicksand font-bold">Website</span>
-                    </div>
-                </div>
+                <!-- Dynamic items rendered via JavaScript -->
             </div>
 
             <div class="p-3 bg-[#FFF6F9] text-center text-[11px] text-text-sub border-t border-sky-soft">
@@ -891,11 +848,113 @@
         <span id="toastMessage">แจ้งเตือน</span>
     </div>
 
+    <!-- 7. ADMIN LOGIN MODAL -->
+    <div id="adminLoginModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
+        <div class="bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-sm w-full flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-300">
+            <div class="p-5 pb-3 border-b border-sky-soft flex items-center justify-between bg-gradient-to-r from-[#FFF6F9] to-white">
+                <div>
+                    <h3 class="font-prompt font-bold text-base text-sky-deep">🔐 เข้าสู่ระบบแอดมิน</h3>
+                    <p class="text-[11px] text-text-sub">กรอกชื่อแอดมินและรหัสผ่านเพื่อจัดการข้อมูล</p>
+                </div>
+                <button onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-sky-soft/70 hover:bg-sky-blue hover:text-white text-text-main flex items-center justify-center transition-colors cursor-pointer">✕</button>
+            </div>
+
+            <form onsubmit="loginAdmin(event)" class="p-5 space-y-3.5">
+                <div>
+                    <label class="block text-xs font-semibold text-text-main mb-1">ชื่อแอดมิน (Username)</label>
+                    <input id="adminUsernameInput" required type="text" placeholder="เช่น jaomeow" class="w-full rounded-xl border border-sky-soft bg-[#FFF9FB] px-3.5 py-2 text-xs text-text-main focus:outline-none focus:border-sky-blue">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-text-main mb-1">รหัสผ่าน (Password)</label>
+                    <input id="adminPasswordInput" required type="password" placeholder="••••••••" class="w-full rounded-xl border border-sky-soft bg-[#FFF9FB] px-3.5 py-2 text-xs text-text-main focus:outline-none focus:border-sky-blue">
+                </div>
+                <p id="adminLoginError" class="text-[11px] text-rose-500 hidden">ชื่อแอดมินหรือรหัสผ่านไม่ถูกต้อง</p>
+                <button type="submit" class="w-full py-2.5 rounded-full bg-sky-blue hover:bg-sky-deep text-white font-prompt font-semibold text-xs shadow-pastel transition-all cursor-pointer">
+                    เข้าสู่ระบบ
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 8. ADMIN PANEL MODAL -->
+    <div id="adminPanelModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
+        <div class="bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-2xl w-full max-h-[88vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-300">
+            <div class="p-5 pb-3 border-b border-sky-soft flex items-center justify-between bg-gradient-to-r from-[#FFF6F9] to-white">
+                <div>
+                    <h3 class="font-prompt font-bold text-lg text-sky-deep">🛠️ ระบบจัดการร้าน (Admin Panel)</h3>
+                    <p class="text-[11px] text-text-sub">สร้างหมวดหมู่ อัปโหลดรูปภาพ ตั้งชื่อรูปภาพ และแนบลิงก์</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="logoutAdmin()" class="px-3 py-1 rounded-full bg-rose-100 hover:bg-rose-200 text-rose-600 text-[11px] font-medium transition-colors cursor-pointer">ออกจากระบบ</button>
+                    <button onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-sky-soft/70 hover:bg-sky-blue hover:text-white text-text-main flex items-center justify-center transition-colors cursor-pointer">✕</button>
+                </div>
+            </div>
+
+            <div class="p-5 overflow-y-auto space-y-5">
+                <!-- Category Manager -->
+                <div class="bg-[#FFF9FB] border border-sky-soft rounded-2xl p-4 space-y-3">
+                    <h4 class="font-prompt font-bold text-xs text-sky-deep">📁 จัดการหมวดหมู่ (Categories)</h4>
+                    <form onsubmit="addCategory(event)" class="flex gap-2">
+                        <input id="newCategoryNameInput" required type="text" placeholder="พิมพ์ชื่อหมวดหมู่ใหม่ เช่น อวาตาร์, ปกเว็บ, จิบิ..." class="flex-1 rounded-xl border border-sky-soft bg-white px-3.5 py-2 text-xs text-text-main focus:outline-none focus:border-sky-blue">
+                        <button type="submit" class="px-4 py-2 rounded-xl bg-sky-blue hover:bg-sky-deep text-white text-xs font-semibold transition-colors cursor-pointer shrink-0">
+                            + เพิ่มหมวดหมู่
+                        </button>
+                    </form>
+                    <div id="adminCategoryList" class="flex flex-wrap gap-2 pt-1">
+                        <!-- Categories rendered via JS -->
+                    </div>
+                </div>
+
+                <!-- Upload Image & Link Form -->
+                <div class="bg-[#FFF9FB] border border-sky-soft rounded-2xl p-4 space-y-3">
+                    <h4 class="font-prompt font-bold text-xs text-sky-deep">🖼️ อัปโหลดรูปภาพ ชื่อรูปภาพ และลิงก์</h4>
+                    <form onsubmit="addArtworkItem(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[11px] font-semibold text-text-main mb-1">ชื่อรูปภาพ</label>
+                            <input id="artworkTitleInput" required type="text" placeholder="เช่น เซ็ตอิโมติคอนแมวน้อย" class="w-full rounded-xl border border-sky-soft bg-white px-3 py-2 text-xs text-text-main focus:outline-none focus:border-sky-blue">
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] font-semibold text-text-main mb-1">เลือกหมวดหมู่</label>
+                            <select id="artworkCategorySelect" required class="w-full rounded-xl border border-sky-soft bg-white px-3 py-2 text-xs text-text-main focus:outline-none focus:border-sky-blue">
+                                <!-- Options populated via JS -->
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] font-semibold text-text-main mb-1">อัปโหลดไฟล์รูปภาพ</label>
+                            <input id="artworkFileInput" required type="file" accept="image/*" class="w-full rounded-xl border border-sky-soft bg-white px-2.5 py-1.5 text-[11px] text-text-main focus:outline-none focus:border-sky-blue">
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] font-semibold text-text-main mb-1">ลิงก์ที่เกี่ยวข้อง (URL)</label>
+                            <input id="artworkLinkInput" type="url" placeholder="https://example.com" class="w-full rounded-xl border border-sky-soft bg-white px-3 py-2 text-xs text-text-main focus:outline-none focus:border-sky-blue">
+                        </div>
+
+                        <div class="sm:col-span-2 pt-1">
+                            <button type="submit" class="w-full py-2.5 rounded-full bg-sky-blue hover:bg-sky-deep text-white font-prompt font-semibold text-xs shadow-pastel transition-all cursor-pointer">
+                                บันทึกรูปภาพและลิงก์ลงหมวดหมู่ ✨
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Existing Items List -->
+                <div class="space-y-2">
+                    <h4 class="font-prompt font-bold text-xs text-sky-deep">📌 รายการรูปภาพทั้งหมดในแกลเลอรี</h4>
+                    <div id="adminArtworkList" class="space-y-2">
+                        <!-- Items rendered via JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- ==================== JAVASCRIPT LOGIC ==================== -->
     <script>
         /* ---------------- 1. MODAL MANAGEMENT ---------------- */
         const backdrop = document.getElementById('modalBackdrop');
-        const allModalIds = ['exampleModal', 'giveawayModal', 'queueModal', 'tosModal', 'pricingModal', 'briefModal'];
+        const allModalIds = ['exampleModal', 'giveawayModal', 'queueModal', 'tosModal', 'pricingModal', 'briefModal', 'adminLoginModal', 'adminPanelModal'];
 
         function openModal(modalId) {
             closeAllModals(true);
@@ -957,24 +1016,264 @@
             }, 3000);
         }
 
-        /* ---------------- 3. EXAMPLE GALLERY FILTER ---------------- */
-        function filterExamples(category) {
-            const tabs = document.querySelectorAll('.example-tab');
-            tabs.forEach(tab => {
-                tab.classList.remove('bg-sky-blue', 'text-white');
-                tab.classList.add('bg-sky-soft/70', 'text-text-main');
-            });
-            event.target.classList.remove('bg-sky-soft/70', 'text-text-main');
-            event.target.classList.add('bg-sky-blue', 'text-white');
+        /* ---------------- 3. ADMIN AUTH & CATEGORY / ARTWORK STATE ---------------- */
+        const ADMIN_CREDENTIALS = {
+            username: 'admin',
+            password: '123'
+        };
 
-            const items = document.querySelectorAll('.example-item');
-            items.forEach(item => {
-                if (category === 'all' || item.dataset.category === category) {
-                    item.style.display = 'flex';
-                } else {
-                    item.style.display = 'none';
-                }
+        let isAdminLoggedIn = false;
+        let currentExampleFilter = 'all';
+
+        let categories = [
+            { id: 'website', name: 'Website / Link-in-bio' },
+            { id: 'emote', name: 'Emotes' },
+            { id: 'chibi', name: 'Chibi' }
+        ];
+
+        let artworks = [
+            {
+                id: 'art-1',
+                title: 'เว็บรับงานสไตล์ชมพูนม',
+                categoryId: 'website',
+                imageUrl: 'https://placehold.co/400x240/FAD2E2/8A5E6F?text=Milk+Pink+Portal',
+                linkUrl: ''
+            },
+            {
+                id: 'art-2',
+                title: 'เซ็ตอิโมติคอนแมวน้อย',
+                categoryId: 'emote',
+                imageUrl: 'https://placehold.co/400x240/FFF4CC/8A5E6F?text=Cute+Emotes',
+                linkUrl: ''
+            },
+            {
+                id: 'art-3',
+                title: 'จิบิเต็มตัวพร้อมพร็อพ',
+                categoryId: 'chibi',
+                imageUrl: 'https://placehold.co/400x240/FCE4EE/8A5E6F?text=Chibi+Full+Color',
+                linkUrl: ''
+            }
+        ];
+
+        function handleTopAdminClick() {
+            if (isAdminLoggedIn) {
+                renderAdminPanel();
+                openModal('adminPanelModal');
+            } else {
+                document.getElementById('adminLoginError').classList.add('hidden');
+                openModal('adminLoginModal');
+            }
+        }
+
+        function loginAdmin(e) {
+            e.preventDefault();
+            const userVal = document.getElementById('adminUsernameInput').value.trim();
+            const passVal = document.getElementById('adminPasswordInput').value;
+
+            if (userVal === ADMIN_CREDENTIALS.username && passVal === ADMIN_CREDENTIALS.password) {
+                isAdminLoggedIn = true;
+                document.getElementById('adminLoginError').classList.add('hidden');
+                document.getElementById('topAdminBtnLabel').textContent = 'แอดมิน • เปิดอยู่';
+                e.target.reset();
+                renderAdminPanel();
+                openModal('adminPanelModal');
+                showToast('เข้าสู่ระบบแอดมินสำเร็จแล้ว ♡');
+            } else {
+                document.getElementById('adminLoginError').classList.remove('hidden');
+            }
+        }
+
+        function logoutAdmin() {
+            isAdminLoggedIn = false;
+            document.getElementById('topAdminBtnLabel').textContent = 'แอดมิน';
+            closeAllModals();
+            showToast('ออกจากระบบแอดมินเรียบร้อยแล้ว');
+        }
+
+        function addCategory(e) {
+            e.preventDefault();
+            const input = document.getElementById('newCategoryNameInput');
+            const name = input.value.trim();
+            if (!name) return;
+
+            const id = 'cat-' + Date.now();
+            categories.push({ id, name });
+            input.value = '';
+
+            renderExampleTabs();
+            renderExampleGrid();
+            renderAdminPanel();
+            showToast(`เพิ่มหมวดหมู่ "${name}" เรียบร้อยแล้ว`);
+        }
+
+        function deleteCategory(catId) {
+            if (categories.length <= 1) {
+                showToast('ต้องมีหมวดหมู่อย่างน้อย 1 หมวดหมู่ครับ');
+                return;
+            }
+            const fallbackCatId = categories.find(c => c.id !== catId)?.id;
+            artworks = artworks.map(item => item.categoryId === catId ? { ...item, categoryId: fallbackCatId } : item);
+            categories = categories.filter(c => c.id !== catId);
+
+            if (currentExampleFilter === catId) {
+                currentExampleFilter = 'all';
+            }
+
+            renderExampleTabs();
+            renderExampleGrid();
+            renderAdminPanel();
+            showToast('ลบหมวดหมู่เรียบร้อยแล้ว');
+        }
+
+        function addArtworkItem(e) {
+            e.preventDefault();
+            const titleInput = document.getElementById('artworkTitleInput');
+            const categorySelect = document.getElementById('artworkCategorySelect');
+            const fileInput = document.getElementById('artworkFileInput');
+            const linkInput = document.getElementById('artworkLinkInput');
+
+            const title = titleInput.value.trim();
+            const categoryId = categorySelect.value;
+            const linkUrl = linkInput.value.trim();
+            const file = fileInput.files && fileInput.files[0];
+
+            if (!title || !categoryId || !file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                artworks.unshift({
+                    id: 'art-' + Date.now(),
+                    title,
+                    categoryId,
+                    imageUrl: event.target.result,
+                    linkUrl
+                });
+
+                renderExampleGrid();
+                renderAdminPanel();
+                e.target.reset();
+                showToast(`อัปโหลด "${title}" เรียบร้อยแล้ว ✨`);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function deleteArtworkItem(artId) {
+            artworks = artworks.filter(item => item.id !== artId);
+            renderExampleGrid();
+            renderAdminPanel();
+            showToast('ลบรายการรูปภาพเรียบร้อยแล้ว');
+        }
+
+        function renderExampleTabs() {
+            const tabContainer = document.getElementById('exampleFilterTabs');
+            if (!tabContainer) return;
+
+            let html = `<button type="button" onclick="filterExamples('all')" class="example-tab px-3 py-1 rounded-full text-xs font-medium transition-all cursor-pointer ${currentExampleFilter === 'all' ? 'bg-sky-blue text-white' : 'bg-sky-soft/70 text-text-main hover:bg-sky-soft'}">ทั้งหมด</button>`;
+
+            categories.forEach(cat => {
+                const isActive = currentExampleFilter === cat.id;
+                html += `<button type="button" onclick="filterExamples('${cat.id}')" class="example-tab px-3 py-1 rounded-full text-xs font-medium transition-all cursor-pointer ${isActive ? 'bg-sky-blue text-white' : 'bg-sky-soft/70 text-text-main hover:bg-sky-soft'}">${escapeHtml(cat.name)}</button>`;
             });
+
+            tabContainer.innerHTML = html;
+        }
+
+        function filterExamples(categoryId) {
+            currentExampleFilter = categoryId;
+            renderExampleTabs();
+            renderExampleGrid();
+        }
+
+        function renderExampleGrid() {
+            const grid = document.getElementById('exampleGrid');
+            if (!grid) return;
+
+            const filtered = currentExampleFilter === 'all'
+                ? artworks
+                : artworks.filter(item => item.categoryId === currentExampleFilter);
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="sm:col-span-2 text-center py-8 text-xs text-text-sub">ยังไม่มีรูปภาพในหมวดหมู่นี้</div>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(item => {
+                const cat = categories.find(c => c.id === item.categoryId);
+                const catName = cat ? cat.name : 'ทั่วไป';
+                const linkAction = item.linkUrl
+                    ? `<a href="${escapeAttr(item.linkUrl)}" target="_blank" rel="noopener noreferrer" class="text-[11px] font-medium text-sky-deep hover:underline inline-flex items-center gap-1 mt-1">เปิดลิงก์ ↗</a>`
+                    : '';
+
+                return `
+                    <div class="example-item bg-[#FFF9FB] border border-sky-soft rounded-2xl p-3 flex flex-col gap-2">
+                        <div class="h-32 rounded-xl bg-[#FFF0F6] overflow-hidden flex items-center justify-center">
+                            <img src="${escapeAttr(item.imageUrl)}" alt="${escapeAttr(item.title)}" onerror="this.src='https://placehold.co/400x240/FCE7F0/8A5E6F?text=Image'" class="w-full h-full object-cover">
+                        </div>
+                        <div class="px-1">
+                            <div class="flex justify-between items-start gap-2">
+                                <span class="text-xs font-semibold text-text-main">${escapeHtml(item.title)}</span>
+                                <span class="text-[10px] bg-sky-soft text-sky-deep px-2 py-0.5 rounded-full font-quicksand font-bold shrink-0">${escapeHtml(catName)}</span>
+                            </div>
+                            ${linkAction}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderAdminPanel() {
+            const catSelect = document.getElementById('artworkCategorySelect');
+            const catList = document.getElementById('adminCategoryList');
+            const artList = document.getElementById('adminArtworkList');
+
+            if (catSelect) {
+                catSelect.innerHTML = categories.map(cat =>
+                    `<option value="${escapeAttr(cat.id)}">${escapeHtml(cat.name)}</option>`
+                ).join('');
+            }
+
+            if (catList) {
+                catList.innerHTML = categories.map(cat => `
+                    <span class="inline-flex items-center gap-1.5 bg-white border border-sky-soft text-text-main text-xs px-3 py-1 rounded-full">
+                        <span>${escapeHtml(cat.name)}</span>
+                        <button type="button" onclick="deleteCategory('${escapeAttr(cat.id)}')" class="text-rose-400 hover:text-rose-600 font-bold cursor-pointer" title="ลบหมวดหมู่">×</button>
+                    </span>
+                `).join('');
+            }
+
+            if (artList) {
+                if (artworks.length === 0) {
+                    artList.innerHTML = `<p class="text-xs text-text-sub text-center py-3">ยังไม่มีรายการรูปภาพ</p>`;
+                } else {
+                    artList.innerHTML = artworks.map(item => {
+                        const cat = categories.find(c => c.id === item.categoryId);
+                        return `
+                            <div class="bg-[#FFF9FB] border border-sky-soft rounded-xl p-2.5 flex items-center justify-between gap-3">
+                                <div class="flex items-center gap-3 min-w-0">
+                                    <img src="${escapeAttr(item.imageUrl)}" alt="${escapeAttr(item.title)}" onerror="this.src='https://placehold.co/100x100/FCE7F0/8A5E6F?text=Img'" class="w-11 h-11 rounded-lg object-cover shrink-0 border border-white">
+                                    <div class="min-w-0">
+                                        <p class="text-xs font-semibold text-text-main truncate">${escapeHtml(item.title)}</p>
+                                        <p class="text-[10px] text-text-sub truncate">หมวดหมู่: ${escapeHtml(cat ? cat.name : '-')}${item.linkUrl ? ' • ' + escapeHtml(item.linkUrl) : ''}</p>
+                                    </div>
+                                </div>
+                                <button type="button" onclick="deleteArtworkItem('${escapeAttr(item.id)}')" class="px-2.5 py-1 rounded-lg bg-rose-100 hover:bg-rose-200 text-rose-600 text-[11px] font-medium shrink-0 cursor-pointer">ลบ</button>
+                            </div>
+                        `;
+                    }).join('');
+                }
+            }
+        }
+
+        function escapeHtml(str) {
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        function escapeAttr(str) {
+            return String(str).replace(/"/g, '&quot;');
         }
 
         /* ---------------- 4. PRICE CALCULATOR & BRIEF FORM ---------------- */
@@ -997,6 +1296,10 @@
             showToast('ส่งบรีฟงานเรียบร้อยแล้ว! ทางร้านจะติดต่อกลับโดยเร็วที่สุด ♡');
             e.target.reset();
         }
+
+        // Initial render for categories and example gallery
+        renderExampleTabs();
+        renderExampleGrid();
     </script>
 </body>
 </html>
