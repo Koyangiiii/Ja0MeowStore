@@ -1370,18 +1370,18 @@
         renderExampleTabs();
         renderGroupTabs();
         renderExampleGrid();
-        renderGroupGrid();
-    </script>
-
-    <!-- ==================== REAL-TIME SHARED STORE SYNC ==================== -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'jaomeow-store-default';
-        const rawConfig = typeof __firebase_config !== 'undefined' ? __firebase_config : '';
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'jaomeow-store';
         const customAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : '';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDeoR_v_GPgWOIJumybt_kzFtqwU6n6Ng4",
+            authDomain: "jaomeow-store.firebaseapp.com",
+            projectId: "jaomeow-store",
+            storageBucket: "jaomeow-store.firebasestorage.app",
+            messagingSenderId: "256575705000",
+            appId: "1:256575705000:web:e9916d1c123aa3d987179d",
+            measurementId: "G-K3RESX0N81"
+        };
 
         const statusBadge = document.getElementById('syncStatusBadge');
 
@@ -1479,13 +1479,7 @@
         window.persistStoreState = persistStoreState;
 
         async function initSharedStoreSync() {
-            if (!rawConfig) {
-                setSyncStatus('โหมดแสดงตัวอย่างในเครื่อง');
-                return;
-            }
-
             try {
-                const firebaseConfig = JSON.parse(rawConfig);
                 const app = initializeApp(firebaseConfig);
                 auth = getAuth(app);
                 db = getFirestore(app);
