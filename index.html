@@ -130,7 +130,7 @@
     <div class="fixed top-4 right-4 z-30">
         <button id="topAdminBtn" onclick="handleTopAdminClick()" class="bg-white/95 hover:bg-[#FCE4EE] text-text-main hover:text-sky-deep border-2 border-white shadow-pill px-4 py-1.5 rounded-full text-xs font-prompt font-semibold transition-all duration-300 hover:-translate-y-0.5 flex items-center gap-1.5 cursor-pointer">
             <span>🐾</span>
-            <span id="topAdminBtnLabel">แอดมิน</span>
+            <span id="topAdminBtnLabel">Admin</span>
         </button>
     </div>
 
@@ -584,8 +584,9 @@
                 <!-- Dynamic items rendered via JavaScript -->
             </div>
 
-            <div class="p-3 bg-[#FFF6F9] text-center text-[11px] text-text-sub border-t border-sky-soft">
-                ⚠️ ภาพทั้งหมดมีลายน้ำและลิขสิทธิ์ ห้ามนำไปใช้โดยไม่ได้รับอนุญาต
+            <div class="p-3 bg-[#FFF6F9] text-center text-[11px] text-text-sub border-t border-sky-soft flex items-center justify-between px-5">
+                <span>⚠️ ภาพทั้งหมดมีลายน้ำและลิขสิทธิ์ ห้ามนำไปใช้โดยไม่ได้รับอนุญาต</span>
+                <span id="syncStatusBadge" class="text-[10px] text-sky-deep font-medium">กำลังซิงก์ข้อมูล...</span>
             </div>
         </div>
     </div>
@@ -848,12 +849,12 @@
         <span id="toastMessage">แจ้งเตือน</span>
     </div>
 
-    <!-- 7. ADMIN LOGIN MODAL -->
+        <!-- 7. ADMIN LOGIN MODAL -->
     <div id="adminLoginModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
         <div class="bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-sm w-full flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-300">
             <div class="p-5 pb-3 border-b border-sky-soft flex items-center justify-between bg-gradient-to-r from-[#FFF6F9] to-white">
                 <div>
-                    <h3 class="font-prompt font-bold text-base text-sky-deep">🔐 เข้าสู่ระบบแอดมิน</h3>
+                    <h3 class="font-prompt font-bold text-base text-sky-deep">🔐 Admin Login</h3>
                     <p class="text-[11px] text-text-sub">กรอกชื่อแอดมินและรหัสผ่านเพื่อจัดการข้อมูล</p>
                 </div>
                 <button onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-sky-soft/70 hover:bg-sky-blue hover:text-white text-text-main flex items-center justify-center transition-colors cursor-pointer">✕</button>
@@ -861,16 +862,16 @@
 
             <form onsubmit="loginAdmin(event)" class="p-5 space-y-3.5">
                 <div>
-                    <label class="block text-xs font-semibold text-text-main mb-1">ชื่อแอดมิน (Username)</label>
-                    <input id="adminUsernameInput" required type="text" placeholder="เช่น jaomeow" class="w-full rounded-xl border border-sky-soft bg-[#FFF9FB] px-3.5 py-2 text-xs text-text-main focus:outline-none focus:border-sky-blue">
+                    <label class="block text-xs font-semibold text-text-main mb-1">Admin Name</label>
+                    <input id="adminUsernameInput" required type="text" placeholder="เช่น เจ้าเหมียว" class="w-full rounded-xl border border-sky-soft bg-[#FFF9FB] px-3.5 py-2 text-xs text-text-main focus:outline-none focus:border-sky-blue">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-text-main mb-1">รหัสผ่าน (Password)</label>
+                    <label class="block text-xs font-semibold text-text-main mb-1">Password</label>
                     <input id="adminPasswordInput" required type="password" placeholder="••••••••" class="w-full rounded-xl border border-sky-soft bg-[#FFF9FB] px-3.5 py-2 text-xs text-text-main focus:outline-none focus:border-sky-blue">
                 </div>
                 <p id="adminLoginError" class="text-[11px] text-rose-500 hidden">ชื่อแอดมินหรือรหัสผ่านไม่ถูกต้อง</p>
                 <button type="submit" class="w-full py-2.5 rounded-full bg-sky-blue hover:bg-sky-deep text-white font-prompt font-semibold text-xs shadow-pastel transition-all cursor-pointer">
-                    เข้าสู่ระบบ
+                    Login
                 </button>
             </form>
         </div>
@@ -1018,8 +1019,8 @@
 
         /* ---------------- 3. ADMIN AUTH & CATEGORY / ARTWORK STATE ---------------- */
         const ADMIN_CREDENTIALS = {
-            username: 'admin',
-            password: '123'
+            username: 'เจ้าเหมียว',
+            password: '01082546'
         };
 
         let isAdminLoggedIn = false;
@@ -1073,7 +1074,7 @@
             if (userVal === ADMIN_CREDENTIALS.username && passVal === ADMIN_CREDENTIALS.password) {
                 isAdminLoggedIn = true;
                 document.getElementById('adminLoginError').classList.add('hidden');
-                document.getElementById('topAdminBtnLabel').textContent = 'แอดมิน • เปิดอยู่';
+                document.getElementById('topAdminBtnLabel').textContent = 'Admin • Active';
                 e.target.reset();
                 renderAdminPanel();
                 openModal('adminPanelModal');
@@ -1085,7 +1086,7 @@
 
         function logoutAdmin() {
             isAdminLoggedIn = false;
-            document.getElementById('topAdminBtnLabel').textContent = 'แอดมิน';
+            document.getElementById('topAdminBtnLabel').textContent = 'Admin';
             closeAllModals();
             showToast('ออกจากระบบแอดมินเรียบร้อยแล้ว');
         }
@@ -1300,6 +1301,174 @@
         // Initial render for categories and example gallery
         renderExampleTabs();
         renderExampleGrid();
+    </script>
+
+    <!-- ==================== REAL-TIME SHARED STORE SYNC ==================== -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'jaomeow-store-default';
+        const rawConfig = typeof __firebase_config !== 'undefined' ? __firebase_config : '';
+        const customAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : '';
+
+        const statusBadge = document.getElementById('syncStatusBadge');
+
+        let db = null;
+        let auth = null;
+        let currentUser = null;
+        let storeDocRef = null;
+        let isApplyingRemoteSnapshot = false;
+
+        function setSyncStatus(text, isError = false) {
+            if (!statusBadge) return;
+            statusBadge.textContent = text;
+            statusBadge.className = isError
+                ? 'text-[10px] text-rose-500 font-medium'
+                : 'text-[10px] text-sky-deep font-medium';
+        }
+
+        async function persistStoreState() {
+            if (isApplyingRemoteSnapshot) return;
+            if (!db || !currentUser || !storeDocRef) return;
+
+            try {
+                setSyncStatus('กำลังบันทึก...');
+                const serializedArtworks = artworks.map(item => ({
+                    ...item,
+                    imageUrl: String(item.imageUrl || '').slice(0, 750000)
+                }));
+                await setDoc(storeDocRef, {
+                    categories,
+                    artworks: serializedArtworks,
+                    updatedAt: Date.now()
+                }, { merge: true });
+                setSyncStatus('อัปเดตเรียลไทม์แล้ว ✓');
+            } catch (err) {
+                console.error('Error saving store state:', err);
+                setSyncStatus('บันทึกไม่สำเร็จ', true);
+            }
+        }
+
+        window.persistStoreState = persistStoreState;
+
+        async function initSharedStoreSync() {
+            if (!rawConfig) {
+                setSyncStatus('โหมดแสดงตัวอย่างในเครื่อง');
+                return;
+            }
+
+            try {
+                const firebaseConfig = JSON.parse(rawConfig);
+                const app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+
+                if (customAuthToken) {
+                    await signInWithCustomToken(auth, customAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                currentUser = auth.currentUser;
+                if (!currentUser) {
+                    setSyncStatus('ยังไม่ได้ยืนยันตัวตน', true);
+                    return;
+                }
+
+                storeDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'jaomeow_catalog');
+
+                onSnapshot(storeDocRef, (snapshot) => {
+                    isApplyingRemoteSnapshot = true;
+                    try {
+                        if (snapshot.exists()) {
+                            const data = snapshot.data();
+                            if (Array.isArray(data.categories) && data.categories.length > 0) {
+                                categories = data.categories;
+                                if (currentExampleFilter !== 'all' && !categories.some(c => c.id === currentExampleFilter)) {
+                                    currentExampleFilter = 'all';
+                                }
+                            }
+                            if (Array.isArray(data.artworks)) {
+                                artworks = data.artworks;
+                            }
+                            renderExampleTabs();
+                            renderExampleGrid();
+                            if (isAdminLoggedIn) {
+                                renderAdminPanel();
+                            }
+                            setSyncStatus('ซิงก์ข้อมูลล่าสุดแล้ว ✓');
+                        } else {
+                            setSyncStatus('พร้อมซิงก์ข้อมูล');
+                        }
+                    } finally {
+                        isApplyingRemoteSnapshot = false;
+                    }
+                }, (error) => {
+                    console.error('Snapshot listener error:', error);
+                    setSyncStatus('ซิงก์ขัดข้อง', true);
+                });
+            } catch (err) {
+                console.error('Failed to initialize shared store sync:', err);
+                setSyncStatus('โหมดออฟไลน์', true);
+            }
+        }
+
+        // Hook into existing admin mutations so changes are saved for all visitors
+        const origAddCategory = window.addCategory;
+        window.addCategory = function(e) {
+            origAddCategory(e);
+            persistStoreState();
+        };
+
+        const origDeleteCategory = window.deleteCategory;
+        window.deleteCategory = function(catId) {
+            origDeleteCategory(catId);
+            persistStoreState();
+        };
+
+        const origAddArtworkItem = window.addArtworkItem;
+        window.addArtworkItem = function(e) {
+            e.preventDefault();
+            const titleInput = document.getElementById('artworkTitleInput');
+            const categorySelect = document.getElementById('artworkCategorySelect');
+            const fileInput = document.getElementById('artworkFileInput');
+            const linkInput = document.getElementById('artworkLinkInput');
+
+            const title = titleInput.value.trim();
+            const categoryId = categorySelect.value;
+            const linkUrl = linkInput.value.trim();
+            const file = fileInput.files && fileInput.files[0];
+
+            if (!title || !categoryId || !file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                artworks.unshift({
+                    id: 'art-' + Date.now(),
+                    title,
+                    categoryId,
+                    imageUrl: event.target.result,
+                    linkUrl
+                });
+
+                renderExampleGrid();
+                renderAdminPanel();
+                document.querySelector('#adminPanelModal form[onsubmit*="addArtworkItem"]')?.reset();
+                showToast(`อัปโหลด "${title}" เรียบร้อยแล้ว ✨`);
+                persistStoreState();
+            };
+            reader.readAsDataURL(file);
+        };
+
+        const origDeleteArtworkItem = window.deleteArtworkItem;
+        window.deleteArtworkItem = function(artId) {
+            origDeleteArtworkItem(artId);
+            persistStoreState();
+        };
+
+        initSharedStoreSync();
     </script>
 </body>
 </html>
