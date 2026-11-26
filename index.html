@@ -566,12 +566,8 @@
                     </button>
                 </section>
 
-                <footer class="pt-1 mb-3 text-center text-xs text-[#9E6780] font-medium">
-                    © 2026 JaoMeowStore Studio All Rights Reserved ☁
-                </footer>
-
-                <!-- Mini Music Player Card at Bottom -->
-                <div class="mini-player-card w-full rounded-[24px] p-3 flex items-center gap-3">
+                <!-- Mini Music Player Card -->
+                <div class="mini-player-card w-full rounded-[24px] p-3 mb-3 flex items-center gap-3">
                     <div class="mini-player-cover relative w-12 h-12 rounded-2xl flex items-center justify-center text-base shrink-0 select-none">
                         <span>🌸</span>
                         <span class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-white border border-pink-200 text-[9px] text-[#D46293] flex items-center justify-center shadow-2xs">♡</span>
@@ -663,6 +659,10 @@
                         </div>
                     </div>
                 </div>
+
+                <footer class="pt-1 text-center text-xs text-[#9E6780] font-medium">
+                    © 2026 JaoMeowStore Studio All Rights Reserved ☁
+                </footer>
             </div>
         </main>
     </div>
@@ -1590,6 +1590,66 @@
                 if (!Array.isArray(state.categories.group)) {
                     state.categories.group = [];
                 }
+                if (!state.categories.group.includes(newName)) {
+                    state.categories.group.push(newName);
+                }
+            }
+
+            if (inputEl) inputEl.value = '';
+            renderAdminCategoryControls();
+            refreshActiveViews();
+            showAdminCategoryNotice(`เพิ่มหมวดย่อย "${newName}" เรียบร้อยแล้วครับ`);
+            await persistStoreToFirestore();
+        }
+
+        async function deleteCustomCategory(mainCat, subCat, catName) {
+            if (mainCat === 'example') {
+                const list = state.categories.example?.[subCat];
+                if (Array.isArray(list)) {
+                    state.categories.example[subCat] = list.filter((item) => item !== catName);
+                }
+                if (state.selectedExampleLeaf === catName) {
+                    state.selectedExampleLeaf = 'ทั้งหมด';
+                }
+            } else {
+                const list = state.categories.group;
+                if (Array.isArray(list)) {
+                    state.categories.group = list.filter((item) => item !== catName);
+                }
+                if (state.selectedGroupSubcat === catName) {
+                    state.selectedGroupSubcat = 'ทั้งหมด';
+                }
+            }
+
+            renderAdminCategoryControls();
+            refreshActiveViews();
+            showAdminCategoryNotice(`ลบหมวดย่อย "${catName}" เรียบร้อยแล้วครับ`);
+            await persistStoreToFirestore();
+        }
+
+        async function handleHeroCardFileUpload(event) {
+            const file = event.target.files?.[0];
+            const statusEl = document.getElementById('adminHeroCardStatus');
+            if (!file) return;
+
+            try {
+                const dataUrl = await readFileAsDataUrl(file);
+                state.heroCardImage = dataUrl;
+                renderHeroCardBanner();
+                await persistStoreToFirestore();
+                if (statusEl) {
+                    statusEl.textContent = 'อัปเดตรูปการ์ดแบนเนอร์เรียบร้อยแล้วครับ';
+                    statusEl.classList.remove('hidden');
+                }
+            } catch (err) {
+                console.error('Hero card image upload error:', err);
+                if (statusEl) {
+                    statusEl.textContent = 'ไม่สามารถโหลดรูปภาพนี้ได้ครับ';
+                    statusEl.classList.remove('hidden');
+                }
+            }
+        }
+
         function renderBatchPreviewStrip() {
             const infoEl = document.getElementById('multiSelectedImagesInfo');
             const stripEl = document.getElementById('multiSelectedImagesStrip');
@@ -1823,9 +1883,9 @@
         }
 
         const MUSIC_VIDEO_ID = '8XXPxLLgwt8';
-        const RELAXED_DEFAULT_VOLUME = 28; // ระดับเสียงคลอฟังสบายๆ (0-100)
+        const RELAXED_DEFAULT_VOLUME = 28;
         let isMusicPlaying = false;
-        let isMusicLooping = true; // เล่นวนคลอฟังสบายๆ ต่อเนื่องเป็นค่าเริ่มต้น
+        let isMusicLooping = true;
         let ytPlayerReady = false;
         let ytPlayerInstance = null;
         let pendingAutoPlay = true;
