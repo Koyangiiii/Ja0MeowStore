@@ -143,6 +143,38 @@
             box-shadow: 0 8px 18px -8px rgba(204, 116, 156, 0.35);
         }
 
+        .pink-audio-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 5px;
+            border-radius: 999px;
+            background: #FFE2EE;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .pink-audio-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 999px;
+            background: #E86D9C;
+            border: 2px solid #FFFFFF;
+            box-shadow: 0 2px 5px rgba(214, 108, 150, 0.45);
+            cursor: pointer;
+        }
+
+        .pink-audio-slider::-moz-range-thumb {
+            width: 12px;
+            height: 12px;
+            border-radius: 999px;
+            background: #E86D9C;
+            border: 2px solid #FFFFFF;
+            box-shadow: 0 2px 5px rgba(214, 108, 150, 0.45);
+            cursor: pointer;
+        }
+
         @keyframes floatCloud {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-6px); }
@@ -156,6 +188,11 @@
         @keyframes twinkleStar {
             0%, 100% { opacity: 0.45; transform: scale(0.92); }
             50% { opacity: 1; transform: scale(1.15); }
+        }
+
+        @keyframes eqWave {
+            0%, 100% { transform: scaleY(0.35); }
+            50% { transform: scaleY(1); }
         }
 
         .cloud-float {
@@ -172,6 +209,11 @@
 
         .twinkle-delay {
             animation: twinkleStar 3.8s ease-in-out 1.4s infinite;
+        }
+
+        .eq-bar {
+            transform-origin: bottom;
+            animation: eqWave 0.9s ease-in-out infinite;
         }
 
         .mobile-shell-bg {
@@ -244,7 +286,7 @@
     </div>
 
     <div class="relative z-10 w-full min-h-screen sm:py-4 flex justify-center">
-        <main class="mobile-shell-bg relative w-full max-w-[430px] min-h-screen sm:min-h-[calc(100vh-2rem)] sm:rounded-[38px] px-4 pt-4 pb-10 overflow-hidden backdrop-blur-md">
+        <main class="mobile-shell-bg relative w-full max-w-[430px] min-h-screen sm:min-h-[calc(100vh-2rem)] sm:rounded-[38px] px-4 pt-4 pb-8 overflow-hidden backdrop-blur-md">
             <div class="absolute inset-0 pointer-events-none overflow-hidden z-0" aria-hidden="true">
                 <div class="absolute -top-10 right-2 w-40 h-40 rounded-full bg-[#FFD8E8]/45 blur-2xl"></div>
                 <div class="absolute top-1/2 -left-10 w-44 h-44 rounded-full bg-white/70 blur-2xl"></div>
@@ -255,17 +297,20 @@
             </div>
 
             <div class="relative z-10">
-                <!-- Top Admin Action Bar -->
-                <div class="flex items-center justify-end mb-2">
+                <!-- Top Admin Button -->
+                <div class="flex items-center justify-end mb-3">
                     <button
                         type="button"
                         onclick="openAdminEntry()"
-                        class="sticker-badge px-3.5 py-1.5 rounded-full inline-flex items-center gap-1.5 text-xs font-bold text-[#9C5A79] hover:text-[#D46293] cursor-pointer"
+                        class="sticker-badge px-3 py-1.5 rounded-full inline-flex items-center gap-1 text-xs font-bold text-[#9C5A79] hover:text-[#D46293] cursor-pointer"
                     >
                         <span>🐾</span>
                         <span>Admin</span>
                     </button>
                 </div>
+
+                <!-- Hidden Audio Engine Host (Required for YouTube Audio Stream) -->
+                <div id="musicPlayerHost" class="sr-only" aria-hidden="true"></div>
 
                 <!-- Center Signature Logo Card -->
                 <header class="flex flex-col items-center text-center mb-4 relative">
@@ -431,7 +476,7 @@
                 </section>
 
                 <!-- Four Menu Buttons in 2 Columns -->
-                <section class="grid grid-cols-2 gap-3 mb-5">
+                <section class="grid grid-cols-2 gap-3 mb-4">
                     <button type="button" onclick="openModal('queueModal')" class="cute-pill-btn w-full rounded-[22px] p-3.5 flex flex-col items-start justify-between gap-2.5 text-left cursor-pointer group min-h-[108px]">
                         <div class="w-full flex items-center justify-between">
                             <span class="w-9 h-9 rounded-2xl bg-[#FFEAF2] border border-pink-100 flex items-center justify-center text-base shrink-0">👛</span>
@@ -477,9 +522,75 @@
                     </button>
                 </section>
 
-                <footer class="pt-1 text-center text-xs text-[#9E6780] font-medium">
+                <footer class="pt-1 mb-3 text-center text-xs text-[#9E6780] font-medium">
                     © 2026 JaoMeowStore Studio All Rights Reserved ☁
                 </footer>
+
+                <!-- Bottom Audio Bar -->
+                <div class="w-full bg-white/95 border-2 border-white rounded-2xl px-3 py-2.5 shadow-[0_8px_18px_-10px_rgba(202,120,156,0.35)]">
+                    <div class="flex items-center justify-between gap-2">
+                        <button
+                            type="button"
+                            id="musicToggleBtn"
+                            onclick="toggleMusicPlayer()"
+                            aria-label="เล่นหรือหยุดเพลง"
+                            class="w-7 h-7 rounded-full bg-gradient-to-r from-[#F48FB6] to-[#E86D9C] text-white text-xs font-bold shadow-2xs hover:opacity-95 transition cursor-pointer shrink-0 flex items-center justify-center"
+                        >
+                            <span id="musicToggleIcon">▶</span>
+                        </button>
+
+                        <div class="min-w-0 flex-1 leading-tight">
+                            <div class="flex items-center gap-1.5">
+                                <span class="text-[11px] font-bold text-[#6B4257] truncate">อย่ามากกว่าฉันก็พอ</span>
+                                <span id="musicEqBars" class="inline-flex items-end gap-[2px] h-2.5 shrink-0 opacity-40">
+                                    <span class="eq-bar w-[2px] h-full rounded-full bg-[#E86D9C]" style="animation-delay:0s"></span>
+                                    <span class="eq-bar w-[2px] h-full rounded-full bg-[#E86D9C]" style="animation-delay:0.2s"></span>
+                                    <span class="eq-bar w-[2px] h-full rounded-full bg-[#E86D9C]" style="animation-delay:0.4s"></span>
+                                </span>
+                            </div>
+                            <div class="text-[9px] font-medium text-[#A5788E] truncate">GAVIN:D × Violette Wautier</div>
+                        </div>
+
+                        <div class="flex items-center gap-1 shrink-0">
+                            <button
+                                type="button"
+                                id="musicMuteBtn"
+                                onclick="toggleMusicMute()"
+                                aria-label="ปิดหรือเปิดเสียง"
+                                title="ปิด/เปิดเสียง"
+                                class="w-6 h-6 rounded-full bg-[#FFF2F7] hover:bg-[#FFE3EE] text-[#B85E88] text-[10px] font-bold flex items-center justify-center cursor-pointer transition"
+                            >
+                                <span id="musicMuteIcon">🔊</span>
+                            </button>
+                            <input
+                                id="musicVolumeSlider"
+                                type="range"
+                                min="0"
+                                max="100"
+                                value="100"
+                                oninput="setMusicVolume(this.value)"
+                                aria-label="ระดับเสียง"
+                                class="pink-audio-slider w-14"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="mt-1.5 flex items-center gap-2">
+                        <span id="musicCurrentTime" class="text-[9px] font-semibold text-[#A5788E] tabular-nums shrink-0">0:00</span>
+                        <input
+                            id="musicSeekSlider"
+                            type="range"
+                            min="0"
+                            max="100"
+                            value="0"
+                            step="0.1"
+                            oninput="seekMusicBySlider(this.value)"
+                            aria-label="แถบเวลาเพลง"
+                            class="pink-audio-slider flex-1"
+                        >
+                        <span id="musicDurationTime" class="text-[9px] font-semibold text-[#A5788E] tabular-nums shrink-0">3:47</span>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
@@ -1636,6 +1747,227 @@
                 .replace(/'/g, '&#39;');
         }
 
+        const MUSIC_VIDEO_ID = '8XXPxLLgwt8';
+        let isMusicPlaying = false;
+        let isMusicMuted = false;
+        let currentVolume = 100;
+        let ytPlayerReady = false;
+        let ytPlayerInstance = null;
+        let pendingAutoPlay = false;
+        let progressTimer = null;
+        let isSeekingSlider = false;
+
+        function formatClock(sec) {
+            const total = Math.max(0, Math.floor(Number(sec) || 0));
+            const m = Math.floor(total / 60);
+            const s = total % 60;
+            return `${m}:${String(s).padStart(2, '0')}`;
+        }
+
+        function updateVolumeUi() {
+            const muteIcon = document.getElementById('musicMuteIcon');
+            const slider = document.getElementById('musicVolumeSlider');
+            if (muteIcon) {
+                muteIcon.textContent = (isMusicMuted || Number(currentVolume) === 0) ? '🔇' : '🔊';
+            }
+            if (slider && document.activeElement !== slider) {
+                slider.value = isMusicMuted ? '0' : String(currentVolume);
+            }
+        }
+
+        function setMusicVolume(val) {
+            const num = Math.max(0, Math.min(100, Number(val) || 0));
+            currentVolume = num;
+            isMusicMuted = num === 0;
+            updateVolumeUi();
+            if (ytPlayerInstance && ytPlayerReady) {
+                try {
+                    if (isMusicMuted) {
+                        ytPlayerInstance.mute();
+                    } else {
+                        ytPlayerInstance.unMute();
+                        ytPlayerInstance.setVolume(num);
+                    }
+                } catch (_) {}
+            }
+        }
+
+        function toggleMusicMute() {
+            isMusicMuted = !isMusicMuted;
+            updateVolumeUi();
+            if (ytPlayerInstance && ytPlayerReady) {
+                try {
+                    if (isMusicMuted) {
+                        ytPlayerInstance.mute();
+                    } else {
+                        ytPlayerInstance.unMute();
+                        ytPlayerInstance.setVolume(currentVolume > 0 ? currentVolume : 80);
+                        if (currentVolume === 0) currentVolume = 80;
+                    }
+                } catch (_) {}
+            }
+        }
+
+        function seekMusicBySlider(pct) {
+            if (!ytPlayerInstance || !ytPlayerReady) return;
+            try {
+                const dur = ytPlayerInstance.getDuration() || 0;
+                if (dur > 0) {
+                    const targetSec = (Number(pct) / 100) * dur;
+                    ytPlayerInstance.seekTo(targetSec, true);
+                    const curEl = document.getElementById('musicCurrentTime');
+                    if (curEl) curEl.textContent = formatClock(targetSec);
+                }
+            } catch (_) {}
+        }
+
+        function startProgressLoop() {
+            if (progressTimer) clearInterval(progressTimer);
+            progressTimer = setInterval(() => {
+                if (!ytPlayerInstance || !ytPlayerReady || isSeekingSlider) return;
+                try {
+                    const dur = ytPlayerInstance.getDuration() || 0;
+                    const cur = ytPlayerInstance.getCurrentTime() || 0;
+                    const curEl = document.getElementById('musicCurrentTime');
+                    const durEl = document.getElementById('musicDurationTime');
+                    const seekEl = document.getElementById('musicSeekSlider');
+                    if (curEl) curEl.textContent = formatClock(cur);
+                    if (durEl && dur > 0) durEl.textContent = formatClock(dur);
+                    if (seekEl && dur > 0) {
+                        seekEl.value = String((cur / dur) * 100);
+                    }
+                } catch (_) {}
+            }, 500);
+        }
+
+        function setMusicUiState(playing) {
+            isMusicPlaying = Boolean(playing);
+            const iconEl = document.getElementById('musicToggleIcon');
+            const eqEl = document.getElementById('musicEqBars');
+            if (iconEl) iconEl.textContent = isMusicPlaying ? '❚❚' : '▶';
+            if (eqEl) {
+                eqEl.classList.toggle('opacity-100', isMusicPlaying);
+                eqEl.classList.toggle('opacity-40', !isMusicPlaying);
+            }
+        }
+
+        function ensureYouTubePlayer(autoPlayAfterLoad = false) {
+            pendingAutoPlay = autoPlayAfterLoad;
+            const hostEl = document.getElementById('musicPlayerHost');
+            if (!hostEl) return;
+
+            if (!hostEl.querySelector('iframe')) {
+                const originParam = window.location.origin && window.location.origin.startsWith('http')
+                    ? `&origin=${encodeURIComponent(window.location.origin)}`
+                    : '';
+                hostEl.innerHTML = `<iframe id="jaomeowMusicFrame" width="200" height="120" src="https://www.youtube.com/embed/${MUSIC_VIDEO_ID}?enablejsapi=1&playsinline=1&autoplay=${autoPlayAfterLoad ? 1 : 0}&rel=0${originParam}" title="อย่ามากกว่าฉันก็พอ - GAVIN:D x Violette Wautier" allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+            }
+
+            if (window.YT && typeof window.YT.Player === 'function') {
+                if (!ytPlayerInstance) {
+                    ytPlayerInstance = new window.YT.Player('jaomeowMusicFrame', {
+                        events: {
+                            onReady: (event) => {
+                                ytPlayerReady = true;
+                                try {
+                                    event.target.unMute();
+                                    event.target.setVolume(currentVolume);
+                                    const dur = event.target.getDuration() || 0;
+                                    const durEl = document.getElementById('musicDurationTime');
+                                    if (durEl && dur > 0) durEl.textContent = formatClock(dur);
+                                } catch (_) {}
+                                startProgressLoop();
+                                if (pendingAutoPlay) {
+                                    pendingAutoPlay = false;
+                                    try {
+                                        event.target.playVideo();
+                                    } catch (_) {}
+                                    setMusicUiState(true);
+                                }
+                            },
+                            onStateChange: (event) => {
+                                if (event.data === window.YT.PlayerState.PLAYING) {
+                                    setMusicUiState(true);
+                                    startProgressLoop();
+                                } else if (event.data === window.YT.PlayerState.PAUSED || event.data === window.YT.PlayerState.ENDED) {
+                                    setMusicUiState(false);
+                                }
+                            }
+                        }
+                    });
+                } else if (ytPlayerReady && autoPlayAfterLoad) {
+                    try {
+                        ytPlayerInstance.unMute();
+                        ytPlayerInstance.setVolume(currentVolume);
+                        ytPlayerInstance.playVideo();
+                    } catch (_) {}
+                    setMusicUiState(true);
+                }
+                return;
+            }
+
+            if (!document.getElementById('youtubeIframeApiScript')) {
+                const tag = document.createElement('script');
+                tag.id = 'youtubeIframeApiScript';
+                tag.src = 'https://www.youtube.com/iframe_api';
+                document.head.appendChild(tag);
+            }
+
+            const prevCallback = window.onYouTubeIframeAPIReady;
+            window.onYouTubeIframeAPIReady = () => {
+                if (typeof prevCallback === 'function') {
+                    prevCallback();
+                }
+                ensureYouTubePlayer(pendingAutoPlay);
+            };
+
+            if (autoPlayAfterLoad) {
+                setMusicUiState(true);
+            }
+        }
+
+        function toggleMusicPlayer() {
+            if (!isMusicPlaying) {
+                ensureYouTubePlayer(true);
+                if (ytPlayerInstance && ytPlayerReady && typeof ytPlayerInstance.playVideo === 'function') {
+                    try {
+                        ytPlayerInstance.unMute();
+                        ytPlayerInstance.setVolume(currentVolume);
+                        ytPlayerInstance.playVideo();
+                    } catch (_) {}
+                }
+                setMusicUiState(true);
+            } else {
+                pendingAutoPlay = false;
+                if (ytPlayerInstance && ytPlayerReady && typeof ytPlayerInstance.pauseVideo === 'function') {
+                    try {
+                        ytPlayerInstance.pauseVideo();
+                    } catch (_) {}
+                } else {
+                    const iframe = document.getElementById('jaomeowMusicFrame');
+                    if (iframe) {
+                        iframe.src = `https://www.youtube.com/embed/${MUSIC_VIDEO_ID}?enablejsapi=1&playsinline=1&autoplay=0&rel=0`;
+                    }
+                }
+                setMusicUiState(false);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const seekEl = document.getElementById('musicSeekSlider');
+            if (seekEl) {
+                seekEl.addEventListener('pointerdown', () => { isSeekingSlider = true; });
+                seekEl.addEventListener('pointerup', () => {
+                    isSeekingSlider = false;
+                    seekMusicBySlider(seekEl.value);
+                });
+                seekEl.addEventListener('change', () => {
+                    isSeekingSlider = false;
+                    seekMusicBySlider(seekEl.value);
+                });
+            }
+        });
+
         window.openModal = openModal;
         window.closeAllModals = closeAllModals;
         window.openAdminEntry = openAdminEntry;
@@ -1654,6 +1986,10 @@
         window.handleAddArtwork = handleAddArtwork;
         window.deleteArtwork = deleteArtwork;
         window.handleBriefSubmit = handleBriefSubmit;
+        window.toggleMusicPlayer = toggleMusicPlayer;
+        window.toggleMusicMute = toggleMusicMute;
+        window.setMusicVolume = setMusicVolume;
+        window.seekMusicBySlider = seekMusicBySlider;
 
         initFirebaseDatabase();
     </script>
