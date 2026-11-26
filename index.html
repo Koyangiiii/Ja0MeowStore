@@ -80,6 +80,25 @@
         .animate-twinkle-delay {
             animation: twinkle 3.6s ease-in-out 1.5s infinite;
         }
+        @keyframes spinVinyl {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .vinyl-spinning {
+            animation: spinVinyl 5s linear infinite;
+            animation-play-state: running;
+        }
+        .vinyl-paused {
+            animation: spinVinyl 5s linear infinite;
+            animation-play-state: paused;
+        }
+        #vinylDisc {
+            width: 100%;
+            height: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: 9999px;
+            flex-shrink: 0;
+        }
 
         /* Custom Cloud Card Pattern */
         .cloud-card-bg {
@@ -192,6 +211,69 @@
 
     <!-- ==================== MAIN CONTAINER ==================== -->
     <main class="relative z-10 max-w-[660px] mx-auto px-4 sm:px-6 pt-8 pb-14 flex flex-col items-center">
+
+        <!-- 5. MINI MUSIC PLAYER WIDGET (VINYL RECORD FIXED BOTTOM-LEFT) -->
+        <section class="fixed bottom-5 left-5 z-30 flex flex-col items-center">
+            
+            <!-- Clickable Spinning Vinyl Disc (Tap to Play / Mute) -->
+                <button type="button" onclick="togglePlay()" title="จิ้มที่แผ่นเสียงเพื่อ เล่น / ปิดเสียง" aria-label="จิ้มที่แผ่นเสียงเพื่อเล่นหรือปิดเสียง" class="group relative w-16 h-16 aspect-square shrink-0 flex items-center justify-center rounded-full bg-white/85 backdrop-blur-md p-0.5 border-2 border-white shadow-pastel hover:shadow-pastel-hover focus:outline-none cursor-pointer active:scale-95 transition-all">
+                    <!-- Vinyl Record Outer Ring -->
+                    <div id="vinylDisc" class="vinyl-paused w-full h-full aspect-square rounded-full bg-gradient-to-tr from-[#3B2A32] via-[#59414C] to-[#3B2A32] p-1.5 shadow-md flex items-center justify-center relative shrink-0">
+                        <!-- Vinyl Grooves & Shine -->
+                        <div class="w-full h-full rounded-full border border-white/20 flex items-center justify-center relative">
+                            <div class="absolute inset-1 rounded-full border border-white/10 pointer-events-none"></div>
+                            <!-- Center Label with Mascot -->
+                            <div class="w-10 h-10 rounded-full bg-[#FFF0F6] border-2 border-sky-blue overflow-hidden flex items-center justify-center relative">
+                                <svg class="w-9 h-9" viewBox="0 0 64 64" fill="none">
+                                    <ellipse cx="22" cy="18" rx="5.5" ry="7" transform="rotate(-15 22 18)" fill="#FFFFFF" stroke="#7A6B63" stroke-width="2"/>
+                                    <ellipse cx="42" cy="18" rx="5.5" ry="7" transform="rotate(15 42 18)" fill="#FFFFFF" stroke="#7A6B63" stroke-width="2"/>
+                                    <path d="M16 32C16 21 22 16 32 16C42 16 48 21 48 32C48 41 42 46 32 46C22 46 16 41 16 32Z" fill="#FFFFFF" stroke="#7A6B63" stroke-width="2"/>
+                                    <ellipse cx="22" cy="34" rx="3" ry="1.8" fill="#FFB3C9"/>
+                                    <ellipse cx="42" cy="34" rx="3" ry="1.8" fill="#FFB3C9"/>
+                                    <circle cx="25" cy="30" r="2.2" fill="#5A4D46"/>
+                                    <circle cx="39" cy="30" r="2.2" fill="#5A4D46"/>
+                                    <path d="M30 33.5C30.5 34.5 31.5 34.5 32 33.5C32.5 34.5 33.5 34.5 34 33.5" stroke="#7A6B63" stroke-width="1.6" stroke-linecap="round"/>
+                                </svg>
+                                <!-- Center Spindle Hole -->
+                                <span class="w-1.5 h-1.5 rounded-full bg-[#3B2A32] border border-white/80 absolute"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hover / Tap Overlay Hint -->
+                    <div class="absolute inset-0 rounded-full bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                        <span id="vinylHoverIcon" class="text-white text-xs drop-shadow">▶</span>
+                    </div>
+
+                    <!-- Tonearm Stylus -->
+                    <div id="tonearm" class="absolute -top-1 -right-1 w-6 h-6 pointer-events-none transition-transform duration-500 origin-top-right -rotate-12">
+                        <div class="w-2.5 h-2.5 rounded-full bg-white border-2 border-sky-blue shadow-xs ml-auto"></div>
+                        <div class="w-0.5 h-4 bg-sky-deep mx-auto -mt-0.5 rotate-25 rounded-full"></div>
+                    </div>
+
+                    <!-- Playing Indicator Dot -->
+                    <span id="playingDot" class="hidden absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-sky-blue border-2 border-white animate-bounce"></span>
+                </button>
+
+                <!-- Subtle Status Tag Below Vinyl -->
+                <span id="audioStatusBadge" class="mt-1.5 text-[10px] font-quicksand font-bold text-sky-deep bg-white/90 px-2.5 py-0.5 rounded-full border border-sky-soft shadow-2xs">
+                    จิ้มแผ่นเสียงเพื่อเล่นเพลง
+                </span>
+
+                <!-- Hidden Track & Slider Elements Preserved for Script Compatibility -->
+                <div class="hidden" aria-hidden="true">
+                    <span id="trackTitle"></span>
+                    <span id="currentTimeDisplay">0:22</span>
+                    <input id="progressSlider" type="range" min="0" max="186" value="22" oninput="seekAudio(this.value)">
+                    <span id="durationDisplay">3:06</span>
+                    <button id="repeatBtn" onclick="toggleRepeat()"></button>
+                    <button id="playPauseBtn" onclick="togglePlay()">
+                        <svg id="playIcon"></svg>
+                        <svg id="pauseIcon" class="hidden"></svg>
+                        <span id="playBtnText">PLAY</span>
+                    </button>
+                </div>
+        </section>
 
         <!-- 1. HEADER SECTION -->
         <header class="w-full flex flex-col items-center text-center mb-6">
@@ -589,109 +671,6 @@
                 </svg>
             </button>
 
-        </section>
-
-        <!-- 5. MINI MUSIC PLAYER WIDGET -->
-        <section class="w-full max-w-[440px] mx-auto mt-1">
-            <div class="bg-white/95 rounded-[22px] p-3 px-4 border border-white shadow-pastel flex items-center gap-3.5">
-                
-                <!-- Left: Cute Chibi Mascot Avatar -->
-                <div class="relative w-14 h-14 rounded-2xl bg-[#FFF0F6] border border-sky-soft overflow-hidden shrink-0 flex items-center justify-center shadow-inner">
-                    <!-- Custom Cute Chibi Character SVG (Inspired by white fluffy mascot drinking boba) -->
-                    <svg class="w-13 h-13" viewBox="0 0 64 64" fill="none">
-                        <!-- Pink Sparkles BG -->
-                        <circle cx="12" cy="14" r="1.5" fill="#F4A9C4"/>
-                        <circle cx="52" cy="18" r="2" fill="#FFE680"/>
-                        <!-- Ears -->
-                        <ellipse cx="22" cy="18" rx="5.5" ry="7" transform="rotate(-15 22 18)" fill="#FFFFFF" stroke="#7A6B63" stroke-width="2"/>
-                        <ellipse cx="42" cy="18" rx="5.5" ry="7" transform="rotate(15 42 18)" fill="#FFFFFF" stroke="#7A6B63" stroke-width="2"/>
-                        <!-- Head -->
-                        <path d="M16 32C16 21 22 16 32 16C42 16 48 21 48 32C48 41 42 46 32 46C22 46 16 41 16 32Z" fill="#FFFFFF" stroke="#7A6B63" stroke-width="2"/>
-                        <!-- Rosy Cheeks -->
-                        <ellipse cx="22" cy="34" rx="3" ry="1.8" fill="#FFB3C9"/>
-                        <ellipse cx="42" cy="34" rx="3" ry="1.8" fill="#FFB3C9"/>
-                        <!-- Cute Eyes -->
-                        <circle cx="25" cy="30" r="2.2" fill="#5A4D46"/>
-                        <circle cx="25.7" cy="29.3" r="0.8" fill="#FFFFFF"/>
-                        <circle cx="39" cy="30" r="2.2" fill="#5A4D46"/>
-                        <circle cx="39.7" cy="29.3" r="0.8" fill="#FFFFFF"/>
-                        <!-- Cute Cat Mouth -->
-                        <path d="M30 33.5C30.5 34.5 31.5 34.5 32 33.5C32.5 34.5 33.5 34.5 34 33.5" stroke="#7A6B63" stroke-width="1.6" stroke-linecap="round"/>
-                        <!-- Boba Drink Cup -->
-                        <path d="M27 42H37L35.5 54H28.5L27 42Z" fill="#F2B8CC" stroke="#7A6B63" stroke-width="1.6"/>
-                        <path d="M26 42H38" stroke="#7A6B63" stroke-width="2" stroke-linecap="round"/>
-                        <path d="M32 42V35" stroke="#F29BB8" stroke-width="2" stroke-linecap="round"/>
-                        <!-- Little Paws Holding Cup -->
-                        <circle cx="26.5" cy="46" r="2.8" fill="#FFFFFF" stroke="#7A6B63" stroke-width="1.6"/>
-                        <circle cx="37.5" cy="46" r="2.8" fill="#FFFFFF" stroke="#7A6B63" stroke-width="1.6"/>
-                    </svg>
-                    <!-- Playing Indicator Dot -->
-                    <span id="playingDot" class="hidden absolute bottom-1 right-1 w-2.5 h-2.5 rounded-full bg-sky-blue border border-white animate-ping"></span>
-                </div>
-
-                <!-- Right: Track Info, Controls & Progress Bar -->
-                <div class="flex-1 min-w-0 flex flex-col justify-between">
-                    
-                    <!-- Song Title Pill Bar -->
-                    <div class="w-full bg-[#FFF0F6] rounded-full px-3 py-1 flex items-center justify-between mb-1.5">
-                        <span id="trackTitle" class="text-[11px] font-quicksand font-bold text-text-main truncate">
-                            ☁️ Pastel Cloud Lullaby - JaoMeowStore Music Box
-                        </span>
-                        <span id="audioStatusBadge" class="text-[9px] font-quicksand font-semibold text-sky-deep bg-white px-1.5 py-0.2 rounded-full ml-1 shrink-0">
-                            Ready
-                        </span>
-                    </div>
-
-                    <!-- Playback Control Buttons -->
-                    <div class="flex items-center justify-center gap-4 my-0.5">
-                        <!-- Prev Button -->
-                        <button onclick="prevTrack()" title="เพลงก่อนหน้า" class="text-sky-blue/80 hover:text-sky-deep transition-colors p-1 cursor-pointer">
-                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                <polygon points="19 20 9 12 19 4 19 20"></polygon>
-                                <line x1="5" y1="19" x2="5" y2="5"></line>
-                            </svg>
-                        </button>
-
-                        <!-- Play / Pause Circular Button -->
-                        <button id="playPauseBtn" onclick="togglePlay()" title="เล่น / หยุดเพลง" class="w-8 h-8 rounded-full bg-sky-blue hover:bg-sky-deep text-white shadow-[0_3px_10px_rgba(242,155,184,0.5)] flex items-center justify-center transition-all active:scale-95 cursor-pointer">
-                            <!-- Play Icon (Default) -->
-                            <svg id="playIcon" class="w-3.5 h-3.5 ml-0.5" viewBox="0 0 24 24" fill="currentColor">
-                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                            </svg>
-                            <!-- Pause Icon (Hidden initially) -->
-                            <svg id="pauseIcon" class="w-3.5 h-3.5 hidden" viewBox="0 0 24 24" fill="currentColor">
-                                <rect x="6" y="4" width="4" height="16" rx="1"></rect>
-                                <rect x="14" y="4" width="4" height="16" rx="1"></rect>
-                            </svg>
-                        </button>
-
-                        <!-- Next Button -->
-                        <button onclick="nextTrack()" title="เพลงถัดไป" class="text-sky-blue/80 hover:text-sky-deep transition-colors p-1 cursor-pointer">
-                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                <polygon points="5 4 15 12 5 20 5 4"></polygon>
-                                <line x1="19" y1="5" x2="19" y2="19"></line>
-                            </svg>
-                        </button>
-
-                        <!-- Repeat Toggle Button -->
-                        <button id="repeatBtn" onclick="toggleRepeat()" title="เล่นซ้ำ" class="text-sky-blue hover:text-sky-deep transition-colors p-1 cursor-pointer">
-                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="17 1 21 5 17 9"></polyline>
-                                <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
-                                <polyline points="7 23 3 19 7 15"></polyline>
-                                <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
-                            </svg>
-                        </button>
-                    </div>
-
-                    <!-- Progress Scrubber & Timestamps -->
-                    <div class="flex items-center gap-2 mt-0.5">
-                        <span id="currentTimeDisplay" class="text-[9px] font-quicksand font-semibold text-text-sub w-6 text-right">0:22</span>
-                        <input id="progressSlider" type="range" min="0" max="186" value="22" oninput="seekAudio(this.value)" class="music-slider flex-1">
-                        <span id="durationDisplay" class="text-[9px] font-quicksand font-semibold text-text-sub w-6">3:06</span>
-                    </div>
-                </div>
-            </div>
         </section>
 
         <!-- Footer Credit -->
@@ -1198,17 +1177,41 @@
             const pauseIcon = document.getElementById('pauseIcon');
             const playingDot = document.getElementById('playingDot');
             const statusBadge = document.getElementById('audioStatusBadge');
+            const vinylDisc = document.getElementById('vinylDisc');
+            const playBtnText = document.getElementById('playBtnText');
+            const tonearm = document.getElementById('tonearm');
+            const vinylHoverIcon = document.getElementById('vinylHoverIcon');
 
             if (isPlaying) {
                 playIcon.classList.add('hidden');
                 pauseIcon.classList.remove('hidden');
                 playingDot.classList.remove('hidden');
-                statusBadge.textContent = 'Playing ♪';
+                if (vinylDisc) {
+                    vinylDisc.classList.remove('vinyl-paused');
+                    vinylDisc.classList.add('vinyl-spinning');
+                }
+                if (tonearm) {
+                    tonearm.classList.remove('-rotate-12');
+                    tonearm.classList.add('rotate-12');
+                }
+                if (vinylHoverIcon) vinylHoverIcon.textContent = '❚❚';
+                if (playBtnText) playBtnText.textContent = 'PAUSE';
+                statusBadge.textContent = '♪ กำลังเล่นเพลง (จิ้มเพื่อปิดเสียง)';
             } else {
                 playIcon.classList.remove('hidden');
                 pauseIcon.classList.add('hidden');
                 playingDot.classList.add('hidden');
-                statusBadge.textContent = 'Paused';
+                if (vinylDisc) {
+                    vinylDisc.classList.remove('vinyl-spinning');
+                    vinylDisc.classList.add('vinyl-paused');
+                }
+                if (tonearm) {
+                    tonearm.classList.remove('rotate-12');
+                    tonearm.classList.add('-rotate-12');
+                }
+                if (vinylHoverIcon) vinylHoverIcon.textContent = '▶';
+                if (playBtnText) playBtnText.textContent = 'PLAY';
+                statusBadge.textContent = 'จิ้มแผ่นเสียงเพื่อเล่นเพลง';
             }
         }
 
