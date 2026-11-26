@@ -10,27 +10,35 @@
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --sky-soft: #EAF4FF;
-            --sky-mid: #CBE4FF;
-            --pink-soft: #FFEAF2;
-            --pink-mid: #FFC4DC;
-            --cream-soft: #FFFDF8;
-            --ink-main: #4A3F55;
-            --ink-muted: #887A94;
+            --milk-cream: #FFFDFB;
+            --milk-blush: #FFF5F8;
+            --pink-soft: #FFE6EF;
+            --pink-mid: #FFB7D1;
+            --pink-deep: #E86F9E;
+            --ink-main: #593E4D;
+            --ink-muted: #9A798B;
         }
 
         body {
             font-family: 'Noto Sans Thai', 'Nunito', sans-serif;
             color: var(--ink-main);
-            background-color: #FFF4F8;
+            background-color: #FFF2F7;
             background-image:
-                radial-gradient(circle at 15% 10%, rgba(255, 255, 255, 0.85) 0%, transparent 45%),
-                radial-gradient(circle at 88% 18%, rgba(255, 214, 232, 0.65) 0%, transparent 42%),
+                radial-gradient(circle at 15% 10%, rgba(255, 255, 255, 0.95) 0%, transparent 40%),
+                radial-gradient(circle at 86% 22%, rgba(255, 198, 222, 0.65) 0%, transparent 42%),
+                radial-gradient(circle at 12% 58%, rgba(255, 210, 228, 0.58) 0%, transparent 44%),
+                radial-gradient(circle at 88% 76%, rgba(255, 255, 255, 0.85) 0%, transparent 42%),
                 linear-gradient(180deg,
                     #FFEBF3 0%,
-                    #FCE0EC 38%,
-                    #F9D2E3 72%,
-                    #F4C3D8 100%);
+                    #FDE0EC 38%,
+                    #FAD2E2 72%,
+                    #F6C1D7 100%);
+            background-size:
+                100% 100%,
+                100% 100%,
+                100% 100%,
+                100% 100%,
+                100% 100%;
             min-height: 100vh;
             overflow-x: hidden;
         }
@@ -40,15 +48,17 @@
         }
 
         .hero-milk-sky {
-            background: linear-gradient(180deg, #F6C6DB 0%, #FDE2EE 58%, #FFF9FC 100%);
+            background:
+                radial-gradient(circle at 20% 25%, rgba(255, 255, 255, 0.65) 0%, transparent 45%),
+                linear-gradient(180deg, #F7BFD7 0%, #FDE0EC 56%, #FFF9FB 100%);
         }
 
         .cute-panel {
-            background: linear-gradient(180deg, #FFFDFC 0%, #FFF6FA 72%, #FFECF4 100%);
+            background: linear-gradient(180deg, #FFFDFC 0%, #FFF6F9 72%, #FFEBF2 100%);
             border: 3px solid #FFFFFF;
             box-shadow:
-                0 12px 26px -10px rgba(196, 126, 160, 0.28),
-                0 4px 12px -4px rgba(255, 180, 212, 0.35),
+                0 12px 26px -10px rgba(212, 126, 162, 0.28),
+                0 4px 12px -4px rgba(255, 178, 210, 0.35),
                 inset 0 1px 0 rgba(255, 255, 255, 1);
             transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, border-color 0.25s ease;
         }
@@ -57,21 +67,21 @@
             transform: translateY(-3px);
             border-color: #FFFFFF;
             box-shadow:
-                0 16px 32px -10px rgba(188, 112, 148, 0.36),
-                0 8px 18px -4px rgba(255, 165, 204, 0.42);
+                0 16px 32px -10px rgba(206, 114, 152, 0.36),
+                0 8px 18px -4px rgba(255, 164, 202, 0.42);
         }
 
         .cute-pill-btn {
-            background: linear-gradient(180deg, #FFFFFF 0%, #FFF9FC 100%);
-            border: 2.5px solid #FFE8F1;
-            box-shadow: 0 8px 18px -10px rgba(184, 116, 150, 0.32);
+            background: linear-gradient(180deg, #FFFFFF 0%, #FFF7FA 100%);
+            border: 2.5px solid #FFE4EE;
+            box-shadow: 0 8px 18px -10px rgba(202, 120, 156, 0.32);
             transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.22s ease, border-color 0.22s ease;
         }
 
         .cute-pill-btn:hover {
             transform: translateY(-3px);
-            border-color: #FFC8DE;
-            box-shadow: 0 14px 24px -10px rgba(255, 160, 200, 0.45);
+            border-color: #FFC0D8;
+            box-shadow: 0 14px 24px -10px rgba(244, 148, 188, 0.45);
         }
 
         .cute-pill-btn:active {
@@ -79,9 +89,9 @@
         }
 
         .sticker-badge {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.96);
             border: 2px solid #FFFFFF;
-            box-shadow: 0 8px 18px -8px rgba(178, 138, 185, 0.28);
+            box-shadow: 0 8px 18px -8px rgba(206, 134, 166, 0.3);
             transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
@@ -91,11 +101,43 @@
 
         @keyframes floatCloud {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
+            50% { transform: translateY(-6px); }
+        }
+
+        @keyframes floatCloudSlow {
+            0%, 100% { transform: translateY(0px) translateX(0px); }
+            50% { transform: translateY(-5px) translateX(4px); }
+        }
+
+        @keyframes twinkleStar {
+            0%, 100% { opacity: 0.45; transform: scale(0.92); }
+            50% { opacity: 1; transform: scale(1.15); }
         }
 
         .cloud-float {
             animation: floatCloud 4.8s ease-in-out infinite;
+        }
+
+        .cloud-float-slow {
+            animation: floatCloudSlow 6.5s ease-in-out infinite;
+        }
+
+        .twinkle {
+            animation: twinkleStar 3.2s ease-in-out infinite;
+        }
+
+        .twinkle-delay {
+            animation: twinkleStar 3.8s ease-in-out 1.4s infinite;
+        }
+
+        .mobile-shell-bg {
+            background:
+                radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.92) 0%, rgba(255, 244, 249, 0.72) 45%, rgba(255, 232, 242, 0.85) 100%);
+            border: 3px solid rgba(255, 255, 255, 0.95);
+            box-shadow:
+                0 20px 50px -12px rgba(196, 114, 152, 0.28),
+                0 4px 16px -4px rgba(255, 182, 214, 0.35),
+                inset 0 2px 0 rgba(255, 255, 255, 1);
         }
 
         .modal-card {
@@ -112,280 +154,331 @@
             height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #FFF4F8;
+            background: #FFF3F7;
             border-radius: 999px;
         }
         ::-webkit-scrollbar-thumb {
-            background: #F3C1D6;
+            background: #F4BCD4;
             border-radius: 999px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #E8A4C2;
+            background: #EA9EC0;
         }
     </style>
 </head>
-<body class="antialiased selection:bg-pink-200 selection:text-purple-900">
-    <!-- Mobile-Sized Centered Showcase Frame -->
-    <main class="w-full max-w-[430px] mx-auto px-4 pt-4 pb-8">
-        <!-- Top Right Admin Button -->
-        <div class="flex justify-end mb-1">
-            <button
-                id="adminTopBtn"
-                type="button"
-                onclick="openAdminAccess()"
-                class="px-4 py-1.5 rounded-full bg-white/95 hover:bg-pink-50 text-[#8F5571] font-display font-semibold text-xs border-2 border-white shadow-sm hover:shadow transition-all flex items-center gap-1.5 cursor-pointer"
-            >
-                <span>🐾</span>
-                <span id="adminTopLabel">Admin</span>
-            </button>
-        </div>
+<body class="antialiased selection:bg-pink-200 selection:text-[#593E4D] relative">
+    <!-- Decorative Cute Background Layer -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0" aria-hidden="true">
+        <!-- Soft Glowing Orbs -->
+        <div class="absolute -top-12 -left-12 w-56 h-56 rounded-full bg-white/60 blur-2xl"></div>
+        <div class="absolute top-1/3 -right-16 w-64 h-64 rounded-full bg-[#FFD2E5]/55 blur-2xl"></div>
+        <div class="absolute bottom-16 -left-16 w-60 h-60 rounded-full bg-white/50 blur-2xl"></div>
 
-        <!-- Center Cloud Emblem with Website & Emotes Pills -->
-        <header class="flex flex-col items-center text-center mb-4 relative">
-            <div class="relative w-36 h-36 flex items-center justify-center mb-2">
-                <!-- Decorative paw & sparkles -->
-                <span class="absolute -left-4 top-3 text-pink-300/90 text-xl select-none pointer-events-none">🐾</span>
-                <span class="absolute left-3 top-1 text-amber-300 text-xs select-none pointer-events-none">✦</span>
-                <span class="absolute right-2 top-3 text-amber-300 text-sm select-none pointer-events-none">✦</span>
-                <span class="absolute right-1 bottom-5 text-amber-200 text-xs select-none pointer-events-none">✦</span>
+        <!-- Floating Fluffy Clouds -->
+        <svg class="cloud-float absolute top-14 -left-6 w-36 h-16 text-white/75" viewBox="0 0 180 70" fill="currentColor">
+            <path d="M24 62h132a18 18 0 0 0 2-35.8A26 26 0 0 0 112 18a28 28 0 0 0-52 4A20 20 0 0 0 24 62z"/>
+        </svg>
+        <svg class="cloud-float-slow absolute top-44 -right-8 w-40 h-16 text-white/70" viewBox="0 0 180 70" fill="currentColor">
+            <path d="M24 62h132a18 18 0 0 0 2-35.8A26 26 0 0 0 112 18a28 28 0 0 0-52 4A20 20 0 0 0 24 62z"/>
+        </svg>
+        <svg class="cloud-float absolute top-[56%] -left-10 w-44 h-16 text-white/65" viewBox="0 0 180 70" fill="currentColor">
+            <path d="M24 62h132a18 18 0 0 0 2-35.8A26 26 0 0 0 112 18a28 28 0 0 0-52 4A20 20 0 0 0 24 62z"/>
+        </svg>
+        <svg class="cloud-float-slow absolute bottom-24 -right-6 w-36 h-16 text-white/75" viewBox="0 0 180 70" fill="currentColor">
+            <path d="M24 62h132a18 18 0 0 0 2-35.8A26 26 0 0 0 112 18a28 28 0 0 0-52 4A20 20 0 0 0 24 62z"/>
+        </svg>
 
-                <!-- Main Circle Emblem -->
-                <div class="w-28 h-28 rounded-full bg-gradient-to-b from-white via-[#FFF7FA] to-[#FDE4EE] border-[3px] border-white shadow-[0_12px_28px_-8px_rgba(198,132,164,0.45)] flex flex-col items-center justify-center">
-                    <span class="font-serif italic font-bold text-xl text-[#A96B86] leading-none">JaoMeow</span>
-                    <span class="text-[10px] tracking-[0.22em] font-semibold text-[#C28FA5] mt-1">STORE</span>
-                </div>
+        <!-- Sparkles, Hearts & Paw Prints -->
+        <span class="twinkle absolute top-10 left-[14%] text-white text-lg">✦</span>
+        <span class="twinkle-delay absolute top-28 right-[16%] text-amber-200 text-base">✦</span>
+        <span class="twinkle absolute top-[38%] left-[7%] text-pink-300/80 text-sm">♡</span>
+        <span class="twinkle-delay absolute top-[48%] right-[8%] text-white text-lg">✦</span>
+        <span class="twinkle absolute top-[68%] left-[11%] text-pink-300/75 text-base">🐾</span>
+        <span class="twinkle-delay absolute top-[78%] right-[12%] text-pink-300/80 text-sm">♡</span>
+        <span class="twinkle absolute bottom-28 left-[18%] text-white text-base">✦</span>
 
-                <!-- Cloud puff at bottom of emblem -->
-                <svg class="absolute bottom-1 left-1/2 -translate-x-1/2 w-24 h-8 text-white pointer-events-none drop-shadow-xs" viewBox="0 0 120 40" fill="currentColor">
-                    <path d="M16 34h88a11 11 0 0 0 1-21.9A16 16 0 0 0 74 9a18 18 0 0 0-33 2A12 12 0 0 0 16 34z"/>
-                </svg>
+        <!-- Bottom Creamy Cloud Border -->
+        <svg class="absolute bottom-0 left-0 w-full h-14 text-white/75" viewBox="0 0 1200 100" preserveAspectRatio="none" fill="currentColor">
+            <path d="M0,58 C75,18 165,18 240,58 C315,15 405,15 480,58 C555,18 645,18 720,58 C795,15 885,15 960,58 C1035,18 1125,18 1200,58 L1200,100 L0,100 Z"></path>
+        </svg>
+    </div>
 
-                <!-- Floating Website Badge -->
-                <div class="sticker-badge absolute -right-4 top-5 rounded-full px-3 py-1 flex items-center gap-1 text-[11px] font-semibold text-[#A36983]">
-                    <span>Website</span>
-                    <span class="text-pink-400">🌸</span>
-                </div>
-
-                <!-- Floating Emotes Badge -->
-                <div class="sticker-badge absolute -left-3 bottom-4 rounded-full px-3 py-1 flex items-center gap-1 text-[11px] font-semibold text-[#A36983]">
-                    <span>Emotes</span>
-                    <span class="text-pink-400">♡</span>
-                </div>
+    <div class="relative z-10 w-full min-h-screen sm:py-4 flex justify-center">
+        <main class="mobile-shell-bg relative w-full max-w-[430px] min-h-screen sm:min-h-[calc(100vh-2rem)] sm:rounded-[38px] px-4 pt-4 pb-10 overflow-hidden backdrop-blur-md">
+            <!-- Inner Mobile Frame Soft Decorations -->
+            <div class="absolute inset-0 pointer-events-none overflow-hidden z-0" aria-hidden="true">
+                <div class="absolute -top-10 right-2 w-40 h-40 rounded-full bg-[#FFD8E8]/45 blur-2xl"></div>
+                <div class="absolute top-1/2 -left-10 w-44 h-44 rounded-full bg-white/70 blur-2xl"></div>
+                <div class="absolute bottom-12 right-0 w-44 h-44 rounded-full bg-[#FFD4E6]/45 blur-2xl"></div>
+                <span class="twinkle absolute top-24 left-5 text-pink-300/70 text-xs">✦</span>
+                <span class="twinkle-delay absolute top-44 right-6 text-pink-300/70 text-xs">♡</span>
+                <span class="twinkle absolute bottom-32 left-6 text-pink-300/65 text-xs">🐾</span>
             </div>
 
-            <h1 class="font-serif italic font-bold text-2xl text-[#E986B1] drop-shadow-[0_1px_0_#FFFFFF] tracking-wide">
-                JaoMeowStore
-            </h1>
-            <div class="mt-1.5 inline-flex items-center gap-1.5 px-4 py-1 rounded-full bg-white/90 border border-white shadow-2xs text-[11px] font-semibold text-[#A56A84]">
-                <span class="text-pink-400">❀</span>
-                <span>website | commission</span>
-                <span class="text-pink-400">❀</span>
+            <div class="relative z-10">
+                <!-- Top Right Admin Button -->
+                <div class="flex justify-end mb-1">
+                    <button
+                        id="adminTopBtn"
+                        type="button"
+                        onclick="openAdminAccess()"
+                        class="px-4 py-1.5 rounded-full bg-white/95 hover:bg-pink-50 text-[#8F5571] font-display font-semibold text-xs border-2 border-white shadow-sm hover:shadow transition-all flex items-center gap-1.5 cursor-pointer"
+                    >
+                        <span>🐾</span>
+                        <span id="adminTopLabel">Admin</span>
+                    </button>
+                </div>
+
+                <!-- Center Cloud Emblem with Website & Emotes Pills -->
+                <header class="flex flex-col items-center text-center mb-4 relative">
+                    <div class="relative w-36 h-36 flex items-center justify-center mb-2">
+                        <!-- Decorative paw & sparkles -->
+                        <span class="absolute -left-4 top-3 text-pink-300/90 text-xl select-none pointer-events-none">🐾</span>
+                        <span class="absolute left-3 top-1 text-amber-300 text-xs select-none pointer-events-none">✦</span>
+                        <span class="absolute right-2 top-3 text-amber-300 text-sm select-none pointer-events-none">✦</span>
+                        <span class="absolute right-1 bottom-5 text-amber-200 text-xs select-none pointer-events-none">✦</span>
+
+                        <!-- Main Circle Emblem -->
+                        <div class="w-28 h-28 rounded-full bg-gradient-to-b from-white via-[#FFF7FA] to-[#FDE4EE] border-[3px] border-white shadow-[0_12px_28px_-8px_rgba(198,132,164,0.45)] flex flex-col items-center justify-center">
+                            <span class="font-serif italic font-bold text-xl text-[#A96B86] leading-none">JaoMeow</span>
+                            <span class="text-[10px] tracking-[0.22em] font-semibold text-[#C28FA5] mt-1">STORE</span>
+                        </div>
+
+                        <!-- Cloud puff at bottom of emblem -->
+                        <svg class="absolute bottom-1 left-1/2 -translate-x-1/2 w-24 h-8 text-white pointer-events-none drop-shadow-xs" viewBox="0 0 120 40" fill="currentColor">
+                            <path d="M16 34h88a11 11 0 0 0 1-21.9A16 16 0 0 0 74 9a18 18 0 0 0-33 2A12 12 0 0 0 16 34z"/>
+                        </svg>
+
+                        <!-- Floating Website Badge -->
+                        <div class="sticker-badge absolute -right-4 top-5 rounded-full px-3 py-1 flex items-center gap-1 text-[11px] font-semibold text-[#A36983]">
+                            <span>Website</span>
+                            <span class="text-pink-400">🌸</span>
+                        </div>
+
+                        <!-- Floating Emotes Badge -->
+                        <div class="sticker-badge absolute -left-3 bottom-4 rounded-full px-3 py-1 flex items-center gap-1 text-[11px] font-semibold text-[#A36983]">
+                            <span>Emotes</span>
+                            <span class="text-pink-400">♡</span>
+                        </div>
+                    </div>
+
+                    <h1 class="font-serif italic font-bold text-2xl text-[#E986B1] drop-shadow-[0_1px_0_#FFFFFF] tracking-wide">
+                        JaoMeowStore
+                    </h1>
+                    <div class="mt-1.5 inline-flex items-center gap-1.5 px-4 py-1 rounded-full bg-white/95 border border-white shadow-2xs text-[11px] font-semibold text-[#A56A84]">
+                        <span class="text-pink-400">❀</span>
+                        <span>website | commission</span>
+                        <span class="text-pink-400">❀</span>
+                    </div>
+                </header>
+
+                <!-- Hero Banner Card with Cloud Bottom -->
+                <section class="relative rounded-[26px] overflow-hidden border-[3px] border-white shadow-[0_14px_30px_-10px_rgba(196,126,160,0.32)] mb-4">
+                    <div class="hero-milk-sky relative min-h-[152px] flex flex-col items-end justify-center px-5 py-5 text-right">
+                        <span class="absolute left-5 top-5 text-white/90 text-sm pointer-events-none">✦</span>
+                        <span class="absolute left-12 top-11 text-pink-400/50 text-base pointer-events-none">🐾</span>
+                        <div class="relative z-10 flex flex-col items-end">
+                            <div class="inline-flex items-center gap-2 bg-white/95 px-4 py-1.5 rounded-full border-2 border-white shadow-sm mb-1.5">
+                                <span class="text-xs text-[#D97CA6]">🐾</span>
+                                <span class="font-serif italic font-bold text-xl text-[#E07AA8]">JaoMeowStore</span>
+                                <span class="text-xs text-pink-400">☆</span>
+                            </div>
+                            <p class="text-xs font-semibold text-[#9E5B79] drop-shadow-[0_1px_1px_rgba(255,255,255,0.85)]">
+                                website / emote / chibi
+                            </p>
+                            <p class="text-[11px] font-medium text-[#B06C8A] drop-shadow-[0_1px_1px_rgba(255,255,255,0.85)]">
+                                commission
+                            </p>
+                        </div>
+
+                        <svg class="absolute bottom-0 left-0 w-full h-9 text-white pointer-events-none" viewBox="0 0 1200 100" preserveAspectRatio="none" fill="currentColor">
+                            <path d="M0,55 C60,20 140,20 200,55 C260,18 350,18 410,56 C475,20 565,20 625,55 C690,18 780,18 845,56 C910,20 1000,20 1065,55 C1120,25 1165,28 1200,52 L1200,100 L0,100 Z"></path>
+                        </svg>
+                    </div>
+                </section>
+
+                <!-- Side-by-Side Showcase Cards on Same Row: EXAMPLE WORK & GROUP WORK -->
+                <section class="grid grid-cols-2 gap-3 mb-4">
+                    <button
+                        type="button"
+                        onclick="openModal('exampleModal')"
+                        class="cute-panel relative w-full rounded-[24px] pt-3 pb-8 px-3 text-center overflow-hidden cursor-pointer group flex flex-col justify-between"
+                    >
+                        <div class="text-left leading-none mb-0.5">
+                            <div class="font-serif italic font-bold text-xs text-[#B77B95]">JaoMeow</div>
+                            <div class="text-[7px] tracking-[0.2em] font-bold text-[#CCA0B4]">STORE</div>
+                        </div>
+                        <div class="py-0.5">
+                            <div class="font-serif italic font-bold text-base text-[#E68BB3] group-hover:text-pink-500 transition-colors leading-tight">
+                                EXAMPLE WORK
+                            </div>
+                            <div class="mt-1 font-bold text-xs text-[#6D536E]">
+                                ตัวอย่างงานของทางร้าน
+                            </div>
+                            <div class="mt-2 text-[10px] text-[#9E8A96] leading-snug">
+                                <div>don't use without permission</div>
+                                <div>ห้ามคัดลอก และแอบอ้างไปใช้งาน</div>
+                            </div>
+                        </div>
+                        <svg class="absolute bottom-0 left-0 w-full h-6 text-white pointer-events-none" viewBox="0 0 1200 80" preserveAspectRatio="none" fill="currentColor">
+                            <path d="M0,45 C70,12 150,12 220,46 C290,12 380,12 450,48 C525,12 615,12 685,46 C760,12 850,12 920,48 C995,14 1085,14 1200,45 L1200,80 L0,80 Z"></path>
+                        </svg>
+                    </button>
+
+                    <button
+                        type="button"
+                        onclick="openModal('groupModal')"
+                        class="cute-panel relative w-full rounded-[24px] pt-3 pb-8 px-3 text-center overflow-hidden cursor-pointer group flex flex-col justify-between"
+                    >
+                        <div class="text-left leading-none mb-0.5">
+                            <div class="font-serif italic font-bold text-xs text-[#B77B95]">JaoMeow</div>
+                            <div class="text-[7px] tracking-[0.2em] font-bold text-[#CCA0B4]">STORE</div>
+                        </div>
+                        <div class="py-0.5">
+                            <div class="font-serif italic font-bold text-base text-[#E68BB3] group-hover:text-pink-500 transition-colors leading-tight">
+                                GROUP WORK
+                            </div>
+                            <div class="mt-1 font-bold text-xs text-[#6D536E]">
+                                ตัวอย่างกลุ่มทั้งหมด
+                            </div>
+                            <div class="mt-2 text-[10px] text-[#9E8A96] leading-snug">
+                                <div>รวมตัวอย่างงานกลุ่มและเซ็ตของทางร้าน</div>
+                                <div>ห้ามคัดลอก และแอบอ้างไปใช้งาน</div>
+                            </div>
+                        </div>
+                        <svg class="absolute bottom-0 left-0 w-full h-6 text-white pointer-events-none" viewBox="0 0 1200 80" preserveAspectRatio="none" fill="currentColor">
+                            <path d="M0,45 C70,12 150,12 220,46 C290,12 380,12 450,48 C525,12 615,12 685,46 C760,12 850,12 920,48 C995,14 1085,14 1200,45 L1200,80 L0,80 Z"></path>
+                        </svg>
+                    </button>
+                </section>
+
+                <!-- Four Menu Buttons in 2 Columns (2 per row) -->
+                <section class="grid grid-cols-2 gap-3 mb-5">
+                    <button type="button" onclick="openModal('queueModal')" class="cute-pill-btn w-full rounded-[22px] p-3.5 flex flex-col items-start justify-between gap-2 text-left cursor-pointer group">
+                        <div class="w-full flex items-center justify-between">
+                            <span class="w-9 h-9 rounded-2xl bg-[#FFEAF2] border border-pink-100 flex items-center justify-center text-base shrink-0">👛</span>
+                            <span class="text-[#C59BB0] group-hover:translate-x-0.5 transition-transform text-sm font-bold">›</span>
+                        </div>
+                        <div>
+                            <div class="font-bold text-xs sm:text-sm text-[#5B4563]">เช็กคิว</div>
+                            <div class="text-[11px] text-[#9B8C9E] leading-snug mt-0.5">ดูคิวงานและสถานะงานของคุณ</div>
+                        </div>
+                    </button>
+
+                    <button type="button" onclick="openModal('tosModal')" class="cute-pill-btn w-full rounded-[22px] p-3.5 flex flex-col items-start justify-between gap-2 text-left cursor-pointer group">
+                        <div class="w-full flex items-center justify-between">
+                            <span class="w-9 h-9 rounded-2xl bg-[#FFEAF2] border border-pink-100 flex items-center justify-center text-base shrink-0">🧸</span>
+                            <span class="text-[#C59BB0] group-hover:translate-x-0.5 transition-transform text-sm font-bold">›</span>
+                        </div>
+                        <div>
+                            <div class="font-bold text-xs sm:text-sm text-[#5B4563]">Terms of Service</div>
+                            <div class="text-[11px] text-[#9B8C9E] leading-snug mt-0.5">ข้อตกลงและเงื่อนไขสำหรับงานวาด</div>
+                        </div>
+                    </button>
+
+                    <button type="button" onclick="openModal('pricingModal')" class="cute-pill-btn w-full rounded-[22px] p-3.5 flex flex-col items-start justify-between gap-2 text-left cursor-pointer group">
+                        <div class="w-full flex items-center justify-between">
+                            <span class="w-9 h-9 rounded-2xl bg-[#FFEAF2] border border-pink-100 flex items-center justify-center text-base shrink-0">🐾</span>
+                            <span class="text-[#C59BB0] group-hover:translate-x-0.5 transition-transform text-sm font-bold">›</span>
+                        </div>
+                        <div>
+                            <div class="font-bold text-xs sm:text-sm text-[#5B4563]">ราคางาน</div>
+                            <div class="text-[11px] text-[#9B8C9E] leading-snug mt-0.5">ดูเรทราคาและคำนวณราคาเบื้องต้น</div>
+                        </div>
+                    </button>
+
+                    <button type="button" onclick="openModal('briefModal')" class="cute-pill-btn w-full rounded-[22px] p-3.5 flex flex-col items-start justify-between gap-2 text-left cursor-pointer group">
+                        <div class="w-full flex items-center justify-between">
+                            <span class="w-9 h-9 rounded-2xl bg-[#FFEAF2] border border-pink-100 flex items-center justify-center text-base shrink-0">☁️</span>
+                            <span class="text-[#C59BB0] group-hover:translate-x-0.5 transition-transform text-sm font-bold">›</span>
+                        </div>
+                        <div>
+                            <div class="font-bold text-xs sm:text-sm text-[#5B4563]">ส่งบรีฟงาน</div>
+                            <div class="text-[11px] text-[#9B8C9E] leading-snug mt-0.5">เลือกแบบและส่งรายละเอียดงาน</div>
+                        </div>
+                    </button>
+                </section>
+
+                <!-- Subtle Sync Status Indicator -->
+                <div class="flex items-center justify-center gap-2 mb-2 text-[11px] text-[#9E6B83]">
+                    <span id="syncDot" class="w-2 h-2 rounded-full bg-amber-400 inline-block"></span>
+                    <span id="syncStatusText">กำลังเชื่อมต่อฐานข้อมูล...</span>
+                </div>
+
+                <!-- Footer matching Reference -->
+                <footer class="pt-1 text-center text-xs text-[#9E6780] font-medium">
+                    © 2026 JaoMeowStore Studio All Rights Reserved ☁
+                </footer>
             </div>
-        </header>
-
-        <!-- Hero Banner Card with Cloud Bottom -->
-        <section class="relative rounded-[26px] overflow-hidden border-[3px] border-white shadow-[0_14px_30px_-10px_rgba(196,126,160,0.32)] mb-4">
-            <div class="hero-milk-sky relative min-h-[152px] flex flex-col items-end justify-center px-5 py-5 text-right">
-                <div class="relative z-10 flex flex-col items-end">
-                    <div class="inline-flex items-center gap-2 bg-white/95 px-4 py-1.5 rounded-full border-2 border-white shadow-sm mb-1.5">
-                        <span class="text-xs text-[#D97CA6]">🐾</span>
-                        <span class="font-serif italic font-bold text-xl text-[#E07AA8]">JaoMeowStore</span>
-                        <span class="text-xs text-pink-400">☆</span>
-                    </div>
-                    <p class="text-xs font-semibold text-[#9E5B79] drop-shadow-[0_1px_1px_rgba(255,255,255,0.85)]">
-                        website / emote / chibi
-                    </p>
-                    <p class="text-[11px] font-medium text-[#B06C8A] drop-shadow-[0_1px_1px_rgba(255,255,255,0.85)]">
-                        commission
-                    </p>
-                </div>
-
-                <svg class="absolute bottom-0 left-0 w-full h-9 text-white pointer-events-none" viewBox="0 0 1200 100" preserveAspectRatio="none" fill="currentColor">
-                    <path d="M0,55 C60,20 140,20 200,55 C260,18 350,18 410,56 C475,20 565,20 625,55 C690,18 780,18 845,56 C910,20 1000,20 1065,55 C1120,25 1165,28 1200,52 L1200,100 L0,100 Z"></path>
-                </svg>
-            </div>
-        </section>
-
-        <!-- Side-by-Side Showcase Cards on Same Row: EXAMPLE WORK & GROUP WORK -->
-        <section class="grid grid-cols-2 gap-3 mb-4">
-            <button
-                type="button"
-                onclick="openModal('exampleModal')"
-                class="cute-panel relative w-full rounded-[24px] pt-3 pb-8 px-3 text-center overflow-hidden cursor-pointer group flex flex-col justify-between"
-            >
-                <div class="text-left leading-none mb-0.5">
-                    <div class="font-serif italic font-bold text-xs text-[#B77B95]">JaoMeow</div>
-                    <div class="text-[7px] tracking-[0.2em] font-bold text-[#CCA0B4]">STORE</div>
-                </div>
-                <div class="py-0.5">
-                    <div class="font-serif italic font-bold text-base text-[#E68BB3] group-hover:text-pink-500 transition-colors leading-tight">
-                        EXAMPLE WORK
-                    </div>
-                    <div class="mt-1 font-bold text-xs text-[#6D536E]">
-                        ตัวอย่างงานของทางร้าน
-                    </div>
-                    <div class="mt-2 text-[10px] text-[#9E8A96] leading-snug">
-                        <div>don't use without permission</div>
-                        <div>ห้ามคัดลอก และแอบอ้างไปใช้งาน</div>
-                    </div>
-                </div>
-                <svg class="absolute bottom-0 left-0 w-full h-6 text-white pointer-events-none" viewBox="0 0 1200 80" preserveAspectRatio="none" fill="currentColor">
-                    <path d="M0,45 C70,12 150,12 220,46 C290,12 380,12 450,48 C525,12 615,12 685,46 C760,12 850,12 920,48 C995,14 1085,14 1200,45 L1200,80 L0,80 Z"></path>
-                </svg>
-            </button>
-
-            <button
-                type="button"
-                onclick="openModal('groupModal')"
-                class="cute-panel relative w-full rounded-[24px] pt-3 pb-8 px-3 text-center overflow-hidden cursor-pointer group flex flex-col justify-between"
-            >
-                <div class="text-left leading-none mb-0.5">
-                    <div class="font-serif italic font-bold text-xs text-[#B77B95]">JaoMeow</div>
-                    <div class="text-[7px] tracking-[0.2em] font-bold text-[#CCA0B4]">STORE</div>
-                </div>
-                <div class="py-0.5">
-                    <div class="font-serif italic font-bold text-base text-[#E68BB3] group-hover:text-pink-500 transition-colors leading-tight">
-                        GROUP WORK
-                    </div>
-                    <div class="mt-1 font-bold text-xs text-[#6D536E]">
-                        ตัวอย่างกลุ่มทั้งหมด
-                    </div>
-                    <div class="mt-2 text-[10px] text-[#9E8A96] leading-snug">
-                        <div>รวมตัวอย่างงานกลุ่มและเซ็ตของทางร้าน</div>
-                        <div>ห้ามคัดลอก และแอบอ้างไปใช้งาน</div>
-                    </div>
-                </div>
-                <svg class="absolute bottom-0 left-0 w-full h-6 text-white pointer-events-none" viewBox="0 0 1200 80" preserveAspectRatio="none" fill="currentColor">
-                    <path d="M0,45 C70,12 150,12 220,46 C290,12 380,12 450,48 C525,12 615,12 685,46 C760,12 850,12 920,48 C995,14 1085,14 1200,45 L1200,80 L0,80 Z"></path>
-                </svg>
-            </button>
-        </section>
-
-        <!-- Four Stacked Menu Buttons matching Reference Order -->
-        <section class="space-y-3 mb-5">
-            <button type="button" onclick="openModal('queueModal')" class="cute-pill-btn w-full rounded-[22px] px-4 py-3 flex items-center justify-between gap-3 text-left cursor-pointer group">
-                <div class="flex items-center gap-3">
-                    <span class="w-10 h-10 rounded-2xl bg-[#FFEAF2] border border-pink-100 flex items-center justify-center text-lg shrink-0">👛</span>
-                    <div>
-                        <div class="font-bold text-sm text-[#5B4563]">เช็กคิว</div>
-                        <div class="text-xs text-[#9B8C9E]">ดูคิวงานและสถานะงานของคุณ</div>
-                    </div>
-                </div>
-                <span class="text-[#C59BB0] group-hover:translate-x-1 transition-transform text-base">›</span>
-            </button>
-
-            <button type="button" onclick="openModal('tosModal')" class="cute-pill-btn w-full rounded-[22px] px-4 py-3 flex items-center justify-between gap-3 text-left cursor-pointer group">
-                <div class="flex items-center gap-3">
-                    <span class="w-10 h-10 rounded-2xl bg-[#FFEAF2] border border-pink-100 flex items-center justify-center text-lg shrink-0">🧸</span>
-                    <div>
-                        <div class="font-bold text-sm text-[#5B4563]">Terms of Service</div>
-                        <div class="text-xs text-[#9B8C9E]">ข้อตกลงและเงื่อนไขสำหรับงานวาด</div>
-                    </div>
-                </div>
-                <span class="text-[#C59BB0] group-hover:translate-x-1 transition-transform text-base">›</span>
-            </button>
-
-            <button type="button" onclick="openModal('pricingModal')" class="cute-pill-btn w-full rounded-[22px] px-4 py-3 flex items-center justify-between gap-3 text-left cursor-pointer group">
-                <div class="flex items-center gap-3">
-                    <span class="w-10 h-10 rounded-2xl bg-[#FFEAF2] border border-pink-100 flex items-center justify-center text-lg shrink-0">🐾</span>
-                    <div>
-                        <div class="font-bold text-sm text-[#5B4563]">ราคางาน</div>
-                        <div class="text-xs text-[#9B8C9E]">ดูเรทราคาและคำนวณราคาเบื้องต้น</div>
-                    </div>
-                </div>
-                <span class="text-[#C59BB0] group-hover:translate-x-1 transition-transform text-base">›</span>
-            </button>
-
-            <button type="button" onclick="openModal('briefModal')" class="cute-pill-btn w-full rounded-[22px] px-4 py-3 flex items-center justify-between gap-3 text-left cursor-pointer group">
-                <div class="flex items-center gap-3">
-                    <span class="w-10 h-10 rounded-2xl bg-[#FFEAF2] border border-pink-100 flex items-center justify-center text-lg shrink-0">☁️</span>
-                    <div>
-                        <div class="font-bold text-sm text-[#5B4563]">ส่งบรีฟงาน</div>
-                        <div class="text-xs text-[#9B8C9E]">เลือกแบบและส่งรายละเอียดงาน</div>
-                    </div>
-                </div>
-                <span class="text-[#C59BB0] group-hover:translate-x-1 transition-transform text-base">›</span>
-            </button>
-        </section>
-
-        <!-- Subtle Sync Status Indicator -->
-        <div class="flex items-center justify-center gap-2 mb-2 text-[11px] text-[#9E6B83]">
-            <span id="syncDot" class="w-2 h-2 rounded-full bg-amber-400 inline-block"></span>
-            <span id="syncStatusText">กำลังเชื่อมต่อฐานข้อมูล...</span>
-        </div>
-
-        <!-- Footer matching Reference -->
-        <footer class="pt-1 text-center text-xs text-[#A8758C]">
-            © 2026 JaoMeowStore Studio All Rights Reserved ☁
-        </footer>
-    </main>
+        </main>
+    </div>
 
     <!-- Backdrop -->
-    <div id="modalBackdrop" onclick="closeAllModals()" class="modal-backdrop fixed inset-0 z-40 hidden opacity-0 bg-[#3B2E47]/40 backdrop-blur-xs"></div>
+    <div id="modalBackdrop" onclick="closeAllModals()" class="modal-backdrop fixed inset-0 z-40 hidden opacity-0 bg-[#5A3649]/35 backdrop-blur-xs"></div>
 
     <!-- 1. EXAMPLE WORK MODAL -->
     <div id="exampleModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
-        <div class="modal-card bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-2xl w-full max-h-[86vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
-            <div class="p-5 pb-3.5 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-[#FFF5F9] to-[#F5FAFF]">
+        <div class="modal-card bg-[#FFFDFC]/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-md w-full max-h-[86vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
+            <div class="p-4 pb-3 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-[#FFF1F6] via-[#FFF7FA] to-[#FFEAF2]">
                 <div>
-                    <h3 class="font-display text-xl font-bold text-[#5A486A]">EXAMPLE WORK</h3>
-                    <p class="text-xs text-[#887A94]">เลือกดูตัวอย่างงานแยกตามหมวดหมู่</p>
+                    <h3 class="font-display text-lg font-bold text-[#7A4961]">EXAMPLE WORK</h3>
+                    <p class="text-xs text-[#A5788E]">เลือกดูตัวอย่างงานแยกตามหมวดหมู่</p>
                 </div>
-                <button type="button" onclick="closeAllModals()" class="w-9 h-9 rounded-full bg-white hover:bg-pink-50 text-[#7A6888] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
+                <button type="button" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
             </div>
-            <div class="px-5 pt-3 pb-2 border-b border-pink-50 space-y-2 bg-white">
-                <div class="flex flex-wrap gap-2" id="exampleSubcatTabs"></div>
+            <div class="px-4 pt-3 pb-2.5 border-b border-pink-50 space-y-2 bg-[#FFFDFC]">
+                <div class="flex flex-wrap gap-1.5" id="exampleSubcatTabs"></div>
                 <div class="flex flex-wrap gap-1.5" id="exampleLeafFilterChips"></div>
             </div>
-            <div id="exampleGalleryList" class="p-5 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 gap-4 flex-1"></div>
+            <div id="exampleGalleryList" class="p-4 overflow-y-auto grid grid-cols-2 gap-3 flex-1 bg-[#FFF9FB]/60"></div>
         </div>
     </div>
 
     <!-- 2. GROUP WORK MODAL -->
     <div id="groupModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
-        <div class="modal-card bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-2xl w-full max-h-[86vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
-            <div class="p-5 pb-3.5 border-b border-sky-100 flex items-center justify-between bg-gradient-to-r from-[#F4FAFF] to-[#FFF6FA]">
+        <div class="modal-card bg-[#FFFDFC]/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-md w-full max-h-[86vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
+            <div class="p-4 pb-3 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-[#FFEAF2] via-[#FFF7FA] to-[#FFF1F6]">
                 <div>
-                    <h3 class="font-display text-xl font-bold text-[#5A486A]">ตัวอย่างกลุ่มทั้งหมด</h3>
-                    <p class="text-xs text-[#887A94]">รูปภาพ ชื่อผลงาน และลิงก์ของตัวอย่างกลุ่ม</p>
+                    <h3 class="font-display text-lg font-bold text-[#7A4961]">ตัวอย่างกลุ่มทั้งหมด</h3>
+                    <p class="text-xs text-[#A5788E]">รูปภาพ ชื่อผลงาน และลิงก์ของตัวอย่างกลุ่ม</p>
                 </div>
-                <button type="button" onclick="closeAllModals()" class="w-9 h-9 rounded-full bg-white hover:bg-sky-50 text-[#7A6888] border border-sky-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
+                <button type="button" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
             </div>
-            <div class="px-5 py-3 border-b border-sky-50 bg-white">
+            <div class="px-4 py-2.5 border-b border-pink-50 bg-[#FFFDFC]">
                 <div class="flex flex-wrap gap-1.5" id="groupSubcatFilterChips"></div>
             </div>
-            <div id="groupGalleryList" class="p-5 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 gap-4 flex-1"></div>
+            <div id="groupGalleryList" class="p-4 overflow-y-auto grid grid-cols-2 gap-3 flex-1 bg-[#FFF9FB]/60"></div>
         </div>
     </div>
 
     <!-- 3. QUEUE MODAL -->
     <div id="queueModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
-        <div class="modal-card bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-lg w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
-            <div class="p-5 pb-3.5 border-b border-sky-100 flex items-center justify-between bg-gradient-to-r from-[#FFF6F9] to-white">
-                <h3 class="font-display text-xl font-bold text-[#5A486A]">📋 เช็กคิวงานปัจจุบัน</h3>
-                <button type="button" onclick="closeAllModals()" class="w-9 h-9 rounded-full bg-white hover:bg-pink-50 text-[#7A6888] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
+        <div class="modal-card bg-[#FFFDFC]/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-md w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
+            <div class="p-4 pb-3 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-[#FFF2F7] to-[#FFF9FB]">
+                <h3 class="font-display text-lg font-bold text-[#7A4961]">📋 เช็กคิวงานปัจจุบัน</h3>
+                <button type="button" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
             </div>
-            <div class="p-5 overflow-y-auto space-y-3 text-sm">
-                <div class="p-3.5 rounded-2xl bg-sky-50/80 border border-sky-100 flex items-center justify-between">
+            <div class="p-4 overflow-y-auto space-y-2.5 text-sm bg-[#FFF9FB]/50">
+                <div class="p-3.5 rounded-2xl bg-[#FFF0F6] border border-pink-100 flex items-center justify-between">
                     <div>
-                        <div class="font-bold text-[#5A486A]">คิวที่ 1 — คุณมินนี่</div>
-                        <div class="text-xs text-[#887A94]">งานเว็บไซต์ + เซ็ตอีโมต</div>
+                        <div class="font-bold text-[#6B4257]">คิวที่ 1 — คุณมินนี่</div>
+                        <div class="text-xs text-[#A5788E]">งานเว็บไซต์ + เซ็ตอีโมต</div>
                     </div>
-                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-700">กำลังทำร่าง</span>
+                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-pink-200/80 text-[#8F3E64]">กำลังทำร่าง</span>
                 </div>
-                <div class="p-3.5 rounded-2xl bg-pink-50/80 border border-pink-100 flex items-center justify-between">
+                <div class="p-3.5 rounded-2xl bg-white border border-pink-100 flex items-center justify-between">
                     <div>
-                        <div class="font-bold text-[#5A486A]">คิวที่ 2 — คุณปลายฟ้า</div>
-                        <div class="text-xs text-[#887A94]">งานชีตตัวละคร & ป้ายร้าน</div>
+                        <div class="font-bold text-[#6B4257]">คิวที่ 2 — คุณปลายฟ้า</div>
+                        <div class="text-xs text-[#A5788E]">งานชีตตัวละคร & ป้ายร้าน</div>
                     </div>
-                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-sky-100 text-sky-700">รอคิวถัดไป</span>
+                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-[#FFE6F0] text-[#9E5678]">รอคิวถัดไป</span>
                 </div>
-                <div class="p-3.5 rounded-2xl bg-emerald-50/80 border border-emerald-100 flex items-center justify-between">
+                <div class="p-3.5 rounded-2xl bg-[#FFF6F9] border border-pink-100 flex items-center justify-between">
                     <div>
-                        <div class="font-bold text-[#5A486A]">คิวว่างเปิดรับเพิ่ม</div>
-                        <div class="text-xs text-[#887A94]">สามารถส่งบรีฟเพื่อจองคิวล่วงหน้าได้</div>
+                        <div class="font-bold text-[#6B4257]">คิวว่างเปิดรับเพิ่ม</div>
+                        <div class="text-xs text-[#A5788E]">สามารถส่งบรีฟเพื่อจองคิวล่วงหน้าได้</div>
                     </div>
-                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700">ว่าง 2 คิว</span>
+                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-rose-100 text-rose-600">ว่าง 2 คิว</span>
                 </div>
             </div>
         </div>
@@ -393,12 +486,12 @@
 
     <!-- 4. TOS MODAL -->
     <div id="tosModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
-        <div class="modal-card bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-lg w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
-            <div class="p-5 pb-3.5 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-[#FFF6F9] to-white">
-                <h3 class="font-display text-xl font-bold text-[#5A486A]">📜 กฎการจ้างงาน</h3>
-                <button type="button" onclick="closeAllModals()" class="w-9 h-9 rounded-full bg-white hover:bg-pink-50 text-[#7A6888] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
+        <div class="modal-card bg-[#FFFDFC]/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-md w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
+            <div class="p-4 pb-3 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-[#FFF2F7] to-[#FFF9FB]">
+                <h3 class="font-display text-lg font-bold text-[#7A4961]">📜 กฎการจ้างงาน</h3>
+                <button type="button" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
             </div>
-            <div class="p-5 overflow-y-auto space-y-3 text-sm text-[#635570] leading-relaxed">
+            <div class="p-4 overflow-y-auto space-y-3 text-sm text-[#6E495C] leading-relaxed bg-[#FFF9FB]/50">
                 <p>1. บรีฟรายละเอียดให้ชัดเจนก่อนเริ่มงาน สามารถแก้ไขจุดเล็กน้อยได้ฟรีตามจำนวนครั้งที่ตกลง</p>
                 <p>2. ชำระมัดจำ 50% หลังจากตกลงรายละเอียดและรับคิวเรียบร้อยแล้ว ส่วนที่เหลือชำระก่อนส่งไฟล์จริง</p>
                 <p>3. ไม่อนุญาตให้นำผลงานไปแอบอ้างเป็นฝีมือตนเอง หรือนำไปเทรน AI ทุกกรณี</p>
@@ -409,32 +502,32 @@
 
     <!-- 5. PRICING MODAL -->
     <div id="pricingModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
-        <div class="modal-card bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-lg w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
-            <div class="p-5 pb-3.5 border-b border-amber-100 flex items-center justify-between bg-gradient-to-r from-[#FFFDF4] to-[#FFF6F9]">
-                <h3 class="font-display text-xl font-bold text-[#5A486A]">💰 เรตราคางานเบื้องต้น</h3>
-                <button type="button" onclick="closeAllModals()" class="w-9 h-9 rounded-full bg-white hover:bg-amber-50 text-[#7A6888] border border-amber-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
+        <div class="modal-card bg-[#FFFDFC]/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-md w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
+            <div class="p-4 pb-3 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-[#FFF2F7] to-[#FFF9FB]">
+                <h3 class="font-display text-lg font-bold text-[#7A4961]">💰 เรตราคางานเบื้องต้น</h3>
+                <button type="button" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
             </div>
-            <div class="p-5 overflow-y-auto space-y-3 text-sm">
-                <div class="p-4 rounded-2xl bg-pink-50/70 border border-pink-100 flex items-center justify-between">
+            <div class="p-4 overflow-y-auto space-y-2.5 text-sm bg-[#FFF9FB]/50">
+                <div class="p-3.5 rounded-2xl bg-[#FFF0F6] border border-pink-100 flex items-center justify-between">
                     <div>
-                        <div class="font-bold text-[#5A486A]">งานป้าย / ป้ายร้าน / ป้ายประกาศ</div>
-                        <div class="text-xs text-[#887A94]">ไฟล์พร้อมใช้งาน สีพาสเทลคมชัด</div>
+                        <div class="font-bold text-[#6B4257]">งานป้าย / ป้ายร้าน / ป้ายประกาศ</div>
+                        <div class="text-xs text-[#A5788E]">ไฟล์พร้อมใช้งาน สีชมพูนมคมชัด</div>
                     </div>
-                    <span class="font-display font-bold text-pink-500 text-base">เริ่มต้น 150฿</span>
+                    <span class="font-display font-bold text-[#E06897] text-base">เริ่มต้น 150฿</span>
                 </div>
-                <div class="p-4 rounded-2xl bg-sky-50/70 border border-sky-100 flex items-center justify-between">
+                <div class="p-3.5 rounded-2xl bg-white border border-pink-100 flex items-center justify-between">
                     <div>
-                        <div class="font-bold text-[#5A486A]">งานชีต / ชิบิ / อีโมต</div>
-                        <div class="text-xs text-[#887A94]">น่ารักสไตล์เจ้าเหมียว ปรับโทนได้</div>
+                        <div class="font-bold text-[#6B4257]">งานชีต / ชิบิ / อีโมต</div>
+                        <div class="text-xs text-[#A5788E]">น่ารักสไตล์เจ้าเหมียว ปรับโทนได้</div>
                     </div>
-                    <span class="font-display font-bold text-sky-500 text-base">เริ่มต้น 250฿</span>
+                    <span class="font-display font-bold text-[#E06897] text-base">เริ่มต้น 250฿</span>
                 </div>
-                <div class="p-4 rounded-2xl bg-purple-50/70 border border-purple-100 flex items-center justify-between">
+                <div class="p-3.5 rounded-2xl bg-[#FFF5F9] border border-pink-100 flex items-center justify-between">
                     <div>
-                        <div class="font-bold text-[#5A486A]">งาน Website / หน้าเพจร้านค้า</div>
-                        <div class="text-xs text-[#887A94]">รองรับมือถือและเดสก์ท็อป ครบจบในหน้าเดียว</div>
+                        <div class="font-bold text-[#6B4257]">งาน Website / หน้าเพจร้านค้า</div>
+                        <div class="text-xs text-[#A5788E]">รองรับมือถือและเดสก์ท็อป ครบจบในหน้าเดียว</div>
                     </div>
-                    <span class="font-display font-bold text-purple-500 text-base">เริ่มต้น 590฿</span>
+                    <span class="font-display font-bold text-[#E06897] text-base">เริ่มต้น 590฿</span>
                 </div>
             </div>
         </div>
@@ -442,18 +535,18 @@
 
     <!-- 6. BRIEF MODAL -->
     <div id="briefModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
-        <div class="modal-card bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-lg w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
-            <div class="p-5 pb-3.5 border-b border-purple-100 flex items-center justify-between bg-gradient-to-r from-[#F9F4FF] to-[#FFF6F9]">
-                <h3 class="font-display text-xl font-bold text-[#5A486A]">💌 ส่งบรีฟงาน</h3>
-                <button type="button" onclick="closeAllModals()" class="w-9 h-9 rounded-full bg-white hover:bg-purple-50 text-[#7A6888] border border-purple-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
+        <div class="modal-card bg-[#FFFDFC]/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-md w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
+            <div class="p-4 pb-3 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-[#FFF2F7] to-[#FFF9FB]">
+                <h3 class="font-display text-lg font-bold text-[#7A4961]">💌 ส่งบรีฟงาน</h3>
+                <button type="button" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
             </div>
-            <form id="briefForm" onsubmit="handleBriefSubmit(event)" class="p-5 overflow-y-auto space-y-3.5 text-sm">
+            <form id="briefForm" onsubmit="handleBriefSubmit(event)" class="p-4 overflow-y-auto space-y-3.5 text-sm bg-[#FFF9FB]/50">
                 <div>
-                    <label class="block font-semibold text-[#5A486A] mb-1">ชื่อผู้จ้าง / ช่องทางติดต่อ</label>
+                    <label class="block font-semibold text-[#6B4257] mb-1">ชื่อผู้จ้าง / ช่องทางติดต่อ</label>
                     <input id="briefContact" type="text" required placeholder="เช่น คุณเหมียว / FB: JaoMeow" class="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
                 </div>
                 <div>
-                    <label class="block font-semibold text-[#5A486A] mb-1">ประเภทงานที่สนใจ</label>
+                    <label class="block font-semibold text-[#6B4257] mb-1">ประเภทงานที่สนใจ</label>
                     <select id="briefType" class="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
                         <option value="งานป้าย">งานป้าย</option>
                         <option value="งานชีต">งานชีต</option>
@@ -463,35 +556,35 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block font-semibold text-[#5A486A] mb-1">รายละเอียดบรีฟ / โทนสี / งบประมาณ</label>
+                    <label class="block font-semibold text-[#6B4257] mb-1">รายละเอียดบรีฟ / โทนสี / งบประมาณ</label>
                     <textarea id="briefDetail" rows="3" required placeholder="พิมพ์รายละเอียดงานที่ต้องการได้เลยครับ..." class="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400"></textarea>
                 </div>
-                <button type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-pink-400 to-sky-400 text-white font-bold shadow hover:opacity-95 transition cursor-pointer">
+                <button type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#F48FB6] to-[#E86D9C] text-white font-bold shadow hover:opacity-95 transition cursor-pointer">
                     คัดลอกข้อความบรีฟพร้อมส่ง
                 </button>
-                <div id="briefFeedback" class="hidden p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold"></div>
+                <div id="briefFeedback" class="hidden p-3 rounded-xl bg-pink-50 border border-pink-200 text-[#8F3E64] text-xs font-semibold"></div>
             </form>
         </div>
     </div>
 
     <!-- 7. ADMIN LOGIN MODAL -->
     <div id="adminLoginModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
-        <div class="modal-card bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-sm w-full flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
-            <div class="p-5 pb-3.5 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-[#FFF5F9] to-white">
-                <h3 class="font-display text-lg font-bold text-[#5A486A]">🐾 Admin Login</h3>
-                <button type="button" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#7A6888] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
+        <div class="modal-card bg-[#FFFDFC]/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-sm w-full flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
+            <div class="p-4 pb-3 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-[#FFF2F7] to-[#FFF9FB]">
+                <h3 class="font-display text-lg font-bold text-[#7A4961]">🐾 Admin Login</h3>
+                <button type="button" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
             </div>
-            <form id="adminLoginForm" onsubmit="handleAdminLogin(event)" class="p-5 space-y-3.5 text-sm">
+            <form id="adminLoginForm" onsubmit="handleAdminLogin(event)" class="p-5 space-y-3.5 text-sm bg-[#FFF9FB]/50">
                 <div>
-                    <label class="block font-semibold text-[#5A486A] mb-1">Admin Name</label>
+                    <label class="block font-semibold text-[#6B4257] mb-1">Admin Name</label>
                     <input id="adminUsernameInput" type="text" required placeholder="กรอกชื่อแอดมิน" autocomplete="off" class="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
                 </div>
                 <div>
-                    <label class="block font-semibold text-[#5A486A] mb-1">Password</label>
+                    <label class="block font-semibold text-[#6B4257] mb-1">Password</label>
                     <input id="adminPasswordInput" type="password" required placeholder="กรอกรหัสผ่าน" class="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
                 </div>
                 <div id="adminLoginError" class="hidden text-xs text-rose-500 font-semibold bg-rose-50 p-2.5 rounded-xl border border-rose-200"></div>
-                <button type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-pink-400 to-purple-400 text-white font-bold shadow hover:opacity-95 transition cursor-pointer">
+                <button type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#F48FB6] to-[#E86D9C] text-white font-bold shadow hover:opacity-95 transition cursor-pointer">
                     เข้าสู่ระบบแอดมิน
                 </button>
             </form>
@@ -500,25 +593,25 @@
 
     <!-- 8. ADMIN PANEL MODAL -->
     <div id="adminPanelModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
-        <div class="modal-card bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-2xl w-full max-h-[88vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
-            <div class="p-5 pb-3.5 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-[#FFF5F9] to-[#F5FAFF]">
+        <div class="modal-card bg-[#FFFDFC]/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-lg w-full max-h-[88vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
+            <div class="p-4 pb-3 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-[#FFF1F6] via-[#FFF7FA] to-[#FFEAF2]">
                 <div>
-                    <h3 class="font-display text-xl font-bold text-[#5A486A]">⚙️ Admin Manager — เจ้าเหมียว</h3>
-                    <p class="text-xs text-[#887A94]">จัดการหมวดหมู่ย่อย อัปโหลดรูปภาพ ชื่อรูป และลิงก์</p>
+                    <h3 class="font-display text-lg font-bold text-[#7A4961]">⚙️ Admin Manager — เจ้าเหมียว</h3>
+                    <p class="text-xs text-[#A5788E]">จัดการหมวดหมู่ย่อย อัปโหลดรูปภาพ ชื่อรูป และลิงก์</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <button type="button" onclick="handleAdminLogout()" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-50 text-rose-500 border border-rose-200 hover:bg-rose-100 cursor-pointer">ออกจากระบบ</button>
-                    <button type="button" onclick="closeAllModals()" class="w-9 h-9 rounded-full bg-white hover:bg-pink-50 text-[#7A6888] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
+                    <button type="button" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
                 </div>
             </div>
 
-            <div class="p-5 overflow-y-auto space-y-5 text-sm">
-                <div class="p-4 rounded-2xl bg-pink-50/60 border border-pink-100 space-y-3">
-                    <div class="font-bold text-[#5A486A]">1. เลือกหมวดหลักและจัดการหมวดหมู่</div>
+            <div class="p-4 overflow-y-auto space-y-4 text-sm bg-[#FFF9FB]/50">
+                <div class="p-4 rounded-2xl bg-[#FFF2F7] border border-pink-100 space-y-3">
+                    <div class="font-bold text-[#6B4257]">1. เลือกหมวดหลักและจัดการหมวดหมู่</div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
-                            <label class="block text-xs font-semibold text-[#6D597A] mb-1">หมวดหลัก</label>
+                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">หมวดหลัก</label>
                             <select id="adminMainCatSelect" onchange="onAdminMainCatChange()" class="w-full px-3 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none">
                                 <option value="example">ตัวอย่างงาน</option>
                                 <option value="group">ตัวอย่างกลุ่ม</option>
@@ -526,7 +619,7 @@
                         </div>
 
                         <div id="adminExampleSubcatWrapper">
-                            <label class="block text-xs font-semibold text-[#6D597A] mb-1">หมวดย่อย (ตัวอย่างงาน)</label>
+                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">หมวดย่อย (ตัวอย่างงาน)</label>
                             <select id="adminExampleSubcatSelect" onchange="renderAdminCategoryControls()" class="w-full px-3 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none">
                                 <option value="งานป้าย">งานป้าย</option>
                                 <option value="งานชีต">งานชีต</option>
@@ -546,7 +639,7 @@
                             type="button"
                             onclick="addCustomCategory()"
                             id="addCustomCategoryBtn"
-                            class="px-4 py-2 rounded-xl bg-pink-400 hover:bg-pink-500 text-white font-bold shadow-xs transition cursor-pointer shrink-0"
+                            class="px-4 py-2 rounded-xl bg-[#EE7CA8] hover:bg-[#E46898] text-white font-bold shadow-xs transition cursor-pointer shrink-0"
                         >
                             + เพิ่มหมวด
                         </button>
@@ -555,52 +648,52 @@
                     <div id="adminCustomCategoryList" class="flex flex-wrap gap-1.5 pt-1"></div>
                 </div>
 
-                <form id="adminArtworkForm" onsubmit="handleAddArtwork(event)" class="p-4 rounded-2xl bg-sky-50/60 border border-sky-100 space-y-3.5">
-                    <div class="font-bold text-[#5A486A]">2. เพิ่มรูปภาพ ชื่อรูปภาพ และลิงก์</div>
+                <form id="adminArtworkForm" onsubmit="handleAddArtwork(event)" class="p-4 rounded-2xl bg-white border border-pink-100 space-y-3.5">
+                    <div class="font-bold text-[#6B4257]">2. เพิ่มรูปภาพ ชื่อรูปภาพ และลิงก์</div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
-                            <label class="block text-xs font-semibold text-[#6D597A] mb-1">ชื่อรูปภาพ / ชื่องาน</label>
-                            <input id="artworkTitleInput" type="text" required placeholder="เช่น ป้ายร้านคาเฟ่พาสเทล" class="w-full px-3.5 py-2 rounded-xl border border-sky-200 bg-white focus:outline-none focus:border-sky-400">
+                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ชื่อรูปภาพ / ชื่องาน</label>
+                            <input id="artworkTitleInput" type="text" required placeholder="เช่น ป้ายร้านคาเฟ่พาสเทล" class="w-full px-3.5 py-2 rounded-xl border border-pink-200 bg-[#FFFDFC] focus:outline-none focus:border-pink-400">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-[#6D597A] mb-1">แนบลิงก์ (ถ้ามี)</label>
-                            <input id="artworkLinkInput" type="url" placeholder="https://..." class="w-full px-3.5 py-2 rounded-xl border border-sky-200 bg-white focus:outline-none focus:border-sky-400">
+                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">แนบลิงก์ (ถ้ามี)</label>
+                            <input id="artworkLinkInput" type="url" placeholder="https://..." class="w-full px-3.5 py-2 rounded-xl border border-pink-200 bg-[#FFFDFC] focus:outline-none focus:border-pink-400">
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 items-start">
                         <div>
-                            <label class="block text-xs font-semibold text-[#6D597A] mb-1">อัปโหลดไฟล์รูปภาพ</label>
-                            <input id="artworkFileInput" type="file" accept="image/*" onchange="handleFilePreview(event)" class="w-full text-xs text-[#6D597A] file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-pink-100 file:text-pink-600 hover:file:bg-pink-200 cursor-pointer">
+                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">อัปโหลดไฟล์รูปภาพ</label>
+                            <input id="artworkFileInput" type="file" accept="image/*" onchange="handleFilePreview(event)" class="w-full text-xs text-[#8A5A72] file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#FFE6F0] file:text-[#B84D7B] hover:file:bg-[#FFD6E6] cursor-pointer">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-[#6D597A] mb-1">หรือวางลิงก์รูปภาพโดยตรง</label>
-                            <input id="artworkImageUrlInput" type="url" oninput="handleDirectUrlPreview()" placeholder="https://.../image.jpg" class="w-full px-3.5 py-2 rounded-xl border border-sky-200 bg-white focus:outline-none focus:border-sky-400">
+                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">หรือวางลิงก์รูปภาพโดยตรง</label>
+                            <input id="artworkImageUrlInput" type="url" oninput="handleDirectUrlPreview()" placeholder="https://.../image.jpg" class="w-full px-3.5 py-2 rounded-xl border border-pink-200 bg-[#FFFDFC] focus:outline-none focus:border-pink-400">
                         </div>
                     </div>
 
                     <div class="flex items-center gap-3.5">
-                        <div class="w-20 h-20 rounded-2xl border-2 border-dashed border-pink-200 bg-white flex items-center justify-center overflow-hidden shrink-0">
+                        <div class="w-20 h-20 rounded-2xl border-2 border-dashed border-pink-200 bg-[#FFF7FA] flex items-center justify-center overflow-hidden shrink-0">
                             <img id="artworkPreviewImg" src="" alt="Preview" class="hidden w-full h-full object-cover">
-                            <span id="artworkPreviewPlaceholder" class="text-[11px] text-[#9A8CA6] text-center px-1">1:1 Preview</span>
+                            <span id="artworkPreviewPlaceholder" class="text-[11px] text-[#B08398] text-center px-1">1:1 Preview</span>
                         </div>
                         <div class="flex-1">
-                            <div id="multiCatLabel" class="text-xs font-semibold text-[#6D597A] mb-1.5">เลือกหมวดย่อย (เลือกได้มากกว่า 1 หมวด)</div>
+                            <div id="multiCatLabel" class="text-xs font-semibold text-[#8A5A72] mb-1.5">เลือกหมวดย่อย (เลือกได้มากกว่า 1 หมวด)</div>
                             <div id="multiCategoryCheckboxes" class="flex flex-wrap gap-2"></div>
                         </div>
                     </div>
 
                     <div id="adminFormError" class="hidden text-xs text-rose-500 font-semibold bg-rose-50 p-2.5 rounded-xl border border-rose-200"></div>
-                    <div id="adminFormSuccess" class="hidden text-xs text-emerald-700 font-semibold bg-emerald-50 p-2.5 rounded-xl border border-emerald-200"></div>
+                    <div id="adminFormSuccess" class="hidden text-xs text-[#8F3E64] font-semibold bg-[#FFF0F6] p-2.5 rounded-xl border border-pink-200"></div>
 
-                    <button type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-sky-400 to-pink-400 text-white font-bold shadow hover:opacity-95 transition cursor-pointer">
+                    <button type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#F48FB6] to-[#E86D9C] text-white font-bold shadow hover:opacity-95 transition cursor-pointer">
                         บันทึกรูปภาพและเผยแพร่ให้ลูกค้าเห็น
                     </button>
                 </form>
 
                 <div class="space-y-2.5">
-                    <div class="font-bold text-[#5A486A]">3. รายการที่เผยแพร่แล้ว (<span id="adminItemCount">0</span>)</div>
+                    <div class="font-bold text-[#6B4257]">3. รายการที่เผยแพร่แล้ว (<span id="adminItemCount">0</span>)</div>
                     <div id="adminArtworkList" class="space-y-2"></div>
                 </div>
             </div>
@@ -802,21 +895,21 @@
 
             customListEl.innerHTML = choices.length
                 ? choices.map(item => `
-                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-white border border-pink-200 text-[#5A486A]">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-white border border-pink-200 text-[#6B4257]">
                         <span>${escapeHtml(item)}</span>
                         <button type="button" onclick="removeCustomCategory('${escapeJsAttr(item)}')" class="text-rose-400 hover:text-rose-600 font-bold cursor-pointer">×</button>
                     </span>
                 `).join('')
-                : '<span class="text-xs text-[#9A8CA6]">ยังไม่มีหมวดที่เพิ่มเอง</span>';
+                : '<span class="text-xs text-[#B08398]">ยังไม่มีหมวดที่เพิ่มเอง</span>';
 
             multiCheckboxesEl.innerHTML = choices.length
                 ? choices.map((item, idx) => `
-                    <label class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-sky-200 text-xs font-semibold text-[#5A486A] cursor-pointer hover:bg-sky-50">
-                        <input type="checkbox" name="artworkMultiCat" value="${escapeHtml(item)}" id="multiCat_${idx}" class="rounded accent-pink-400">
+                    <label class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FFF7FA] border border-pink-200 text-xs font-semibold text-[#6B4257] cursor-pointer hover:bg-[#FFEBF2]">
+                        <input type="checkbox" name="artworkMultiCat" value="${escapeHtml(item)}" id="multiCat_${idx}" class="rounded accent-pink-500">
                         <span>${escapeHtml(item)}</span>
                     </label>
                 `).join('')
-                : '<span class="text-xs text-[#9A8CA6]">กรุณาเพิ่มหมวดย่อยด้านบนก่อน</span>';
+                : '<span class="text-xs text-[#B08398]">กรุณาเพิ่มหมวดย่อยด้านบนก่อน</span>';
         }
 
         function compressImageFile(file) {
@@ -985,9 +1078,9 @@
                         <div class="flex items-center gap-3 min-w-0">
                             <img src="${escapeHtml(item.imageData)}" alt="${escapeHtml(item.title)}" onerror="this.src='https://placehold.co/120x120/FFE6F0/6D597A?text=1:1'" class="w-12 h-12 rounded-xl object-cover shrink-0 border border-pink-100">
                             <div class="min-w-0">
-                                <div class="font-bold text-xs sm:text-sm text-[#5A486A] truncate">${escapeHtml(item.title)}</div>
-                                <div class="text-[11px] text-pink-500 font-semibold">${badgeMain}${tagsText ? ' · ' + escapeHtml(tagsText) : ''}</div>
-                                ${item.link ? `<a href="${escapeHtml(item.link)}" target="_blank" rel="noopener noreferrer" class="text-[11px] text-sky-500 hover:underline truncate block">${escapeHtml(item.link)}</a>` : ''}
+                                <div class="font-bold text-xs sm:text-sm text-[#6B4257] truncate">${escapeHtml(item.title)}</div>
+                                <div class="text-[11px] text-[#E06897] font-semibold">${badgeMain}${tagsText ? ' · ' + escapeHtml(tagsText) : ''}</div>
+                                ${item.link ? `<a href="${escapeHtml(item.link)}" target="_blank" rel="noopener noreferrer" class="text-[11px] text-[#B85D85] hover:underline truncate block">${escapeHtml(item.link)}</a>` : ''}
                             </div>
                         </div>
                         <button type="button" onclick="deleteArtwork('${escapeJsAttr(item.id)}')" class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-rose-50 text-rose-500 hover:bg-rose-100 shrink-0 cursor-pointer">ลบ</button>
@@ -1011,7 +1104,7 @@
                     <button
                         type="button"
                         onclick="selectExampleSubcat('${escapeJsAttr(sub)}')"
-                        class="px-3.5 py-1.5 rounded-full text-xs font-bold transition cursor-pointer ${active ? 'bg-pink-400 text-white shadow-xs' : 'bg-pink-50 text-[#6D597A] hover:bg-pink-100'}"
+                        class="px-3.5 py-1.5 rounded-full text-xs font-bold transition cursor-pointer ${active ? 'bg-[#EE7CA8] text-white shadow-xs' : 'bg-[#FFF0F6] text-[#7A4961] hover:bg-[#FFE2EE]'}"
                     >
                         ${escapeHtml(sub)}
                     </button>
@@ -1030,7 +1123,7 @@
                     <button
                         type="button"
                         onclick="selectExampleLeafFilter('${escapeJsAttr(leaf)}')"
-                        class="px-3 py-1 rounded-full text-[11px] font-semibold transition cursor-pointer ${active ? 'bg-sky-400 text-white' : 'bg-sky-50 text-sky-700 hover:bg-sky-100'}"
+                        class="px-3 py-1 rounded-full text-[11px] font-semibold transition cursor-pointer ${active ? 'bg-[#F49AC0] text-white' : 'bg-[#FFF6F9] text-[#9E5678] border border-pink-100 hover:bg-[#FFEBF2]'}"
                     >
                         ${escapeHtml(leaf)}
                     </button>
@@ -1073,7 +1166,7 @@
                     <button
                         type="button"
                         onclick="selectGroupSubcatFilter('${escapeJsAttr(cat)}')"
-                        class="px-3 py-1 rounded-full text-xs font-semibold transition cursor-pointer ${active ? 'bg-sky-400 text-white' : 'bg-sky-50 text-sky-700 hover:bg-sky-100'}"
+                        class="px-3 py-1 rounded-full text-xs font-semibold transition cursor-pointer ${active ? 'bg-[#EE7CA8] text-white' : 'bg-[#FFF6F9] text-[#9E5678] border border-pink-100 hover:bg-[#FFEBF2]'}"
                     >
                         ${escapeHtml(cat)}
                     </button>
@@ -1097,7 +1190,7 @@
         function renderArtworkCards(container, items, emptyMessage) {
             if (!items.length) {
                 container.innerHTML = `
-                    <div class="col-span-full py-10 text-center rounded-2xl bg-pink-50/40 border border-dashed border-pink-200 text-sm text-[#887A94]">
+                    <div class="col-span-full py-10 text-center rounded-2xl bg-[#FFF5F9] border border-dashed border-pink-200 text-sm text-[#A5788E]">
                         ${escapeHtml(emptyMessage)}
                     </div>
                 `;
@@ -1106,22 +1199,22 @@
 
             container.innerHTML = items.map(item => {
                 const catsHtml = (item.leafCategories || []).map(c =>
-                    `<span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-pink-100/80 text-pink-600">${escapeHtml(c)}</span>`
+                    `<span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#FFE8F1] text-[#B84D7B]">${escapeHtml(c)}</span>`
                 ).join('');
 
                 return `
-                    <article class="rounded-2xl bg-white border-2 border-pink-100/80 overflow-hidden shadow-xs hover:shadow-md transition flex flex-col">
+                    <article class="rounded-2xl bg-white border-2 border-pink-100 overflow-hidden shadow-xs hover:shadow-md transition flex flex-col">
                         <div class="aspect-square w-full bg-[#FFF7FA] overflow-hidden">
                             <img
                                 src="${escapeHtml(item.imageData)}"
                                 alt="${escapeHtml(item.title)}"
-                                onerror="this.src='https://placehold.co/500x500/FFE6F0/6D597A?text=1:1+Work'"
+                                onerror="this.src='https://placehold.co/500x500/FFE6F0/8F5571?text=1:1+Work'"
                                 class="w-full h-full object-cover"
                             >
                         </div>
-                        <div class="p-3.5 flex-1 flex flex-col justify-between gap-2.5">
+                        <div class="p-3 flex-1 flex flex-col justify-between gap-2">
                             <div>
-                                <h4 class="font-bold text-sm text-[#5A486A] leading-snug">${escapeHtml(item.title)}</h4>
+                                <h4 class="font-bold text-xs text-[#6B4257] leading-snug">${escapeHtml(item.title)}</h4>
                                 ${catsHtml ? `<div class="flex flex-wrap gap-1 mt-1.5">${catsHtml}</div>` : ''}
                             </div>
                             ${item.link ? `
@@ -1129,7 +1222,7 @@
                                     href="${escapeHtml(item.link)}"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    class="inline-flex items-center justify-center gap-1 w-full py-2 px-3 rounded-xl bg-gradient-to-r from-pink-400 to-sky-400 text-white text-xs font-bold hover:opacity-95 transition"
+                                    class="inline-flex items-center justify-center gap-1 w-full py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-[#F48FB6] to-[#E86D9C] text-white text-[11px] font-bold hover:opacity-95 transition"
                                 >
                                     <span>เปิดลิงก์งาน</span>
                                     <span>↗</span>
@@ -1241,7 +1334,6 @@
                     return;
                 }
 
-                // Firestore document path must have an even number of segments (collection/doc/collection/doc)
                 docRef = doc(db, 'artifacts', appId, 'public', 'data', 'storeShowcase', 'main');
 
                 window.persistStoreState = async function () {
