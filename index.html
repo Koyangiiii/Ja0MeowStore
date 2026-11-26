@@ -3,842 +3,496 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JaoMeowStore •°• website | commission •°•</title>
-    
-    <!-- Google Fonts: Mali, Prompt, Quicksand, Cormorant Garamond สำหรับโลโก้ -->
+    <title>JaoMeowStore — Website / Emote / Chibi Commission</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Mali:wght@400;500;600;700&family=Prompt:wght@300;400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'prompt': ['Prompt', 'sans-serif'],
-                        'mali': ['Mali', 'cursive'],
-                        'quicksand': ['Quicksand', 'sans-serif'],
-                        'serif-logo': ['"Cormorant Garamond"', 'serif'],
-                    },
-                    colors: {
-                        'sky-bg': '#FFF6F9',
-                        'sky-soft': '#FCE7F0',
-                        'sky-blue': '#F29BB8',
-                        'sky-deep': '#D97598',
-                        'text-main': '#8A5E6F',
-                        'text-sub': '#B58D9D',
-                        'star-yellow': '#FFF1A8',
-                    },
-                    boxShadow: {
-                        'pastel': '0 10px 30px -5px rgba(242, 155, 184, 0.20), 0 4px 12px -2px rgba(242, 155, 184, 0.12)',
-                        'pastel-hover': '0 18px 36px -5px rgba(242, 155, 184, 0.30), 0 8px 16px -4px rgba(242, 155, 184, 0.18)',
-                        'pill': '0 4px 15px rgba(242, 155, 184, 0.18)',
-                    }
-                }
-            }
-        }
-    </script>
-
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --sky-soft: #EAF4FF;
+            --sky-mid: #CBE4FF;
+            --pink-soft: #FFEAF2;
+            --pink-mid: #FFC4DC;
+            --cream-soft: #FFFDF8;
+            --ink-main: #4A3F55;
+            --ink-muted: #887A94;
+        }
+
         body {
-            background-color: #FFF3F7;
-            color: #8A5E6F;
-            font-family: 'Prompt', sans-serif;
+            font-family: 'Noto Sans Thai', 'Nunito', sans-serif;
+            color: var(--ink-main);
+            background-color: #FFF4F8;
+            background-image:
+                radial-gradient(circle at 15% 10%, rgba(255, 255, 255, 0.85) 0%, transparent 45%),
+                radial-gradient(circle at 88% 18%, rgba(255, 214, 232, 0.65) 0%, transparent 42%),
+                linear-gradient(180deg,
+                    #FFEBF3 0%,
+                    #FCE0EC 38%,
+                    #F9D2E3 72%,
+                    #F4C3D8 100%);
+            min-height: 100vh;
             overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 15% 15%, rgba(255, 226, 238, 0.85) 0%, transparent 45%),
-                radial-gradient(circle at 85% 20%, rgba(255, 214, 232, 0.75) 0%, transparent 48%),
-                radial-gradient(circle at 22% 82%, rgba(255, 238, 244, 0.9) 0%, transparent 45%),
-                radial-gradient(circle at 82% 80%, rgba(255, 224, 236, 0.8) 0%, transparent 45%);
         }
 
-        /* Floating & Twinkle Animations */
-        @keyframes floatSlow {
+        .font-display {
+            font-family: 'Fredoka', 'Nunito', 'Noto Sans Thai', sans-serif;
+        }
+
+        .hero-milk-sky {
+            background: linear-gradient(180deg, #F6C6DB 0%, #FDE2EE 58%, #FFF9FC 100%);
+        }
+
+        .cute-panel {
+            background: linear-gradient(180deg, #FFFDFC 0%, #FFF6FA 72%, #FFECF4 100%);
+            border: 3px solid #FFFFFF;
+            box-shadow:
+                0 12px 26px -10px rgba(196, 126, 160, 0.28),
+                0 4px 12px -4px rgba(255, 180, 212, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 1);
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+
+        .cute-panel:hover {
+            transform: translateY(-3px);
+            border-color: #FFFFFF;
+            box-shadow:
+                0 16px 32px -10px rgba(188, 112, 148, 0.36),
+                0 8px 18px -4px rgba(255, 165, 204, 0.42);
+        }
+
+        .cute-pill-btn {
+            background: linear-gradient(180deg, #FFFFFF 0%, #FFF9FC 100%);
+            border: 2.5px solid #FFE8F1;
+            box-shadow: 0 8px 18px -10px rgba(184, 116, 150, 0.32);
+            transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.22s ease, border-color 0.22s ease;
+        }
+
+        .cute-pill-btn:hover {
+            transform: translateY(-3px);
+            border-color: #FFC8DE;
+            box-shadow: 0 14px 24px -10px rgba(255, 160, 200, 0.45);
+        }
+
+        .cute-pill-btn:active {
+            transform: scale(0.98);
+        }
+
+        .sticker-badge {
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid #FFFFFF;
+            box-shadow: 0 8px 18px -8px rgba(178, 138, 185, 0.28);
+            transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .sticker-badge:hover {
+            transform: translateY(-2px) rotate(-1deg);
+        }
+
+        @keyframes floatCloud {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-7px); }
-        }
-        @keyframes floatDelayed {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-5px) rotate(2deg); }
-        }
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.4; transform: scale(0.85); }
-            50% { opacity: 1; transform: scale(1.15); }
+            50% { transform: translateY(-5px); }
         }
 
-        .animate-float {
-            animation: floatSlow 4.5s ease-in-out infinite;
-        }
-        .animate-float-delay {
-            animation: floatDelayed 5.2s ease-in-out 1.2s infinite;
-        }
-        .animate-twinkle {
-            animation: twinkle 3s ease-in-out infinite;
-        }
-        .animate-twinkle-delay {
-            animation: twinkle 3.6s ease-in-out 1.5s infinite;
+        .cloud-float {
+            animation: floatCloud 4.8s ease-in-out infinite;
         }
 
-        /* Custom Cloud Card Pattern */
-        .cloud-card-bg {
-            background: linear-gradient(180deg, #FFFDFD 0%, #FFF2F7 55%, #FCE0EC 100%);
-            position: relative;
+        .modal-card {
+            max-width: 100%;
+            box-sizing: border-box;
         }
 
-        /* Cute Cat-Ear Inner Frame Accent for Store Cards */
-        .meow-inner-card {
-            background: rgba(255, 255, 255, 0.86);
-            border: 1.5px solid #FAD5E4;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 6px 18px -6px rgba(232, 139, 174, 0.22);
+        .modal-backdrop {
+            transition: opacity 0.22s ease;
         }
 
-        /* Hero Banner Milk Pink Sky Gradient */
-        .hero-sky-bg {
-            background: linear-gradient(180deg, #F6C5D7 0%, #F9D7E4 45%, #FCEBF2 80%, #FFFFFF 100%);
-        }
-
-        /* Soft Text Glow & Outline for Hero Logo */
-        .kawaii-logo-text {
-            color: #FFFFFF;
-            text-shadow: 
-                0 3px 10px rgba(217, 117, 152, 0.35),
-                0 0 2px rgba(242, 155, 184, 0.65);
-        }
-
-        /* Custom Scrollbar for Modals */
         ::-webkit-scrollbar {
-            width: 6px;
+            width: 8px;
+            height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #FFF6F9;
-            border-radius: 10px;
+            background: #FFF4F8;
+            border-radius: 999px;
         }
         ::-webkit-scrollbar-thumb {
-            background: #F5C2D4;
-            border-radius: 10px;
+            background: #F3C1D6;
+            border-radius: 999px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #ECA4BE;
+            background: #E8A4C2;
         }
     </style>
 </head>
-<body class="min-h-screen w-full overflow-x-hidden overflow-y-auto relative selection:bg-sky-blue/30 selection:text-sky-deep">
+<body class="antialiased selection:bg-pink-200 selection:text-purple-900">
+    <!-- Mobile-Sized Centered Showcase Frame -->
+    <main class="w-full max-w-[430px] mx-auto px-4 pt-4 pb-8">
+        <!-- Top Right Admin Button -->
+        <div class="flex justify-end mb-1">
+            <button
+                id="adminTopBtn"
+                type="button"
+                onclick="openAdminAccess()"
+                class="px-4 py-1.5 rounded-full bg-white/95 hover:bg-pink-50 text-[#8F5571] font-display font-semibold text-xs border-2 border-white shadow-sm hover:shadow transition-all flex items-center gap-1.5 cursor-pointer"
+            >
+                <span>🐾</span>
+                <span id="adminTopLabel">Admin</span>
+            </button>
+        </div>
 
-    <!-- Top Right Admin Button -->
-    <div class="fixed top-4 right-4 z-30">
-        <button id="topAdminBtn" onclick="handleTopAdminClick()" class="bg-white/95 hover:bg-[#FCE4EE] text-text-main hover:text-sky-deep border-2 border-white shadow-pill px-4 py-1.5 rounded-full text-xs font-prompt font-semibold transition-all duration-300 hover:-translate-y-0.5 flex items-center gap-1.5 cursor-pointer">
-            <span>🐾</span>
-            <span id="topAdminBtnLabel">Admin</span>
-        </button>
-    </div>
+        <!-- Center Cloud Emblem with Website & Emotes Pills -->
+        <header class="flex flex-col items-center text-center mb-4 relative">
+            <div class="relative w-36 h-36 flex items-center justify-center mb-2">
+                <!-- Decorative paw & sparkles -->
+                <span class="absolute -left-4 top-3 text-pink-300/90 text-xl select-none pointer-events-none">🐾</span>
+                <span class="absolute left-3 top-1 text-amber-300 text-xs select-none pointer-events-none">✦</span>
+                <span class="absolute right-2 top-3 text-amber-300 text-sm select-none pointer-events-none">✦</span>
+                <span class="absolute right-1 bottom-5 text-amber-200 text-xs select-none pointer-events-none">✦</span>
 
-    <!-- ==================== BACKGROUND MILK PINK & CAT PAW ==================== -->
-    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0" aria-hidden="true">
-        <!-- Soft Milk Pink Glow Orbs -->
-        <div class="absolute -top-14 -right-14 w-72 h-72 rounded-full bg-[#FFE0EC]/75 blur-2xl animate-float"></div>
-        <div class="absolute top-[38%] -left-20 w-64 h-64 rounded-full bg-[#FFE6F0]/70 blur-2xl"></div>
-        <div class="absolute -bottom-16 right-[15%] w-72 h-72 rounded-full bg-[#FFDCE9]/65 blur-2xl animate-float-delay"></div>
+                <!-- Main Circle Emblem -->
+                <div class="w-28 h-28 rounded-full bg-gradient-to-b from-white via-[#FFF7FA] to-[#FDE4EE] border-[3px] border-white shadow-[0_12px_28px_-8px_rgba(198,132,164,0.45)] flex flex-col items-center justify-center">
+                    <span class="font-serif italic font-bold text-xl text-[#A96B86] leading-none">JaoMeow</span>
+                    <span class="text-[10px] tracking-[0.22em] font-semibold text-[#C28FA5] mt-1">STORE</span>
+                </div>
 
-        <!-- Subtle Cat Paw Prints Matching "JaoMeowStore" -->
-        <svg class="absolute top-12 left-[10%] w-9 h-9 text-[#F4B8CF]/55 -rotate-12 animate-float" viewBox="0 0 48 48" fill="currentColor">
-            <ellipse cx="24" cy="30" rx="9" ry="7.5"/>
-            <circle cx="14.5" cy="21" r="3.3"/>
-            <circle cx="20.8" cy="16" r="3.3"/>
-            <circle cx="27.2" cy="16" r="3.3"/>
-            <circle cx="33.5" cy="21" r="3.3"/>
-        </svg>
-        <svg class="absolute top-[28%] right-[9%] w-8 h-8 text-[#F4B8CF]/50 rotate-18 animate-float-delay" viewBox="0 0 48 48" fill="currentColor">
-            <ellipse cx="24" cy="30" rx="9" ry="7.5"/>
-            <circle cx="14.5" cy="21" r="3.3"/>
-            <circle cx="20.8" cy="16" r="3.3"/>
-            <circle cx="27.2" cy="16" r="3.3"/>
-            <circle cx="33.5" cy="21" r="3.3"/>
-        </svg>
-        <svg class="absolute bottom-[24%] left-[8%] w-8 h-8 text-[#F4B8CF]/50 rotate-12 animate-float-delay" viewBox="0 0 48 48" fill="currentColor">
-            <ellipse cx="24" cy="30" rx="9" ry="7.5"/>
-            <circle cx="14.5" cy="21" r="3.3"/>
-            <circle cx="20.8" cy="16" r="3.3"/>
-            <circle cx="27.2" cy="16" r="3.3"/>
-            <circle cx="33.5" cy="21" r="3.3"/>
-        </svg>
-        <svg class="absolute bottom-[14%] right-[12%] w-9 h-9 text-[#F4B8CF]/55 -rotate-15 animate-float" viewBox="0 0 48 48" fill="currentColor">
-            <ellipse cx="24" cy="30" rx="9" ry="7.5"/>
-            <circle cx="14.5" cy="21" r="3.3"/>
-            <circle cx="20.8" cy="16" r="3.3"/>
-            <circle cx="27.2" cy="16" r="3.3"/>
-            <circle cx="33.5" cy="21" r="3.3"/>
-        </svg>
-
-        <!-- Twinkling Sparkles & Stars -->
-        <svg class="absolute top-[18%] left-[24%] w-4 h-4 text-[#F29BB8]/70 animate-twinkle" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5L12 0Z"/>
-        </svg>
-        <svg class="absolute top-[52%] right-[18%] w-4 h-4 text-[#F29BB8]/65 animate-twinkle-delay" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5L12 0Z"/>
-        </svg>
-        <svg class="absolute bottom-[32%] left-[18%] w-3.5 h-3.5 text-[#E8B85C]/80 animate-twinkle" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2l2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01L12 2z"/>
-        </svg>
-    </div>
-
-    <!-- ==================== MAIN CONTAINER ==================== -->
-    <main class="relative z-10 max-w-[660px] mx-auto px-4 sm:px-6 pt-8 pb-14 flex flex-col items-center">
-
-        <!-- 1. HEADER SECTION -->
-        <header class="w-full flex flex-col items-center text-center mb-6">
-            
-            <!-- Circular Cloud Emblem with Floating Tags -->
-            <div class="relative w-56 h-40 flex items-center justify-center mb-1">
-                
-                <!-- Decorative Yellow Stars around Emblem -->
-                <svg class="absolute top-1 left-[48%] w-4 h-4 text-[#FFE680] drop-shadow-sm animate-twinkle" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2l2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01L12 2z"/>
-                </svg>
-                <svg class="absolute top-14 left-6 w-3.5 h-3.5 text-[#FFE680] drop-shadow-sm animate-twinkle-delay" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2l2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01L12 2z"/>
-                </svg>
-                <svg class="absolute bottom-6 right-8 w-3 h-3 text-[#FFE680] animate-twinkle" viewBox="0 0 24 24" fill="currentColor">
-                    <circle cx="12" cy="12" r="6"/>
-                </svg>
-                <!-- Tiny Four-point Sparkles -->
-                <svg class="absolute top-5 left-12 w-3.5 h-3.5 text-sky-blue/70 animate-twinkle" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 0L14 10L24 12L14 14L12 24L10 14L0 12L10 10L12 0Z"/>
-                </svg>
-                <svg class="absolute bottom-3 left-20 w-3 h-3 text-sky-blue/60 animate-twinkle-delay" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 0L14 10L24 12L14 14L12 24L10 14L0 12L10 10L12 0Z"/>
+                <!-- Cloud puff at bottom of emblem -->
+                <svg class="absolute bottom-1 left-1/2 -translate-x-1/2 w-24 h-8 text-white pointer-events-none drop-shadow-xs" viewBox="0 0 120 40" fill="currentColor">
+                    <path d="M16 34h88a11 11 0 0 0 1-21.9A16 16 0 0 0 74 9a18 18 0 0 0-33 2A12 12 0 0 0 16 34z"/>
                 </svg>
 
-                <!-- Left Floating Pill Tag: Emotes ♡ -->
-                <button onclick="openModal('exampleModal')" class="absolute left-0 bottom-7 z-20 bg-white/95 hover:bg-white text-text-main hover:text-sky-deep text-[11px] font-quicksand font-bold px-3 py-1 rounded-full shadow-pill border border-sky-soft/80 transition-all duration-300 hover:-translate-y-0.5 flex items-center gap-1 animate-float">
-                    <span>Emotes</span>
-                    <span class="text-sky-blue text-xs">♡</span>
-                </button>
-
-                <!-- Right Floating Pill Tag: Website ✿ -->
-                <button onclick="openModal('exampleModal')" class="absolute right-0 top-7 z-20 bg-white/95 hover:bg-white text-text-main hover:text-sky-deep text-[11px] font-quicksand font-bold px-3 py-1 rounded-full shadow-pill border border-sky-soft/80 transition-all duration-300 hover:-translate-y-0.5 flex items-center gap-1 animate-float-delay">
+                <!-- Floating Website Badge -->
+                <div class="sticker-badge absolute -right-4 top-5 rounded-full px-3 py-1 flex items-center gap-1 text-[11px] font-semibold text-[#A36983]">
                     <span>Website</span>
-                    <span class="text-sky-blue text-xs">✿</span>
-                </button>
+                    <span class="text-pink-400">🌸</span>
+                </div>
 
-                <!-- Main Emblem Circle -->
-                <div class="relative w-32 h-32 rounded-full bg-gradient-to-b from-white via-[#FFF7FA] to-[#FCE4EE] shadow-[0_8px_25px_rgba(242,155,184,0.30)] border-2 border-white flex items-center justify-center">
-                    
-                    <!-- Top-Right Mini Cloud on Circle -->
-                    <svg class="absolute -top-2 right-2 w-12 h-8 text-white drop-shadow-[0_2px_4px_rgba(242,155,184,0.20)]" viewBox="0 0 100 60" fill="currentColor">
-                        <circle cx="30" cy="38" r="16"/>
-                        <circle cx="52" cy="28" r="20"/>
-                        <circle cx="72" cy="38" r="15"/>
-                        <rect x="26" y="36" width="48" height="18" rx="9"/>
-                    </svg>
-
-                    <!-- Stylised Stacked JaoMeowStore Logo -->
-                    <div class="relative select-none flex flex-col items-center justify-center tracking-tight text-[#C76E8E]">
-                        <div class="flex items-baseline leading-none">
-                            <span class="font-serif-logo font-bold text-2xl drop-shadow-[0_1px_1px_rgba(255,255,255,0.9)]">Jao</span>
-                            <span class="font-serif-logo font-bold text-2xl text-[#B85D7E]">Meow</span>
-                        </div>
-                        <span class="font-serif-logo font-semibold text-xs tracking-widest uppercase -mt-0.5 text-[#D97598]">Store</span>
-                    </div>
-
-                    <!-- Bottom Fluffy Cloud Overlapping Circle -->
-                    <svg class="absolute -bottom-3 -left-3 w-24 h-14 text-white drop-shadow-[0_4px_8px_rgba(242,155,184,0.22)]" viewBox="0 0 140 80" fill="currentColor">
-                        <circle cx="32" cy="52" r="20"/>
-                        <circle cx="62" cy="40" r="26"/>
-                        <circle cx="95" cy="48" r="22"/>
-                        <circle cx="115" cy="56" r="16"/>
-                        <rect x="25" y="48" width="95" height="24" rx="12"/>
-                    </svg>
+                <!-- Floating Emotes Badge -->
+                <div class="sticker-badge absolute -left-3 bottom-4 rounded-full px-3 py-1 flex items-center gap-1 text-[11px] font-semibold text-[#A36983]">
+                    <span>Emotes</span>
+                    <span class="text-pink-400">♡</span>
                 </div>
             </div>
 
-            <!-- Brand Title -->
-            <h1 class="font-quicksand font-bold italic text-2xl sm:text-[26px] tracking-wider text-sky-blue drop-shadow-[0_2px_6px_rgba(242,155,184,0.28)]">
+            <h1 class="font-serif italic font-bold text-2xl text-[#E986B1] drop-shadow-[0_1px_0_#FFFFFF] tracking-wide">
                 JaoMeowStore
             </h1>
-
-            <!-- Caption Pill -->
-            <div class="mt-1.5 inline-flex items-center gap-1.5 bg-white/90 px-4 py-1 rounded-full shadow-pill border border-white text-[11px] sm:text-xs font-quicksand font-semibold text-text-main">
-                <span class="text-sky-blue">✿°•</span>
+            <div class="mt-1.5 inline-flex items-center gap-1.5 px-4 py-1 rounded-full bg-white/90 border border-white shadow-2xs text-[11px] font-semibold text-[#A56A84]">
+                <span class="text-pink-400">❀</span>
                 <span>website | commission</span>
-                <span class="text-sky-blue">•°✿</span>
+                <span class="text-pink-400">❀</span>
             </div>
         </header>
 
-        <!-- 2. HERO BANNER CARD -->
-        <section class="w-full mb-5">
-            <div class="hero-sky-bg relative w-full h-52 sm:h-64 rounded-[28px] border-2 border-white shadow-pastel overflow-hidden p-6 sm:p-8 flex flex-col justify-center items-end transition-transform duration-300 hover:shadow-pastel-hover">
-                
-                <!-- Subtle Ambient Glow in Sky -->
-                <div class="absolute top-6 left-10 w-36 h-36 bg-white/25 rounded-full blur-2xl pointer-events-none"></div>
-
-                <!-- Right Side Cute Bubble Logo Group -->
-                <div class="relative z-10 flex flex-col items-end pr-1 sm:pr-4">
-                    
-                    <!-- Updated Hero Banner Store Logo -->
-                    <div class="relative flex flex-col items-end select-none">
-                        <div class="inline-flex items-center gap-1.5 bg-white/85 backdrop-blur-xs px-4 py-1.5 rounded-full border border-white shadow-[0_4px_14px_rgba(217,117,152,0.22)]">
-                            <span class="text-sm text-[#DF7C9F]">🐾</span>
-                            <span class="font-quicksand font-bold italic text-xl sm:text-2xl text-[#C76E8E] tracking-wide">JaoMeowStore</span>
-                            <span class="text-xs text-[#F29BB8]">✿</span>
-                        </div>
+        <!-- Hero Banner Card with Cloud Bottom -->
+        <section class="relative rounded-[26px] overflow-hidden border-[3px] border-white shadow-[0_14px_30px_-10px_rgba(196,126,160,0.32)] mb-4">
+            <div class="hero-milk-sky relative min-h-[152px] flex flex-col items-end justify-center px-5 py-5 text-right">
+                <div class="relative z-10 flex flex-col items-end">
+                    <div class="inline-flex items-center gap-2 bg-white/95 px-4 py-1.5 rounded-full border-2 border-white shadow-sm mb-1.5">
+                        <span class="text-xs text-[#D97CA6]">🐾</span>
+                        <span class="font-serif italic font-bold text-xl text-[#E07AA8]">JaoMeowStore</span>
+                        <span class="text-xs text-pink-400">☆</span>
                     </div>
-
-                    <!-- Subtitle under Hero Logo -->
-                    <div class="mt-2 flex items-center gap-2 text-white/95 drop-shadow-[0_1px_4px_rgba(217,117,152,0.45)]">
-                        <div class="text-right leading-tight">
-                            <p class="font-quicksand font-bold text-xs sm:text-sm tracking-wide">website / emote / chibi</p>
-                            <p class="font-quicksand font-semibold text-[10px] sm:text-xs opacity-90">commission</p>
-                        </div>
-                        <div class="w-[2px] h-7 bg-white/80 rounded-full"></div>
-                    </div>
+                    <p class="text-xs font-semibold text-[#9E5B79] drop-shadow-[0_1px_1px_rgba(255,255,255,0.85)]">
+                        website / emote / chibi
+                    </p>
+                    <p class="text-[11px] font-medium text-[#B06C8A] drop-shadow-[0_1px_1px_rgba(255,255,255,0.85)]">
+                        commission
+                    </p>
                 </div>
 
-                <!-- Fluffy Layered Clouds at Bottom of Banner -->
-                <div class="absolute inset-x-0 bottom-0 h-24 pointer-events-none">
-                    <!-- Back Cloud Layer -->
-                    <svg class="w-full h-full text-white/60" preserveAspectRatio="none" viewBox="0 0 600 120" fill="currentColor">
-                        <circle cx="40" cy="95" r="45"/>
-                        <circle cx="110" cy="80" r="55"/>
-                        <circle cx="195" cy="90" r="48"/>
-                        <circle cx="280" cy="75" r="58"/>
-                        <circle cx="370" cy="88" r="50"/>
-                        <circle cx="455" cy="72" r="56"/>
-                        <circle cx="545" cy="85" r="52"/>
-                        <rect x="0" y="85" width="600" height="40"/>
-                    </svg>
-                    <!-- Front Bright White Cloud Layer -->
-                    <svg class="w-full h-20 absolute bottom-0 text-white" preserveAspectRatio="none" viewBox="0 0 600 100" fill="currentColor">
-                        <circle cx="25" cy="85" r="42"/>
-                        <circle cx="95" cy="75" r="48"/>
-                        <circle cx="175" cy="82" r="44"/>
-                        <circle cx="255" cy="68" r="52"/>
-                        <circle cx="345" cy="80" r="46"/>
-                        <circle cx="430" cy="66" r="52"/>
-                        <circle cx="515" cy="78" r="46"/>
-                        <circle cx="585" cy="82" r="40"/>
-                        <rect x="0" y="75" width="600" height="30"/>
-                    </svg>
-                </div>
+                <svg class="absolute bottom-0 left-0 w-full h-9 text-white pointer-events-none" viewBox="0 0 1200 100" preserveAspectRatio="none" fill="currentColor">
+                    <path d="M0,55 C60,20 140,20 200,55 C260,18 350,18 410,56 C475,20 565,20 625,55 C690,18 780,18 845,56 C910,20 1000,20 1065,55 C1120,25 1165,28 1200,52 L1200,100 L0,100 Z"></path>
+                </svg>
             </div>
         </section>
 
-        <!-- 3. MAIN FEATURE CARDS (2 COLUMNS) -->
-        <section class="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-            
-            <!-- Left Card: EXAMPLE WORK -->
-            <button onclick="openModal('exampleModal')" class="group cloud-card-bg relative rounded-[28px] border-2 border-white shadow-pastel hover:shadow-pastel-hover p-5 pt-4 pb-10 text-center flex flex-col items-center justify-between min-h-[235px] transition-all duration-300 hover:-translate-y-1 overflow-hidden cursor-pointer">
-                
-                <!-- Top Left Mini Logo -->
-                <div class="w-full flex justify-start relative z-10">
-                    <div class="flex flex-col items-center leading-none tracking-tight text-[#C76E8E] select-none">
-                        <div class="flex items-baseline">
-                            <span class="font-serif-logo font-bold text-sm">Jao</span>
-                            <span class="font-serif-logo font-bold text-sm text-[#B85D7E]">Meow</span>
-                        </div>
-                        <span class="font-serif-logo font-semibold text-[9px] tracking-widest uppercase -mt-0.5 text-[#D97598]">Store</span>
-                    </div>
+        <!-- Side-by-Side Showcase Cards on Same Row: EXAMPLE WORK & GROUP WORK -->
+        <section class="grid grid-cols-2 gap-3 mb-4">
+            <button
+                type="button"
+                onclick="openModal('exampleModal')"
+                class="cute-panel relative w-full rounded-[24px] pt-3 pb-8 px-3 text-center overflow-hidden cursor-pointer group flex flex-col justify-between"
+            >
+                <div class="text-left leading-none mb-0.5">
+                    <div class="font-serif italic font-bold text-xs text-[#B77B95]">JaoMeow</div>
+                    <div class="text-[7px] tracking-[0.2em] font-bold text-[#CCA0B4]">STORE</div>
                 </div>
-
-                <!-- Center Content -->
-                <div class="relative z-10 my-auto py-3 px-2 bg-white/75 rounded-2xl w-full">
-                    <h2 class="font-quicksand font-bold italic text-xl sm:text-[22px] tracking-wide text-sky-blue group-hover:text-sky-deep transition-colors">
+                <div class="py-0.5">
+                    <div class="font-serif italic font-bold text-base text-[#E68BB3] group-hover:text-pink-500 transition-colors leading-tight">
                         EXAMPLE WORK
-                    </h2>
-                    <div class="w-4/5 h-[1.5px] bg-sky-soft mx-auto my-1.5 rounded-full"></div>
-                    <p class="font-prompt font-semibold text-sm text-text-main">
+                    </div>
+                    <div class="mt-1 font-bold text-xs text-[#6D536E]">
                         ตัวอย่างงานของทางร้าน
-                    </p>
-                    <p class="mt-3 text-[10px] leading-relaxed text-text-sub font-prompt">
-                        don't use without permission<br>
-                        ห้ามคัดลอก และแอบอ้างไปใช้งาน
-                    </p>
+                    </div>
+                    <div class="mt-2 text-[10px] text-[#9E8A96] leading-snug">
+                        <div>don't use without permission</div>
+                        <div>ห้ามคัดลอก และแอบอ้างไปใช้งาน</div>
+                    </div>
                 </div>
-
-                <!-- Bottom Fluffy Clouds -->
-                <svg class="absolute inset-x-0 bottom-0 w-full h-14 text-[#FBE0EB]/85 pointer-events-none" preserveAspectRatio="none" viewBox="0 0 300 70" fill="currentColor">
-                    <circle cx="30" cy="55" r="30"/>
-                    <circle cx="85" cy="45" r="35"/>
-                    <circle cx="150" cy="52" r="32"/>
-                    <circle cx="215" cy="44" r="36"/>
-                    <circle cx="275" cy="54" r="30"/>
-                    <rect x="0" y="50" width="300" height="25"/>
-                </svg>
-                <svg class="absolute inset-x-0 bottom-0 w-full h-10 text-white pointer-events-none" preserveAspectRatio="none" viewBox="0 0 300 50" fill="currentColor">
-                    <circle cx="20" cy="42" r="24"/>
-                    <circle cx="70" cy="36" r="28"/>
-                    <circle cx="130" cy="40" r="26"/>
-                    <circle cx="195" cy="34" r="28"/>
-                    <circle cx="260" cy="40" r="25"/>
-                    <rect x="0" y="38" width="300" height="15"/>
+                <svg class="absolute bottom-0 left-0 w-full h-6 text-white pointer-events-none" viewBox="0 0 1200 80" preserveAspectRatio="none" fill="currentColor">
+                    <path d="M0,45 C70,12 150,12 220,46 C290,12 380,12 450,48 C525,12 615,12 685,46 C760,12 850,12 920,48 C995,14 1085,14 1200,45 L1200,80 L0,80 Z"></path>
                 </svg>
             </button>
 
-            <!-- Right Card: GIVEAWAY -->
-            <button onclick="openModal('giveawayModal')" class="group cloud-card-bg relative rounded-[28px] border-2 border-white shadow-pastel hover:shadow-pastel-hover p-5 pt-4 pb-10 text-center flex flex-col items-center justify-between min-h-[235px] transition-all duration-300 hover:-translate-y-1 overflow-hidden cursor-pointer">
-                
-                <!-- Top Left Mini Logo -->
-                <div class="w-full flex justify-start relative z-10">
-                    <div class="flex flex-col items-center leading-none tracking-tight text-[#C76E8E] select-none">
-                        <div class="flex items-baseline">
-                            <span class="font-serif-logo font-bold text-sm">Jao</span>
-                            <span class="font-serif-logo font-bold text-sm text-[#B85D7E]">Meow</span>
-                        </div>
-                        <span class="font-serif-logo font-semibold text-[9px] tracking-widest uppercase -mt-0.5 text-[#D97598]">Store</span>
-                    </div>
+            <button
+                type="button"
+                onclick="openModal('groupModal')"
+                class="cute-panel relative w-full rounded-[24px] pt-3 pb-8 px-3 text-center overflow-hidden cursor-pointer group flex flex-col justify-between"
+            >
+                <div class="text-left leading-none mb-0.5">
+                    <div class="font-serif italic font-bold text-xs text-[#B77B95]">JaoMeow</div>
+                    <div class="text-[7px] tracking-[0.2em] font-bold text-[#CCA0B4]">STORE</div>
                 </div>
-
-                <!-- Center Content -->
-                <div class="relative z-10 my-auto py-3 px-2 bg-white/75 rounded-2xl w-full">
-                    <h2 class="font-quicksand font-bold italic text-xl sm:text-[22px] tracking-wide text-sky-blue group-hover:text-sky-deep transition-colors">
+                <div class="py-0.5">
+                    <div class="font-serif italic font-bold text-base text-[#E68BB3] group-hover:text-pink-500 transition-colors leading-tight">
                         GROUP WORK
-                    </h2>
-                    <div class="w-4/5 h-[1.5px] bg-sky-soft mx-auto my-1.5 rounded-full"></div>
-                    <p class="font-prompt font-semibold text-sm text-text-main">
+                    </div>
+                    <div class="mt-1 font-bold text-xs text-[#6D536E]">
                         ตัวอย่างกลุ่มทั้งหมด
-                    </p>
-                    <p class="mt-3 text-[10px] leading-relaxed text-text-sub font-prompt">
-                        รวมตัวอย่างงานกลุ่มและเซ็ตของทางร้าน<br>
-                        ห้ามคัดลอก และแอบอ้างไปใช้งาน
-                    </p>
+                    </div>
+                    <div class="mt-2 text-[10px] text-[#9E8A96] leading-snug">
+                        <div>รวมตัวอย่างงานกลุ่มและเซ็ตของทางร้าน</div>
+                        <div>ห้ามคัดลอก และแอบอ้างไปใช้งาน</div>
+                    </div>
                 </div>
-
-                <!-- Bottom Fluffy Clouds -->
-                <svg class="absolute inset-x-0 bottom-0 w-full h-14 text-[#FBE0EB]/85 pointer-events-none" preserveAspectRatio="none" viewBox="0 0 300 70" fill="currentColor">
-                    <circle cx="25" cy="54" r="30"/>
-                    <circle cx="90" cy="44" r="35"/>
-                    <circle cx="155" cy="50" r="32"/>
-                    <circle cx="220" cy="45" r="36"/>
-                    <circle cx="280" cy="54" r="30"/>
-                    <rect x="0" y="50" width="300" height="25"/>
-                </svg>
-                <svg class="absolute inset-x-0 bottom-0 w-full h-10 text-white pointer-events-none" preserveAspectRatio="none" viewBox="0 0 300 50" fill="currentColor">
-                    <circle cx="30" cy="42" r="24"/>
-                    <circle cx="85" cy="35" r="28"/>
-                    <circle cx="145" cy="40" r="26"/>
-                    <circle cx="210" cy="35" r="28"/>
-                    <circle cx="270" cy="41" r="25"/>
-                    <rect x="0" y="38" width="300" height="15"/>
+                <svg class="absolute bottom-0 left-0 w-full h-6 text-white pointer-events-none" viewBox="0 0 1200 80" preserveAspectRatio="none" fill="currentColor">
+                    <path d="M0,45 C70,12 150,12 220,46 C290,12 380,12 450,48 C525,12 615,12 685,46 C760,12 850,12 920,48 C995,14 1085,14 1200,45 L1200,80 L0,80 Z"></path>
                 </svg>
             </button>
         </section>
 
-        <!-- 4. ACTION BUTTONS GRID (2x2) -->
-        <section class="w-full grid grid-cols-1 sm:grid-cols-2 gap-3.5 mb-5">
-            
-            <!-- Button 1: เช็กคิว -->
-            <button onclick="openModal('queueModal')" class="group bg-[#FFF5F8] hover:bg-[#FCE4EE] rounded-[22px] p-3.5 px-4 border-2 border-white shadow-pastel hover:shadow-pastel-hover flex items-center justify-between text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer">
-                <div class="flex items-center gap-3.5">
-                    <!-- Cute Pastel Letter / Queue Icon -->
-                    <div class="w-12 h-12 rounded-2xl bg-[#FFF0F6] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                        <svg class="w-8 h-8" viewBox="0 0 48 48" fill="none">
-                            <!-- Pink Envelope Body -->
-                            <rect x="9" y="16" width="30" height="20" rx="5" fill="#F9C6DA"/>
-                            <!-- White Letter Card Peeking Out -->
-                            <rect x="13" y="11" width="22" height="14" rx="3" fill="#FFFDFD" stroke="#F4B2CC" stroke-width="1.5"/>
-                            <!-- Front Envelope Flap -->
-                            <path d="M9 20L24 29L39 20V31C39 33.7614 36.7614 36 34 36H14C11.2386 36 9 33.7614 9 31V20Z" fill="#F4A9C4"/>
-                            <!-- Cute Heart Seal -->
-                            <path d="M24 26.5C24 26.5 20.5 24 20.5 21.8C20.5 20.5 21.5 19.6 22.7 19.6C23.4 19.6 23.8 20 24 20.4C24.2 20 24.6 19.6 25.3 19.6C26.5 19.6 27.5 20.5 27.5 21.8C27.5 24 24 26.5 24 26.5Z" fill="#FFF1A8"/>
-                        </svg>
-                    </div>
+        <!-- Four Stacked Menu Buttons matching Reference Order -->
+        <section class="space-y-3 mb-5">
+            <button type="button" onclick="openModal('queueModal')" class="cute-pill-btn w-full rounded-[22px] px-4 py-3 flex items-center justify-between gap-3 text-left cursor-pointer group">
+                <div class="flex items-center gap-3">
+                    <span class="w-10 h-10 rounded-2xl bg-[#FFEAF2] border border-pink-100 flex items-center justify-center text-lg shrink-0">👛</span>
                     <div>
-                        <h3 class="font-prompt font-semibold text-sm text-text-main group-hover:text-sky-deep transition-colors">เช็กคิว</h3>
-                        <p class="font-prompt text-[11px] text-text-sub">ดูคิวงานและสถานะงานของคุณ</p>
+                        <div class="font-bold text-sm text-[#5B4563]">เช็กคิว</div>
+                        <div class="text-xs text-[#9B8C9E]">ดูคิวงานและสถานะงานของคุณ</div>
                     </div>
                 </div>
-                <svg class="w-4 h-4 text-text-sub group-hover:text-sky-blue group-hover:translate-x-0.5 transition-all shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
+                <span class="text-[#C59BB0] group-hover:translate-x-1 transition-transform text-base">›</span>
             </button>
 
-            <!-- Button 2: Terms of Service -->
-            <button onclick="openModal('tosModal')" class="group bg-[#FFF5F8] hover:bg-[#FCE4EE] rounded-[22px] p-3.5 px-4 border-2 border-white shadow-pastel hover:shadow-pastel-hover flex items-center justify-between text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer">
-                <div class="flex items-center gap-3.5">
-                    <!-- Cute Pastel Teddy Bear Icon -->
-                    <div class="w-12 h-12 rounded-2xl bg-[#FFF0F6] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                        <svg class="w-8 h-8" viewBox="0 0 48 48" fill="none">
-                            <!-- Ears -->
-                            <circle cx="15" cy="14" r="4.5" fill="#F5C4D7"/>
-                            <circle cx="33" cy="14" r="4.5" fill="#F5C4D7"/>
-                            <circle cx="15" cy="14" r="2.2" fill="#FFFFFF"/>
-                            <circle cx="33" cy="14" r="2.2" fill="#FFFFFF"/>
-                            <!-- Body -->
-                            <ellipse cx="24" cy="32" rx="9" ry="8" fill="#F9D5E3"/>
-                            <ellipse cx="24" cy="32" rx="5" ry="4.5" fill="#FFFFFF"/>
-                            <!-- Arms & Legs -->
-                            <circle cx="14" cy="29" r="3.5" fill="#F5C4D7"/>
-                            <circle cx="34" cy="29" r="3.5" fill="#F5C4D7"/>
-                            <circle cx="17" cy="39" r="3.8" fill="#F5C4D7"/>
-                            <circle cx="31" cy="39" r="3.8" fill="#F5C4D7"/>
-                            <!-- Head -->
-                            <circle cx="24" cy="20" r="9" fill="#FADCE8"/>
-                            <!-- Muzzle & Eyes -->
-                            <ellipse cx="24" cy="22" rx="4" ry="3" fill="#FFFFFF"/>
-                            <circle cx="24" cy="21" r="1.2" fill="#C97C99"/>
-                            <circle cx="20.5" cy="19" r="1.2" fill="#8A5E6F"/>
-                            <circle cx="27.5" cy="19" r="1.2" fill="#8A5E6F"/>
-                            <!-- Pink Bowtie -->
-                            <path d="M24 27L20 25V29L24 27ZM24 27L28 25V29L24 27Z" fill="#DF7C9F"/>
-                        </svg>
-                    </div>
+            <button type="button" onclick="openModal('tosModal')" class="cute-pill-btn w-full rounded-[22px] px-4 py-3 flex items-center justify-between gap-3 text-left cursor-pointer group">
+                <div class="flex items-center gap-3">
+                    <span class="w-10 h-10 rounded-2xl bg-[#FFEAF2] border border-pink-100 flex items-center justify-center text-lg shrink-0">🧸</span>
                     <div>
-                        <h3 class="font-quicksand font-bold text-sm text-text-main group-hover:text-sky-deep transition-colors">Terms of Service</h3>
-                        <p class="font-prompt text-[11px] text-text-sub">ข้อตกลงและเงื่อนไขสำหรับงานวาด</p>
+                        <div class="font-bold text-sm text-[#5B4563]">Terms of Service</div>
+                        <div class="text-xs text-[#9B8C9E]">ข้อตกลงและเงื่อนไขสำหรับงานวาด</div>
                     </div>
                 </div>
-                <svg class="w-4 h-4 text-text-sub group-hover:text-sky-blue group-hover:translate-x-0.5 transition-all shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
+                <span class="text-[#C59BB0] group-hover:translate-x-1 transition-transform text-base">›</span>
             </button>
 
-            <!-- Button 3: ราคางาน -->
-            <button onclick="openModal('pricingModal')" class="group bg-[#FFF5F8] hover:bg-[#FCE4EE] rounded-[22px] p-3.5 px-4 border-2 border-white shadow-pastel hover:shadow-pastel-hover flex items-center justify-between text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer">
-                <div class="flex items-center gap-3.5">
-                    <!-- Cute Pastel Paw / Price Tag Icon -->
-                    <div class="w-12 h-12 rounded-2xl bg-[#FFF0F6] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                        <svg class="w-8 h-8" viewBox="0 0 48 48" fill="none">
-                            <!-- Soft Paw Shape -->
-                            <ellipse cx="24" cy="30" rx="10" ry="8" fill="#FFFFFF" stroke="#F6B8D0" stroke-width="2.2"/>
-                            <circle cx="14" cy="21" r="3.5" fill="#FFFFFF" stroke="#F6B8D0" stroke-width="2"/>
-                            <circle cx="20.5" cy="16" r="3.5" fill="#FFFFFF" stroke="#F6B8D0" stroke-width="2"/>
-                            <circle cx="27.5" cy="16" r="3.5" fill="#FFFFFF" stroke="#F6B8D0" stroke-width="2"/>
-                            <circle cx="34" cy="21" r="3.5" fill="#FFFFFF" stroke="#F6B8D0" stroke-width="2"/>
-                            <!-- Inner Milk Pink Pads -->
-                            <ellipse cx="24" cy="30.5" rx="5.5" ry="4" fill="#FAD4E3"/>
-                            <circle cx="14" cy="21" r="1.5" fill="#FAD4E3"/>
-                            <circle cx="20.5" cy="16" r="1.5" fill="#FAD4E3"/>
-                            <circle cx="27.5" cy="16" r="1.5" fill="#FAD4E3"/>
-                            <circle cx="34" cy="21" r="1.5" fill="#FAD4E3"/>
-                        </svg>
-                    </div>
+            <button type="button" onclick="openModal('pricingModal')" class="cute-pill-btn w-full rounded-[22px] px-4 py-3 flex items-center justify-between gap-3 text-left cursor-pointer group">
+                <div class="flex items-center gap-3">
+                    <span class="w-10 h-10 rounded-2xl bg-[#FFEAF2] border border-pink-100 flex items-center justify-center text-lg shrink-0">🐾</span>
                     <div>
-                        <h3 class="font-prompt font-semibold text-sm text-text-main group-hover:text-sky-deep transition-colors">ราคางาน</h3>
-                        <p class="font-prompt text-[11px] text-text-sub">ดูเรทราคาและคำนวณราคาเบื้องต้น</p>
+                        <div class="font-bold text-sm text-[#5B4563]">ราคางาน</div>
+                        <div class="text-xs text-[#9B8C9E]">ดูเรทราคาและคำนวณราคาเบื้องต้น</div>
                     </div>
                 </div>
-                <svg class="w-4 h-4 text-text-sub group-hover:text-sky-blue group-hover:translate-x-0.5 transition-all shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
+                <span class="text-[#C59BB0] group-hover:translate-x-1 transition-transform text-base">›</span>
             </button>
 
-            <!-- Button 4: ส่งบรีฟงาน -->
-            <button onclick="openModal('briefModal')" class="group bg-[#FFF5F8] hover:bg-[#FCE4EE] rounded-[22px] p-3.5 px-4 border-2 border-white shadow-pastel hover:shadow-pastel-hover flex items-center justify-between text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer">
-                <div class="flex items-center gap-3.5">
-                    <!-- Cute Pastel Cloud & Stars Icon -->
-                    <div class="w-12 h-12 rounded-2xl bg-[#FFF0F6] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                        <svg class="w-8 h-8" viewBox="0 0 48 48" fill="none">
-                            <!-- Fluffy Pink Cloud -->
-                            <path d="M14 35H35C39.4183 35 43 31.4183 43 27C43 22.8936 39.9061 19.5112 35.9189 19.0518C34.5021 14.3894 30.1684 11 25 11C18.9249 11 14 15.9249 14 22C14 22.3455 14.0159 22.6873 14.047 23.0246C10.6327 23.4894 8 26.4161 8 29.9583C8 32.7428 10.6863 35 14 35Z" fill="#F4A9C4"/>
-                            <!-- White Inner Highlight Cloud -->
-                            <path d="M16 33H33C36.3137 33 39 30.3137 39 27C39 23.9202 36.6796 21.3834 33.6892 21.0389C32.6266 17.5421 29.3763 15 25.5 15C20.9437 15 17.25 18.6937 17.25 23.25C17.25 23.5091 17.2619 23.7655 17.2853 24.0185C14.7245 24.3671 12.75 26.5621 12.75 29.2188C12.75 31.3071 14.7647 33 16 33Z" fill="#FFEDF4"/>
-                            <!-- Little Sparkle Stars -->
-                            <path d="M13 13L14 16L17 17L14 18L13 21L12 18L9 17L12 16L13 13Z" fill="#F29BB8"/>
-                            <circle cx="38" cy="13" r="1.8" fill="#FFE680"/>
-                        </svg>
-                    </div>
+            <button type="button" onclick="openModal('briefModal')" class="cute-pill-btn w-full rounded-[22px] px-4 py-3 flex items-center justify-between gap-3 text-left cursor-pointer group">
+                <div class="flex items-center gap-3">
+                    <span class="w-10 h-10 rounded-2xl bg-[#FFEAF2] border border-pink-100 flex items-center justify-center text-lg shrink-0">☁️</span>
                     <div>
-                        <h3 class="font-prompt font-semibold text-sm text-text-main group-hover:text-sky-deep transition-colors">ส่งบรีฟงาน</h3>
-                        <p class="font-prompt text-[11px] text-text-sub">เลือกแบบและส่งรายละเอียดงาน</p>
+                        <div class="font-bold text-sm text-[#5B4563]">ส่งบรีฟงาน</div>
+                        <div class="text-xs text-[#9B8C9E]">เลือกแบบและส่งรายละเอียดงาน</div>
                     </div>
                 </div>
-                <svg class="w-4 h-4 text-text-sub group-hover:text-sky-blue group-hover:translate-x-0.5 transition-all shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
+                <span class="text-[#C59BB0] group-hover:translate-x-1 transition-transform text-base">›</span>
             </button>
-
         </section>
 
-        <!-- Footer Credit -->
-        <footer class="mt-6 text-center text-[11px] font-quicksand text-text-sub/80">
-            © 2026 JaoMeowStore Studio • All Rights Reserved ☁️
+        <!-- Subtle Sync Status Indicator -->
+        <div class="flex items-center justify-center gap-2 mb-2 text-[11px] text-[#9E6B83]">
+            <span id="syncDot" class="w-2 h-2 rounded-full bg-amber-400 inline-block"></span>
+            <span id="syncStatusText">กำลังเชื่อมต่อฐานข้อมูล...</span>
+        </div>
+
+        <!-- Footer matching Reference -->
+        <footer class="pt-1 text-center text-xs text-[#A8758C]">
+            © 2026 JaoMeowStore Studio All Rights Reserved ☁
         </footer>
-
     </main>
 
-    <!-- ==================== INTERACTIVE MODALS ==================== -->
-
-    <!-- Modal Backdrop -->
-    <div id="modalBackdrop" onclick="closeAllModals()" class="fixed inset-0 bg-[#8A5E6F]/30 backdrop-blur-xs z-40 hidden opacity-0 transition-opacity duration-300"></div>
+    <!-- Backdrop -->
+    <div id="modalBackdrop" onclick="closeAllModals()" class="modal-backdrop fixed inset-0 z-40 hidden opacity-0 bg-[#3B2E47]/40 backdrop-blur-xs"></div>
 
     <!-- 1. EXAMPLE WORK MODAL -->
     <div id="exampleModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
-        <div class="bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-xl w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-300">
-            <!-- Header -->
-            <div class="p-5 pb-3 border-b border-sky-soft flex items-center justify-between bg-gradient-to-r from-[#FFF6F9] to-white">
+        <div class="modal-card bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-2xl w-full max-h-[86vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
+            <div class="p-5 pb-3.5 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-[#FFF5F9] to-[#F5FAFF]">
                 <div>
-                    <h3 class="font-quicksand font-bold italic text-xl text-sky-deep">EXAMPLE WORK ✿</h3>
-                    <p class="text-xs text-text-sub">ตัวอย่างผลงานคอมมิชชันของทางร้าน JaoMeowStore</p>
+                    <h3 class="font-display text-xl font-bold text-[#5A486A]">EXAMPLE WORK</h3>
+                    <p class="text-xs text-[#887A94]">เลือกดูตัวอย่างงานแยกตามหมวดหมู่</p>
                 </div>
-                <button onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-sky-soft/70 hover:bg-sky-blue hover:text-white text-text-main flex items-center justify-center transition-colors cursor-pointer">✕</button>
+                <button type="button" onclick="closeAllModals()" class="w-9 h-9 rounded-full bg-white hover:bg-pink-50 text-[#7A6888] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
             </div>
-            
-            <!-- Filter Tabs -->
-            <div id="exampleFilterTabs" class="px-5 pt-3 flex gap-2 flex-wrap">
-                <button onclick="filterExamples('all', this)" class="example-tab active-tab px-3 py-1 rounded-full text-xs font-medium bg-sky-blue text-white transition-all cursor-pointer">ทั้งหมด</button>
+            <div class="px-5 pt-3 pb-2 border-b border-pink-50 space-y-2 bg-white">
+                <div class="flex flex-wrap gap-2" id="exampleSubcatTabs"></div>
+                <div class="flex flex-wrap gap-1.5" id="exampleLeafFilterChips"></div>
             </div>
-
-            <!-- Gallery Grid -->
-            <div id="exampleGrid" class="p-5 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <!-- Dynamic items rendered via JavaScript -->
-            </div>
-
-            <div class="p-3 bg-[#FFF6F9] text-center text-[11px] text-text-sub border-t border-sky-soft flex items-center justify-between px-5">
-                <span>⚠️ ภาพทั้งหมดมีลายน้ำและลิขสิทธิ์ ห้ามนำไปใช้โดยไม่ได้รับอนุญาต</span>
-                <span id="exampleSyncBadge" class="text-[10px] text-sky-deep font-medium">ตัวอย่างงานของทางร้าน</span>
-            </div>
+            <div id="exampleGalleryList" class="p-5 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 gap-4 flex-1"></div>
         </div>
     </div>
 
-    <!-- 2. GIVEAWAY MODAL -->
-    <div id="giveawayModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
-        <div class="bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-xl w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-300">
-            <div class="p-5 pb-3 border-b border-sky-soft flex items-center justify-between bg-gradient-to-r from-[#FFF6F9] to-white">
+    <!-- 2. GROUP WORK MODAL -->
+    <div id="groupModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
+        <div class="modal-card bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-2xl w-full max-h-[86vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
+            <div class="p-5 pb-3.5 border-b border-sky-100 flex items-center justify-between bg-gradient-to-r from-[#F4FAFF] to-[#FFF6FA]">
                 <div>
-                    <h3 class="font-quicksand font-bold italic text-xl text-sky-deep">GROUP WORK ♡</h3>
-                    <p class="text-xs text-text-sub">ตัวอย่างกลุ่มทั้งหมดและผลงานของร้าน JaoMeowStore</p>
+                    <h3 class="font-display text-xl font-bold text-[#5A486A]">ตัวอย่างกลุ่มทั้งหมด</h3>
+                    <p class="text-xs text-[#887A94]">รูปภาพ ชื่อผลงาน และลิงก์ของตัวอย่างกลุ่ม</p>
                 </div>
-                <button onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-sky-soft/70 hover:bg-sky-blue hover:text-white text-text-main flex items-center justify-center transition-colors cursor-pointer">✕</button>
+                <button type="button" onclick="closeAllModals()" class="w-9 h-9 rounded-full bg-white hover:bg-sky-50 text-[#7A6888] border border-sky-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
             </div>
-
-            <!-- Filter Tabs -->
-            <div id="groupFilterTabs" class="px-5 pt-3 flex gap-2 flex-wrap">
-                <button onclick="filterGroupWork('all', this)" class="group-tab active-tab px-3 py-1 rounded-full text-xs font-medium bg-sky-blue text-white transition-all cursor-pointer">ทั้งหมด</button>
+            <div class="px-5 py-3 border-b border-sky-50 bg-white">
+                <div class="flex flex-wrap gap-1.5" id="groupSubcatFilterChips"></div>
             </div>
-
-            <!-- Group Gallery Grid -->
-            <div id="groupGrid" class="p-5 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <!-- Dynamic items rendered via JavaScript -->
-            </div>
-
-            <div class="p-3 bg-[#FFF6F9] text-center text-[11px] text-text-sub border-t border-sky-soft flex items-center justify-between px-5">
-                <span>⚠️ ภาพทั้งหมดมีลายน้ำและลิขสิทธิ์ ห้ามนำไปใช้โดยไม่ได้รับอนุญาต</span>
-                <span id="syncStatusBadge" class="text-[10px] text-sky-deep font-medium">กำลังซิงก์ข้อมูล...</span>
-            </div>
+            <div id="groupGalleryList" class="p-5 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 gap-4 flex-1"></div>
         </div>
     </div>
 
-    <!-- 3. QUEUE STATUS MODAL (เช็กคิว) -->
+    <!-- 3. QUEUE MODAL -->
     <div id="queueModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
-        <div class="bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-lg w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-300">
-            <div class="p-5 pb-3 border-b border-sky-soft flex items-center justify-between bg-gradient-to-r from-[#FFF6F9] to-white">
-                <div>
-                    <h3 class="font-prompt font-bold text-lg text-sky-deep">📅 เช็กคิวงาน (Queue Status)</h3>
-                    <p class="text-xs text-text-sub">สถานะคิวปัจจุบัน: <span class="text-emerald-500 font-semibold">● เปิดรับคิวว่าง (ว่าง 2 คิว)</span></p>
-                </div>
-                <button onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-sky-soft/70 hover:bg-sky-blue hover:text-white text-text-main flex items-center justify-center transition-colors cursor-pointer">✕</button>
+        <div class="modal-card bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-lg w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
+            <div class="p-5 pb-3.5 border-b border-sky-100 flex items-center justify-between bg-gradient-to-r from-[#FFF6F9] to-white">
+                <h3 class="font-display text-xl font-bold text-[#5A486A]">📋 เช็กคิวงานปัจจุบัน</h3>
+                <button type="button" onclick="closeAllModals()" class="w-9 h-9 rounded-full bg-white hover:bg-pink-50 text-[#7A6888] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
             </div>
-
-            <div class="p-5 overflow-y-auto space-y-2.5">
-                <!-- Queue Row 1 -->
-                <div class="bg-[#FFF9FB] border border-sky-soft rounded-2xl p-3.5 flex items-center justify-between">
+            <div class="p-5 overflow-y-auto space-y-3 text-sm">
+                <div class="p-3.5 rounded-2xl bg-sky-50/80 border border-sky-100 flex items-center justify-between">
                     <div>
-                        <div class="flex items-center gap-2">
-                            <span class="text-xs font-quicksand font-bold bg-sky-blue text-white px-2 py-0.5 rounded-full">#Q01</span>
-                            <span class="text-sm font-semibold text-text-main">คุณ Mochi_Cloud</span>
-                        </div>
-                        <p class="text-[11px] text-text-sub mt-0.5">Website Commission (Full Custom)</p>
+                        <div class="font-bold text-[#5A486A]">คิวที่ 1 — คุณมินนี่</div>
+                        <div class="text-xs text-[#887A94]">งานเว็บไซต์ + เซ็ตอีโมต</div>
                     </div>
-                    <span class="text-[11px] font-medium bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full">กำลังลงสี / โค้ด 80%</span>
+                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-700">กำลังทำร่าง</span>
                 </div>
-
-                <!-- Queue Row 2 -->
-                <div class="bg-[#FFF9FB] border border-sky-soft rounded-2xl p-3.5 flex items-center justify-between">
+                <div class="p-3.5 rounded-2xl bg-pink-50/80 border border-pink-100 flex items-center justify-between">
                     <div>
-                        <div class="flex items-center gap-2">
-                            <span class="text-xs font-quicksand font-bold bg-sky-blue text-white px-2 py-0.5 rounded-full">#Q02</span>
-                            <span class="text-sm font-semibold text-text-main">คุณ SoraChibi</span>
-                        </div>
-                        <p class="text-[11px] text-text-sub mt-0.5">Emote Pack (6 ตัว) + Chibi 1</p>
+                        <div class="font-bold text-[#5A486A]">คิวที่ 2 — คุณปลายฟ้า</div>
+                        <div class="text-xs text-[#887A94]">งานชีตตัวละคร & ป้ายร้าน</div>
                     </div>
-                    <span class="text-[11px] font-medium bg-sky-soft text-sky-deep px-2.5 py-1 rounded-full">ส่งร่างสเก็ตช์แล้ว</span>
+                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-sky-100 text-sky-700">รอคิวถัดไป</span>
                 </div>
-
-                <!-- Queue Row 3 -->
-                <div class="bg-[#FFF9FB] border border-sky-soft rounded-2xl p-3.5 flex items-center justify-between">
+                <div class="p-3.5 rounded-2xl bg-emerald-50/80 border border-emerald-100 flex items-center justify-between">
                     <div>
-                        <div class="flex items-center gap-2">
-                            <span class="text-xs font-quicksand font-bold bg-emerald-400 text-white px-2 py-0.5 rounded-full">#Q03</span>
-                            <span class="text-sm font-semibold text-text-main">คุณ Hana_VT</span>
-                        </div>
-                        <p class="text-[11px] text-text-sub mt-0.5">Link-in-bio Portal</p>
+                        <div class="font-bold text-[#5A486A]">คิวว่างเปิดรับเพิ่ม</div>
+                        <div class="text-xs text-[#887A94]">สามารถส่งบรีฟเพื่อจองคิวล่วงหน้าได้</div>
                     </div>
-                    <span class="text-[11px] font-medium bg-emerald-100 text-emerald-700 px-2.5 py-1 rounded-full">เสร็จสมบูรณ์ ✓</span>
-                </div>
-
-                <!-- Available Slot -->
-                <div class="border-2 border-dashed border-sky-blue/50 rounded-2xl p-3.5 flex items-center justify-between bg-white">
-                    <div>
-                        <span class="text-xs font-semibold text-sky-deep">✨ คิวว่างพร้อมรับงาน (#Q04 - #Q05)</span>
-                        <p class="text-[11px] text-text-sub">สามารถกดส่งบรีฟเพื่อจองคิวได้ทันที</p>
-                    </div>
-                    <button onclick="closeAllModals(); setTimeout(()=>openModal('briefModal'), 200)" class="px-3 py-1.5 rounded-full bg-sky-blue hover:bg-sky-deep text-white text-xs font-medium transition-colors cursor-pointer">
-                        จองคิว
-                    </button>
+                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700">ว่าง 2 คิว</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 4. TERMS OF SERVICE MODAL -->
+    <!-- 4. TOS MODAL -->
     <div id="tosModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
-        <div class="bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-lg w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-300">
-            <div class="p-5 pb-3 border-b border-sky-soft flex items-center justify-between bg-gradient-to-r from-[#FFF6F9] to-white">
-                <div>
-                    <h3 class="font-quicksand font-bold text-lg text-sky-deep">🧸 Terms of Service</h3>
-                    <p class="text-xs text-text-sub">ข้อตกลงและเงื่อนไขการสั่งงานร้าน JaoMeowStore</p>
-                </div>
-                <button onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-sky-soft/70 hover:bg-sky-blue hover:text-white text-text-main flex items-center justify-center transition-colors cursor-pointer">✕</button>
+        <div class="modal-card bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-lg w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
+            <div class="p-5 pb-3.5 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-[#FFF6F9] to-white">
+                <h3 class="font-display text-xl font-bold text-[#5A486A]">📜 กฎการจ้างงาน</h3>
+                <button type="button" onclick="closeAllModals()" class="w-9 h-9 rounded-full bg-white hover:bg-pink-50 text-[#7A6888] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
             </div>
-
-            <div class="p-5 overflow-y-auto space-y-3 text-xs leading-relaxed text-text-main">
-                <div class="bg-[#FFF9FB] p-3.5 rounded-2xl border border-sky-soft">
-                    <h4 class="font-bold text-sky-deep mb-1">1. การชำระเงินและมัดจำ</h4>
-                    <p>• ชำระมัดจำ 50% เพื่อจองคิวงาน และชำระส่วนที่เหลือ 50% เมื่ออนุมัติภาพร่าง/โครงสร้างเว็บเรียบร้อยแล้ว</p>
-                    <p>• หากยกเลิกงานหลังจากเริ่มร่างภาพแล้ว ขอสงวนสิทธิ์ไม่คืนเงินมัดจำทุกกรณี</p>
-                </div>
-
-                <div class="bg-[#FFF9FB] p-3.5 rounded-2xl border border-sky-soft">
-                    <h4 class="font-bold text-sky-deep mb-1">2. การแก้ไขงาน (Revision)</h4>
-                    <p>• สามารถแก้ไขงานในขั้นตอน Sketch / Wireframe ได้ฟรี 3 ครั้ง (ครั้งต่อไปคิดเพิ่มครั้งละ 50 - 100 บาท)</p>
-                    <p>• ขั้นตอนลงสี / โค้ดจริง สามารถปรับแก้สีหรือรายละเอียดเล็กน้อยได้ 2 ครั้ง</p>
-                </div>
-
-                <div class="bg-[#FFF9FB] p-3.5 rounded-2xl border border-sky-soft">
-                    <h4 class="font-bold text-sky-deep mb-1">3. ลิขสิทธิ์และการใช้งาน</h4>
-                    <p>• ราคาเริ่มต้นสำหรับใช้งานส่วนตัว (Personal Use) หากนำไปใช้เชิงพาณิชย์ (Commercial Use / สตรีมสร้างรายได้ / ขายของ) คิดเพิ่ม x1.5 - x2 ของราคาปกติ</p>
-                    <p>• ห้ามนำผลงานไปเทรน AI หรือแอบอ้างเป็นผลงานตนเองเด็ดขาด</p>
-                </div>
+            <div class="p-5 overflow-y-auto space-y-3 text-sm text-[#635570] leading-relaxed">
+                <p>1. บรีฟรายละเอียดให้ชัดเจนก่อนเริ่มงาน สามารถแก้ไขจุดเล็กน้อยได้ฟรีตามจำนวนครั้งที่ตกลง</p>
+                <p>2. ชำระมัดจำ 50% หลังจากตกลงรายละเอียดและรับคิวเรียบร้อยแล้ว ส่วนที่เหลือชำระก่อนส่งไฟล์จริง</p>
+                <p>3. ไม่อนุญาตให้นำผลงานไปแอบอ้างเป็นฝีมือตนเอง หรือนำไปเทรน AI ทุกกรณี</p>
+                <p>4. หากต้องการนำไปใช้เชิงพาณิชย์ กรุณาแจ้งล่วงหน้าเพื่อคำนวณเรตให้เหมาะสมครับ</p>
             </div>
         </div>
     </div>
 
-    <!-- 5. PRICING & CALCULATOR MODAL (ราคางาน) -->
+    <!-- 5. PRICING MODAL -->
     <div id="pricingModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
-        <div class="bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-lg w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-300">
-            <div class="p-5 pb-3 border-b border-sky-soft flex items-center justify-between bg-gradient-to-r from-[#FFF6F9] to-white">
-                <div>
-                    <h3 class="font-prompt font-bold text-lg text-sky-deep">🐾 เรทราคา & คำนวณราคาเบื้องต้น</h3>
-                    <p class="text-xs text-text-sub">เลือกประเภทงานเพื่อคำนวณงบประมาณคร่าวๆ</p>
-                </div>
-                <button onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-sky-soft/70 hover:bg-sky-blue hover:text-white text-text-main flex items-center justify-center transition-colors cursor-pointer">✕</button>
+        <div class="modal-card bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-lg w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
+            <div class="p-5 pb-3.5 border-b border-amber-100 flex items-center justify-between bg-gradient-to-r from-[#FFFDF4] to-[#FFF6F9]">
+                <h3 class="font-display text-xl font-bold text-[#5A486A]">💰 เรตราคางานเบื้องต้น</h3>
+                <button type="button" onclick="closeAllModals()" class="w-9 h-9 rounded-full bg-white hover:bg-amber-50 text-[#7A6888] border border-amber-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
             </div>
-
-            <div class="p-5 overflow-y-auto space-y-4">
-                <!-- Service Type Selection -->
-                <div>
-                    <label class="block text-xs font-semibold text-text-main mb-1.5">1. เลือกประเภทงานหลัก</label>
-                    <select id="calcService" onchange="calculatePrice()" class="w-full rounded-xl border border-sky-soft bg-[#FFF9FB] px-3.5 py-2.5 text-xs text-text-main focus:outline-none focus:border-sky-blue">
-                        <option value="850">Website / Link-in-bio Portal (เริ่มต้น 850 ฿)</option>
-                        <option value="250">Emote ตัวละครน่ารัก (ตัวละ 250 ฿)</option>
-                        <option value="450">Chibi Full Body ลงสีเต็ม (ตัวละ 450 ฿)</option>
-                        <option value="1200">Set Emote 5 ตัว แถมฟรี 1 ตัว (1,200 ฿)</option>
-                    </select>
-                </div>
-
-                <!-- Quantity -->
-                <div>
-                    <label class="block text-xs font-semibold text-text-main mb-1.5">2. จำนวน (ชิ้น / ตัว / หน้า)</label>
-                    <input id="calcQty" type="number" min="1" max="20" value="1" oninput="calculatePrice()" class="w-full rounded-xl border border-sky-soft bg-[#FFF9FB] px-3.5 py-2 text-xs text-text-main focus:outline-none focus:border-sky-blue">
-                </div>
-
-                <!-- Add-ons -->
-                <div class="space-y-2">
-                    <label class="block text-xs font-semibold text-text-main">3. ตัวเลือกเพิ่มเติม (Add-ons)</label>
-                    <label class="flex items-center gap-2 text-xs text-text-main cursor-pointer">
-                        <input id="calcCommercial" type="checkbox" onchange="calculatePrice()" class="rounded text-sky-blue focus:ring-sky-blue">
-                        <span>ใช้งานเชิงพาณิชย์ / Commercial Use (x1.5)</span>
-                    </label>
-                    <label class="flex items-center gap-2 text-xs text-text-main cursor-pointer">
-                        <input id="calcRush" type="checkbox" onchange="calculatePrice()" class="rounded text-sky-blue focus:ring-sky-blue">
-                        <span>งานด่วนพิเศษภายใน 3 วัน (+300 ฿)</span>
-                    </label>
-                </div>
-
-                <!-- Price Summary Box -->
-                <div class="bg-gradient-to-r from-[#FFEDF4] to-[#FFF6F9] border border-sky-blue/40 rounded-2xl p-4 flex items-center justify-between">
+            <div class="p-5 overflow-y-auto space-y-3 text-sm">
+                <div class="p-4 rounded-2xl bg-pink-50/70 border border-pink-100 flex items-center justify-between">
                     <div>
-                        <span class="text-xs text-text-sub block">ราคาประเมินเบื้องต้น</span>
-                        <span class="text-[10px] text-text-sub">*ราคาอาจปรับตามความละเอียดของบรีฟ</span>
+                        <div class="font-bold text-[#5A486A]">งานป้าย / ป้ายร้าน / ป้ายประกาศ</div>
+                        <div class="text-xs text-[#887A94]">ไฟล์พร้อมใช้งาน สีพาสเทลคมชัด</div>
                     </div>
-                    <div class="text-right">
-                        <span id="calcTotalDisplay" class="font-quicksand font-bold text-2xl text-sky-deep">850</span>
-                        <span class="text-xs font-semibold text-sky-deep"> บาท</span>
+                    <span class="font-display font-bold text-pink-500 text-base">เริ่มต้น 150฿</span>
+                </div>
+                <div class="p-4 rounded-2xl bg-sky-50/70 border border-sky-100 flex items-center justify-between">
+                    <div>
+                        <div class="font-bold text-[#5A486A]">งานชีต / ชิบิ / อีโมต</div>
+                        <div class="text-xs text-[#887A94]">น่ารักสไตล์เจ้าเหมียว ปรับโทนได้</div>
                     </div>
+                    <span class="font-display font-bold text-sky-500 text-base">เริ่มต้น 250฿</span>
+                </div>
+                <div class="p-4 rounded-2xl bg-purple-50/70 border border-purple-100 flex items-center justify-between">
+                    <div>
+                        <div class="font-bold text-[#5A486A]">งาน Website / หน้าเพจร้านค้า</div>
+                        <div class="text-xs text-[#887A94]">รองรับมือถือและเดสก์ท็อป ครบจบในหน้าเดียว</div>
+                    </div>
+                    <span class="font-display font-bold text-purple-500 text-base">เริ่มต้น 590฿</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 6. SEND BRIEF MODAL (ส่งบรีฟงาน) -->
+    <!-- 6. BRIEF MODAL -->
     <div id="briefModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
-        <div class="bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-lg w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-300">
-            <div class="p-5 pb-3 border-b border-sky-soft flex items-center justify-between bg-gradient-to-r from-[#FFF6F9] to-white">
-                <div>
-                    <h3 class="font-prompt font-bold text-lg text-sky-deep">☁️ ส่งบรีฟงาน (Commission Brief)</h3>
-                    <p class="text-xs text-text-sub">กรอกรายละเอียดงานเพื่อให้ทางร้านประเมินราคาและคิว</p>
-                </div>
-                <button onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-sky-soft/70 hover:bg-sky-blue hover:text-white text-text-main flex items-center justify-center transition-colors cursor-pointer">✕</button>
+        <div class="modal-card bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-lg w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
+            <div class="p-5 pb-3.5 border-b border-purple-100 flex items-center justify-between bg-gradient-to-r from-[#F9F4FF] to-[#FFF6F9]">
+                <h3 class="font-display text-xl font-bold text-[#5A486A]">💌 ส่งบรีฟงาน</h3>
+                <button type="button" onclick="closeAllModals()" class="w-9 h-9 rounded-full bg-white hover:bg-purple-50 text-[#7A6888] border border-purple-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
             </div>
-
-            <form onsubmit="submitBrief(event)" class="p-5 overflow-y-auto space-y-3.5">
+            <form id="briefForm" onsubmit="handleBriefSubmit(event)" class="p-5 overflow-y-auto space-y-3.5 text-sm">
                 <div>
-                    <label class="block text-xs font-semibold text-text-main mb-1">ชื่อลูกค้า / ชื่อแอคเคาท์ (X, Discord, Line)</label>
-                    <input required type="text" placeholder="เช่น @jaomeow_fan / Discord: jaomeow#1234" class="w-full rounded-xl border border-sky-soft bg-[#FFF9FB] px-3.5 py-2 text-xs text-text-main focus:outline-none focus:border-sky-blue">
+                    <label class="block font-semibold text-[#5A486A] mb-1">ชื่อผู้จ้าง / ช่องทางติดต่อ</label>
+                    <input id="briefContact" type="text" required placeholder="เช่น คุณเหมียว / FB: JaoMeow" class="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
                 </div>
-
                 <div>
-                    <label class="block text-xs font-semibold text-text-main mb-1">ประเภทงานที่ต้องการสั่ง</label>
-                    <select class="w-full rounded-xl border border-sky-soft bg-[#FFF9FB] px-3.5 py-2 text-xs text-text-main focus:outline-none focus:border-sky-blue">
-                        <option>Website / Link-in-bio Commission</option>
-                        <option>Emote Commission</option>
-                        <option>Chibi Character Commission</option>
-                        <option>อื่นๆ (ระบุในรายละเอียด)</option>
+                    <label class="block font-semibold text-[#5A486A] mb-1">ประเภทงานที่สนใจ</label>
+                    <select id="briefType" class="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
+                        <option value="งานป้าย">งานป้าย</option>
+                        <option value="งานชีต">งานชีต</option>
+                        <option value="Website">Website</option>
+                        <option value="Emote / Chibi">Emote / Chibi</option>
+                        <option value="งานกลุ่ม">งานกลุ่ม</option>
                     </select>
                 </div>
-
                 <div>
-                    <label class="block text-xs font-semibold text-text-main mb-1">รายละเอียดงาน / โทนสี / ลิงก์ Reference</label>
-                    <textarea required rows="3" placeholder="อธิบายลักษณะตัวละคร ท่าทาง โทนสี หรือแนบลิงก์ Google Drive..." class="w-full rounded-xl border border-sky-soft bg-[#FFF9FB] px-3.5 py-2 text-xs text-text-main focus:outline-none focus:border-sky-blue"></textarea>
+                    <label class="block font-semibold text-[#5A486A] mb-1">รายละเอียดบรีฟ / โทนสี / งบประมาณ</label>
+                    <textarea id="briefDetail" rows="3" required placeholder="พิมพ์รายละเอียดงานที่ต้องการได้เลยครับ..." class="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400"></textarea>
                 </div>
-
-                <button type="submit" class="w-full py-2.5 rounded-full bg-sky-blue hover:bg-sky-deep text-white font-prompt font-semibold text-xs shadow-pastel transition-all cursor-pointer">
-                    ส่งบรีฟงานให้ร้าน JaoMeowStore ☁️✨
+                <button type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-pink-400 to-sky-400 text-white font-bold shadow hover:opacity-95 transition cursor-pointer">
+                    คัดลอกข้อความบรีฟพร้อมส่ง
                 </button>
+                <div id="briefFeedback" class="hidden p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold"></div>
             </form>
         </div>
     </div>
 
-    <!-- TOAST NOTIFICATION -->
-    <div id="toastBox" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-white/95 border border-sky-blue/40 text-text-main px-4 py-2.5 rounded-full shadow-pastel-hover text-xs font-prompt font-medium flex items-center gap-2 opacity-0 pointer-events-none transition-all duration-300 translate-y-3">
-        <span class="text-sky-blue text-sm">☁️</span>
-        <span id="toastMessage">แจ้งเตือน</span>
-    </div>
-
     <!-- 7. ADMIN LOGIN MODAL -->
     <div id="adminLoginModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
-        <div class="bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-sm w-full flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-300">
-            <div class="p-5 pb-3 border-b border-sky-soft flex items-center justify-between bg-gradient-to-r from-[#FFF6F9] to-white">
-                <div>
-                    <h3 class="font-prompt font-bold text-base text-sky-deep">🔐 Admin Login</h3>
-                    <p class="text-[11px] text-text-sub">กรอกชื่อแอดมินและรหัสผ่านเพื่อจัดการข้อมูล</p>
-                </div>
-                <button onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-sky-soft/70 hover:bg-sky-blue hover:text-white text-text-main flex items-center justify-center transition-colors cursor-pointer">✕</button>
+        <div class="modal-card bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-sm w-full flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
+            <div class="p-5 pb-3.5 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-[#FFF5F9] to-white">
+                <h3 class="font-display text-lg font-bold text-[#5A486A]">🐾 Admin Login</h3>
+                <button type="button" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#7A6888] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
             </div>
-
-            <form onsubmit="loginAdmin(event)" class="p-5 space-y-3.5">
+            <form id="adminLoginForm" onsubmit="handleAdminLogin(event)" class="p-5 space-y-3.5 text-sm">
                 <div>
-                    <label class="block text-xs font-semibold text-text-main mb-1">Admin Name</label>
-                    <input id="adminUsernameInput" required type="text" placeholder="กรอกชื่อแอดมิน" class="w-full rounded-xl border border-sky-soft bg-[#FFF9FB] px-3.5 py-2 text-xs text-text-main focus:outline-none focus:border-sky-blue">
+                    <label class="block font-semibold text-[#5A486A] mb-1">Admin Name</label>
+                    <input id="adminUsernameInput" type="text" required placeholder="กรอกชื่อแอดมิน" autocomplete="off" class="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-text-main mb-1">Password</label>
-                    <input id="adminPasswordInput" required type="password" placeholder="••••••••" class="w-full rounded-xl border border-sky-soft bg-[#FFF9FB] px-3.5 py-2 text-xs text-text-main focus:outline-none focus:border-sky-blue">
+                    <label class="block font-semibold text-[#5A486A] mb-1">Password</label>
+                    <input id="adminPasswordInput" type="password" required placeholder="กรอกรหัสผ่าน" class="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
                 </div>
-                <p id="adminLoginError" class="text-[11px] text-rose-500 hidden">ชื่อแอดมินหรือรหัสผ่านไม่ถูกต้อง</p>
-                <button type="submit" class="w-full py-2.5 rounded-full bg-sky-blue hover:bg-sky-deep text-white font-prompt font-semibold text-xs shadow-pastel transition-all cursor-pointer">
-                    Login
+                <div id="adminLoginError" class="hidden text-xs text-rose-500 font-semibold bg-rose-50 p-2.5 rounded-xl border border-rose-200"></div>
+                <button type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-pink-400 to-purple-400 text-white font-bold shadow hover:opacity-95 transition cursor-pointer">
+                    เข้าสู่ระบบแอดมิน
                 </button>
             </form>
         </div>
@@ -846,92 +500,148 @@
 
     <!-- 8. ADMIN PANEL MODAL -->
     <div id="adminPanelModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
-        <div class="bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-2xl w-full max-h-[88vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-300">
-            <div class="p-5 pb-3 border-b border-sky-soft flex items-center justify-between bg-gradient-to-r from-[#FFF6F9] to-white">
+        <div class="modal-card bg-white/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-2xl w-full max-h-[88vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
+            <div class="p-5 pb-3.5 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-[#FFF5F9] to-[#F5FAFF]">
                 <div>
-                    <h3 class="font-prompt font-bold text-lg text-sky-deep">🛠️ ระบบจัดการร้าน (Admin Panel)</h3>
-                    <p class="text-[11px] text-text-sub">สร้างหมวดหมู่ อัปโหลดรูปภาพ ตั้งชื่อรูปภาพ และแนบลิงก์</p>
+                    <h3 class="font-display text-xl font-bold text-[#5A486A]">⚙️ Admin Manager — เจ้าเหมียว</h3>
+                    <p class="text-xs text-[#887A94]">จัดการหมวดหมู่ย่อย อัปโหลดรูปภาพ ชื่อรูป และลิงก์</p>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button onclick="logoutAdmin()" class="px-3 py-1 rounded-full bg-rose-100 hover:bg-rose-200 text-rose-600 text-[11px] font-medium transition-colors cursor-pointer">ออกจากระบบ</button>
-                    <button onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-sky-soft/70 hover:bg-sky-blue hover:text-white text-text-main flex items-center justify-center transition-colors cursor-pointer">✕</button>
+                    <button type="button" onclick="handleAdminLogout()" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-50 text-rose-500 border border-rose-200 hover:bg-rose-100 cursor-pointer">ออกจากระบบ</button>
+                    <button type="button" onclick="closeAllModals()" class="w-9 h-9 rounded-full bg-white hover:bg-pink-50 text-[#7A6888] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
                 </div>
             </div>
 
-            <div class="p-5 overflow-y-auto space-y-5">
-                <!-- Category Manager -->
-                <div class="bg-[#FFF9FB] border border-sky-soft rounded-2xl p-4 space-y-3">
-                    <h4 class="font-prompt font-bold text-xs text-sky-deep">📁 จัดการหมวดหมู่ (Categories)</h4>
-                    <form onsubmit="addCategory(event)" class="flex gap-2">
-                        <input id="newCategoryNameInput" required type="text" placeholder="พิมพ์ชื่อหมวดหมู่ใหม่ เช่น อวาตาร์, ปกเว็บ, จิบิ..." class="flex-1 rounded-xl border border-sky-soft bg-white px-3.5 py-2 text-xs text-text-main focus:outline-none focus:border-sky-blue">
-                        <button type="submit" class="px-4 py-2 rounded-xl bg-sky-blue hover:bg-sky-deep text-white text-xs font-semibold transition-colors cursor-pointer shrink-0">
-                            + เพิ่มหมวดหมู่
-                        </button>
-                    </form>
-                    <div id="adminCategoryList" class="flex flex-wrap gap-2 pt-1">
-                        <!-- Categories rendered via JS -->
-                    </div>
-                </div>
+            <div class="p-5 overflow-y-auto space-y-5 text-sm">
+                <div class="p-4 rounded-2xl bg-pink-50/60 border border-pink-100 space-y-3">
+                    <div class="font-bold text-[#5A486A]">1. เลือกหมวดหลักและจัดการหมวดหมู่</div>
 
-                <!-- Upload Image & Link Form -->
-                <div class="bg-[#FFF9FB] border border-sky-soft rounded-2xl p-4 space-y-3">
-                    <h4 class="font-prompt font-bold text-xs text-sky-deep">🖼️ อัปโหลดรูปภาพ ชื่อรูปภาพ และลิงก์</h4>
-                    <form onsubmit="addArtworkItem(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
-                            <label class="block text-[11px] font-semibold text-text-main mb-1">ชื่อรูปภาพ</label>
-                            <input id="artworkTitleInput" required type="text" placeholder="เช่น เซ็ตอิโมติคอนแมวน้อย" class="w-full rounded-xl border border-sky-soft bg-white px-3 py-2 text-xs text-text-main focus:outline-none focus:border-sky-blue">
-                        </div>
-
-                        <div>
-                            <label class="block text-[11px] font-semibold text-text-main mb-1">เลือกหมวดหมู่</label>
-                            <select id="artworkCategorySelect" required class="w-full rounded-xl border border-sky-soft bg-white px-3 py-2 text-xs text-text-main focus:outline-none focus:border-sky-blue">
-                                <!-- Options populated via JS -->
+                            <label class="block text-xs font-semibold text-[#6D597A] mb-1">หมวดหลัก</label>
+                            <select id="adminMainCatSelect" onchange="onAdminMainCatChange()" class="w-full px-3 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none">
+                                <option value="example">ตัวอย่างงาน</option>
+                                <option value="group">ตัวอย่างกลุ่ม</option>
                             </select>
                         </div>
 
-                        <div>
-                            <label class="block text-[11px] font-semibold text-text-main mb-1">อัปโหลดไฟล์รูปภาพ</label>
-                            <input id="artworkFileInput" type="file" accept="image/*" class="w-full rounded-xl border border-sky-soft bg-white px-2.5 py-1.5 text-[11px] text-text-main focus:outline-none focus:border-sky-blue">
+                        <div id="adminExampleSubcatWrapper">
+                            <label class="block text-xs font-semibold text-[#6D597A] mb-1">หมวดย่อย (ตัวอย่างงาน)</label>
+                            <select id="adminExampleSubcatSelect" onchange="renderAdminCategoryControls()" class="w-full px-3 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none">
+                                <option value="งานป้าย">งานป้าย</option>
+                                <option value="งานชีต">งานชีต</option>
+                                <option value="website">website</option>
+                            </select>
                         </div>
+                    </div>
 
-                        <div>
-                            <label class="block text-[11px] font-semibold text-text-main mb-1">หรือใส่ลิงก์รูปภาพโดยตรง (Image URL)</label>
-                            <input id="artworkImageUrlInput" type="url" placeholder="https://.../image.png (ถ้าไม่เลือกไฟล์)" class="w-full rounded-xl border border-sky-soft bg-white px-3 py-2 text-xs text-text-main focus:outline-none focus:border-sky-blue">
-                        </div>
+                    <div class="flex flex-col sm:flex-row gap-2 pt-1">
+                        <input
+                            id="newSubCategoryInput"
+                            type="text"
+                            placeholder="พิมพ์ชื่อหมวดที่ต้องการเพิ่มเอง..."
+                            class="flex-1 px-3.5 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400"
+                        >
+                        <button
+                            type="button"
+                            onclick="addCustomCategory()"
+                            id="addCustomCategoryBtn"
+                            class="px-4 py-2 rounded-xl bg-pink-400 hover:bg-pink-500 text-white font-bold shadow-xs transition cursor-pointer shrink-0"
+                        >
+                            + เพิ่มหมวด
+                        </button>
+                    </div>
 
-                        <div class="sm:col-span-2">
-                            <label class="block text-[11px] font-semibold text-text-main mb-1">ลิงก์ที่เกี่ยวข้อง (URL เมื่อกดเปิดลิงก์)</label>
-                            <input id="artworkLinkInput" type="url" placeholder="https://example.com" class="w-full rounded-xl border border-sky-soft bg-white px-3 py-2 text-xs text-text-main focus:outline-none focus:border-sky-blue">
-                        </div>
-
-                        <div class="sm:col-span-2 pt-1">
-                            <button type="submit" class="w-full py-2.5 rounded-full bg-sky-blue hover:bg-sky-deep text-white font-prompt font-semibold text-xs shadow-pastel transition-all cursor-pointer">
-                                บันทึกรูปภาพและลิงก์ลงหมวดหมู่ ✨
-                            </button>
-                        </div>
-                    </form>
+                    <div id="adminCustomCategoryList" class="flex flex-wrap gap-1.5 pt-1"></div>
                 </div>
 
-                <!-- Existing Items List -->
-                <div class="space-y-2">
-                    <h4 class="font-prompt font-bold text-xs text-sky-deep">📌 รายการรูปภาพทั้งหมดในแกลเลอรี</h4>
-                    <div id="adminArtworkList" class="space-y-2">
-                        <!-- Items rendered via JS -->
+                <form id="adminArtworkForm" onsubmit="handleAddArtwork(event)" class="p-4 rounded-2xl bg-sky-50/60 border border-sky-100 space-y-3.5">
+                    <div class="font-bold text-[#5A486A]">2. เพิ่มรูปภาพ ชื่อรูปภาพ และลิงก์</div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-[#6D597A] mb-1">ชื่อรูปภาพ / ชื่องาน</label>
+                            <input id="artworkTitleInput" type="text" required placeholder="เช่น ป้ายร้านคาเฟ่พาสเทล" class="w-full px-3.5 py-2 rounded-xl border border-sky-200 bg-white focus:outline-none focus:border-sky-400">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-[#6D597A] mb-1">แนบลิงก์ (ถ้ามี)</label>
+                            <input id="artworkLinkInput" type="url" placeholder="https://..." class="w-full px-3.5 py-2 rounded-xl border border-sky-200 bg-white focus:outline-none focus:border-sky-400">
+                        </div>
                     </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 items-start">
+                        <div>
+                            <label class="block text-xs font-semibold text-[#6D597A] mb-1">อัปโหลดไฟล์รูปภาพ</label>
+                            <input id="artworkFileInput" type="file" accept="image/*" onchange="handleFilePreview(event)" class="w-full text-xs text-[#6D597A] file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-pink-100 file:text-pink-600 hover:file:bg-pink-200 cursor-pointer">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-[#6D597A] mb-1">หรือวางลิงก์รูปภาพโดยตรง</label>
+                            <input id="artworkImageUrlInput" type="url" oninput="handleDirectUrlPreview()" placeholder="https://.../image.jpg" class="w-full px-3.5 py-2 rounded-xl border border-sky-200 bg-white focus:outline-none focus:border-sky-400">
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-20 h-20 rounded-2xl border-2 border-dashed border-pink-200 bg-white flex items-center justify-center overflow-hidden shrink-0">
+                            <img id="artworkPreviewImg" src="" alt="Preview" class="hidden w-full h-full object-cover">
+                            <span id="artworkPreviewPlaceholder" class="text-[11px] text-[#9A8CA6] text-center px-1">1:1 Preview</span>
+                        </div>
+                        <div class="flex-1">
+                            <div id="multiCatLabel" class="text-xs font-semibold text-[#6D597A] mb-1.5">เลือกหมวดย่อย (เลือกได้มากกว่า 1 หมวด)</div>
+                            <div id="multiCategoryCheckboxes" class="flex flex-wrap gap-2"></div>
+                        </div>
+                    </div>
+
+                    <div id="adminFormError" class="hidden text-xs text-rose-500 font-semibold bg-rose-50 p-2.5 rounded-xl border border-rose-200"></div>
+                    <div id="adminFormSuccess" class="hidden text-xs text-emerald-700 font-semibold bg-emerald-50 p-2.5 rounded-xl border border-emerald-200"></div>
+
+                    <button type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-sky-400 to-pink-400 text-white font-bold shadow hover:opacity-95 transition cursor-pointer">
+                        บันทึกรูปภาพและเผยแพร่ให้ลูกค้าเห็น
+                    </button>
+                </form>
+
+                <div class="space-y-2.5">
+                    <div class="font-bold text-[#5A486A]">3. รายการที่เผยแพร่แล้ว (<span id="adminItemCount">0</span>)</div>
+                    <div id="adminArtworkList" class="space-y-2"></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ==================== JAVASCRIPT LOGIC ==================== -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    <script>
+        const ADMIN_CREDENTIALS = {
+            username: 'เจ้าเหมียว',
+            password: '01082546'
+        };
 
-        /* ---------------- 1. MODAL MANAGEMENT ---------------- */
+        const DEFAULT_EXAMPLE_SUBCATS = ['งานป้าย', 'งานชีต', 'website'];
+
+        const storeState = {
+            exampleLeafCategories: {
+                'งานป้าย': ['ป้ายร้าน', 'ป้ายประกาศ'],
+                'งานชีต': ['ชีตตัวละคร', 'ชีตอีโมต'],
+                'website': ['เว็บร้านค้า', 'เว็บพอร์ต']
+            },
+            groupSubcategories: ['กลุ่มพาสเทล', 'กลุ่มอีเวนต์'],
+            artworks: []
+        };
+
+        let isAdminAuthenticated = false;
+        let currentPreparedImageData = '';
+        let activeExampleSubcat = 'งานป้าย';
+        let activeExampleLeafFilter = 'ทั้งหมด';
+        let activeGroupSubcatFilter = 'ทั้งหมด';
+
         const backdrop = document.getElementById('modalBackdrop');
-        const allModalIds = ['exampleModal', 'giveawayModal', 'queueModal', 'tosModal', 'pricingModal', 'briefModal', 'adminLoginModal', 'adminPanelModal'];
+        const allModalIds = [
+            'exampleModal',
+            'groupModal',
+            'queueModal',
+            'tosModal',
+            'pricingModal',
+            'briefModal',
+            'adminLoginModal',
+            'adminPanelModal'
+        ];
 
         function openModal(modalId) {
             closeAllModals(true);
@@ -944,10 +654,15 @@
 
             requestAnimationFrame(() => {
                 backdrop.classList.remove('opacity-0');
-                const inner = modal.firstElementChild;
-                inner.classList.remove('scale-95');
-                inner.classList.add('scale-100');
+                const inner = modal.querySelector('.modal-card') || modal.firstElementChild;
+                if (inner) {
+                    inner.classList.remove('scale-95');
+                    inner.classList.add('scale-100');
+                }
             });
+
+            if (modalId === 'exampleModal') renderExampleGallery();
+            if (modalId === 'groupModal') renderGroupGallery();
         }
 
         function closeAllModals(immediate = false) {
@@ -955,9 +670,11 @@
             allModalIds.forEach(id => {
                 const modal = document.getElementById(id);
                 if (modal && !modal.classList.contains('hidden')) {
-                    const inner = modal.firstElementChild;
-                    inner.classList.remove('scale-100');
-                    inner.classList.add('scale-95');
+                    const inner = modal.querySelector('.modal-card') || modal.firstElementChild;
+                    if (inner) {
+                        inner.classList.remove('scale-100');
+                        inner.classList.add('scale-95');
+                    }
                     if (immediate) {
                         modal.classList.add('hidden');
                         modal.classList.remove('flex');
@@ -965,245 +682,21 @@
                         setTimeout(() => {
                             modal.classList.add('hidden');
                             modal.classList.remove('flex');
-                        }, 200);
+                        }, 180);
                     }
                 }
             });
             if (immediate) {
                 backdrop.classList.add('hidden');
             } else {
-                setTimeout(() => backdrop.classList.add('hidden'), 200);
+                setTimeout(() => backdrop.classList.add('hidden'), 180);
             }
         }
 
-        /* ---------------- 2. TOAST NOTIFICATION ---------------- */
-        let toastTimeout;
-        function showToast(msg) {
-            const toast = document.getElementById('toastBox');
-            const toastMsg = document.getElementById('toastMessage');
-            toastMsg.textContent = msg;
-
-            toast.classList.remove('opacity-0', 'translate-y-3');
-            toast.classList.add('opacity-100', 'translate-y-0');
-
-            clearTimeout(toastTimeout);
-            toastTimeout = setTimeout(() => {
-                toast.classList.remove('opacity-100', 'translate-y-0');
-                toast.classList.add('opacity-0', 'translate-y-3');
-            }, 3000);
-        }
-
-        /* ---------------- 3. ADMIN AUTH & CATEGORY / ARTWORK STATE ---------------- */
-        const ADMIN_CREDENTIALS = {
-            username: 'เจ้าเหมียว',
-            password: '01082546'
-        };
-
-        let isAdminLoggedIn = false;
-        let currentExampleFilter = 'all';
-        let currentGroupFilter = 'all';
-
-        let categories = [
-            { id: 'website', name: 'Website / Link-in-bio' },
-            { id: 'emote', name: 'Emotes' },
-            { id: 'chibi', name: 'Chibi' }
-        ];
-
-        let artworks = [
-            {
-                id: 'art-1',
-                title: 'เว็บรับงานสไตล์ชมพูนม',
-                categoryId: 'website',
-                imageUrl: 'https://placehold.co/400x240/FAD2E2/8A5E6F?text=Milk+Pink+Portal',
-                linkUrl: ''
-            },
-            {
-                id: 'art-2',
-                title: 'เซ็ตอิโมติคอนแมวน้อย',
-                categoryId: 'emote',
-                imageUrl: 'https://placehold.co/400x240/FFF4CC/8A5E6F?text=Cute+Emotes',
-                linkUrl: ''
-            },
-            {
-                id: 'art-3',
-                title: 'จิบิเต็มตัวพร้อมพร็อพ',
-                categoryId: 'chibi',
-                imageUrl: 'https://placehold.co/400x240/FCE4EE/8A5E6F?text=Chibi+Full+Color',
-                linkUrl: ''
-            }
-        ];
-
-        function filterExamples(categoryId, btnEl) {
-            currentExampleFilter = categoryId;
-            document.querySelectorAll('.example-tab').forEach(tab => {
-                tab.classList.remove('bg-sky-blue', 'text-white');
-                tab.classList.add('bg-sky-soft/60', 'text-text-main');
-            });
-            if (btnEl) {
-                btnEl.classList.remove('bg-sky-soft/60', 'text-text-main');
-                btnEl.classList.add('bg-sky-blue', 'text-white');
-            }
-            renderExampleGrid();
-        }
-
-        function filterGroupWork(categoryId, btnEl) {
-            currentGroupFilter = categoryId;
-            document.querySelectorAll('.group-tab').forEach(tab => {
-                tab.classList.remove('bg-sky-blue', 'text-white');
-                tab.classList.add('bg-sky-soft/60', 'text-text-main');
-            });
-            if (btnEl) {
-                btnEl.classList.remove('bg-sky-soft/60', 'text-text-main');
-                btnEl.classList.add('bg-sky-blue', 'text-white');
-            }
-            renderGroupGrid();
-        }
-
-        function renderExampleTabs() {
-            const container = document.getElementById('exampleFilterTabs');
-            if (!container) return;
-            const allBtnClass = currentExampleFilter === 'all'
-                ? 'bg-sky-blue text-white'
-                : 'bg-sky-soft/60 text-text-main';
-
-            let html = `<button onclick="filterExamples('all', this)" class="example-tab px-3 py-1 rounded-full text-xs font-medium ${allBtnClass} transition-all cursor-pointer">ทั้งหมด</button>`;
-            categories.forEach(cat => {
-                const activeClass = currentExampleFilter === cat.id
-                    ? 'bg-sky-blue text-white'
-                    : 'bg-sky-soft/60 text-text-main';
-                html += `<button onclick="filterExamples('${escapeAttr(cat.id)}', this)" class="example-tab px-3 py-1 rounded-full text-xs font-medium ${activeClass} transition-all cursor-pointer">${escapeHtml(cat.name)}</button>`;
-            });
-            container.innerHTML = html;
-        }
-
-        function renderGroupTabs() {
-            const container = document.getElementById('groupFilterTabs');
-            if (!container) return;
-            const allBtnClass = currentGroupFilter === 'all'
-                ? 'bg-sky-blue text-white'
-                : 'bg-sky-soft/60 text-text-main';
-
-            let html = `<button onclick="filterGroupWork('all', this)" class="group-tab px-3 py-1 rounded-full text-xs font-medium ${allBtnClass} transition-all cursor-pointer">ทั้งหมด</button>`;
-            categories.forEach(cat => {
-                const activeClass = currentGroupFilter === cat.id
-                    ? 'bg-sky-blue text-white'
-                    : 'bg-sky-soft/60 text-text-main';
-                html += `<button onclick="filterGroupWork('${escapeAttr(cat.id)}', this)" class="group-tab px-3 py-1 rounded-full text-xs font-medium ${activeClass} transition-all cursor-pointer">${escapeHtml(cat.name)}</button>`;
-            });
-            container.innerHTML = html;
-        }
-
-        function buildGalleryCardHtml(item) {
-            const catObj = categories.find(c => c.id === item.categoryId);
-            const catName = catObj ? catObj.name : 'ทั่วไป';
-            const safeImg = item.imageUrl || 'https://placehold.co/400x400/FAD2E2/8A5E6F?text=JaoMeowStore';
-            const linkButtonHtml = item.linkUrl
-                ? `<a href="${escapeAttr(item.linkUrl)}" target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex items-center gap-1 text-[11px] font-semibold text-sky-deep hover:underline">เปิดลิงก์งาน ↗</a>`
-                : '';
-
-            return `
-                <div class="bg-[#FFF9FB] border border-sky-soft rounded-2xl p-3 shadow-xs flex flex-col justify-between">
-                    <div>
-                        <img src="${escapeAttr(safeImg)}" alt="${escapeAttr(item.title)}" onerror="this.src='https://placehold.co/400x400/FAD2E2/8A5E6F?text=JaoMeowStore'" class="w-full aspect-square object-cover rounded-xl mb-2.5 bg-white">
-                        <span class="inline-block text-[10px] font-semibold bg-sky-soft text-sky-deep px-2 py-0.5 rounded-full mb-1">${escapeHtml(catName)}</span>
-                        <h4 class="text-xs font-semibold text-text-main">${escapeHtml(item.title)}</h4>
-                    </div>
-                    ${linkButtonHtml}
-                </div>
-            `;
-        }
-
-        function renderExampleGrid() {
-            const grid = document.getElementById('exampleGrid');
-            if (!grid) return;
-
-            const filtered = currentExampleFilter === 'all'
-                ? artworks
-                : artworks.filter(item => item.categoryId === currentExampleFilter);
-
-            if (filtered.length === 0) {
-                grid.innerHTML = `<div class="sm:col-span-2 text-center py-8 text-xs text-text-sub">ยังไม่มีรูปภาพในหมวดหมู่นี้</div>`;
-                return;
-            }
-
-            grid.innerHTML = filtered.map(item => buildGalleryCardHtml(item)).join('');
-        }
-
-        function renderGroupGrid() {
-            const grid = document.getElementById('groupGrid');
-            if (!grid) return;
-
-            const filtered = currentGroupFilter === 'all'
-                ? artworks
-                : artworks.filter(item => item.categoryId === currentGroupFilter);
-
-            if (filtered.length === 0) {
-                grid.innerHTML = `<div class="sm:col-span-2 text-center py-8 text-xs text-text-sub">ยังไม่มีรูปภาพในหมวดหมู่ของตัวอย่างกลุ่มทั้งหมด</div>`;
-                return;
-            }
-
-            grid.innerHTML = filtered.map(item => buildGalleryCardHtml(item)).join('');
-        }
-
-        function deleteArtworkItem(artId) {
-            artworks = artworks.filter(item => item.id !== artId);
-            renderExampleGrid();
-            renderGroupGrid();
-            renderAdminPanel();
-            showToast('ลบรูปภาพเรียบร้อยแล้ว');
-            persistStoreState();
-        }
-
-        function renderAdminPanel() {
-            const catListEl = document.getElementById('adminCategoryList');
-            const catSelectEl = document.getElementById('artworkCategorySelect');
-            const artListEl = document.getElementById('adminArtworkList');
-
-            if (catListEl) {
-                catListEl.innerHTML = categories.map(cat => `
-                    <span class="inline-flex items-center gap-1.5 bg-white border border-sky-soft text-text-main text-xs px-3 py-1 rounded-full">
-                        <span>${escapeHtml(cat.name)}</span>
-                        <button type="button" onclick="deleteCategory('${escapeAttr(cat.id)}')" class="text-rose-400 hover:text-rose-600 font-bold cursor-pointer" title="ลบหมวดหมู่">×</button>
-                    </span>
-                `).join('');
-            }
-
-            if (catSelectEl) {
-                catSelectEl.innerHTML = categories.map(cat => `
-                    <option value="${escapeAttr(cat.id)}">${escapeHtml(cat.name)}</option>
-                `).join('');
-            }
-
-            if (artListEl) {
-                if (artworks.length === 0) {
-                    artListEl.innerHTML = `<p class="text-xs text-text-sub">ยังไม่มีรายการรูปภาพในตัวอย่างกลุ่มทั้งหมด</p>`;
-                    return;
-                }
-                artListEl.innerHTML = artworks.map(item => {
-                    const catName = categories.find(c => c.id === item.categoryId)?.name || 'ทั่วไป';
-                    const safeImg = item.imageUrl || 'https://placehold.co/120x80/FAD2E2/8A5E6F?text=Img';
-                    return `
-                        <div class="bg-[#FFF9FB] border border-sky-soft rounded-xl p-2.5 flex items-center justify-between gap-3">
-                            <div class="flex items-center gap-3 min-w-0">
-                                <img src="${escapeAttr(safeImg)}" alt="${escapeAttr(item.title)}" onerror="this.src='https://placehold.co/120x80/FAD2E2/8A5E6F?text=Img'" class="w-12 h-12 rounded-lg object-cover shrink-0 bg-white">
-                                <div class="min-w-0">
-                                    <p class="text-xs font-semibold text-text-main truncate">${escapeHtml(item.title)}</p>
-                                    <p class="text-[10px] text-sky-deep">หมวด: ${escapeHtml(catName)}</p>
-                                    ${item.linkUrl ? `<p class="text-[10px] text-text-sub truncate">ลิงก์: ${escapeHtml(item.linkUrl)}</p>` : ''}
-                                </div>
-                            </div>
-                            <button type="button" onclick="deleteArtworkItem('${escapeAttr(item.id)}')" class="px-2.5 py-1 rounded-lg bg-rose-100 hover:bg-rose-200 text-rose-600 text-[11px] font-medium shrink-0 cursor-pointer">
-                                ลบ
-                            </button>
-                        </div>
-                    `;
-                }).join('');
-            }
-        }
-
-        function handleTopAdminClick() {
-            if (isAdminLoggedIn) {
-                renderAdminPanel();
+        function openAdminAccess() {
+            if (isAdminAuthenticated) {
+                renderAdminCategoryControls();
+                renderAdminArtworkList();
                 openModal('adminPanelModal');
             } else {
                 document.getElementById('adminLoginError').classList.add('hidden');
@@ -1211,192 +704,508 @@
             }
         }
 
-        function loginAdmin(e) {
+        function handleAdminLogin(e) {
             e.preventDefault();
             const userVal = document.getElementById('adminUsernameInput').value.trim();
-            const passVal = document.getElementById('adminPasswordInput').value;
+            const passVal = document.getElementById('adminPasswordInput').value.trim();
+            const errEl = document.getElementById('adminLoginError');
 
             if (userVal === ADMIN_CREDENTIALS.username && passVal === ADMIN_CREDENTIALS.password) {
-                isAdminLoggedIn = true;
-                document.getElementById('adminLoginError').classList.add('hidden');
-                document.getElementById('topAdminBtnLabel').textContent = 'Admin • Active';
-                e.target.reset();
-                renderAdminPanel();
+                isAdminAuthenticated = true;
+                document.getElementById('adminTopLabel').textContent = 'Admin ✓';
+                errEl.classList.add('hidden');
+                document.getElementById('adminPasswordInput').value = '';
+                renderAdminCategoryControls();
+                renderAdminArtworkList();
                 openModal('adminPanelModal');
-                showToast('เข้าสู่ระบบแอดมินสำเร็จแล้ว ♡');
             } else {
-                document.getElementById('adminLoginError').classList.remove('hidden');
+                errEl.textContent = 'ชื่อแอดมินหรือรหัสผ่านไม่ถูกต้องครับ';
+                errEl.classList.remove('hidden');
             }
         }
 
-        function logoutAdmin() {
-            isAdminLoggedIn = false;
-            document.getElementById('topAdminBtnLabel').textContent = 'Admin';
+        function handleAdminLogout() {
+            isAdminAuthenticated = false;
+            document.getElementById('adminTopLabel').textContent = 'Admin';
             closeAllModals();
-            showToast('ออกจากระบบแอดมินเรียบร้อยแล้ว');
         }
 
-        function addCategory(e) {
-            e.preventDefault();
-            const input = document.getElementById('newCategoryNameInput');
+        function onAdminMainCatChange() {
+            const mainCat = document.getElementById('adminMainCatSelect').value;
+            const exampleSubcatWrapper = document.getElementById('adminExampleSubcatWrapper');
+            if (mainCat === 'example') {
+                exampleSubcatWrapper.classList.remove('hidden');
+            } else {
+                exampleSubcatWrapper.classList.add('hidden');
+            }
+            renderAdminCategoryControls();
+        }
+
+        function addCustomCategory() {
+            const input = document.getElementById('newSubCategoryInput');
             const name = input.value.trim();
             if (!name) return;
 
-            const id = 'cat-' + Date.now();
-            categories.push({ id, name });
-            input.value = '';
-
-            renderExampleTabs();
-            renderGroupTabs();
-            renderExampleGrid();
-            renderGroupGrid();
-            renderAdminPanel();
-            showToast(`เพิ่มหมวดหมู่ "${name}" เรียบร้อยแล้ว`);
-            persistStoreState();
-        }
-
-        function deleteCategory(catId) {
-            if (categories.length <= 1) {
-                showToast('ต้องมีหมวดหมู่อย่างน้อย 1 หมวดหมู่ครับ');
-                return;
-            }
-            const fallbackCatId = categories.find(c => c.id !== catId)?.id;
-            artworks = artworks.map(item => item.categoryId === catId ? { ...item, categoryId: fallbackCatId } : item);
-            categories = categories.filter(c => c.id !== catId);
-
-            if (currentExampleFilter === catId) {
-                currentExampleFilter = 'all';
-            }
-            if (currentGroupFilter === catId) {
-                currentGroupFilter = 'all';
-            }
-
-            renderExampleTabs();
-            renderGroupTabs();
-            renderExampleGrid();
-            renderGroupGrid();
-            renderAdminPanel();
-            showToast('ลบหมวดหมู่เรียบร้อยแล้ว');
-            persistStoreState();
-        }
-
-        function addArtworkItem(e) {
-            e.preventDefault();
-            const formEl = e.target;
-            const titleInput = document.getElementById('artworkTitleInput');
-            const categorySelect = document.getElementById('artworkCategorySelect');
-            const fileInput = document.getElementById('artworkFileInput');
-            const imageUrlInput = document.getElementById('artworkImageUrlInput');
-            const linkInput = document.getElementById('artworkLinkInput');
-
-            const title = titleInput.value.trim();
-            const categoryId = categorySelect.value;
-            const directImageUrl = imageUrlInput ? imageUrlInput.value.trim() : '';
-            const linkUrl = linkInput.value.trim();
-            const file = fileInput.files && fileInput.files[0];
-
-            if (!title || !categoryId) return;
-            if (!file && !directImageUrl) {
-                showToast('กรุณาเลือกไฟล์รูปภาพหรือกรอกลิงก์รูปภาพครับ');
-                return;
-            }
-
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = async function(event) {
-                    const compressedImg = await compressImageDataUrl(event.target.result);
-                    const newItem = {
-                        id: 'art-' + Date.now(),
-                        title,
-                        categoryId,
-                        imageUrl: compressedImg,
-                        linkUrl
-                    };
-                    artworks.unshift(newItem);
-                    renderExampleGrid();
-                    renderGroupGrid();
-                    renderAdminPanel();
-                    formEl.reset();
-                    showToast(`อัปโหลด "${title}" ลงตัวอย่างกลุ่มทั้งหมดเรียบร้อยแล้ว ✨`);
-                    persistStoreState();
-                };
-                reader.readAsDataURL(file);
+            const mainCat = document.getElementById('adminMainCatSelect').value;
+            if (mainCat === 'example') {
+                const subcat = document.getElementById('adminExampleSubcatSelect').value;
+                if (!Array.isArray(storeState.exampleLeafCategories[subcat])) {
+                    storeState.exampleLeafCategories[subcat] = [];
+                }
+                if (!storeState.exampleLeafCategories[subcat].includes(name)) {
+                    storeState.exampleLeafCategories[subcat].push(name);
+                }
             } else {
-                artworks.unshift({
-                    id: 'art-' + Date.now(),
-                    title,
-                    categoryId,
-                    imageUrl: directImageUrl,
-                    linkUrl
-                });
-                renderExampleGrid();
-                renderGroupGrid();
-                renderAdminPanel();
-                formEl.reset();
-                showToast(`เพิ่ม "${title}" ลงตัวอย่างกลุ่มทั้งหมดเรียบร้อยแล้ว ✨`);
-                persistStoreState();
+                if (!Array.isArray(storeState.groupSubcategories)) {
+                    storeState.groupSubcategories = [];
+                }
+                if (!storeState.groupSubcategories.includes(name)) {
+                    storeState.groupSubcategories.push(name);
+                }
             }
+
+            input.value = '';
+            renderAdminCategoryControls();
+            persistStoreState();
+        }
+
+        function removeCustomCategory(name) {
+            const mainCat = document.getElementById('adminMainCatSelect').value;
+            if (mainCat === 'example') {
+                const subcat = document.getElementById('adminExampleSubcatSelect').value;
+                storeState.exampleLeafCategories[subcat] = (storeState.exampleLeafCategories[subcat] || []).filter(item => item !== name);
+            } else {
+                storeState.groupSubcategories = (storeState.groupSubcategories || []).filter(item => item !== name);
+            }
+            renderAdminCategoryControls();
+            persistStoreState();
+        }
+
+        function renderAdminCategoryControls() {
+            const mainCat = document.getElementById('adminMainCatSelect').value;
+            const customListEl = document.getElementById('adminCustomCategoryList');
+            const multiCheckboxesEl = document.getElementById('multiCategoryCheckboxes');
+            const multiCatLabel = document.getElementById('multiCatLabel');
+            const newInput = document.getElementById('newSubCategoryInput');
+
+            let choices = [];
+            if (mainCat === 'example') {
+                const subcat = document.getElementById('adminExampleSubcatSelect').value;
+                choices = storeState.exampleLeafCategories[subcat] || [];
+                multiCatLabel.textContent = `เลือกหมวดในหมวดย่อย "${subcat}" (เลือกได้มากกว่า 1 หมวด)`;
+                newInput.placeholder = `เพิ่มหมวดในหมวดย่อย "${subcat}"...`;
+            } else {
+                choices = storeState.groupSubcategories || [];
+                multiCatLabel.textContent = 'เลือกหมวดย่อยของ "ตัวอย่างกลุ่ม" (เลือกได้มากกว่า 1 หมวด)';
+                newInput.placeholder = 'เพิ่มหมวดย่อยของ "ตัวอย่างกลุ่ม"...';
+            }
+
+            customListEl.innerHTML = choices.length
+                ? choices.map(item => `
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-white border border-pink-200 text-[#5A486A]">
+                        <span>${escapeHtml(item)}</span>
+                        <button type="button" onclick="removeCustomCategory('${escapeJsAttr(item)}')" class="text-rose-400 hover:text-rose-600 font-bold cursor-pointer">×</button>
+                    </span>
+                `).join('')
+                : '<span class="text-xs text-[#9A8CA6]">ยังไม่มีหมวดที่เพิ่มเอง</span>';
+
+            multiCheckboxesEl.innerHTML = choices.length
+                ? choices.map((item, idx) => `
+                    <label class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-sky-200 text-xs font-semibold text-[#5A486A] cursor-pointer hover:bg-sky-50">
+                        <input type="checkbox" name="artworkMultiCat" value="${escapeHtml(item)}" id="multiCat_${idx}" class="rounded accent-pink-400">
+                        <span>${escapeHtml(item)}</span>
+                    </label>
+                `).join('')
+                : '<span class="text-xs text-[#9A8CA6]">กรุณาเพิ่มหมวดย่อยด้านบนก่อน</span>';
+        }
+
+        function compressImageFile(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const maxDim = 768;
+                        let { width, height } = img;
+                        if (width > maxDim || height > maxDim) {
+                            if (width > height) {
+                                height = Math.round((height * maxDim) / width);
+                                width = maxDim;
+                            } else {
+                                width = Math.round((width * maxDim) / height);
+                                height = maxDim;
+                            }
+                        }
+                        const canvas = document.createElement('canvas');
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        let quality = 0.78;
+                        let dataUrl = canvas.toDataURL('image/jpeg', quality);
+                        while (dataUrl.length > 360000 && quality > 0.35) {
+                            quality -= 0.1;
+                            dataUrl = canvas.toDataURL('image/jpeg', quality);
+                        }
+                        resolve(dataUrl);
+                    };
+                    img.onerror = reject;
+                    img.src = ev.target.result;
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        async function handleFilePreview(e) {
+            const file = e.target.files?.[0];
+            if (!file) return;
+            try {
+                const compressed = await compressImageFile(file);
+                currentPreparedImageData = compressed;
+                document.getElementById('artworkImageUrlInput').value = '';
+                setPreviewImage(compressed);
+            } catch (err) {
+                console.error('Image compression error:', err);
+            }
+        }
+
+        function handleDirectUrlPreview() {
+            const urlVal = document.getElementById('artworkImageUrlInput').value.trim();
+            if (urlVal) {
+                currentPreparedImageData = urlVal;
+                document.getElementById('artworkFileInput').value = '';
+                setPreviewImage(urlVal);
+            } else if (!document.getElementById('artworkFileInput').files?.length) {
+                currentPreparedImageData = '';
+                setPreviewImage('');
+            }
+        }
+
+        function setPreviewImage(src) {
+            const imgEl = document.getElementById('artworkPreviewImg');
+            const phEl = document.getElementById('artworkPreviewPlaceholder');
+            if (src) {
+                imgEl.src = src;
+                imgEl.classList.remove('hidden');
+                phEl.classList.add('hidden');
+            } else {
+                imgEl.src = '';
+                imgEl.classList.add('hidden');
+                phEl.classList.remove('hidden');
+            }
+        }
+
+        async function handleAddArtwork(e) {
+            e.preventDefault();
+            const errEl = document.getElementById('adminFormError');
+            const okEl = document.getElementById('adminFormSuccess');
+            errEl.classList.add('hidden');
+            okEl.classList.add('hidden');
+
+            const title = document.getElementById('artworkTitleInput').value.trim();
+            const link = document.getElementById('artworkLinkInput').value.trim();
+            const directUrl = document.getElementById('artworkImageUrlInput').value.trim();
+            const mainCategory = document.getElementById('adminMainCatSelect').value;
+            const subCategory = mainCategory === 'example'
+                ? document.getElementById('adminExampleSubcatSelect').value
+                : 'ตัวอย่างกลุ่ม';
+
+            const selectedCats = Array.from(document.querySelectorAll('input[name="artworkMultiCat"]:checked'))
+                .map(cb => cb.value);
+
+            const imageSrc = currentPreparedImageData || directUrl;
+            if (!imageSrc) {
+                errEl.textContent = 'กรุณาอัปโหลดไฟล์รูปภาพหรือกรอกลิงก์รูปภาพก่อนครับ';
+                errEl.classList.remove('hidden');
+                return;
+            }
+
+            const newItem = {
+                id: 'art_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
+                mainCategory,
+                subCategory,
+                leafCategories: selectedCats,
+                title,
+                link,
+                imageData: imageSrc,
+                createdAt: Date.now()
+            };
+
+            storeState.artworks.unshift(newItem);
+
+            document.getElementById('artworkTitleInput').value = '';
+            document.getElementById('artworkLinkInput').value = '';
+            document.getElementById('artworkFileInput').value = '';
+            document.getElementById('artworkImageUrlInput').value = '';
+            currentPreparedImageData = '';
+            setPreviewImage('');
+            document.querySelectorAll('input[name="artworkMultiCat"]').forEach(cb => { cb.checked = false; });
+
+            renderAdminArtworkList();
+            renderExampleGallery();
+            renderGroupGallery();
+
+            const synced = await persistStoreState();
+            if (synced) {
+                okEl.textContent = 'บันทึกรูปภาพและซิงก์ให้ลูกค้าเห็นเรียบร้อยแล้วครับ!';
+                okEl.classList.remove('hidden');
+            } else {
+                okEl.textContent = 'บันทึกลงหน้าจอนี้แล้ว (หากยังไม่ผูกฐานข้อมูลจะแสดงในเครื่องนี้)';
+                okEl.classList.remove('hidden');
+            }
+        }
+
+        async function deleteArtwork(id) {
+            storeState.artworks = storeState.artworks.filter(item => item.id !== id);
+            renderAdminArtworkList();
+            renderExampleGallery();
+            renderGroupGallery();
+            await persistStoreState();
+        }
+
+        function renderAdminArtworkList() {
+            const listEl = document.getElementById('adminArtworkList');
+            const countEl = document.getElementById('adminItemCount');
+            countEl.textContent = storeState.artworks.length;
+
+            if (!storeState.artworks.length) {
+                listEl.innerHTML = '<div class="text-xs text-[#9A8CA6] p-3 rounded-xl bg-white border border-pink-100">ยังไม่มีรายการที่เผยแพร่</div>';
+                return;
+            }
+
+            listEl.innerHTML = storeState.artworks.map(item => {
+                const badgeMain = item.mainCategory === 'example'
+                    ? `ตัวอย่างงาน · ${escapeHtml(item.subCategory)}`
+                    : 'ตัวอย่างกลุ่ม';
+                const tagsText = (item.leafCategories || []).join(', ');
+                return `
+                    <div class="p-2.5 rounded-2xl bg-white border border-pink-100 flex items-center justify-between gap-3">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <img src="${escapeHtml(item.imageData)}" alt="${escapeHtml(item.title)}" onerror="this.src='https://placehold.co/120x120/FFE6F0/6D597A?text=1:1'" class="w-12 h-12 rounded-xl object-cover shrink-0 border border-pink-100">
+                            <div class="min-w-0">
+                                <div class="font-bold text-xs sm:text-sm text-[#5A486A] truncate">${escapeHtml(item.title)}</div>
+                                <div class="text-[11px] text-pink-500 font-semibold">${badgeMain}${tagsText ? ' · ' + escapeHtml(tagsText) : ''}</div>
+                                ${item.link ? `<a href="${escapeHtml(item.link)}" target="_blank" rel="noopener noreferrer" class="text-[11px] text-sky-500 hover:underline truncate block">${escapeHtml(item.link)}</a>` : ''}
+                            </div>
+                        </div>
+                        <button type="button" onclick="deleteArtwork('${escapeJsAttr(item.id)}')" class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-rose-50 text-rose-500 hover:bg-rose-100 shrink-0 cursor-pointer">ลบ</button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderExampleGallery() {
+            const tabsEl = document.getElementById('exampleSubcatTabs');
+            const leafChipsEl = document.getElementById('exampleLeafFilterChips');
+            const gridEl = document.getElementById('exampleGalleryList');
+
+            if (!DEFAULT_EXAMPLE_SUBCATS.includes(activeExampleSubcat)) {
+                activeExampleSubcat = DEFAULT_EXAMPLE_SUBCATS[0];
+            }
+
+            tabsEl.innerHTML = DEFAULT_EXAMPLE_SUBCATS.map(sub => {
+                const active = sub === activeExampleSubcat;
+                return `
+                    <button
+                        type="button"
+                        onclick="selectExampleSubcat('${escapeJsAttr(sub)}')"
+                        class="px-3.5 py-1.5 rounded-full text-xs font-bold transition cursor-pointer ${active ? 'bg-pink-400 text-white shadow-xs' : 'bg-pink-50 text-[#6D597A] hover:bg-pink-100'}"
+                    >
+                        ${escapeHtml(sub)}
+                    </button>
+                `;
+            }).join('');
+
+            const leaves = storeState.exampleLeafCategories[activeExampleSubcat] || [];
+            const chipOptions = ['ทั้งหมด', ...leaves];
+            if (!chipOptions.includes(activeExampleLeafFilter)) {
+                activeExampleLeafFilter = 'ทั้งหมด';
+            }
+
+            leafChipsEl.innerHTML = chipOptions.map(leaf => {
+                const active = leaf === activeExampleLeafFilter;
+                return `
+                    <button
+                        type="button"
+                        onclick="selectExampleLeafFilter('${escapeJsAttr(leaf)}')"
+                        class="px-3 py-1 rounded-full text-[11px] font-semibold transition cursor-pointer ${active ? 'bg-sky-400 text-white' : 'bg-sky-50 text-sky-700 hover:bg-sky-100'}"
+                    >
+                        ${escapeHtml(leaf)}
+                    </button>
+                `;
+            }).join('');
+
+            const filtered = storeState.artworks.filter(item => {
+                if (item.mainCategory !== 'example' || item.subCategory !== activeExampleSubcat) return false;
+                if (activeExampleLeafFilter === 'ทั้งหมด') return true;
+                return Array.isArray(item.leafCategories) && item.leafCategories.includes(activeExampleLeafFilter);
+            });
+
+            renderArtworkCards(gridEl, filtered, 'ยังไม่มีตัวอย่างงานในหมวดนี้ครับ');
+        }
+
+        function selectExampleSubcat(sub) {
+            activeExampleSubcat = sub;
+            activeExampleLeafFilter = 'ทั้งหมด';
+            renderExampleGallery();
+        }
+
+        function selectExampleLeafFilter(leaf) {
+            activeExampleLeafFilter = leaf;
+            renderExampleGallery();
+        }
+
+        function renderGroupGallery() {
+            const chipsEl = document.getElementById('groupSubcatFilterChips');
+            const gridEl = document.getElementById('groupGalleryList');
+
+            const groupSubs = storeState.groupSubcategories || [];
+            const chipOptions = ['ทั้งหมด', ...groupSubs];
+            if (!chipOptions.includes(activeGroupSubcatFilter)) {
+                activeGroupSubcatFilter = 'ทั้งหมด';
+            }
+
+            chipsEl.innerHTML = chipOptions.map(cat => {
+                const active = cat === activeGroupSubcatFilter;
+                return `
+                    <button
+                        type="button"
+                        onclick="selectGroupSubcatFilter('${escapeJsAttr(cat)}')"
+                        class="px-3 py-1 rounded-full text-xs font-semibold transition cursor-pointer ${active ? 'bg-sky-400 text-white' : 'bg-sky-50 text-sky-700 hover:bg-sky-100'}"
+                    >
+                        ${escapeHtml(cat)}
+                    </button>
+                `;
+            }).join('');
+
+            const filtered = storeState.artworks.filter(item => {
+                if (item.mainCategory !== 'group') return false;
+                if (activeGroupSubcatFilter === 'ทั้งหมด') return true;
+                return Array.isArray(item.leafCategories) && item.leafCategories.includes(activeGroupSubcatFilter);
+            });
+
+            renderArtworkCards(gridEl, filtered, 'ยังไม่มีรูปภาพหรือลิงก์ในตัวอย่างกลุ่มครับ');
+        }
+
+        function selectGroupSubcatFilter(cat) {
+            activeGroupSubcatFilter = cat;
+            renderGroupGallery();
+        }
+
+        function renderArtworkCards(container, items, emptyMessage) {
+            if (!items.length) {
+                container.innerHTML = `
+                    <div class="col-span-full py-10 text-center rounded-2xl bg-pink-50/40 border border-dashed border-pink-200 text-sm text-[#887A94]">
+                        ${escapeHtml(emptyMessage)}
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = items.map(item => {
+                const catsHtml = (item.leafCategories || []).map(c =>
+                    `<span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-pink-100/80 text-pink-600">${escapeHtml(c)}</span>`
+                ).join('');
+
+                return `
+                    <article class="rounded-2xl bg-white border-2 border-pink-100/80 overflow-hidden shadow-xs hover:shadow-md transition flex flex-col">
+                        <div class="aspect-square w-full bg-[#FFF7FA] overflow-hidden">
+                            <img
+                                src="${escapeHtml(item.imageData)}"
+                                alt="${escapeHtml(item.title)}"
+                                onerror="this.src='https://placehold.co/500x500/FFE6F0/6D597A?text=1:1+Work'"
+                                class="w-full h-full object-cover"
+                            >
+                        </div>
+                        <div class="p-3.5 flex-1 flex flex-col justify-between gap-2.5">
+                            <div>
+                                <h4 class="font-bold text-sm text-[#5A486A] leading-snug">${escapeHtml(item.title)}</h4>
+                                ${catsHtml ? `<div class="flex flex-wrap gap-1 mt-1.5">${catsHtml}</div>` : ''}
+                            </div>
+                            ${item.link ? `
+                                <a
+                                    href="${escapeHtml(item.link)}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="inline-flex items-center justify-center gap-1 w-full py-2 px-3 rounded-xl bg-gradient-to-r from-pink-400 to-sky-400 text-white text-xs font-bold hover:opacity-95 transition"
+                                >
+                                    <span>เปิดลิงก์งาน</span>
+                                    <span>↗</span>
+                                </a>
+                            ` : ''}
+                        </div>
+                    </article>
+                `;
+            }).join('');
+        }
+
+        function handleBriefSubmit(e) {
+            e.preventDefault();
+            const contact = document.getElementById('briefContact').value.trim();
+            const type = document.getElementById('briefType').value;
+            const detail = document.getElementById('briefDetail').value.trim();
+            const feedback = document.getElementById('briefFeedback');
+
+            const summaryText = `【บรีฟงาน JaoMeowStore】\nผู้ติดต่อ: ${contact}\nประเภทงาน: ${type}\nรายละเอียด: ${detail}`;
+
+            const tempTextarea = document.createElement('textarea');
+            tempTextarea.value = summaryText;
+            document.body.appendChild(tempTextarea);
+            tempTextarea.select();
+            try {
+                document.execCommand('copy');
+                feedback.textContent = 'คัดลอกข้อความบรีฟเรียบร้อยแล้ว สามารถนำไปวางส่งในแชทร้านได้เลยครับ!';
+            } catch (_) {
+                feedback.textContent = 'เตรียมข้อความบรีฟเรียบร้อยแล้ว สามารถคัดลอกส่งในแชทร้านได้เลยครับ!';
+            }
+            document.body.removeChild(tempTextarea);
+            feedback.classList.remove('hidden');
+        }
+
+        function updateSyncUI(state, message) {
+            const dot = document.getElementById('syncDot');
+            const text = document.getElementById('syncStatusText');
+            if (!dot || !text) return;
+            text.textContent = message;
+            dot.className = 'w-2.5 h-2.5 rounded-full inline-block ' + (
+                state === 'synced' ? 'bg-emerald-400' :
+                state === 'error' ? 'bg-rose-400' : 'bg-amber-400'
+            );
         }
 
         function escapeHtml(str) {
-            return String(str)
+            return String(str ?? '')
                 .replace(/&/g, '&amp;')
                 .replace(/</g, '&lt;')
                 .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;');
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
         }
 
-        function escapeAttr(str) {
-            return String(str).replace(/"/g, '&quot;');
+        function escapeJsAttr(str) {
+            return String(str ?? '')
+                .replace(/\\/g, '\\\\')
+                .replace(/'/g, "\\'");
         }
 
-        /* ---------------- 4. PRICE CALCULATOR & BRIEF FORM ---------------- */
-        function calculatePrice() {
-            const basePrice = parseFloat(document.getElementById('calcService').value) || 0;
-            const qty = Math.max(1, parseInt(document.getElementById('calcQty').value) || 1);
-            const isCommercial = document.getElementById('calcCommercial').checked;
-            const isRush = document.getElementById('calcRush').checked;
+        window.persistStoreState = async function () {
+            return false;
+        };
 
-            let total = basePrice * qty;
-            if (isCommercial) total *= 1.5;
-            if (isRush) total += 300;
-
-            document.getElementById('calcTotalDisplay').textContent = Math.round(total).toLocaleString();
-        }
-
-        function submitBrief(e) {
-            e.preventDefault();
-            closeAllModals();
-            showToast('ส่งบรีฟงานเรียบร้อยแล้ว! ทางร้านจะติดต่อกลับโดยเร็วที่สุด ♡');
-            e.target.reset();
-        }
-
-        // Expose inline handlers on window for module scope
-        Object.assign(window, {
-            openModal,
-            closeAllModals,
-            filterExamples,
-            filterGroupWork,
-            deleteArtworkItem,
-            handleTopAdminClick,
-            loginAdmin,
-            logoutAdmin,
-            addCategory,
-            deleteCategory,
-            addArtworkItem,
-            calculatePrice,
-            submitBrief
+        window.addEventListener('DOMContentLoaded', () => {
+            renderAdminCategoryControls();
+            renderAdminArtworkList();
+            renderExampleGallery();
+            renderGroupGallery();
         });
+    </script>
 
-        // Initial render for categories and example gallery
-        renderExampleTabs();
-        renderGroupTabs();
-        renderExampleGrid();
-        renderGroupGrid();
-
-        /* ---------------- 5. FIREBASE FIRESTORE REAL-TIME SYNC ---------------- */
-        const catalogKey = 'jaomeow-store';
-        const customAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : '';
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDeoR_v_GPgWOIJumybt_kzFtqwU6n6Ng4",
@@ -1408,164 +1217,92 @@
             measurementId: "G-K3RESX0N81"
         };
 
-        const statusBadge = document.getElementById('syncStatusBadge');
-
+        const appId = typeof __app_id !== 'undefined' && __app_id ? __app_id : 'jaomeow-store';
         let db = null;
-        let auth = null;
         let currentUser = null;
-        let storeDocRef = null;
-        let isApplyingRemoteSnapshot = false;
+        let docRef = null;
 
-        function setSyncStatus(text, isError = false) {
-            if (!statusBadge) return;
-            statusBadge.textContent = text;
-            statusBadge.className = isError
-                ? 'text-[10px] text-rose-500 font-medium'
-                : 'text-[10px] text-sky-deep font-medium';
-        }
-
-        function compressImageDataUrl(dataUrl, maxWidth = 600, quality = 0.6) {
-            return new Promise((resolve) => {
-                if (!dataUrl || !dataUrl.startsWith('data:image/')) {
-                    resolve(dataUrl || '');
-                    return;
-                }
-                if (dataUrl.length <= 120000) {
-                    resolve(dataUrl);
-                    return;
-                }
-                const img = new Image();
-                img.onload = function() {
-                    let width = img.width;
-                    let height = img.height;
-                    if (width > maxWidth) {
-                        height = Math.round((height * maxWidth) / width);
-                        width = maxWidth;
-                    }
-                    const canvas = document.createElement('canvas');
-                    canvas.width = width;
-                    canvas.height = height;
-                    const ctx = canvas.getContext('2d');
-                    ctx.fillStyle = '#FFFFFF';
-                    ctx.fillRect(0, 0, width, height);
-                    ctx.drawImage(img, 0, 0, width, height);
-                    const compressed = canvas.toDataURL('image/jpeg', quality);
-                    resolve(compressed.length < dataUrl.length ? compressed : dataUrl);
-                };
-                img.onerror = function() {
-                    resolve(dataUrl);
-                };
-                img.src = dataUrl;
-            });
-        }
-
-        async function persistStoreState() {
-            if (isApplyingRemoteSnapshot) return;
-            if (!db || !currentUser || !storeDocRef) {
-                setSyncStatus('ยังไม่เชื่อมต่อฐานข้อมูลส่วนกลาง', true);
-                return;
-            }
-
+        async function initFirestoreSync() {
             try {
-                setSyncStatus('กำลังบันทึก...');
-                const compressedArtworks = await Promise.all(
-                    artworks.map(async (item) => ({
-                        ...item,
-                        imageUrl: await compressImageDataUrl(item.imageUrl)
-                    }))
-                );
-                const payload = {
-                    categories,
-                    artworks: compressedArtworks,
-                    updatedAt: Date.now()
-                };
-                const serializedSize = JSON.stringify(payload).length;
-                if (serializedSize > 950000) {
-                    setSyncStatus('ข้อมูลรูปภาพรวมใหญ่เกิน 1MB', true);
-                    showToast('รูปภาพหลายรูปเกินลิมิต 1MB กรุณาลบรูปเก่าออกบางส่วนครับ');
-                    return;
-                }
-                await setDoc(storeDocRef, payload, { merge: true });
-                artworks = compressedArtworks;
-                renderExampleGrid();
-                renderGroupGrid();
-                if (isAdminLoggedIn) {
-                    renderAdminPanel();
-                }
-                setSyncStatus('อัปเดตเรียลไทม์แล้ว ✓');
-                showToast('ซิงก์รูปภาพให้ลูกค้าเห็นแล้ว ✨');
-            } catch (err) {
-                console.error('Error saving store state:', err);
-                setSyncStatus('บันทึกไม่สำเร็จ', true);
-                showToast('บันทึกรูปภาพไม่สำเร็จ กรุณาตรวจสอบสิทธิ์ Firestore ครับ');
-            }
-        }
-
-        window.persistStoreState = persistStoreState;
-
-        async function initSharedStoreSync() {
-            try {
-                setSyncStatus('กำลังเชื่อมต่อ...');
+                updateSyncUI('syncing', 'กำลังเชื่อมต่อ Firebase Firestore...');
                 const app = initializeApp(firebaseConfig);
-                auth = getAuth(app);
+                const auth = getAuth(app);
                 db = getFirestore(app);
 
-                if (customAuthToken) {
-                    await signInWithCustomToken(auth, customAuthToken);
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
                 } else {
                     await signInAnonymously(auth);
                 }
 
                 currentUser = auth.currentUser;
                 if (!currentUser) {
-                    setSyncStatus('ยังไม่ได้ยืนยันตัวตน (เปิด Anonymous Auth)', true);
+                    updateSyncUI('error', 'ไม่สามารถยืนยันตัวตนผู้เข้าชมได้');
                     return;
                 }
 
-                storeDocRef = doc(db, 'artifacts', catalogKey, 'public', 'data', 'jaomeow_catalog', 'main');
+                // Firestore document path must have an even number of segments (collection/doc/collection/doc)
+                docRef = doc(db, 'artifacts', appId, 'public', 'data', 'storeShowcase', 'main');
 
-                onSnapshot(storeDocRef, (snapshot) => {
-                    isApplyingRemoteSnapshot = true;
+                window.persistStoreState = async function () {
+                    if (!currentUser || !docRef) return false;
                     try {
+                        await setDoc(docRef, {
+                            exampleLeafCategories: storeState.exampleLeafCategories,
+                            groupSubcategories: storeState.groupSubcategories,
+                            artworks: storeState.artworks,
+                            updatedAt: Date.now()
+                        }, { merge: true });
+                        updateSyncUI('synced', 'ซิงก์ข้อมูลล่าสุดกับฐานข้อมูลแล้ว ✓');
+                        return true;
+                    } catch (err) {
+                        console.error('Firestore write error:', err);
+                        const reason = err?.code ? ` (${err.code})` : '';
+                        updateSyncUI('error', `บันทึกขึ้นฐานข้อมูลไม่สำเร็จ${reason}`);
+                        return false;
+                    }
+                };
+
+                onSnapshot(
+                    docRef,
+                    (snapshot) => {
                         if (snapshot.exists()) {
-                            const data = snapshot.data();
-                            if (Array.isArray(data.categories) && data.categories.length > 0) {
-                                categories = data.categories;
-                                if (currentExampleFilter !== 'all' && !categories.some(c => c.id === currentExampleFilter)) {
-                                    currentExampleFilter = 'all';
-                                }
-                                if (currentGroupFilter !== 'all' && !categories.some(c => c.id === currentGroupFilter)) {
-                                    currentGroupFilter = 'all';
-                                }
+                            const data = snapshot.data() || {};
+                            if (data.exampleLeafCategories && typeof data.exampleLeafCategories === 'object') {
+                                storeState.exampleLeafCategories = {
+                                    'งานป้าย': Array.isArray(data.exampleLeafCategories['งานป้าย']) ? data.exampleLeafCategories['งานป้าย'] : [],
+                                    'งานชีต': Array.isArray(data.exampleLeafCategories['งานชีต']) ? data.exampleLeafCategories['งานชีต'] : [],
+                                    'website': Array.isArray(data.exampleLeafCategories['website']) ? data.exampleLeafCategories['website'] : []
+                                };
+                            }
+                            if (Array.isArray(data.groupSubcategories)) {
+                                storeState.groupSubcategories = data.groupSubcategories;
                             }
                             if (Array.isArray(data.artworks)) {
-                                artworks = data.artworks;
+                                storeState.artworks = data.artworks;
                             }
-                            renderExampleTabs();
-                            renderGroupTabs();
-                            renderExampleGrid();
-                            renderGroupGrid();
-                            if (isAdminLoggedIn) {
-                                renderAdminPanel();
-                            }
-                            setSyncStatus('ซิงก์ข้อมูลล่าสุดแล้ว ✓');
-                        } else {
-                            setSyncStatus('พร้อมซิงก์ข้อมูล');
+
+                            renderAdminCategoryControls();
+                            renderAdminArtworkList();
+                            renderExampleGallery();
+                            renderGroupGallery();
                         }
-                    } finally {
-                        isApplyingRemoteSnapshot = false;
+                        updateSyncUI('synced', 'ซิงก์ข้อมูลล่าสุดกับฐานข้อมูลแล้ว ✓');
+                    },
+                    (err) => {
+                        console.error('Firestore snapshot error:', err);
+                        const reason = err?.code ? ` (${err.code})` : '';
+                        updateSyncUI('error', `อ่านข้อมูลจากฐานข้อมูลไม่ได้${reason}`);
                     }
-                }, (error) => {
-                    console.error('Snapshot listener error:', error);
-                    setSyncStatus('ซิงก์ขัดข้อง (ตรวจ Firestore Rules)', true);
-                });
+                );
             } catch (err) {
-                console.error('Failed to initialize shared store sync:', err);
-                setSyncStatus('โหมดออฟไลน์', true);
+                console.error('Firebase init error:', err);
+                const reason = err?.code ? ` (${err.code})` : '';
+                updateSyncUI('error', `เชื่อมต่อฐานข้อมูลไม่สำเร็จ${reason}`);
             }
         }
 
-        initSharedStoreSync();
+        initFirestoreSync();
     </script>
 </body>
 </html>
