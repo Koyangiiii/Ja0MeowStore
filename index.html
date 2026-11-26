@@ -370,11 +370,11 @@
                             </div>
 
                             <!-- Right Store Title & Commission Info -->
-                            <div class="col-span-7 flex flex-col items-end text-right pr-0.5">
-                                <div class="inline-flex items-center gap-1.5 bg-white/95 px-3.5 py-1 rounded-2xl rounded-br-xs border-2 border-white shadow-xs mb-1.5">
-                                    <span class="text-xs text-[#D97CA6]">🐾</span>
-                                    <span class="font-serif italic font-bold text-lg text-[#E07AA8] leading-none">JaoMeowStore</span>
-                                    <span class="text-xs text-pink-400">☆</span>
+                            <div class="col-span-7 flex flex-col items-end text-right pr-0.5 min-w-0">
+                                <div class="max-w-full inline-flex items-center gap-1 bg-white/95 px-2.5 py-1 rounded-2xl rounded-br-xs border-2 border-white shadow-xs mb-1.5">
+                                    <span class="text-[11px] text-[#D97CA6] shrink-0">🐾</span>
+                                    <span class="font-serif italic font-bold text-sm text-[#E07AA8] leading-none truncate">JaoMeowStore</span>
+                                    <span class="text-[11px] text-pink-400 shrink-0">☆</span>
                                 </div>
                                 <p class="text-[11px] font-bold text-[#955270] leading-snug">
                                     website / emote / chibi
@@ -781,19 +781,19 @@
                     <div id="adminFormSuccess" class="hidden text-xs text-[#8F3E64] font-semibold bg-[#FFF0F6] p-2.5 rounded-xl border border-pink-200"></div>
 
                     <button type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#F48FB6] to-[#E86D9C] text-white font-bold shadow hover:opacity-95 transition cursor-pointer">
-                        บันทึกรูปภาพและเผยแพร่ให้ลูกค้าเห็น
+                        คัดลอกข้อความบรีฟพร้อมส่ง
                     </button>
+                    <div id="briefFeedback" class="hidden p-3 rounded-xl bg-pink-50 border border-pink-200 text-[#8F3E64] text-xs font-semibold"></div>
                 </form>
-
-                <div class="space-y-2.5">
-                    <div class="font-bold text-[#6B4257]">3. รายการที่เผยแพร่แล้ว (<span id="adminItemCount">0</span>)</div>
-                    <div id="adminArtworkList" class="space-y-2"></div>
-                </div>
             </div>
         </div>
     </div>
 
-    <script>
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js';
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js';
+        import { getFirestore, doc, getDoc, setDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js';
+
         const ADMIN_CREDENTIALS = {
             username: 'เจ้าเหมียว',
             password: '01082546'
@@ -816,6 +816,12 @@
         let activeExampleSubcat = 'งานป้าย';
         let activeExampleLeafFilter = 'ทั้งหมด';
         let activeGroupSubcatFilter = 'ทั้งหมด';
+
+        let db = null;
+        let auth = null;
+        let storeDocRef = null;
+        let unsubscribeStore = null;
+        let isApplyingRemoteSnapshot = false;
 
         const backdrop = document.getElementById('modalBackdrop');
         const allModalIds = [
@@ -911,6 +917,155 @@
                 return trimmed;
             }
             return '';
+        }
+
+        function normalizeStorePayload(rawData) {
+            const data = rawData && typeof rawData === 'object' ? rawData : {};
+            const rawLeafMap = data.exampleLeafCategories && typeof data.exampleLeafCategories === 'object'
+                ? data.exampleLeafCategories
+                : {};
+
+            const mergedLeafMap = {};
+            DEFAULT_EXAMPLE_SUBCATS.forEach(sub => {
+                const baseList = storeState.exampleLeafCategories[sub] || [];
+                const remoteList = Array.isArray(rawLeafMap[sub]) ? rawLeafMap[sub] : [];
+                mergedLeafMap[sub] = Array.from(new Set([...baseList, ...remoteList].filter(Boolean)));
+            });
+
+            Object.keys(rawLeafMap).forEach(sub => {
+                if (!mergedLeafMap[sub] && Array.isArray(rawLeafMap[sub])) {
+                    mergedLeafMap[sub] = Array.from(new Set(rawLeafMap[sub].filter(Boolean)));
+                }
+            });
+
+            const groupSubs = Array.isArray(data.groupSubcategories)
+                ? Array.from(new Set(data.groupSubcategories.filter(Boolean)))
+                : [...storeState.groupSubcategories];
+
+            const artworks = Array.isArray(data.artworks)
+                ? data.artworks
+                    .filter(item => item && typeof item === 'object')
+                    .map(item => ({
+                        id: String(item.id || ('art_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7))),
+                        title: String(item.title || 'Untitled'),
+                        imageUrl: sanitizeUrl(item.imageUrl || ''),
+                        link: sanitizeUrl(item.link || ''),
+                        mainCategory: item.mainCategory === 'group' ? 'group' : 'example',
+                        subCategory: String(item.subCategory || (item.mainCategory === 'group' ? 'กลุ่มทั้งหมด' : 'งานป้าย')),
+                        leafCategories: Array.isArray(item.leafCategories)
+                            ? Array.from(new Set(item.leafCategories.map(String).filter(Boolean)))
+                            : [],
+                        createdAt: Number(item.createdAt) || Date.now()
+                    }))
+                : [];
+
+            return {
+                exampleLeafCategories: mergedLeafMap,
+                groupSubcategories: groupSubs,
+                artworks
+            };
+        }
+
+        async function persistStoreState() {
+            if (!storeDocRef || isApplyingRemoteSnapshot) return;
+            try {
+                const payload = {
+                    exampleLeafCategories: storeState.exampleLeafCategories,
+                    groupSubcategories: storeState.groupSubcategories,
+                    artworks: storeState.artworks,
+                    updatedAt: Date.now()
+                };
+                await setDoc(storeDocRef, payload, { merge: true });
+            } catch (err) {
+                console.error('Failed to persist store state to Firestore:', err);
+                const errEl = document.getElementById('adminFormError');
+                if (errEl) {
+                    errEl.textContent = `บันทึกขึ้นฐานข้อมูลไม่สำเร็จ (${err.code || err.message || 'error'})`;
+                    errEl.classList.remove('hidden');
+                }
+            }
+        }
+
+        function startStoreRealtimeListener() {
+            if (!storeDocRef) return;
+            if (unsubscribeStore) {
+                unsubscribeStore();
+                unsubscribeStore = null;
+            }
+
+            unsubscribeStore = onSnapshot(storeDocRef, async (snapshot) => {
+                try {
+                    if (!snapshot.exists()) {
+                        await setDoc(storeDocRef, {
+                            exampleLeafCategories: storeState.exampleLeafCategories,
+                            groupSubcategories: storeState.groupSubcategories,
+                            artworks: storeState.artworks,
+                            createdAt: Date.now()
+                        }, { merge: true });
+                        return;
+                    }
+
+                    const normalized = normalizeStorePayload(snapshot.data());
+                    isApplyingRemoteSnapshot = true;
+                    storeState.exampleLeafCategories = normalized.exampleLeafCategories;
+                    storeState.groupSubcategories = normalized.groupSubcategories;
+                    storeState.artworks = normalized.artworks;
+                    isApplyingRemoteSnapshot = false;
+
+                    const exampleModal = document.getElementById('exampleModal');
+                    if (exampleModal && !exampleModal.classList.contains('hidden')) {
+                        renderExampleGallery();
+                    }
+
+                    const groupModal = document.getElementById('groupModal');
+                    if (groupModal && !groupModal.classList.contains('hidden')) {
+                        renderGroupGallery();
+                    }
+
+                    const adminPanelModal = document.getElementById('adminPanelModal');
+                    if (adminPanelModal && !adminPanelModal.classList.contains('hidden') && isAdminAuthenticated) {
+                        renderAdminPanel();
+                    }
+                } catch (err) {
+                    isApplyingRemoteSnapshot = false;
+                    console.error('Error processing Firestore snapshot:', err);
+                }
+            }, (err) => {
+                console.error('Firestore onSnapshot error:', err);
+            });
+        }
+
+        async function initFirebaseDatabase() {
+            try {
+                const rawConfig = typeof __firebase_config !== 'undefined' && __firebase_config
+                    ? (typeof __firebase_config === 'string' ? JSON.parse(__firebase_config) : __firebase_config)
+                    : null;
+
+                if (!rawConfig || !rawConfig.apiKey) {
+                    console.warn('Firebase config not found; running with local session state.');
+                    return;
+                }
+
+                const appId = typeof __app_id !== 'undefined' && __app_id ? String(__app_id) : 'jaomeow-store';
+                const app = initializeApp(rawConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+                storeDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'storeShowcase', 'main');
+
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        startStoreRealtimeListener();
+                    }
+                });
+
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (err) {
+                console.error('Failed to initialize Firebase:', err);
+            }
         }
 
         function openAdminEntry() {
@@ -1172,7 +1327,7 @@
                 : `<span class="text-xs text-[#A5788E]">กรุณาเพิ่มหมวดย่อยก่อน หรือบันทึกแบบไม่ระบุหมวดย่อย</span>`;
         }
 
-        function addCustomCategory() {
+        async function addCustomCategory() {
             const input = document.getElementById('newSubCategoryInput');
             const name = input.value.trim();
             if (!name) return;
@@ -1197,9 +1352,10 @@
 
             input.value = '';
             renderAdminCategoryControls();
+            await persistStoreState();
         }
 
-        function removeCustomCategory(catName) {
+        async function removeCustomCategory(catName) {
             const mainCat = document.getElementById('adminMainCatSelect').value;
             if (mainCat === 'example') {
                 const sub = document.getElementById('adminExampleSubcatSelect').value;
@@ -1208,6 +1364,7 @@
                 storeState.groupSubcategories = (storeState.groupSubcategories || []).filter(c => c !== catName);
             }
             renderAdminCategoryControls();
+            await persistStoreState();
         }
 
         function handleFilePreview(event) {
@@ -1245,7 +1402,7 @@
             }
         }
 
-        function handleAddArtwork(event) {
+        async function handleAddArtwork(event) {
             event.preventDefault();
             const errEl = document.getElementById('adminFormError');
             const okEl = document.getElementById('adminFormSuccess');
@@ -1296,13 +1453,16 @@
             renderAdminCategoryControls();
             renderAdminArtworkList();
 
-            okEl.textContent = 'บันทึกรายการเรียบร้อยแล้วครับ!';
+            await persistStoreState();
+
+            okEl.textContent = 'บันทึกรายการและซิงก์ฐานข้อมูลเรียบร้อยแล้วครับ!';
             okEl.classList.remove('hidden');
         }
 
-        function deleteArtwork(id) {
+        async function deleteArtwork(id) {
             storeState.artworks = storeState.artworks.filter(item => item.id !== id);
             renderAdminArtworkList();
+            await persistStoreState();
         }
 
         function renderAdminArtworkList() {
@@ -1374,6 +1534,26 @@
             document.body.removeChild(helper);
             feedback.classList.remove('hidden');
         }
+
+        window.openModal = openModal;
+        window.closeAllModals = closeAllModals;
+        window.openAdminEntry = openAdminEntry;
+        window.handleAdminLogin = handleAdminLogin;
+        window.handleAdminLogout = handleAdminLogout;
+        window.selectExampleSubcat = selectExampleSubcat;
+        window.selectExampleLeafFilter = selectExampleLeafFilter;
+        window.selectGroupSubcatFilter = selectGroupSubcatFilter;
+        window.onAdminMainCatChange = onAdminMainCatChange;
+        window.renderAdminCategoryControls = renderAdminCategoryControls;
+        window.addCustomCategory = addCustomCategory;
+        window.removeCustomCategory = removeCustomCategory;
+        window.handleFilePreview = handleFilePreview;
+        window.handleDirectUrlPreview = handleDirectUrlPreview;
+        window.handleAddArtwork = handleAddArtwork;
+        window.deleteArtwork = deleteArtwork;
+        window.handleBriefSubmit = handleBriefSubmit;
+
+        initFirebaseDatabase();
     </script>
 </body>
 </html>
