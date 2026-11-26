@@ -1103,12 +1103,12 @@
             const passInput = (document.getElementById('adminPasswordInput')?.value || '').trim();
             const errEl = document.getElementById('adminLoginError');
 
-            if (userInput === 'admin' && passInput === '1234') {
+            if (userInput === 'เจ้าเหมียว' && passInput === '01082546') {
                 state.isAdminLoggedIn = true;
                 if (errEl) errEl.classList.add('hidden');
                 openModal('adminPanelModal');
             } else if (errEl) {
-                errEl.textContent = 'ชื่อแอดมินหรือรหัสผ่านไม่ถูกต้องครับ (ทดลองใช้ admin / 1234)';
+                errEl.textContent = 'ชื่อแอดมินหรือรหัสผ่านไม่ถูกต้องครับ';
                 errEl.classList.remove('hidden');
             }
         }
