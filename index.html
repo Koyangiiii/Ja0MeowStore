@@ -344,10 +344,6 @@
                             <span>✿</span>
                             <span>FEATURED SHOWCASE</span>
                         </span>
-                        <span class="text-[10px] font-semibold text-[#C2849F] flex items-center gap-1">
-                            <span>✦</span>
-                            <span>PNG SLOT READY</span>
-                        </span>
                     </div>
 
                     <div class="hero-milk-sky relative rounded-[26px_12px_30px_18px] p-3.5 border-2 border-white overflow-hidden">
@@ -741,6 +737,20 @@
                     <div id="adminCustomCategoryList" class="flex flex-wrap gap-1.5 pt-1"></div>
                 </div>
 
+                <div class="p-4 rounded-2xl bg-[#FFF2F7] border border-pink-100 space-y-3">
+                    <div class="font-bold text-[#6B4257]">รูปภาพในการ์ดแบนเนอร์ (ลูกค้าทุกคนเห็น)</div>
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-20 h-20 rounded-2xl border-2 border-dashed border-pink-200 bg-white flex items-center justify-center overflow-hidden shrink-0">
+                            <img id="adminHeroCardPreviewImg" src="" alt="Card Banner Preview" class="hidden w-full h-full object-contain">
+                            <span id="adminHeroCardPreviewPlaceholder" class="text-[11px] text-[#B08398] text-center px-1">รูปการ์ด</span>
+                        </div>
+                        <div class="flex-1 space-y-2">
+                            <input id="adminHeroCardFileInput" type="file" accept="image/*" onchange="handleHeroCardFileUpload(event)" class="w-full text-xs text-[#8A5A72] file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-white file:text-[#B84D7B] hover:file:bg-[#FFE3EE] cursor-pointer">
+                            <div id="adminHeroCardStatus" class="hidden text-xs font-semibold text-[#8F3E64]"></div>
+                        </div>
+                    </div>
+                </div>
+
                 <form id="adminArtworkForm" onsubmit="handleAddArtwork(event)" class="p-4 rounded-2xl bg-white border border-pink-100 space-y-3.5">
                     <div class="font-bold text-[#6B4257]">2. เพิ่มรูปภาพ ชื่อรูปภาพ และลิงก์</div>
 
@@ -781,624 +791,579 @@
                     <div id="adminFormSuccess" class="hidden text-xs text-[#8F3E64] font-semibold bg-[#FFF0F6] p-2.5 rounded-xl border border-pink-200"></div>
 
                     <button type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#F48FB6] to-[#E86D9C] text-white font-bold shadow hover:opacity-95 transition cursor-pointer">
-                        คัดลอกข้อความบรีฟพร้อมส่ง
+                        บันทึกรายการและเผยแพร่
                     </button>
-                    <div id="briefFeedback" class="hidden p-3 rounded-xl bg-pink-50 border border-pink-200 text-[#8F3E64] text-xs font-semibold"></div>
                 </form>
+
+                <div class="p-4 rounded-2xl bg-[#FFF6F9] border border-pink-100 space-y-2.5">
+                    <div class="flex items-center justify-between">
+                        <div class="font-bold text-[#6B4257]">3. รายการที่เผยแพร่แล้ว (<span id="adminItemCount">0</span>)</div>
+                    </div>
+                    <div id="adminArtworkList" class="space-y-2 max-h-56 overflow-y-auto"></div>
+                </div>
             </div>
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js';
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js';
-        import { getFirestore, doc, getDoc, setDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js';
+        import { getAuth, signInAnonymously, signInWithCustomToken } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js';
+        import { getFirestore, doc, setDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js';
 
-        const ADMIN_CREDENTIALS = {
-            username: 'เจ้าเหมียว',
-            password: '01082546'
-        };
-
-        const DEFAULT_EXAMPLE_SUBCATS = ['งานป้าย', 'งานชีต', 'website'];
-
-        const storeState = {
-            exampleLeafCategories: {
-                'งานป้าย': ['ป้ายร้าน', 'ป้ายประกาศ'],
-                'งานชีต': ['ชีตตัวละคร', 'ชีตอีโมต'],
-                'website': ['เว็บร้านค้า', 'เว็บพอร์ต']
+        const DEFAULT_CATEGORIES = {
+            example: {
+                'งานป้าย': ['ป้ายร้าน', 'ป้ายประกาศ', 'ป้ายโปรโมชัน'],
+                'งานชีต': ['ชีตตัวละคร', 'ชีตชิบิ', 'ชีตอีโมต'],
+                'website': ['หน้าเพจร้านค้า', 'พอร์ตโฟลิโอ', 'เว็บคอมมิชชัน']
             },
-            groupSubcategories: ['กลุ่มพาสเทล', 'กลุ่มอีเวนต์'],
-            artworks: []
+            group: ['เซ็ตอีโมตกลุ่ม', 'งานกลุ่มตัวละคร', 'เซ็ตป้ายร้านค้า']
         };
 
-        let isAdminAuthenticated = false;
-        let currentPreparedImageData = '';
-        let activeExampleSubcat = 'งานป้าย';
-        let activeExampleLeafFilter = 'ทั้งหมด';
-        let activeGroupSubcatFilter = 'ทั้งหมด';
+        const DEFAULT_ARTWORKS = [
+            {
+                id: 'demo-1',
+                title: 'เซ็ตป้ายร้านชมพูนม',
+                link: 'https://example.com',
+                image: 'https://placehold.co/400x400/FFE6F0/A85A7E?text=Sign+Set',
+                mainCat: 'example',
+                subCat: 'งานป้าย',
+                categories: ['ป้ายร้าน']
+            },
+            {
+                id: 'demo-2',
+                title: 'ชีตตัวละครเจ้าเหมียว',
+                link: 'https://example.com',
+                image: 'https://placehold.co/400x400/FFF0F6/9C5A79?text=Chibi+Sheet',
+                mainCat: 'example',
+                subCat: 'งานชีต',
+                categories: ['ชีตชิบิ']
+            },
+            {
+                id: 'demo-3',
+                title: 'เว็บคอมมิชชันพาสเทล',
+                link: 'https://example.com',
+                image: 'https://placehold.co/400x400/FCE4EE/B85E88?text=Website+UI',
+                mainCat: 'example',
+                subCat: 'website',
+                categories: ['หน้าเพจร้านค้า']
+            },
+            {
+                id: 'demo-4',
+                title: 'เซ็ตอีโมตกลุ่มน่ารัก',
+                link: 'https://example.com',
+                image: 'https://placehold.co/400x400/FFEAF3/A85A7E?text=Group+Emotes',
+                mainCat: 'group',
+                subCat: '',
+                categories: ['เซ็ตอีโมตกลุ่ม']
+            }
+        ];
+
+        let state = {
+            categories: JSON.parse(JSON.stringify(DEFAULT_CATEGORIES)),
+            artworks: JSON.parse(JSON.stringify(DEFAULT_ARTWORKS)),
+            selectedExampleSubcat: 'งานป้าย',
+            selectedExampleLeaf: 'ทั้งหมด',
+            selectedGroupSubcat: 'ทั้งหมด',
+            isAdminLoggedIn: false,
+            previewImageData: ''
+        };
 
         let db = null;
         let auth = null;
+        let currentUser = null;
         let storeDocRef = null;
         let unsubscribeStore = null;
-        let isApplyingRemoteSnapshot = false;
 
-        const backdrop = document.getElementById('modalBackdrop');
-        const allModalIds = [
-            'exampleModal',
-            'groupModal',
-            'queueModal',
-            'tosModal',
-            'pricingModal',
-            'briefModal',
-            'adminLoginModal',
-            'adminPanelModal'
-        ];
+        function cloneDefaultCategories() {
+            return JSON.parse(JSON.stringify(DEFAULT_CATEGORIES));
+        }
 
-        function openModal(modalId) {
-            closeAllModals(true);
-            const modal = document.getElementById(modalId);
-            if (!modal) return;
+        function normalizeStoreData(rawData) {
+            const fallbackCats = cloneDefaultCategories();
+            const rawCats = rawData && typeof rawData.categories === 'object' && rawData.categories !== null
+                ? rawData.categories
+                : fallbackCats;
 
-            backdrop.classList.remove('hidden');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
+            const exampleCats = {};
+            const sourceExample = rawCats.example && typeof rawCats.example === 'object'
+                ? rawCats.example
+                : fallbackCats.example;
 
-            requestAnimationFrame(() => {
-                backdrop.classList.remove('opacity-0');
-                const inner = modal.querySelector('.modal-card') || modal.firstElementChild;
-                if (inner) {
-                    inner.classList.remove('scale-95');
-                    inner.classList.add('scale-100');
+            Object.keys(sourceExample).forEach((subKey) => {
+                exampleCats[subKey] = Array.isArray(sourceExample[subKey]) ? [...sourceExample[subKey]] : [];
+            });
+            Object.keys(fallbackCats.example).forEach((defaultSubKey) => {
+                if (!Array.isArray(exampleCats[defaultSubKey])) {
+                    exampleCats[defaultSubKey] = [...fallbackCats.example[defaultSubKey]];
                 }
             });
 
-            if (modalId === 'exampleModal') renderExampleGallery();
-            if (modalId === 'groupModal') {
-                activeGroupSubcatFilter = 'ทั้งหมด';
-                renderGroupGallery();
-            }
-        }
+            const groupCats = Array.isArray(rawCats.group) && rawCats.group.length > 0
+                ? [...rawCats.group]
+                : [...fallbackCats.group];
 
-        function closeAllModals(immediate = false) {
-            backdrop.classList.add('opacity-0');
-            allModalIds.forEach(id => {
-                const modal = document.getElementById(id);
-                if (!modal) return;
-                const inner = modal.querySelector('.modal-card') || modal.firstElementChild;
-                if (inner) {
-                    inner.classList.remove('scale-100');
-                    inner.classList.add('scale-95');
-                }
-                if (immediate) {
-                    modal.classList.add('hidden');
-                    modal.classList.remove('flex');
-                } else {
-                    setTimeout(() => {
-                        if (backdrop.classList.contains('opacity-0')) {
-                            modal.classList.add('hidden');
-                            modal.classList.remove('flex');
-                        }
-                    }, 180);
-                }
-            });
-
-            if (immediate) {
-                backdrop.classList.add('hidden');
-            } else {
-                setTimeout(() => {
-                    if (backdrop.classList.contains('opacity-0')) {
-                        backdrop.classList.add('hidden');
-                    }
-                }, 180);
-            }
-        }
-
-        function escapeHtml(str) {
-            return String(str ?? '')
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;')
-                .replace(/'/g, '&#39;');
-        }
-
-        function escapeJsAttr(str) {
-            return String(str ?? '')
-                .replace(/\\/g, '\\\\')
-                .replace(/'/g, "\\'")
-                .replace(/"/g, '&quot;');
-        }
-
-        function sanitizeUrl(url) {
-            const trimmed = String(url ?? '').trim();
-            if (!trimmed) return '';
-            if (/^(https?:\/\/|data:image\/)/i.test(trimmed)) {
-                return trimmed;
-            }
-            return '';
-        }
-
-        function normalizeStorePayload(rawData) {
-            const data = rawData && typeof rawData === 'object' ? rawData : {};
-            const rawLeafMap = data.exampleLeafCategories && typeof data.exampleLeafCategories === 'object'
-                ? data.exampleLeafCategories
-                : {};
-
-            const mergedLeafMap = {};
-            DEFAULT_EXAMPLE_SUBCATS.forEach(sub => {
-                const baseList = storeState.exampleLeafCategories[sub] || [];
-                const remoteList = Array.isArray(rawLeafMap[sub]) ? rawLeafMap[sub] : [];
-                mergedLeafMap[sub] = Array.from(new Set([...baseList, ...remoteList].filter(Boolean)));
-            });
-
-            Object.keys(rawLeafMap).forEach(sub => {
-                if (!mergedLeafMap[sub] && Array.isArray(rawLeafMap[sub])) {
-                    mergedLeafMap[sub] = Array.from(new Set(rawLeafMap[sub].filter(Boolean)));
-                }
-            });
-
-            const groupSubs = Array.isArray(data.groupSubcategories)
-                ? Array.from(new Set(data.groupSubcategories.filter(Boolean)))
-                : [...storeState.groupSubcategories];
-
-            const artworks = Array.isArray(data.artworks)
-                ? data.artworks
-                    .filter(item => item && typeof item === 'object')
-                    .map(item => ({
-                        id: String(item.id || ('art_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7))),
-                        title: String(item.title || 'Untitled'),
-                        imageUrl: sanitizeUrl(item.imageUrl || ''),
-                        link: sanitizeUrl(item.link || ''),
-                        mainCategory: item.mainCategory === 'group' ? 'group' : 'example',
-                        subCategory: String(item.subCategory || (item.mainCategory === 'group' ? 'กลุ่มทั้งหมด' : 'งานป้าย')),
-                        leafCategories: Array.isArray(item.leafCategories)
-                            ? Array.from(new Set(item.leafCategories.map(String).filter(Boolean)))
-                            : [],
-                        createdAt: Number(item.createdAt) || Date.now()
-                    }))
-                : [];
+            const artworks = Array.isArray(rawData?.artworks) && rawData.artworks.length > 0
+                ? rawData.artworks
+                : JSON.parse(JSON.stringify(DEFAULT_ARTWORKS));
 
             return {
-                exampleLeafCategories: mergedLeafMap,
-                groupSubcategories: groupSubs,
+                categories: {
+                    example: exampleCats,
+                    group: groupCats
+                },
                 artworks
             };
         }
 
-        async function persistStoreState() {
-            if (!storeDocRef || isApplyingRemoteSnapshot) return;
+        async function persistStoreToFirestore() {
+            if (!storeDocRef || !currentUser) return;
             try {
-                const payload = {
-                    exampleLeafCategories: storeState.exampleLeafCategories,
-                    groupSubcategories: storeState.groupSubcategories,
-                    artworks: storeState.artworks,
+                await setDoc(storeDocRef, {
+                    categories: state.categories,
+                    artworks: state.artworks,
                     updatedAt: Date.now()
-                };
-                await setDoc(storeDocRef, payload, { merge: true });
+                }, { merge: true });
             } catch (err) {
-                console.error('Failed to persist store state to Firestore:', err);
-                const errEl = document.getElementById('adminFormError');
-                if (errEl) {
-                    errEl.textContent = `บันทึกขึ้นฐานข้อมูลไม่สำเร็จ (${err.code || err.message || 'error'})`;
-                    errEl.classList.remove('hidden');
-                }
+                console.error('Firestore write error:', err);
             }
         }
 
-        function startStoreRealtimeListener() {
-            if (!storeDocRef) return;
+        function attachStoreListener() {
             if (unsubscribeStore) {
                 unsubscribeStore();
                 unsubscribeStore = null;
             }
+            if (!storeDocRef || !currentUser) return;
 
-            unsubscribeStore = onSnapshot(storeDocRef, async (snapshot) => {
-                try {
-                    if (!snapshot.exists()) {
-                        await setDoc(storeDocRef, {
-                            exampleLeafCategories: storeState.exampleLeafCategories,
-                            groupSubcategories: storeState.groupSubcategories,
-                            artworks: storeState.artworks,
-                            createdAt: Date.now()
-                        }, { merge: true });
-                        return;
+            unsubscribeStore = onSnapshot(
+                storeDocRef,
+                (snap) => {
+                    if (snap.exists()) {
+                        const normalized = normalizeStoreData(snap.data());
+                        state.categories = normalized.categories;
+                        state.artworks = normalized.artworks;
+                        refreshActiveViews();
+                    } else {
+                        const initial = normalizeStoreData({});
+                        state.categories = initial.categories;
+                        state.artworks = initial.artworks;
+                        persistStoreToFirestore();
+                        refreshActiveViews();
                     }
-
-                    const normalized = normalizeStorePayload(snapshot.data());
-                    isApplyingRemoteSnapshot = true;
-                    storeState.exampleLeafCategories = normalized.exampleLeafCategories;
-                    storeState.groupSubcategories = normalized.groupSubcategories;
-                    storeState.artworks = normalized.artworks;
-                    isApplyingRemoteSnapshot = false;
-
-                    const exampleModal = document.getElementById('exampleModal');
-                    if (exampleModal && !exampleModal.classList.contains('hidden')) {
-                        renderExampleGallery();
-                    }
-
-                    const groupModal = document.getElementById('groupModal');
-                    if (groupModal && !groupModal.classList.contains('hidden')) {
-                        renderGroupGallery();
-                    }
-
-                    const adminPanelModal = document.getElementById('adminPanelModal');
-                    if (adminPanelModal && !adminPanelModal.classList.contains('hidden') && isAdminAuthenticated) {
-                        renderAdminPanel();
-                    }
-                } catch (err) {
-                    isApplyingRemoteSnapshot = false;
-                    console.error('Error processing Firestore snapshot:', err);
+                },
+                (err) => {
+                    console.error('Firestore snapshot error:', err);
                 }
-            }, (err) => {
-                console.error('Firestore onSnapshot error:', err);
-            });
+            );
         }
 
         async function initFirebaseDatabase() {
             try {
-                const rawConfig = typeof __firebase_config !== 'undefined' && __firebase_config
-                    ? (typeof __firebase_config === 'string' ? JSON.parse(__firebase_config) : __firebase_config)
-                    : null;
-
-                if (!rawConfig || !rawConfig.apiKey) {
-                    console.warn('Firebase config not found; running with local session state.');
+                const appId = typeof __app_id !== 'undefined' && __app_id ? __app_id : 'jaomeow-store';
+                if (typeof __firebase_config === 'undefined' || !__firebase_config) {
+                    refreshActiveViews();
                     return;
                 }
 
-                const appId = typeof __app_id !== 'undefined' && __app_id ? String(__app_id) : 'jaomeow-store';
-                const app = initializeApp(rawConfig);
+                const firebaseConfig = typeof __firebase_config === 'string'
+                    ? JSON.parse(__firebase_config)
+                    : __firebase_config;
+
+                const app = initializeApp(firebaseConfig);
                 auth = getAuth(app);
                 db = getFirestore(app);
-                storeDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'storeShowcase', 'main');
-
-                onAuthStateChanged(auth, (user) => {
-                    if (user) {
-                        startStoreRealtimeListener();
-                    }
-                });
 
                 if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
                     await signInWithCustomToken(auth, __initial_auth_token);
                 } else {
                     await signInAnonymously(auth);
                 }
+
+                currentUser = auth.currentUser;
+                if (!currentUser) {
+                    refreshActiveViews();
+                    return;
+                }
+
+                storeDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'storeShowcase', 'main');
+                attachStoreListener();
             } catch (err) {
-                console.error('Failed to initialize Firebase:', err);
+                console.error('Firebase init error:', err);
+                refreshActiveViews();
+            }
+        }
+
+        function refreshActiveViews() {
+            renderExampleModal();
+            renderGroupModal();
+            if (state.isAdminLoggedIn) {
+                renderAdminCategoryControls();
+                renderAdminArtworkList();
+            }
+        }
+
+        function closeAllModals() {
+            const backdrop = document.getElementById('modalBackdrop');
+            const modalIds = [
+                'exampleModal',
+                'groupModal',
+                'queueModal',
+                'tosModal',
+                'pricingModal',
+                'briefModal',
+                'adminLoginModal',
+                'adminPanelModal'
+            ];
+
+            modalIds.forEach((id) => {
+                const modal = document.getElementById(id);
+                if (!modal) return;
+                const card = modal.querySelector('.modal-card');
+                if (card) {
+                    card.classList.remove('scale-100');
+                    card.classList.add('scale-95');
+                }
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            });
+
+            if (backdrop) {
+                backdrop.classList.add('opacity-0');
+                setTimeout(() => {
+                    backdrop.classList.add('hidden');
+                }, 180);
+            }
+        }
+
+        function openModal(modalId) {
+            const backdrop = document.getElementById('modalBackdrop');
+            const target = document.getElementById(modalId);
+            if (!target) return;
+
+            const otherModals = [
+                'exampleModal',
+                'groupModal',
+                'queueModal',
+                'tosModal',
+                'pricingModal',
+                'briefModal',
+                'adminLoginModal',
+                'adminPanelModal'
+            ].filter((id) => id !== modalId);
+
+            otherModals.forEach((id) => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.classList.add('hidden');
+                    el.classList.remove('flex');
+                }
+            });
+
+            if (modalId === 'exampleModal') {
+                renderExampleModal();
+            } else if (modalId === 'groupModal') {
+                state.selectedGroupSubcat = 'ทั้งหมด';
+                renderGroupModal();
+            } else if (modalId === 'adminPanelModal') {
+                renderAdminCategoryControls();
+                renderAdminArtworkList();
+            }
+
+            if (backdrop) {
+                backdrop.classList.remove('hidden');
+                requestAnimationFrame(() => {
+                    backdrop.classList.remove('opacity-0');
+                });
+            }
+
+            target.classList.remove('hidden');
+            target.classList.add('flex');
+            const card = target.querySelector('.modal-card');
+            if (card) {
+                requestAnimationFrame(() => {
+                    card.classList.remove('scale-95');
+                    card.classList.add('scale-100');
+                });
             }
         }
 
         function openAdminEntry() {
-            if (isAdminAuthenticated) {
+            if (state.isAdminLoggedIn) {
                 openModal('adminPanelModal');
-                renderAdminPanel();
             } else {
                 const errEl = document.getElementById('adminLoginError');
-                if (errEl) {
-                    errEl.classList.add('hidden');
-                    errEl.textContent = '';
-                }
+                if (errEl) errEl.classList.add('hidden');
                 openModal('adminLoginModal');
             }
         }
 
         function handleAdminLogin(event) {
             event.preventDefault();
-            const username = document.getElementById('adminUsernameInput').value.trim();
-            const password = document.getElementById('adminPasswordInput').value;
+            const userInput = (document.getElementById('adminUsernameInput')?.value || '').trim();
+            const passInput = (document.getElementById('adminPasswordInput')?.value || '').trim();
             const errEl = document.getElementById('adminLoginError');
 
-            if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
-                isAdminAuthenticated = true;
-                errEl.classList.add('hidden');
-                document.getElementById('adminLoginForm').reset();
+            if (userInput === 'admin' && passInput === '1234') {
+                state.isAdminLoggedIn = true;
+                if (errEl) errEl.classList.add('hidden');
                 openModal('adminPanelModal');
-                renderAdminPanel();
-            } else {
-                errEl.textContent = 'ชื่อแอดมินหรือรหัสผ่านไม่ถูกต้องครับ';
+            } else if (errEl) {
+                errEl.textContent = 'ชื่อแอดมินหรือรหัสผ่านไม่ถูกต้องครับ (ทดลองใช้ admin / 1234)';
                 errEl.classList.remove('hidden');
             }
         }
 
         function handleAdminLogout() {
-            isAdminAuthenticated = false;
+            state.isAdminLoggedIn = false;
+            const form = document.getElementById('adminLoginForm');
+            if (form) form.reset();
             closeAllModals();
         }
 
-        function getExampleSubcategories() {
-            const fromLeafKeys = Object.keys(storeState.exampleLeafCategories || {});
-            const fromArtworks = storeState.artworks
-                .filter(item => item.mainCategory === 'example')
-                .map(item => item.subCategory)
-                .filter(Boolean);
-            return Array.from(new Set([...DEFAULT_EXAMPLE_SUBCATS, ...fromLeafKeys, ...fromArtworks]));
-        }
-
-        function getLeafCategoriesForExampleSubcat(subcat) {
-            const fromMap = (storeState.exampleLeafCategories && storeState.exampleLeafCategories[subcat]) || [];
-            const fromArtworks = storeState.artworks
-                .filter(item => item.mainCategory === 'example' && item.subCategory === subcat)
-                .flatMap(item => Array.isArray(item.leafCategories) ? item.leafCategories : []);
-            return Array.from(new Set([...fromMap, ...fromArtworks]));
-        }
-
-        function renderExampleGallery() {
+        function renderExampleModal() {
             const tabsEl = document.getElementById('exampleSubcatTabs');
             const chipsEl = document.getElementById('exampleLeafFilterChips');
-            const gridEl = document.getElementById('exampleGalleryList');
+            const listEl = document.getElementById('exampleGalleryList');
+            if (!tabsEl || !chipsEl || !listEl) return;
 
-            const subcats = getExampleSubcategories();
-            if (!subcats.includes(activeExampleSubcat)) {
-                activeExampleSubcat = subcats[0] || 'งานป้าย';
+            const subcats = Object.keys(state.categories.example || {});
+            if (!subcats.includes(state.selectedExampleSubcat)) {
+                state.selectedExampleSubcat = subcats[0] || 'งานป้าย';
             }
 
-            tabsEl.innerHTML = subcats.map(sub => {
-                const active = sub === activeExampleSubcat;
-                return `
-                    <button
-                        type="button"
-                        onclick="selectExampleSubcat('${escapeJsAttr(sub)}')"
-                        class="px-3.5 py-1.5 rounded-full text-xs font-bold transition cursor-pointer ${active ? 'bg-[#EE7CA8] text-white shadow-xs' : 'bg-[#FFF3F8] text-[#8E5670] hover:bg-[#FFE4EE]'}"
-                    >
-                        ${escapeHtml(sub)}
-                    </button>
-                `;
+            tabsEl.innerHTML = subcats.map((sub) => {
+                const active = sub === state.selectedExampleSubcat;
+                return `<button type="button" onclick="selectExampleSubcat('${escapeHtml(sub)}')" class="px-3 py-1.5 rounded-full text-xs font-bold transition cursor-pointer ${
+                    active
+                        ? 'bg-[#EE7CA8] text-white shadow-xs'
+                        : 'bg-[#FFF2F7] text-[#8A5A72] hover:bg-[#FFE3EE]'
+                }">${escapeHtml(sub)}</button>`;
             }).join('');
 
-            const leaves = getLeafCategoriesForExampleSubcat(activeExampleSubcat);
-            const chipOptions = ['ทั้งหมด', ...leaves];
-            if (!chipOptions.includes(activeExampleLeafFilter)) {
-                activeExampleLeafFilter = 'ทั้งหมด';
+            const leafList = Array.isArray(state.categories.example[state.selectedExampleSubcat])
+                ? state.categories.example[state.selectedExampleSubcat]
+                : [];
+            const allFilterOptions = ['ทั้งหมด', ...leafList];
+            if (!allFilterOptions.includes(state.selectedExampleLeaf)) {
+                state.selectedExampleLeaf = 'ทั้งหมด';
             }
 
-            chipsEl.innerHTML = chipOptions.map(leaf => {
-                const active = leaf === activeExampleLeafFilter;
-                return `
-                    <button
-                        type="button"
-                        onclick="selectExampleLeafFilter('${escapeJsAttr(leaf)}')"
-                        class="px-3 py-1 rounded-full text-xs font-semibold transition cursor-pointer ${active ? 'bg-[#F89EC2] text-white' : 'bg-[#FFF6F9] text-[#9E5678] border border-pink-100 hover:bg-[#FFEBF2]'}"
-                    >
-                        ${escapeHtml(leaf)}
-                    </button>
-                `;
+            chipsEl.innerHTML = allFilterOptions.map((leaf) => {
+                const active = leaf === state.selectedExampleLeaf;
+                return `<button type="button" onclick="selectExampleLeaf('${escapeHtml(leaf)}')" class="px-2.5 py-1 rounded-xl text-[11px] font-semibold border transition cursor-pointer ${
+                    active
+                        ? 'bg-[#FFE3EE] border-[#F4A7C6] text-[#9E3F6B]'
+                        : 'bg-white border-pink-100 text-[#9B7A8A] hover:bg-[#FFF7FA]'
+                }">${escapeHtml(leaf)}</button>`;
             }).join('');
 
-            const filtered = storeState.artworks.filter(item => {
-                if (item.mainCategory !== 'example') return false;
-                if (item.subCategory !== activeExampleSubcat) return false;
-                if (activeExampleLeafFilter === 'ทั้งหมด') return true;
-                return Array.isArray(item.leafCategories) && item.leafCategories.includes(activeExampleLeafFilter);
+            const filtered = state.artworks.filter((item) => {
+                if (item.mainCat !== 'example') return false;
+                if (item.subCat !== state.selectedExampleSubcat) return false;
+                if (state.selectedExampleLeaf === 'ทั้งหมด') return true;
+                return Array.isArray(item.categories) && item.categories.includes(state.selectedExampleLeaf);
             });
 
-            renderArtworkCards(gridEl, filtered, 'ยังไม่มีผลงานในหมวดนี้ครับ');
+            renderGalleryCards(listEl, filtered, 'ยังไม่มีตัวอย่างงานในหมวดนี้ครับ');
         }
 
         function selectExampleSubcat(subcat) {
-            activeExampleSubcat = subcat;
-            activeExampleLeafFilter = 'ทั้งหมด';
-            renderExampleGallery();
+            state.selectedExampleSubcat = subcat;
+            state.selectedExampleLeaf = 'ทั้งหมด';
+            renderExampleModal();
         }
 
-        function selectExampleLeafFilter(leaf) {
-            activeExampleLeafFilter = leaf;
-            renderExampleGallery();
+        function selectExampleLeaf(leaf) {
+            state.selectedExampleLeaf = leaf;
+            renderExampleModal();
         }
 
-        function selectGroupSubcatFilter(cat) {
-            activeGroupSubcatFilter = cat;
-            renderGroupGallery();
-        }
-
-        function renderGroupGallery() {
+        function renderGroupModal() {
             const chipsEl = document.getElementById('groupSubcatFilterChips');
-            const gridEl = document.getElementById('groupGalleryList');
+            const listEl = document.getElementById('groupGalleryList');
+            if (!chipsEl || !listEl) return;
 
-            const groupItems = storeState.artworks.filter(item => item.mainCategory === 'group');
-            const usedCategories = groupItems.flatMap(item => Array.isArray(item.leafCategories) ? item.leafCategories : []);
-            const groupSubs = Array.from(new Set([...(storeState.groupSubcategories || []), ...usedCategories]));
-
-            const chipOptions = ['ทั้งหมด', ...groupSubs];
-            if (!chipOptions.includes(activeGroupSubcatFilter)) {
-                activeGroupSubcatFilter = 'ทั้งหมด';
-            }
-
-            chipsEl.innerHTML = chipOptions.map(cat => {
-                const active = cat === activeGroupSubcatFilter;
-                const count = cat === 'ทั้งหมด'
-                    ? groupItems.length
-                    : groupItems.filter(item => Array.isArray(item.leafCategories) && item.leafCategories.includes(cat)).length;
-                return `
-                    <button
-                        type="button"
-                        onclick="selectGroupSubcatFilter('${escapeJsAttr(cat)}')"
-                        class="px-3 py-1 rounded-full text-xs font-semibold transition cursor-pointer ${active ? 'bg-[#EE7CA8] text-white shadow-xs' : 'bg-[#FFF6F9] text-[#9E5678] border border-pink-100 hover:bg-[#FFEBF2]'}"
-                    >
-                        ${escapeHtml(cat)} (${count})
-                    </button>
-                `;
-            }).join('');
-
-            const filtered = groupItems.filter(item => {
-                if (activeGroupSubcatFilter === 'ทั้งหมด') return true;
-                return Array.isArray(item.leafCategories) && item.leafCategories.includes(activeGroupSubcatFilter);
+            const groupItems = state.artworks.filter((item) => item.mainCat === 'group');
+            const extraCats = new Set();
+            groupItems.forEach((item) => {
+                if (Array.isArray(item.categories)) {
+                    item.categories.forEach((c) => c && extraCats.add(c));
+                }
             });
 
-            renderArtworkCards(gridEl, filtered, 'ยังไม่มีรูปภาพหรือลิงก์ในตัวอย่างกลุ่มครับ');
+            const baseGroupCats = Array.isArray(state.categories.group) ? state.categories.group : [];
+            const mergedGroupCats = Array.from(new Set([...baseGroupCats, ...Array.from(extraCats)]));
+            const filterList = ['ทั้งหมด', ...mergedGroupCats];
+
+            if (!filterList.includes(state.selectedGroupSubcat)) {
+                state.selectedGroupSubcat = 'ทั้งหมด';
+            }
+
+            chipsEl.innerHTML = filterList.map((catName) => {
+                const active = catName === state.selectedGroupSubcat;
+                const countText = catName === 'ทั้งหมด' ? ` (${groupItems.length})` : '';
+                return `<button type="button" onclick="selectGroupSubcat('${escapeHtml(catName)}')" class="px-3 py-1 rounded-full text-xs font-bold transition cursor-pointer ${
+                    active
+                        ? 'bg-[#EE7CA8] text-white shadow-xs'
+                        : 'bg-[#FFF2F7] text-[#8A5A72] hover:bg-[#FFE3EE]'
+                }">${escapeHtml(catName)}${countText}</button>`;
+            }).join('');
+
+            const filtered = state.selectedGroupSubcat === 'ทั้งหมด'
+                ? groupItems
+                : groupItems.filter((item) => Array.isArray(item.categories) && item.categories.includes(state.selectedGroupSubcat));
+
+            renderGalleryCards(listEl, filtered, 'ยังไม่มีตัวอย่างกลุ่มในหมวดนี้ครับ');
         }
 
-        function renderArtworkCards(container, items, emptyText) {
+        function selectGroupSubcat(catName) {
+            state.selectedGroupSubcat = catName;
+            renderGroupModal();
+        }
+
+        function renderGalleryCards(containerEl, items, emptyMessage) {
             if (!items || items.length === 0) {
-                container.innerHTML = `
-                    <div class="col-span-2 py-10 text-center text-sm text-[#A5788E] bg-[#FFFDFC] rounded-2xl border border-dashed border-pink-200">
-                        ${escapeHtml(emptyText)}
-                    </div>
-                `;
+                containerEl.innerHTML = `<div class="col-span-2 py-10 text-center text-xs text-[#A5788E] bg-white/80 rounded-2xl border border-pink-100">${escapeHtml(emptyMessage)}</div>`;
                 return;
             }
 
-            container.innerHTML = items.map(item => {
-                const safeImg = sanitizeUrl(item.imageUrl);
-                const safeLink = sanitizeUrl(item.link);
-                const tags = Array.isArray(item.leafCategories) ? item.leafCategories : [];
+            containerEl.innerHTML = items.map((item) => {
+                const safeImg = item.image || 'https://placehold.co/400x400/FFE6F0/A85A7E?text=JaoMeow';
+                const safeTitle = escapeHtml(item.title || 'ผลงาน');
+                const safeLink = item.link ? escapeHtml(item.link) : '';
+                const tagsText = Array.isArray(item.categories) && item.categories.length > 0
+                    ? escapeHtml(item.categories.join(', '))
+                    : '';
+
                 return `
-                    <article class="rounded-2xl border border-pink-100 bg-white overflow-hidden shadow-2xs flex flex-col">
-                        <div class="aspect-square w-full bg-[#FFF4F8] overflow-hidden">
-                            ${safeImg
-                                ? `<img src="${escapeHtml(safeImg)}" alt="${escapeHtml(item.title)}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400/FFE6F0/A85A7E?text=JaoMeowStore'">`
-                                : `<div class="w-full h-full flex items-center justify-center text-xs text-[#B08398]">ไม่มีรูปภาพ</div>`
-                            }
-                        </div>
-                        <div class="p-2.5 flex-1 flex flex-col justify-between gap-2">
-                            <div>
-                                <div class="font-bold text-xs text-[#6B4257] line-clamp-2">${escapeHtml(item.title)}</div>
-                                ${tags.length > 0 ? `
-                                    <div class="mt-1.5 flex flex-wrap gap-1">
-                                        ${tags.map(t => `<span class="px-2 py-0.5 rounded-full text-[10px] bg-[#FFF0F6] text-[#9E5678] font-medium">${escapeHtml(t)}</span>`).join('')}
-                                    </div>
-                                ` : ''}
+                    <div class="bg-white rounded-2xl border border-pink-100 p-2.5 shadow-2xs flex flex-col justify-between">
+                        <div>
+                            <div class="aspect-square w-full rounded-xl overflow-hidden bg-[#FFF4F8] mb-2">
+                                <img src="${safeImg}" alt="${safeTitle}" onerror="this.src='https://placehold.co/400x400/FFE6F0/A85A7E?text=JaoMeow'" class="w-full h-full object-cover">
                             </div>
-                            ${safeLink ? `
-                                <a href="${escapeHtml(safeLink)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-full py-1.5 px-2 rounded-xl bg-[#FFF0F6] hover:bg-[#FFE0EC] text-[#B84D7B] text-[11px] font-bold transition">
-                                    เปิดลิงก์งาน ↗
-                                </a>
-                            ` : ''}
+                            <div class="font-bold text-xs text-[#6B4257] line-clamp-1">${safeTitle}</div>
+                            ${tagsText ? `<div class="text-[10px] text-[#A87A90] line-clamp-1 mt-0.5">${tagsText}</div>` : ''}
                         </div>
-                    </article>
+                        ${safeLink
+                            ? `<a href="${safeLink}" target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex items-center justify-center w-full py-1.5 rounded-xl bg-[#FFF0F6] hover:bg-[#FFE0EC] text-[#B84D7B] text-[11px] font-bold transition">เปิดลิงก์งาน ↗</a>`
+                            : `<div class="mt-2 text-center py-1 text-[10px] text-[#C29BB0]">ไม่มีลิงก์แนบ</div>`
+                        }
+                    </div>
                 `;
             }).join('');
         }
 
-        function renderAdminPanel() {
-            onAdminMainCatChange();
-            renderAdminArtworkList();
-        }
-
         function onAdminMainCatChange() {
-            const mainCat = document.getElementById('adminMainCatSelect').value;
-            const exampleSubWrapper = document.getElementById('adminExampleSubcatWrapper');
-            const exampleSubSelect = document.getElementById('adminExampleSubcatSelect');
-            const multiCatLabel = document.getElementById('multiCatLabel');
-
-            const exampleSubs = getExampleSubcategories();
-            const currentSelectedSub = exampleSubSelect.value;
-            exampleSubSelect.innerHTML = exampleSubs.map(sub =>
-                `<option value="${escapeHtml(sub)}">${escapeHtml(sub)}</option>`
-            ).join('');
-            exampleSubSelect.value = exampleSubs.includes(currentSelectedSub) ? currentSelectedSub : exampleSubs[0];
-
-            if (mainCat === 'example') {
-                exampleSubWrapper.classList.remove('hidden');
-                multiCatLabel.textContent = 'เลือกหมวดย่อยของตัวอย่างงาน (เลือกได้มากกว่า 1 หมวด)';
-            } else {
-                exampleSubWrapper.classList.add('hidden');
-                multiCatLabel.textContent = 'เลือกหมวดย่อยของตัวอย่างกลุ่ม (เลือกได้มากกว่า 1 หมวด)';
+            const mainCat = document.getElementById('adminMainCatSelect')?.value || 'example';
+            const subcatWrapper = document.getElementById('adminExampleSubcatWrapper');
+            if (subcatWrapper) {
+                subcatWrapper.classList.toggle('hidden', mainCat !== 'example');
             }
-
             renderAdminCategoryControls();
         }
 
         function renderAdminCategoryControls() {
-            const mainCat = document.getElementById('adminMainCatSelect').value;
-            const exampleSub = document.getElementById('adminExampleSubcatSelect').value;
+            const mainCat = document.getElementById('adminMainCatSelect')?.value || 'example';
+            const subcatSelect = document.getElementById('adminExampleSubcatSelect');
             const customListEl = document.getElementById('adminCustomCategoryList');
             const checkboxesEl = document.getElementById('multiCategoryCheckboxes');
+            const labelEl = document.getElementById('multiCatLabel');
+            if (!customListEl || !checkboxesEl) return;
 
-            const categories = mainCat === 'example'
-                ? getLeafCategoriesForExampleSubcat(exampleSub)
-                : Array.from(new Set(storeState.groupSubcategories || []));
+            let availableCats = [];
+            if (mainCat === 'example') {
+                const subKeys = Object.keys(state.categories.example || {});
+                if (subcatSelect) {
+                    const prevVal = subcatSelect.value;
+                    subcatSelect.innerHTML = subKeys.map((k) => `<option value="${escapeHtml(k)}">${escapeHtml(k)}</option>`).join('');
+                    if (subKeys.includes(prevVal)) subcatSelect.value = prevVal;
+                }
+                const activeSub = subcatSelect?.value || subKeys[0] || 'งานป้าย';
+                availableCats = Array.isArray(state.categories.example[activeSub])
+                    ? state.categories.example[activeSub]
+                    : [];
+                if (labelEl) labelEl.textContent = `เลือกหมวดย่อยใน "${activeSub}" (เลือกได้หลายหมวด)`;
+            } else {
+                availableCats = Array.isArray(state.categories.group) ? state.categories.group : [];
+                if (labelEl) labelEl.textContent = 'เลือกหมวดกลุ่ม (เลือกได้หลายหมวด)';
+            }
 
-            customListEl.innerHTML = categories.length
-                ? categories.map(cat => `
-                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-white border border-pink-200 text-[#8A526D]">
-                        <span>${escapeHtml(cat)}</span>
-                        <button type="button" onclick="removeCustomCategory('${escapeJsAttr(cat)}')" class="text-rose-400 hover:text-rose-600 font-bold cursor-pointer" title="ลบหมวด">×</button>
-                    </span>
-                `).join('')
-                : `<span class="text-xs text-[#A5788E]">ยังไม่มีหมวดย่อยในส่วนนี้ สามารถพิมพ์เพิ่มด้านบนได้เลย</span>`;
+            customListEl.innerHTML = availableCats.map((catName) => (
+                `<span class="px-2.5 py-1 rounded-full bg-white border border-pink-200 text-xs font-semibold text-[#7A4961]">${escapeHtml(catName)}</span>`
+            )).join('');
 
-            checkboxesEl.innerHTML = categories.length
-                ? categories.map((cat, idx) => `
-                    <label class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-pink-200 bg-[#FFFDFC] text-xs font-semibold text-[#6B4257] cursor-pointer hover:bg-[#FFF3F8]">
-                        <input type="checkbox" name="adminLeafCat" value="${escapeHtml(cat)}" ${idx === 0 ? 'checked' : ''} class="rounded accent-[#EE7CA8]">
-                        <span>${escapeHtml(cat)}</span>
-                    </label>
-                `).join('')
-                : `<span class="text-xs text-[#A5788E]">กรุณาเพิ่มหมวดย่อยก่อน หรือบันทึกแบบไม่ระบุหมวดย่อย</span>`;
+            checkboxesEl.innerHTML = availableCats.length > 0
+                ? availableCats.map((catName, idx) => (
+                    `<label class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#FFF6F9] border border-pink-100 text-xs text-[#6B4257] cursor-pointer">
+                        <input type="checkbox" name="adminArtCat" value="${escapeHtml(catName)}" ${idx === 0 ? 'checked' : ''} class="rounded accent-[#EE7CA8]">
+                        <span>${escapeHtml(catName)}</span>
+                    </label>`
+                )).join('')
+                : `<span class="text-xs text-[#A5788E]">ยังไม่มีหมวดย่อย กรุณาเพิ่มหมวดด้านบน</span>`;
         }
 
         async function addCustomCategory() {
-            const input = document.getElementById('newSubCategoryInput');
-            const name = input.value.trim();
-            if (!name) return;
+            const inputEl = document.getElementById('newSubCategoryInput');
+            const mainCat = document.getElementById('adminMainCatSelect')?.value || 'example';
+            const subcatSelect = document.getElementById('adminExampleSubcatSelect');
+            const newName = (inputEl?.value || '').trim();
+            if (!newName) return;
 
-            const mainCat = document.getElementById('adminMainCatSelect').value;
             if (mainCat === 'example') {
-                const sub = document.getElementById('adminExampleSubcatSelect').value;
-                if (!Array.isArray(storeState.exampleLeafCategories[sub])) {
-                    storeState.exampleLeafCategories[sub] = [];
+                const activeSub = subcatSelect?.value || 'งานป้าย';
+                if (!Array.isArray(state.categories.example[activeSub])) {
+                    state.categories.example[activeSub] = [];
                 }
-                if (!storeState.exampleLeafCategories[sub].includes(name)) {
-                    storeState.exampleLeafCategories[sub].push(name);
+                if (!state.categories.example[activeSub].includes(newName)) {
+                    state.categories.example[activeSub].push(newName);
                 }
             } else {
-                if (!Array.isArray(storeState.groupSubcategories)) {
-                    storeState.groupSubcategories = [];
+                if (!Array.isArray(state.categories.group)) {
+                    state.categories.group = [];
                 }
-                if (!storeState.groupSubcategories.includes(name)) {
-                    storeState.groupSubcategories.push(name);
+                if (!state.categories.group.includes(newName)) {
+                    state.categories.group.push(newName);
                 }
             }
 
-            input.value = '';
+            if (inputEl) inputEl.value = '';
             renderAdminCategoryControls();
-            await persistStoreState();
-        }
-
-        async function removeCustomCategory(catName) {
-            const mainCat = document.getElementById('adminMainCatSelect').value;
-            if (mainCat === 'example') {
-                const sub = document.getElementById('adminExampleSubcatSelect').value;
-                storeState.exampleLeafCategories[sub] = (storeState.exampleLeafCategories[sub] || []).filter(c => c !== catName);
-            } else {
-                storeState.groupSubcategories = (storeState.groupSubcategories || []).filter(c => c !== catName);
-            }
-            renderAdminCategoryControls();
-            await persistStoreState();
+            refreshActiveViews();
+            await persistStoreToFirestore();
         }
 
         function handleFilePreview(event) {
-            const file = event.target.files && event.target.files[0];
+            const file = event.target.files?.[0];
             if (!file) return;
-
             const reader = new FileReader();
-            reader.onload = function (e) {
-                currentPreparedImageData = e.target.result || '';
-                document.getElementById('artworkImageUrlInput').value = '';
-                updateArtworkPreview(currentPreparedImageData);
+            reader.onload = () => {
+                state.previewImageData = String(reader.result || '');
+                updateAdminPreviewImage(state.previewImageData);
             };
             reader.readAsDataURL(file);
         }
 
         function handleDirectUrlPreview() {
-            const url = document.getElementById('artworkImageUrlInput').value.trim();
-            currentPreparedImageData = url;
-            updateArtworkPreview(url);
+            const urlInput = document.getElementById('artworkImageUrlInput');
+            const val = (urlInput?.value || '').trim();
+            if (val) {
+                state.previewImageData = val;
+                updateAdminPreviewImage(val);
+            }
         }
 
-        function updateArtworkPreview(src) {
-            const img = document.getElementById('artworkPreviewImg');
-            const placeholder = document.getElementById('artworkPreviewPlaceholder');
-            const safeSrc = sanitizeUrl(src);
-
-            if (safeSrc) {
-                img.src = safeSrc;
-                img.classList.remove('hidden');
-                placeholder.classList.add('hidden');
+        function updateAdminPreviewImage(src) {
+            const imgEl = document.getElementById('artworkPreviewImg');
+            const placeholderEl = document.getElementById('artworkPreviewPlaceholder');
+            if (!imgEl || !placeholderEl) return;
+            if (src) {
+                imgEl.src = src;
+                imgEl.classList.remove('hidden');
+                placeholderEl.classList.add('hidden');
             } else {
-                img.src = '';
-                img.classList.add('hidden');
-                placeholder.classList.remove('hidden');
+                imgEl.src = '';
+                imgEl.classList.add('hidden');
+                placeholderEl.classList.remove('hidden');
             }
         }
 
@@ -1406,99 +1371,97 @@
             event.preventDefault();
             const errEl = document.getElementById('adminFormError');
             const okEl = document.getElementById('adminFormSuccess');
-            errEl.classList.add('hidden');
-            okEl.classList.add('hidden');
+            if (errEl) errEl.classList.add('hidden');
+            if (okEl) okEl.classList.add('hidden');
 
-            const title = document.getElementById('artworkTitleInput').value.trim();
-            const link = document.getElementById('artworkLinkInput').value.trim();
-            const directUrl = document.getElementById('artworkImageUrlInput').value.trim();
-            const finalImage = sanitizeUrl(directUrl || currentPreparedImageData);
-
-            const mainCategory = document.getElementById('adminMainCatSelect').value;
-            const subCategory = mainCategory === 'example'
-                ? document.getElementById('adminExampleSubcatSelect').value
-                : 'กลุ่มทั้งหมด';
-
-            const checkedLeaves = Array.from(document.querySelectorAll('input[name="adminLeafCat"]:checked'))
-                .map(el => el.value);
+            const title = (document.getElementById('artworkTitleInput')?.value || '').trim();
+            const link = (document.getElementById('artworkLinkInput')?.value || '').trim();
+            const urlDirect = (document.getElementById('artworkImageUrlInput')?.value || '').trim();
+            const imageSrc = state.previewImageData || urlDirect;
 
             if (!title) {
-                errEl.textContent = 'กรุณากรอกชื่อรูปภาพหรือชื่องานก่อนครับ';
-                errEl.classList.remove('hidden');
+                if (errEl) {
+                    errEl.textContent = 'กรุณากรอกชื่อรูปภาพหรือชื่องานครับ';
+                    errEl.classList.remove('hidden');
+                }
+                return;
+            }
+            if (!imageSrc) {
+                if (errEl) {
+                    errEl.textContent = 'กรุณาอัปโหลดรูปภาพหรือวางลิงก์รูปภาพครับ';
+                    errEl.classList.remove('hidden');
+                }
                 return;
             }
 
-            if (!finalImage && !link) {
-                errEl.textContent = 'กรุณาอัปโหลดรูปภาพ วางลิงก์รูปภาพ หรือกรอกลิงก์ผลงานอย่างน้อย 1 อย่างครับ';
-                errEl.classList.remove('hidden');
-                return;
-            }
+            const mainCat = document.getElementById('adminMainCatSelect')?.value || 'example';
+            const subCat = mainCat === 'example'
+                ? (document.getElementById('adminExampleSubcatSelect')?.value || 'งานป้าย')
+                : '';
+
+            const checkedBoxes = Array.from(document.querySelectorAll('input[name="adminArtCat"]:checked'));
+            const selectedCats = checkedBoxes.map((cb) => cb.value);
 
             const newItem = {
-                id: 'art_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
+                id: 'art-' + Date.now(),
                 title,
-                imageUrl: finalImage,
-                link: sanitizeUrl(link),
-                mainCategory,
-                subCategory,
-                leafCategories: checkedLeaves,
-                createdAt: Date.now()
+                link,
+                image: imageSrc,
+                mainCat,
+                subCat,
+                categories: selectedCats
             };
 
-            storeState.artworks.unshift(newItem);
+            state.artworks.unshift(newItem);
+            state.previewImageData = '';
+            updateAdminPreviewImage('');
+            document.getElementById('adminArtworkForm')?.reset();
 
-            document.getElementById('adminArtworkForm').reset();
-            currentPreparedImageData = '';
-            updateArtworkPreview('');
-            renderAdminCategoryControls();
             renderAdminArtworkList();
+            refreshActiveViews();
+            await persistStoreToFirestore();
 
-            await persistStoreState();
-
-            okEl.textContent = 'บันทึกรายการและซิงก์ฐานข้อมูลเรียบร้อยแล้วครับ!';
-            okEl.classList.remove('hidden');
+            if (okEl) {
+                okEl.textContent = 'บันทึกรายการและเผยแพร่เรียบร้อยแล้วครับ';
+                okEl.classList.remove('hidden');
+            }
         }
 
         async function deleteArtwork(id) {
-            storeState.artworks = storeState.artworks.filter(item => item.id !== id);
+            state.artworks = state.artworks.filter((item) => item.id !== id);
             renderAdminArtworkList();
-            await persistStoreState();
+            refreshActiveViews();
+            await persistStoreToFirestore();
         }
 
         function renderAdminArtworkList() {
             const listEl = document.getElementById('adminArtworkList');
             const countEl = document.getElementById('adminItemCount');
-            countEl.textContent = String(storeState.artworks.length);
+            if (!listEl) return;
 
-            if (storeState.artworks.length === 0) {
-                listEl.innerHTML = `<div class="text-xs text-[#A5788E] bg-white p-3 rounded-2xl border border-pink-100 text-center">ยังไม่มีรายการที่เผยแพร่ครับ</div>`;
+            if (countEl) countEl.textContent = String(state.artworks.length);
+
+            if (state.artworks.length === 0) {
+                listEl.innerHTML = `<div class="text-xs text-[#A5788E] py-4 text-center">ยังไม่มีรายการที่เผยแพร่</div>`;
                 return;
             }
 
-            listEl.innerHTML = storeState.artworks.map(item => {
-                const safeImg = sanitizeUrl(item.imageUrl);
-                const mainLabel = item.mainCategory === 'example' ? `ตัวอย่างงาน (${item.subCategory})` : 'ตัวอย่างกลุ่ม';
-                const leafText = Array.isArray(item.leafCategories) && item.leafCategories.length > 0
-                    ? item.leafCategories.join(', ')
-                    : 'ไม่ระบุหมวดย่อย';
+            listEl.innerHTML = state.artworks.map((item) => {
+                const scopeLabel = item.mainCat === 'example'
+                    ? `ตัวอย่างงาน / ${escapeHtml(item.subCat || '')}`
+                    : 'ตัวอย่างกลุ่ม';
+                const safeImg = item.image || 'https://placehold.co/100x100/FFE6F0/A85A7E?text=Art';
 
                 return `
-                    <div class="p-2.5 rounded-2xl bg-white border border-pink-100 flex items-center justify-between gap-3">
+                    <div class="flex items-center justify-between gap-2.5 p-2 rounded-2xl bg-white border border-pink-100">
                         <div class="flex items-center gap-2.5 min-w-0">
-                            <div class="w-12 h-12 rounded-xl bg-[#FFF4F8] overflow-hidden shrink-0 border border-pink-100">
-                                ${safeImg
-                                    ? `<img src="${escapeHtml(safeImg)}" alt="${escapeHtml(item.title)}" class="w-full h-full object-cover">`
-                                    : `<div class="w-full h-full flex items-center justify-center text-[10px] text-[#B08398]">Link</div>`
-                                }
-                            </div>
+                            <img src="${safeImg}" alt="${escapeHtml(item.title)}" onerror="this.src='https://placehold.co/100x100/FFE6F0/A85A7E?text=Art'" class="w-11 h-11 rounded-xl object-cover bg-[#FFF4F8] shrink-0">
                             <div class="min-w-0">
                                 <div class="font-bold text-xs text-[#6B4257] truncate">${escapeHtml(item.title)}</div>
-                                <div class="text-[11px] text-[#A5788E] truncate">${escapeHtml(mainLabel)} • ${escapeHtml(leafText)}</div>
+                                <div class="text-[10px] text-[#A5788E] truncate">${scopeLabel}${item.categories?.length ? ' · ' + escapeHtml(item.categories.join(', ')) : ''}</div>
                             </div>
                         </div>
-                        <button type="button" onclick="deleteArtwork('${escapeJsAttr(item.id)}')" class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-rose-50 text-rose-500 hover:bg-rose-100 shrink-0 cursor-pointer">
-                            ลบ
-                        </button>
+                        <button type="button" onclick="deleteArtwork('${escapeHtml(item.id)}')" class="px-2.5 py-1 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-500 text-[11px] font-bold shrink-0 cursor-pointer">ลบ</button>
                     </div>
                 `;
             }).join('');
@@ -1506,33 +1469,47 @@
 
         function handleBriefSubmit(event) {
             event.preventDefault();
-            const contact = document.getElementById('briefContact').value.trim();
-            const workType = document.getElementById('briefType').value;
-            const detail = document.getElementById('briefDetail').value.trim();
-            const feedback = document.getElementById('briefFeedback');
+            const contact = (document.getElementById('briefContact')?.value || '').trim();
+            const type = (document.getElementById('briefType')?.value || '').trim();
+            const detail = (document.getElementById('briefDetail')?.value || '').trim();
+            const feedbackEl = document.getElementById('briefFeedback');
 
-            const summary = [
+            const textToCopy = [
                 '【บรีฟงาน JaoMeowStore】',
                 `ผู้ติดต่อ: ${contact}`,
-                `ประเภทงาน: ${workType}`,
+                `ประเภทงาน: ${type}`,
                 `รายละเอียด: ${detail}`
             ].join('\n');
 
-            const helper = document.createElement('textarea');
-            helper.value = summary;
-            helper.setAttribute('readonly', '');
-            helper.style.position = 'fixed';
-            helper.style.left = '-9999px';
-            document.body.appendChild(helper);
-            helper.select();
+            let copied = false;
             try {
-                document.execCommand('copy');
-                feedback.textContent = 'คัดลอกข้อความบรีฟเรียบร้อยแล้ว สามารถนำไปวางส่งให้แอดมินได้เลยครับ';
+                const ta = document.createElement('textarea');
+                ta.value = textToCopy;
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                copied = document.execCommand('copy');
+                document.body.removeChild(ta);
             } catch (err) {
-                feedback.textContent = 'พร้อมส่งบรีฟแล้ว สามารถคัดลอกข้อความด้านล่างไปส่งให้แอดมินได้เลยครับ:\n' + summary;
+                console.error('Copy failed:', err);
             }
-            document.body.removeChild(helper);
-            feedback.classList.remove('hidden');
+
+            if (feedbackEl) {
+                feedbackEl.textContent = copied
+                    ? 'คัดลอกข้อความบรีฟลงคลิปบอร์ดแล้วครับ นำไปวางส่งให้ทางร้านได้เลย!'
+                    : 'เตรียมข้อความบรีฟเรียบร้อยแล้วครับ สามารถคัดลอกส่งให้ทางร้านได้เลย';
+                feedbackEl.classList.remove('hidden');
+            }
+        }
+
+        function escapeHtml(str) {
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
         }
 
         window.openModal = openModal;
@@ -1541,17 +1518,673 @@
         window.handleAdminLogin = handleAdminLogin;
         window.handleAdminLogout = handleAdminLogout;
         window.selectExampleSubcat = selectExampleSubcat;
-        window.selectExampleLeafFilter = selectExampleLeafFilter;
-        window.selectGroupSubcatFilter = selectGroupSubcatFilter;
+        window.selectExampleLeaf = selectExampleLeaf;
+        window.selectGroupSubcat = selectGroupSubcat;
         window.onAdminMainCatChange = onAdminMainCatChange;
         window.renderAdminCategoryControls = renderAdminCategoryControls;
         window.addCustomCategory = addCustomCategory;
-        window.removeCustomCategory = removeCustomCategory;
         window.handleFilePreview = handleFilePreview;
         window.handleDirectUrlPreview = handleDirectUrlPreview;
+        window.handleHeroCardFileUpload = handleHeroCardFileUpload;
         window.handleAddArtwork = handleAddArtwork;
         window.deleteArtwork = deleteArtwork;
         window.handleBriefSubmit = handleBriefSubmit;
+// ... existing code ... -->
+        let state = {
+            categories: JSON.parse(JSON.stringify(DEFAULT_CATEGORIES)),
+            artworks: JSON.parse(JSON.stringify(DEFAULT_ARTWORKS)),
+            heroCardImage: '',
+            selectedExampleSubcat: 'งานป้าย',
+            selectedExampleLeaf: 'ทั้งหมด',
+            selectedGroupSubcat: 'ทั้งหมด',
+            isAdminLoggedIn: false,
+            previewImageData: ''
+        };
+// ... existing code ... -->
+            return {
+                categories: {
+                    example: exampleCats,
+                    group: groupCats
+                },
+                heroCardImage: typeof rawData?.heroCardImage === 'string' ? rawData.heroCardImage : '',
+                artworks
+            };
+        }
+
+        async function persistStoreToFirestore() {
+            if (!storeDocRef || !currentUser) return;
+            try {
+                await setDoc(storeDocRef, {
+                    categories: state.categories,
+                    heroCardImage: state.heroCardImage || '',
+                    artworks: state.artworks,
+                    updatedAt: Date.now()
+                }, { merge: true });
+            } catch (err) {
+                console.error('Firestore write error:', err);
+            }
+        }
+
+        function attachStoreListener() {
+            if (unsubscribeStore) {
+                unsubscribeStore();
+                unsubscribeStore = null;
+            }
+            if (!storeDocRef || !currentUser) return;
+
+            unsubscribeStore = onSnapshot(
+                storeDocRef,
+                (snap) => {
+                    if (snap.exists()) {
+                        const normalized = normalizeStoreData(snap.data());
+                        state.categories = normalized.categories;
+                        state.heroCardImage = normalized.heroCardImage;
+                        state.artworks = normalized.artworks;
+                        refreshActiveViews();
+                    } else {
+                        const initial = normalizeStoreData({});
+                        state.categories = initial.categories;
+                        state.heroCardImage = initial.heroCardImage;
+                        state.artworks = initial.artworks;
+                        persistStoreToFirestore();
+                        refreshActiveViews();
+                    }
+                },
+                (err) => {
+                    console.error('Firestore snapshot error:', err);
+                }
+            );
+        }
+// ... existing code ... -->
+        function renderHeroCardBanner() {
+            const imgEl = document.getElementById('heroPngImage');
+            const placeholderEl = document.getElementById('heroPngPlaceholder');
+            const adminImgEl = document.getElementById('adminHeroCardPreviewImg');
+            const adminPlaceholderEl = document.getElementById('adminHeroCardPreviewPlaceholder');
+            const src = state.heroCardImage || '';
+
+            if (imgEl && placeholderEl) {
+                if (src) {
+                    imgEl.src = src;
+                    imgEl.classList.remove('hidden');
+                    placeholderEl.classList.add('hidden');
+                } else {
+                    imgEl.src = '';
+                    imgEl.classList.add('hidden');
+                    placeholderEl.classList.remove('hidden');
+                }
+            }
+
+            if (adminImgEl && adminPlaceholderEl) {
+                if (src) {
+                    adminImgEl.src = src;
+                    adminImgEl.classList.remove('hidden');
+                    adminPlaceholderEl.classList.add('hidden');
+                } else {
+                    adminImgEl.src = '';
+                    adminImgEl.classList.add('hidden');
+                    adminPlaceholderEl.classList.remove('hidden');
+                }
+            }
+        }
+
+        async function handleHeroCardFileUpload(event) {
+            const file = event.target.files?.[0];
+            const statusEl = document.getElementById('adminHeroCardStatus');
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = async () => {
+                state.heroCardImage = String(reader.result || '');
+                renderHeroCardBanner();
+                await persistStoreToFirestore();
+                if (statusEl) {
+                    statusEl.textContent = 'อัปโหลดรูปการ์ดเรียบร้อยแล้ว ลูกค้าทุกคนเห็นรูปนี้ครับ';
+                    statusEl.classList.remove('hidden');
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function refreshActiveViews() {
+            renderHeroCardBanner();
+            renderExampleModal();
+            renderGroupModal();
+            if (state.isAdminLoggedIn) {
+                renderAdminCategoryControls();
+                renderAdminArtworkList();
+            }
+        }
+
+        function closeAllModals() {
+            const backdrop = document.getElementById('modalBackdrop');
+            const modalIds = [
+                'exampleModal',
+                'groupModal',
+                'queueModal',
+                'tosModal',
+                'pricingModal',
+                'briefModal',
+                'adminLoginModal',
+                'adminPanelModal'
+            ];
+
+            modalIds.forEach((id) => {
+                const modal = document.getElementById(id);
+                if (!modal) return;
+                const card = modal.querySelector('.modal-card');
+                if (card) {
+                    card.classList.remove('scale-100');
+                    card.classList.add('scale-95');
+                }
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            });
+
+            if (backdrop) {
+                backdrop.classList.add('opacity-0');
+                setTimeout(() => {
+                    backdrop.classList.add('hidden');
+                }, 180);
+            }
+        }
+
+        function openModal(modalId) {
+            const backdrop = document.getElementById('modalBackdrop');
+            const target = document.getElementById(modalId);
+            if (!target) return;
+
+            const otherModals = [
+                'exampleModal',
+                'groupModal',
+                'queueModal',
+                'tosModal',
+                'pricingModal',
+                'briefModal',
+                'adminLoginModal',
+                'adminPanelModal'
+            ].filter((id) => id !== modalId);
+
+            otherModals.forEach((id) => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.classList.add('hidden');
+                    el.classList.remove('flex');
+                }
+            });
+
+            if (modalId === 'exampleModal') {
+                renderExampleModal();
+            } else if (modalId === 'groupModal') {
+                state.selectedGroupSubcat = 'ทั้งหมด';
+                renderGroupModal();
+            } else if (modalId === 'adminPanelModal') {
+                renderHeroCardBanner();
+                renderAdminCategoryControls();
+                renderAdminArtworkList();
+            }
+
+            if (backdrop) {
+                backdrop.classList.remove('hidden');
+                requestAnimationFrame(() => {
+                    backdrop.classList.remove('opacity-0');
+                });
+            }
+
+            target.classList.remove('hidden');
+            target.classList.add('flex');
+            const card = target.querySelector('.modal-card');
+            if (card) {
+                requestAnimationFrame(() => {
+                    card.classList.remove('scale-95');
+                    card.classList.add('scale-100');
+                });
+            }
+        }
+
+        function openAdminEntry() {
+            if (state.isAdminLoggedIn) {
+                openModal('adminPanelModal');
+            } else {
+                const errEl = document.getElementById('adminLoginError');
+                if (errEl) errEl.classList.add('hidden');
+                openModal('adminLoginModal');
+            }
+        }
+
+        function handleAdminLogin(event) {
+            event.preventDefault();
+            const userInput = (document.getElementById('adminUsernameInput')?.value || '').trim();
+            const passInput = (document.getElementById('adminPasswordInput')?.value || '').trim();
+            const errEl = document.getElementById('adminLoginError');
+
+            if (userInput === 'admin' && passInput === '1234') {
+                state.isAdminLoggedIn = true;
+                if (errEl) errEl.classList.add('hidden');
+                openModal('adminPanelModal');
+            } else if (errEl) {
+                errEl.textContent = 'ชื่อแอดมินหรือรหัสผ่านไม่ถูกต้องครับ (ทดลองใช้ admin / 1234)';
+                errEl.classList.remove('hidden');
+            }
+        }
+
+        function handleAdminLogout() {
+            state.isAdminLoggedIn = false;
+            const form = document.getElementById('adminLoginForm');
+            if (form) form.reset();
+            closeAllModals();
+        }
+
+        function renderExampleModal() {
+            const tabsEl = document.getElementById('exampleSubcatTabs');
+            const chipsEl = document.getElementById('exampleLeafFilterChips');
+            const listEl = document.getElementById('exampleGalleryList');
+            if (!tabsEl || !chipsEl || !listEl) return;
+
+            const subcats = Object.keys(state.categories.example || {});
+            if (!subcats.includes(state.selectedExampleSubcat)) {
+                state.selectedExampleSubcat = subcats[0] || 'งานป้าย';
+            }
+
+            tabsEl.innerHTML = subcats.map((sub) => {
+                const active = sub === state.selectedExampleSubcat;
+                return `<button type="button" onclick="selectExampleSubcat('${escapeHtml(sub)}')" class="px-3 py-1.5 rounded-full text-xs font-bold transition cursor-pointer ${
+                    active
+                        ? 'bg-[#EE7CA8] text-white shadow-xs'
+                        : 'bg-[#FFF2F7] text-[#8A5A72] hover:bg-[#FFE3EE]'
+                }">${escapeHtml(sub)}</button>`;
+            }).join('');
+
+            const leafList = Array.isArray(state.categories.example[state.selectedExampleSubcat])
+                ? state.categories.example[state.selectedExampleSubcat]
+                : [];
+            const allFilterOptions = ['ทั้งหมด', ...leafList];
+            if (!allFilterOptions.includes(state.selectedExampleLeaf)) {
+                state.selectedExampleLeaf = 'ทั้งหมด';
+            }
+
+            chipsEl.innerHTML = allFilterOptions.map((leaf) => {
+                const active = leaf === state.selectedExampleLeaf;
+                return `<button type="button" onclick="selectExampleLeaf('${escapeHtml(leaf)}')" class="px-2.5 py-1 rounded-xl text-[11px] font-semibold border transition cursor-pointer ${
+                    active
+                        ? 'bg-[#FFE3EE] border-[#F4A7C6] text-[#9E3F6B]'
+                        : 'bg-white border-pink-100 text-[#9B7A8A] hover:bg-[#FFF7FA]'
+                }">${escapeHtml(leaf)}</button>`;
+            }).join('');
+
+            const filtered = state.artworks.filter((item) => {
+                if (item.mainCat !== 'example') return false;
+                if (item.subCat !== state.selectedExampleSubcat) return false;
+                if (state.selectedExampleLeaf === 'ทั้งหมด') return true;
+                return Array.isArray(item.categories) && item.categories.includes(state.selectedExampleLeaf);
+            });
+
+            renderGalleryCards(listEl, filtered, 'ยังไม่มีตัวอย่างงานในหมวดนี้ครับ');
+        }
+
+        function selectExampleSubcat(subcat) {
+            state.selectedExampleSubcat = subcat;
+            state.selectedExampleLeaf = 'ทั้งหมด';
+            renderExampleModal();
+        }
+
+        function selectExampleLeaf(leaf) {
+            state.selectedExampleLeaf = leaf;
+            renderExampleModal();
+        }
+
+        function renderGroupModal() {
+            const chipsEl = document.getElementById('groupSubcatFilterChips');
+            const listEl = document.getElementById('groupGalleryList');
+            if (!chipsEl || !listEl) return;
+
+            const groupItems = state.artworks.filter((item) => item.mainCat === 'group');
+            const extraCats = new Set();
+            groupItems.forEach((item) => {
+                if (Array.isArray(item.categories)) {
+                    item.categories.forEach((c) => c && extraCats.add(c));
+                }
+            });
+
+            const baseGroupCats = Array.isArray(state.categories.group) ? state.categories.group : [];
+            const mergedGroupCats = Array.from(new Set([...baseGroupCats, ...Array.from(extraCats)]));
+            const filterList = ['ทั้งหมด', ...mergedGroupCats];
+
+            if (!filterList.includes(state.selectedGroupSubcat)) {
+                state.selectedGroupSubcat = 'ทั้งหมด';
+            }
+
+            chipsEl.innerHTML = filterList.map((catName) => {
+                const active = catName === state.selectedGroupSubcat;
+                const countText = catName === 'ทั้งหมด' ? ` (${groupItems.length})` : '';
+                return `<button type="button" onclick="selectGroupSubcat('${escapeHtml(catName)}')" class="px-3 py-1 rounded-full text-xs font-bold transition cursor-pointer ${
+                    active
+                        ? 'bg-[#EE7CA8] text-white shadow-xs'
+                        : 'bg-[#FFF2F7] text-[#8A5A72] hover:bg-[#FFE3EE]'
+                }">${escapeHtml(catName)}${countText}</button>`;
+            }).join('');
+
+            const filtered = state.selectedGroupSubcat === 'ทั้งหมด'
+                ? groupItems
+                : groupItems.filter((item) => Array.isArray(item.categories) && item.categories.includes(state.selectedGroupSubcat));
+
+            renderGalleryCards(listEl, filtered, 'ยังไม่มีตัวอย่างกลุ่มในหมวดนี้ครับ');
+        }
+
+        function selectGroupSubcat(catName) {
+            state.selectedGroupSubcat = catName;
+            renderGroupModal();
+        }
+
+        function renderGalleryCards(containerEl, items, emptyMessage) {
+            if (!items || items.length === 0) {
+                containerEl.innerHTML = `<div class="col-span-2 py-10 text-center text-xs text-[#A5788E] bg-white/80 rounded-2xl border border-pink-100">${escapeHtml(emptyMessage)}</div>`;
+                return;
+            }
+
+            containerEl.innerHTML = items.map((item) => {
+                const safeImg = item.image || 'https://placehold.co/400x400/FFE6F0/A85A7E?text=JaoMeow';
+                const safeTitle = escapeHtml(item.title || 'ผลงาน');
+                const safeLink = item.link ? escapeHtml(item.link) : '';
+                const tagsText = Array.isArray(item.categories) && item.categories.length > 0
+                    ? escapeHtml(item.categories.join(', '))
+                    : '';
+
+                return `
+                    <div class="bg-white rounded-2xl border border-pink-100 p-2.5 shadow-2xs flex flex-col justify-between">
+                        <div>
+                            <div class="aspect-square w-full rounded-xl overflow-hidden bg-[#FFF4F8] mb-2">
+                                <img src="${safeImg}" alt="${safeTitle}" onerror="this.src='https://placehold.co/400x400/FFE6F0/A85A7E?text=JaoMeow'" class="w-full h-full object-cover">
+                            </div>
+                            <div class="font-bold text-xs text-[#6B4257] line-clamp-1">${safeTitle}</div>
+                            ${tagsText ? `<div class="text-[10px] text-[#A87A90] line-clamp-1 mt-0.5">${tagsText}</div>` : ''}
+                        </div>
+                        ${safeLink
+                            ? `<a href="${safeLink}" target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex items-center justify-center w-full py-1.5 rounded-xl bg-[#FFF0F6] hover:bg-[#FFE0EC] text-[#B84D7B] text-[11px] font-bold transition">เปิดลิงก์งาน ↗</a>`
+                            : `<div class="mt-2 text-center py-1 text-[10px] text-[#C29BB0]">ไม่มีลิงก์แนบ</div>`
+                        }
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function onAdminMainCatChange() {
+            const mainCat = document.getElementById('adminMainCatSelect')?.value || 'example';
+            const subcatWrapper = document.getElementById('adminExampleSubcatWrapper');
+            if (subcatWrapper) {
+                subcatWrapper.classList.toggle('hidden', mainCat !== 'example');
+            }
+            renderAdminCategoryControls();
+        }
+
+        function renderAdminCategoryControls() {
+            const mainCat = document.getElementById('adminMainCatSelect')?.value || 'example';
+            const subcatSelect = document.getElementById('adminExampleSubcatSelect');
+            const customListEl = document.getElementById('adminCustomCategoryList');
+            const checkboxesEl = document.getElementById('multiCategoryCheckboxes');
+            const labelEl = document.getElementById('multiCatLabel');
+            if (!customListEl || !checkboxesEl) return;
+
+            let availableCats = [];
+            if (mainCat === 'example') {
+                const subKeys = Object.keys(state.categories.example || {});
+                if (subcatSelect) {
+                    const prevVal = subcatSelect.value;
+                    subcatSelect.innerHTML = subKeys.map((k) => `<option value="${escapeHtml(k)}">${escapeHtml(k)}</option>`).join('');
+                    if (subKeys.includes(prevVal)) subcatSelect.value = prevVal;
+                }
+                const activeSub = subcatSelect?.value || subKeys[0] || 'งานป้าย';
+                availableCats = Array.isArray(state.categories.example[activeSub])
+                    ? state.categories.example[activeSub]
+                    : [];
+                if (labelEl) labelEl.textContent = `เลือกหมวดย่อยใน "${activeSub}" (เลือกได้หลายหมวด)`;
+            } else {
+                availableCats = Array.isArray(state.categories.group) ? state.categories.group : [];
+                if (labelEl) labelEl.textContent = 'เลือกหมวดกลุ่ม (เลือกได้หลายหมวด)';
+            }
+
+            customListEl.innerHTML = availableCats.map((catName) => (
+                `<span class="px-2.5 py-1 rounded-full bg-white border border-pink-200 text-xs font-semibold text-[#7A4961]">${escapeHtml(catName)}</span>`
+            )).join('');
+
+            checkboxesEl.innerHTML = availableCats.length > 0
+                ? availableCats.map((catName, idx) => (
+                    `<label class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#FFF6F9] border border-pink-100 text-xs text-[#6B4257] cursor-pointer">
+                        <input type="checkbox" name="adminArtCat" value="${escapeHtml(catName)}" ${idx === 0 ? 'checked' : ''} class="rounded accent-[#EE7CA8]">
+                        <span>${escapeHtml(catName)}</span>
+                    </label>`
+                )).join('')
+                : `<span class="text-xs text-[#A5788E]">ยังไม่มีหมวดย่อย กรุณาเพิ่มหมวดด้านบน</span>`;
+        }
+
+        async function addCustomCategory() {
+            const inputEl = document.getElementById('newSubCategoryInput');
+            const mainCat = document.getElementById('adminMainCatSelect')?.value || 'example';
+            const subcatSelect = document.getElementById('adminExampleSubcatSelect');
+            const newName = (inputEl?.value || '').trim();
+            if (!newName) return;
+
+            if (mainCat === 'example') {
+                const activeSub = subcatSelect?.value || 'งานป้าย';
+                if (!Array.isArray(state.categories.example[activeSub])) {
+                    state.categories.example[activeSub] = [];
+                }
+                if (!state.categories.example[activeSub].includes(newName)) {
+                    state.categories.example[activeSub].push(newName);
+                }
+            } else {
+                if (!Array.isArray(state.categories.group)) {
+                    state.categories.group = [];
+                }
+                if (!state.categories.group.includes(newName)) {
+                    state.categories.group.push(newName);
+                }
+            }
+
+            if (inputEl) inputEl.value = '';
+            renderAdminCategoryControls();
+            refreshActiveViews();
+            await persistStoreToFirestore();
+        }
+
+        function handleFilePreview(event) {
+            const file = event.target.files?.[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = () => {
+                state.previewImageData = String(reader.result || '');
+                updateAdminPreviewImage(state.previewImageData);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function handleDirectUrlPreview() {
+            const urlInput = document.getElementById('artworkImageUrlInput');
+            const val = (urlInput?.value || '').trim();
+            if (val) {
+                state.previewImageData = val;
+                updateAdminPreviewImage(val);
+            }
+        }
+
+        function updateAdminPreviewImage(src) {
+            const imgEl = document.getElementById('artworkPreviewImg');
+            const placeholderEl = document.getElementById('artworkPreviewPlaceholder');
+            if (!imgEl || !placeholderEl) return;
+            if (src) {
+                imgEl.src = src;
+                imgEl.classList.remove('hidden');
+                placeholderEl.classList.add('hidden');
+            } else {
+                imgEl.src = '';
+                imgEl.classList.add('hidden');
+                placeholderEl.classList.remove('hidden');
+            }
+        }
+
+        async function handleAddArtwork(event) {
+            event.preventDefault();
+            const errEl = document.getElementById('adminFormError');
+            const okEl = document.getElementById('adminFormSuccess');
+            if (errEl) errEl.classList.add('hidden');
+            if (okEl) okEl.classList.add('hidden');
+
+            const title = (document.getElementById('artworkTitleInput')?.value || '').trim();
+            const link = (document.getElementById('artworkLinkInput')?.value || '').trim();
+            const urlDirect = (document.getElementById('artworkImageUrlInput')?.value || '').trim();
+            const imageSrc = state.previewImageData || urlDirect;
+
+            if (!title) {
+                if (errEl) {
+                    errEl.textContent = 'กรุณากรอกชื่อรูปภาพหรือชื่องานครับ';
+                    errEl.classList.remove('hidden');
+                }
+                return;
+            }
+            if (!imageSrc) {
+                if (errEl) {
+                    errEl.textContent = 'กรุณาอัปโหลดรูปภาพหรือวางลิงก์รูปภาพครับ';
+                    errEl.classList.remove('hidden');
+                }
+                return;
+            }
+
+            const mainCat = document.getElementById('adminMainCatSelect')?.value || 'example';
+            const subCat = mainCat === 'example'
+                ? (document.getElementById('adminExampleSubcatSelect')?.value || 'งานป้าย')
+                : '';
+
+            const checkedBoxes = Array.from(document.querySelectorAll('input[name="adminArtCat"]:checked'));
+            const selectedCats = checkedBoxes.map((cb) => cb.value);
+
+            const newItem = {
+                id: 'art-' + Date.now(),
+                title,
+                link,
+                image: imageSrc,
+                mainCat,
+                subCat,
+                categories: selectedCats
+            };
+
+            state.artworks.unshift(newItem);
+            state.previewImageData = '';
+            updateAdminPreviewImage('');
+            document.getElementById('adminArtworkForm')?.reset();
+
+            renderAdminArtworkList();
+            refreshActiveViews();
+            await persistStoreToFirestore();
+
+            if (okEl) {
+                okEl.textContent = 'บันทึกรายการและเผยแพร่เรียบร้อยแล้วครับ';
+                okEl.classList.remove('hidden');
+            }
+        }
+
+        async function deleteArtwork(id) {
+            state.artworks = state.artworks.filter((item) => item.id !== id);
+            renderAdminArtworkList();
+            refreshActiveViews();
+            await persistStoreToFirestore();
+        }
+
+        function renderAdminArtworkList() {
+            const listEl = document.getElementById('adminArtworkList');
+            const countEl = document.getElementById('adminItemCount');
+            if (!listEl) return;
+
+            if (countEl) countEl.textContent = String(state.artworks.length);
+
+            if (state.artworks.length === 0) {
+                listEl.innerHTML = `<div class="text-xs text-[#A5788E] py-4 text-center">ยังไม่มีรายการที่เผยแพร่</div>`;
+                return;
+            }
+
+            listEl.innerHTML = state.artworks.map((item) => {
+                const scopeLabel = item.mainCat === 'example'
+                    ? `ตัวอย่างงาน / ${escapeHtml(item.subCat || '')}`
+                    : 'ตัวอย่างกลุ่ม';
+                const safeImg = item.image || 'https://placehold.co/100x100/FFE6F0/A85A7E?text=Art';
+
+                return `
+                    <div class="flex items-center justify-between gap-2.5 p-2 rounded-2xl bg-white border border-pink-100">
+                        <div class="flex items-center gap-2.5 min-w-0">
+                            <img src="${safeImg}" alt="${escapeHtml(item.title)}" onerror="this.src='https://placehold.co/100x100/FFE6F0/A85A7E?text=Art'" class="w-11 h-11 rounded-xl object-cover bg-[#FFF4F8] shrink-0">
+                            <div class="min-w-0">
+                                <div class="font-bold text-xs text-[#6B4257] truncate">${escapeHtml(item.title)}</div>
+                                <div class="text-[10px] text-[#A5788E] truncate">${scopeLabel}${item.categories?.length ? ' · ' + escapeHtml(item.categories.join(', ')) : ''}</div>
+                            </div>
+                        </div>
+                        <button type="button" onclick="deleteArtwork('${escapeHtml(item.id)}')" class="px-2.5 py-1 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-500 text-[11px] font-bold shrink-0 cursor-pointer">ลบ</button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function handleBriefSubmit(event) {
+            event.preventDefault();
+            const contact = (document.getElementById('briefContact')?.value || '').trim();
+            const type = (document.getElementById('briefType')?.value || '').trim();
+            const detail = (document.getElementById('briefDetail')?.value || '').trim();
+            const feedbackEl = document.getElementById('briefFeedback');
+
+            const textToCopy = [
+                '【บรีฟงาน JaoMeowStore】',
+                `ผู้ติดต่อ: ${contact}`,
+                `ประเภทงาน: ${type}`,
+                `รายละเอียด: ${detail}`
+            ].join('\n');
+
+            let copied = false;
+            try {
+                const ta = document.createElement('textarea');
+                ta.value = textToCopy;
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                copied = document.execCommand('copy');
+                document.body.removeChild(ta);
+            } catch (err) {
+                console.error('Copy failed:', err);
+            }
+
+            if (feedbackEl) {
+                feedbackEl.textContent = copied
+                    ? 'คัดลอกข้อความบรีฟลงคลิปบอร์ดแล้วครับ นำไปวางส่งให้ทางร้านได้เลย!'
+                    : 'เตรียมข้อความบรีฟเรียบร้อยแล้วครับ สามารถคัดลอกส่งให้ทางร้านได้เลย';
+                feedbackEl.classList.remove('hidden');
+            }
+        }
+
+        function escapeHtml(str) {
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        window.openModal = openModal;
+        window.closeAllModals = closeAllModals;
+        window.openAdminEntry = openAdminEntry;
+        window.handleAdminLogin = handleAdminLogin;
+        window.handleAdminLogout = handleAdminLogout;
+        window.selectExampleSubcat = selectExampleSubcat;
+        window.selectExampleLeaf = selectExampleLeaf;
+        window.selectGroupSubcat = selectGroupSubcat;
+        window.onAdminMainCatChange = onAdminMainCatChange;
+        window.renderAdminCategoryControls = renderAdminCategoryControls;
+        window.addCustomCategory = addCustomCategory;
+        window.handleFilePreview = handleFilePreview;
+        window.handleDirectUrlPreview = handleDirectUrlPreview;
+        window.handleHeroCardFileUpload = handleHeroCardFileUpload;
+        window.handleAddArtwork = handleAddArtwork;
+        window.deleteArtwork = deleteArtwork;
+        window.handleBriefSubmit = handleBriefSubmit;
+        window.handleHeroCardFileUpload = handleHeroCardFileUpload;
 
         initFirebaseDatabase();
     </script>
