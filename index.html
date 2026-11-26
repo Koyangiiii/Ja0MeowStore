@@ -43,15 +43,15 @@
 
     <style>
         body {
-            background-color: #FFF6F9;
+            background-color: #FFF3F7;
             color: #8A5E6F;
             font-family: 'Prompt', sans-serif;
             overflow-x: hidden;
             background-image: 
-                radial-gradient(circle at 15% 15%, rgba(255, 255, 255, 0.92) 0%, transparent 45%),
-                radial-gradient(circle at 85% 30%, rgba(252, 231, 240, 0.85) 0%, transparent 50%),
-                radial-gradient(circle at 20% 75%, rgba(255, 255, 255, 0.88) 0%, transparent 40%),
-                radial-gradient(circle at 80% 85%, rgba(250, 224, 235, 0.75) 0%, transparent 45%);
+                radial-gradient(circle at 15% 15%, rgba(255, 226, 238, 0.85) 0%, transparent 45%),
+                radial-gradient(circle at 85% 20%, rgba(255, 214, 232, 0.75) 0%, transparent 48%),
+                radial-gradient(circle at 22% 82%, rgba(255, 238, 244, 0.9) 0%, transparent 45%),
+                radial-gradient(circle at 82% 80%, rgba(255, 224, 236, 0.8) 0%, transparent 45%);
         }
 
         /* Floating & Twinkle Animations */
@@ -80,30 +80,18 @@
         .animate-twinkle-delay {
             animation: twinkle 3.6s ease-in-out 1.5s infinite;
         }
-        @keyframes spinVinyl {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        .vinyl-spinning {
-            animation: spinVinyl 5s linear infinite;
-            animation-play-state: running;
-        }
-        .vinyl-paused {
-            animation: spinVinyl 5s linear infinite;
-            animation-play-state: paused;
-        }
-        #vinylDisc {
-            width: 100%;
-            height: 100%;
-            aspect-ratio: 1 / 1;
-            border-radius: 9999px;
-            flex-shrink: 0;
-        }
 
         /* Custom Cloud Card Pattern */
         .cloud-card-bg {
-            background: linear-gradient(180deg, #FFFFFF 0%, #FFF9FB 55%, #FDEBF2 100%);
+            background: linear-gradient(180deg, #FFFDFD 0%, #FFF2F7 55%, #FCE0EC 100%);
             position: relative;
+        }
+
+        /* Cute Cat-Ear Inner Frame Accent for Store Cards */
+        .meow-inner-card {
+            background: rgba(255, 255, 255, 0.86);
+            border: 1.5px solid #FAD5E4;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 6px 18px -6px rgba(232, 139, 174, 0.22);
         }
 
         /* Hero Banner Milk Pink Sky Gradient */
@@ -134,146 +122,61 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #ECA4BE;
         }
-
-        /* Range Slider Styling */
-        input[type=range].music-slider {
-            -webkit-appearance: none;
-            background: transparent;
-        }
-        input[type=range].music-slider::-webkit-slider-runnable-track {
-            height: 4px;
-            border-radius: 999px;
-            background: #FADCE8;
-        }
-        input[type=range].music-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            height: 12px;
-            width: 12px;
-            border-radius: 50%;
-            background: #F29BB8;
-            border: 2px solid #FFFFFF;
-            box-shadow: 0 2px 5px rgba(242, 155, 184, 0.5);
-            margin-top: -4px;
-            cursor: pointer;
-            transition: transform 0.15s ease;
-        }
-        input[type=range].music-slider::-webkit-slider-thumb:hover {
-            transform: scale(1.25);
-        }
     </style>
 </head>
-<body class="min-h-screen relative selection:bg-sky-blue/30 selection:text-sky-deep">
+<body class="min-h-screen w-full overflow-x-hidden overflow-y-auto relative selection:bg-sky-blue/30 selection:text-sky-deep">
 
-    <!-- ==================== BACKGROUND FLOATING CLOUDS & SPARKLES ==================== -->
+    <!-- ==================== BACKGROUND MILK PINK & CAT PAW ==================== -->
     <div class="fixed inset-0 pointer-events-none overflow-hidden z-0" aria-hidden="true">
-        <!-- Top Left Cloud -->
-        <svg class="absolute -top-6 -left-16 w-64 h-40 text-white/85 blur-[1px] animate-float" viewBox="0 0 200 120" fill="currentColor">
-            <path d="M40,100 C18,100 5,85 10,65 C14,48 30,42 45,45 C52,22 80,15 100,28 C118,18 145,25 152,48 C170,48 185,62 182,80 C180,94 166,100 150,100 Z"/>
+        <!-- Soft Milk Pink Glow Orbs -->
+        <div class="absolute -top-14 -right-14 w-72 h-72 rounded-full bg-[#FFE0EC]/75 blur-2xl animate-float"></div>
+        <div class="absolute top-[38%] -left-20 w-64 h-64 rounded-full bg-[#FFE6F0]/70 blur-2xl"></div>
+        <div class="absolute -bottom-16 right-[15%] w-72 h-72 rounded-full bg-[#FFDCE9]/65 blur-2xl animate-float-delay"></div>
+
+        <!-- Subtle Cat Paw Prints Matching "JaoMeowStore" -->
+        <svg class="absolute top-12 left-[10%] w-9 h-9 text-[#F4B8CF]/55 -rotate-12 animate-float" viewBox="0 0 48 48" fill="currentColor">
+            <ellipse cx="24" cy="30" rx="9" ry="7.5"/>
+            <circle cx="14.5" cy="21" r="3.3"/>
+            <circle cx="20.8" cy="16" r="3.3"/>
+            <circle cx="27.2" cy="16" r="3.3"/>
+            <circle cx="33.5" cy="21" r="3.3"/>
+        </svg>
+        <svg class="absolute top-[28%] right-[9%] w-8 h-8 text-[#F4B8CF]/50 rotate-18 animate-float-delay" viewBox="0 0 48 48" fill="currentColor">
+            <ellipse cx="24" cy="30" rx="9" ry="7.5"/>
+            <circle cx="14.5" cy="21" r="3.3"/>
+            <circle cx="20.8" cy="16" r="3.3"/>
+            <circle cx="27.2" cy="16" r="3.3"/>
+            <circle cx="33.5" cy="21" r="3.3"/>
+        </svg>
+        <svg class="absolute bottom-[24%] left-[8%] w-8 h-8 text-[#F4B8CF]/50 rotate-12 animate-float-delay" viewBox="0 0 48 48" fill="currentColor">
+            <ellipse cx="24" cy="30" rx="9" ry="7.5"/>
+            <circle cx="14.5" cy="21" r="3.3"/>
+            <circle cx="20.8" cy="16" r="3.3"/>
+            <circle cx="27.2" cy="16" r="3.3"/>
+            <circle cx="33.5" cy="21" r="3.3"/>
+        </svg>
+        <svg class="absolute bottom-[14%] right-[12%] w-9 h-9 text-[#F4B8CF]/55 -rotate-15 animate-float" viewBox="0 0 48 48" fill="currentColor">
+            <ellipse cx="24" cy="30" rx="9" ry="7.5"/>
+            <circle cx="14.5" cy="21" r="3.3"/>
+            <circle cx="20.8" cy="16" r="3.3"/>
+            <circle cx="27.2" cy="16" r="3.3"/>
+            <circle cx="33.5" cy="21" r="3.3"/>
         </svg>
 
-        <!-- Mid Left Soft Cloud -->
-        <svg class="absolute top-[38%] -left-20 w-56 h-36 text-white/70 blur-[2px]" viewBox="0 0 200 120" fill="currentColor">
-            <circle cx="55" cy="70" r="35"/>
-            <circle cx="95" cy="55" r="42"/>
-            <circle cx="135" cy="72" r="32"/>
-            <rect x="45" y="70" width="95" height="35" rx="17"/>
-        </svg>
-
-        <!-- Bottom Left Cloud -->
-        <svg class="absolute bottom-24 -left-10 w-64 h-40 text-white/85 blur-[1px] animate-float-delay" viewBox="0 0 200 120" fill="currentColor">
-            <path d="M35,105 C15,105 5,90 12,72 C18,56 34,52 48,56 C56,32 86,25 106,40 C124,28 152,36 158,58 C176,58 190,72 186,90 C183,100 170,105 154,105 Z"/>
-        </svg>
-
-        <!-- Top Right Cloud -->
-        <svg class="absolute top-12 -right-20 w-72 h-44 text-white/75 blur-[1.5px] animate-float-delay" viewBox="0 0 200 120" fill="currentColor">
-            <circle cx="60" cy="72" r="34"/>
-            <circle cx="105" cy="54" r="44"/>
-            <circle cx="148" cy="70" r="34"/>
-            <rect x="50" y="72" width="105" height="34" rx="17"/>
-        </svg>
-
-        <!-- Mid Right Cloud -->
-        <svg class="absolute top-[52%] -right-12 w-64 h-40 text-white/90 blur-[0.5px] animate-float" viewBox="0 0 200 120" fill="currentColor">
-            <path d="M40,100 C18,100 5,85 10,65 C14,48 30,42 45,45 C52,22 80,15 100,28 C118,18 145,25 152,48 C170,48 185,62 182,80 C180,94 166,100 150,100 Z"/>
-        </svg>
-
-        <!-- Ambient Sparkles -->
-        <svg class="absolute top-[22%] left-[14%] w-5 h-5 text-sky-blue/40 animate-twinkle" viewBox="0 0 24 24" fill="currentColor">
+        <!-- Twinkling Sparkles & Stars -->
+        <svg class="absolute top-[18%] left-[24%] w-4 h-4 text-[#F29BB8]/70 animate-twinkle" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5L12 0Z"/>
         </svg>
-        <svg class="absolute top-[18%] right-[16%] w-4 h-4 text-amber-200/80 animate-twinkle-delay" viewBox="0 0 24 24" fill="currentColor">
+        <svg class="absolute top-[52%] right-[18%] w-4 h-4 text-[#F29BB8]/65 animate-twinkle-delay" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5L12 0Z"/>
         </svg>
-        <svg class="absolute bottom-[28%] right-[12%] w-5 h-5 text-sky-blue/35 animate-twinkle" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5L12 0Z"/>
+        <svg class="absolute bottom-[32%] left-[18%] w-3.5 h-3.5 text-[#E8B85C]/80 animate-twinkle" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2l2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01L12 2z"/>
         </svg>
     </div>
 
     <!-- ==================== MAIN CONTAINER ==================== -->
     <main class="relative z-10 max-w-[660px] mx-auto px-4 sm:px-6 pt-8 pb-14 flex flex-col items-center">
-
-        <!-- 5. MINI MUSIC PLAYER WIDGET (VINYL RECORD FIXED BOTTOM-LEFT) -->
-        <section class="fixed bottom-5 left-5 z-30 flex flex-col items-center">
-            
-            <!-- Clickable Spinning Vinyl Disc (Tap to Play / Mute) -->
-                <button type="button" onclick="togglePlay()" title="จิ้มที่แผ่นเสียงเพื่อ เล่น / ปิดเสียง" aria-label="จิ้มที่แผ่นเสียงเพื่อเล่นหรือปิดเสียง" class="group relative w-16 h-16 aspect-square shrink-0 flex items-center justify-center rounded-full bg-white/85 backdrop-blur-md p-0.5 border-2 border-white shadow-pastel hover:shadow-pastel-hover focus:outline-none cursor-pointer active:scale-95 transition-all">
-                    <!-- Vinyl Record Outer Ring -->
-                    <div id="vinylDisc" class="vinyl-paused w-full h-full aspect-square rounded-full bg-gradient-to-tr from-[#3B2A32] via-[#59414C] to-[#3B2A32] p-1.5 shadow-md flex items-center justify-center relative shrink-0">
-                        <!-- Vinyl Grooves & Shine -->
-                        <div class="w-full h-full rounded-full border border-white/20 flex items-center justify-center relative">
-                            <div class="absolute inset-1 rounded-full border border-white/10 pointer-events-none"></div>
-                            <!-- Center Label with Mascot -->
-                            <div class="w-10 h-10 rounded-full bg-[#FFF0F6] border-2 border-sky-blue overflow-hidden flex items-center justify-center relative">
-                                <svg class="w-9 h-9" viewBox="0 0 64 64" fill="none">
-                                    <ellipse cx="22" cy="18" rx="5.5" ry="7" transform="rotate(-15 22 18)" fill="#FFFFFF" stroke="#7A6B63" stroke-width="2"/>
-                                    <ellipse cx="42" cy="18" rx="5.5" ry="7" transform="rotate(15 42 18)" fill="#FFFFFF" stroke="#7A6B63" stroke-width="2"/>
-                                    <path d="M16 32C16 21 22 16 32 16C42 16 48 21 48 32C48 41 42 46 32 46C22 46 16 41 16 32Z" fill="#FFFFFF" stroke="#7A6B63" stroke-width="2"/>
-                                    <ellipse cx="22" cy="34" rx="3" ry="1.8" fill="#FFB3C9"/>
-                                    <ellipse cx="42" cy="34" rx="3" ry="1.8" fill="#FFB3C9"/>
-                                    <circle cx="25" cy="30" r="2.2" fill="#5A4D46"/>
-                                    <circle cx="39" cy="30" r="2.2" fill="#5A4D46"/>
-                                    <path d="M30 33.5C30.5 34.5 31.5 34.5 32 33.5C32.5 34.5 33.5 34.5 34 33.5" stroke="#7A6B63" stroke-width="1.6" stroke-linecap="round"/>
-                                </svg>
-                                <!-- Center Spindle Hole -->
-                                <span class="w-1.5 h-1.5 rounded-full bg-[#3B2A32] border border-white/80 absolute"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Hover / Tap Overlay Hint -->
-                    <div class="absolute inset-0 rounded-full bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-                        <span id="vinylHoverIcon" class="text-white text-xs drop-shadow">▶</span>
-                    </div>
-
-                    <!-- Tonearm Stylus -->
-                    <div id="tonearm" class="absolute -top-1 -right-1 w-6 h-6 pointer-events-none transition-transform duration-500 origin-top-right -rotate-12">
-                        <div class="w-2.5 h-2.5 rounded-full bg-white border-2 border-sky-blue shadow-xs ml-auto"></div>
-                        <div class="w-0.5 h-4 bg-sky-deep mx-auto -mt-0.5 rotate-25 rounded-full"></div>
-                    </div>
-
-                    <!-- Playing Indicator Dot -->
-                    <span id="playingDot" class="hidden absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-sky-blue border-2 border-white animate-bounce"></span>
-                </button>
-
-                <!-- Subtle Status Tag Below Vinyl -->
-                <span id="audioStatusBadge" class="mt-1.5 text-[10px] font-quicksand font-bold text-sky-deep bg-white/90 px-2.5 py-0.5 rounded-full border border-sky-soft shadow-2xs">
-                    จิ้มแผ่นเสียงเพื่อเล่นเพลง
-                </span>
-
-                <!-- Hidden Track & Slider Elements Preserved for Script Compatibility -->
-                <div class="hidden" aria-hidden="true">
-                    <span id="trackTitle"></span>
-                    <span id="currentTimeDisplay">0:22</span>
-                    <input id="progressSlider" type="range" min="0" max="186" value="22" oninput="seekAudio(this.value)">
-                    <span id="durationDisplay">3:06</span>
-                    <button id="repeatBtn" onclick="toggleRepeat()"></button>
-                    <button id="playPauseBtn" onclick="togglePlay()">
-                        <svg id="playIcon"></svg>
-                        <svg id="pauseIcon" class="hidden"></svg>
-                        <span id="playBtnText">PLAY</span>
-                    </button>
-                </div>
-        </section>
 
         <!-- 1. HEADER SECTION -->
         <header class="w-full flex flex-col items-center text-center mb-6">
@@ -365,51 +268,12 @@
                 <!-- Right Side Cute Bubble Logo Group -->
                 <div class="relative z-10 flex flex-col items-end pr-1 sm:pr-4">
                     
-                    <!-- Cute Bubbly "JaoMeowStore" Logo -->
-                    <div class="relative flex items-center select-none">
-                        <!-- Cloud Outline behind Logo -->
-                        <svg class="absolute -top-6 -left-3 w-36 h-24 text-white/95 pointer-events-none drop-shadow-[0_4px_10px_rgba(242,155,184,0.28)]" viewBox="0 0 180 110" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round">
-                            <path d="M22,68 C10,55 18,32 38,32 C46,12 78,8 92,26 C112,22 126,38 120,56"/>
-                        </svg>
-
-                        <!-- Four-point Star Left -->
-                        <svg class="w-4 h-4 text-white mr-1 -mt-2 drop-shadow-sm animate-twinkle" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5L12 0Z"/>
-                        </svg>
-
-                        <!-- Word Jao -->
-                        <span class="font-mali font-bold text-2xl sm:text-3xl kawaii-logo-text tracking-tight">Jao</span>
-
-                        <!-- Glowing Cloud Star Bubble -->
-                        <div class="relative w-10 h-10 sm:w-12 sm:h-12 mx-0.5 rounded-full bg-white/75 backdrop-blur-sm border-2 border-white shadow-[0_4px_15px_rgba(255,241,168,0.65)] flex items-center justify-center animate-float">
-                            <svg class="w-6 h-6 sm:w-7 sm:h-7 text-[#FFF199] drop-shadow-[0_2px_4px_rgba(218,195,105,0.4)]" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2.5c.6 0 1.1.3 1.4.9l2.1 4.3 4.7.7c.6.1 1.1.5 1.3 1.1.2.6 0 1.2-.4 1.6l-3.4 3.3.8 4.7c.1.6-.1 1.2-.6 1.6-.5.4-1.1.4-1.7.1L12 18.6l-4.2 2.2c-.5.3-1.2.2-1.7-.1-.5-.4-.7-1-.6-1.6l.8-4.7-3.4-3.3c-.4-.4-.6-1-.4-1.6.2-.6.7-1 1.3-1.1l4.7-.7 2.1-4.3c.3-.6.8-.9 1.4-.9z"/>
-                            </svg>
-                        </div>
-
-                        <!-- Stacked Meow -->
-                        <div class="flex flex-col leading-[0.85] mx-0.5 -mt-1">
-                            <span class="font-mali font-bold text-lg sm:text-xl kawaii-logo-text">Me</span>
-                            <span class="font-mali font-bold text-lg sm:text-xl kawaii-logo-text">ow</span>
-                        </div>
-
-                        <!-- Word Store (with tiny cloud perched on top) -->
-                        <div class="relative">
-                            <svg class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-6 text-white drop-shadow-sm" viewBox="0 0 80 50" fill="currentColor">
-                                <circle cx="24" cy="30" r="12"/>
-                                <circle cx="40" cy="22" r="15"/>
-                                <circle cx="56" cy="30" r="12"/>
-                                <rect x="20" y="28" width="40" height="14" rx="7"/>
-                            </svg>
-                            <span class="font-mali font-bold text-2xl sm:text-3xl kawaii-logo-text">Stor</span>
-                        </div>
-
-                        <!-- Letter e (with sparkle above) -->
-                        <div class="relative">
-                            <svg class="absolute -top-3 right-0 w-4 h-4 text-white animate-twinkle-delay" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5L12 0Z"/>
-                            </svg>
-                            <span class="font-mali font-bold text-2xl sm:text-3xl kawaii-logo-text">e</span>
+                    <!-- Updated Hero Banner Store Logo -->
+                    <div class="relative flex flex-col items-end select-none">
+                        <div class="inline-flex items-center gap-1.5 bg-white/85 backdrop-blur-xs px-4 py-1.5 rounded-full border border-white shadow-[0_4px_14px_rgba(217,117,152,0.22)]">
+                            <span class="text-sm text-[#DF7C9F]">🐾</span>
+                            <span class="font-quicksand font-bold italic text-xl sm:text-2xl text-[#C76E8E] tracking-wide">JaoMeowStore</span>
+                            <span class="text-xs text-[#F29BB8]">✿</span>
                         </div>
                     </div>
 
@@ -456,17 +320,21 @@
         <section class="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
             
             <!-- Left Card: EXAMPLE WORK -->
-            <button onclick="openModal('exampleModal')" class="group cloud-card-bg relative rounded-[26px] border-2 border-white shadow-pastel hover:shadow-pastel-hover p-5 pt-4 pb-10 text-center flex flex-col items-center justify-between min-h-[235px] transition-all duration-300 hover:-translate-y-1 overflow-hidden cursor-pointer">
+            <button onclick="openModal('exampleModal')" class="group cloud-card-bg relative rounded-[28px] border-2 border-white shadow-pastel hover:shadow-pastel-hover p-5 pt-4 pb-10 text-center flex flex-col items-center justify-between min-h-[235px] transition-all duration-300 hover:-translate-y-1 overflow-hidden cursor-pointer">
                 
                 <!-- Top Left Mini Logo -->
-                <div class="w-full flex justify-start items-center">
-                    <div class="flex items-center tracking-tight text-[#C76E8E]/85 select-none">
-                        <span class="font-serif-logo font-bold text-sm leading-none">JaoMeowStore</span>
+                <div class="w-full flex justify-start relative z-10">
+                    <div class="flex flex-col items-center leading-none tracking-tight text-[#C76E8E] select-none">
+                        <div class="flex items-baseline">
+                            <span class="font-serif-logo font-bold text-sm">Jao</span>
+                            <span class="font-serif-logo font-bold text-sm text-[#B85D7E]">Meow</span>
+                        </div>
+                        <span class="font-serif-logo font-semibold text-[9px] tracking-widest uppercase -mt-0.5 text-[#D97598]">Store</span>
                     </div>
                 </div>
 
                 <!-- Center Content -->
-                <div class="relative z-10 my-auto py-3 px-2 bg-white/60 backdrop-blur-[2px] rounded-2xl w-full">
+                <div class="relative z-10 my-auto py-3 px-2 bg-white/75 rounded-2xl w-full">
                     <h2 class="font-quicksand font-bold italic text-xl sm:text-[22px] tracking-wide text-sky-blue group-hover:text-sky-deep transition-colors">
                         EXAMPLE WORK
                     </h2>
@@ -481,7 +349,7 @@
                 </div>
 
                 <!-- Bottom Fluffy Clouds -->
-                <svg class="absolute inset-x-0 bottom-0 w-full h-14 text-[#FBE0EB]/80 pointer-events-none" preserveAspectRatio="none" viewBox="0 0 300 70" fill="currentColor">
+                <svg class="absolute inset-x-0 bottom-0 w-full h-14 text-[#FBE0EB]/85 pointer-events-none" preserveAspectRatio="none" viewBox="0 0 300 70" fill="currentColor">
                     <circle cx="30" cy="55" r="30"/>
                     <circle cx="85" cy="45" r="35"/>
                     <circle cx="150" cy="52" r="32"/>
@@ -500,32 +368,36 @@
             </button>
 
             <!-- Right Card: GIVEAWAY -->
-            <button onclick="openModal('giveawayModal')" class="group cloud-card-bg relative rounded-[26px] border-2 border-white shadow-pastel hover:shadow-pastel-hover p-5 pt-4 pb-10 text-center flex flex-col items-center justify-between min-h-[235px] transition-all duration-300 hover:-translate-y-1 overflow-hidden cursor-pointer">
+            <button onclick="openModal('giveawayModal')" class="group cloud-card-bg relative rounded-[28px] border-2 border-white shadow-pastel hover:shadow-pastel-hover p-5 pt-4 pb-10 text-center flex flex-col items-center justify-between min-h-[235px] transition-all duration-300 hover:-translate-y-1 overflow-hidden cursor-pointer">
                 
                 <!-- Top Left Mini Logo -->
-                <div class="w-full flex justify-start items-center">
-                    <div class="flex items-center tracking-tight text-[#C76E8E]/85 select-none">
-                        <span class="font-serif-logo font-bold text-sm leading-none">JaoMeowStore</span>
+                <div class="w-full flex justify-start relative z-10">
+                    <div class="flex flex-col items-center leading-none tracking-tight text-[#C76E8E] select-none">
+                        <div class="flex items-baseline">
+                            <span class="font-serif-logo font-bold text-sm">Jao</span>
+                            <span class="font-serif-logo font-bold text-sm text-[#B85D7E]">Meow</span>
+                        </div>
+                        <span class="font-serif-logo font-semibold text-[9px] tracking-widest uppercase -mt-0.5 text-[#D97598]">Store</span>
                     </div>
                 </div>
 
                 <!-- Center Content -->
-                <div class="relative z-10 my-auto py-3 px-2 bg-white/60 backdrop-blur-[2px] rounded-2xl w-full">
+                <div class="relative z-10 my-auto py-3 px-2 bg-white/75 rounded-2xl w-full">
                     <h2 class="font-quicksand font-bold italic text-xl sm:text-[22px] tracking-wide text-sky-blue group-hover:text-sky-deep transition-colors">
-                        GIVEAWAY
+                        GROUP WORK
                     </h2>
                     <div class="w-4/5 h-[1.5px] bg-sky-soft mx-auto my-1.5 rounded-full"></div>
                     <p class="font-prompt font-semibold text-sm text-text-main">
-                        รวมงานแจกของทางร้าน
+                        ตัวอย่างกลุ่มทั้งหมด
                     </p>
                     <p class="mt-3 text-[10px] leading-relaxed text-text-sub font-prompt">
-                        Thankyou for your support<br>
-                        ใช้ส่วนตัว ห้ามดัดแปลงนำไปจำหน่ายต่อ
+                        รวมตัวอย่างงานกลุ่มและเซ็ตของทางร้าน<br>
+                        ห้ามคัดลอก และแอบอ้างไปใช้งาน
                     </p>
                 </div>
 
                 <!-- Bottom Fluffy Clouds -->
-                <svg class="absolute inset-x-0 bottom-0 w-full h-14 text-[#FBE0EB]/80 pointer-events-none" preserveAspectRatio="none" viewBox="0 0 300 70" fill="currentColor">
+                <svg class="absolute inset-x-0 bottom-0 w-full h-14 text-[#FBE0EB]/85 pointer-events-none" preserveAspectRatio="none" viewBox="0 0 300 70" fill="currentColor">
                     <circle cx="25" cy="54" r="30"/>
                     <circle cx="90" cy="44" r="35"/>
                     <circle cx="155" cy="50" r="32"/>
@@ -548,22 +420,19 @@
         <section class="w-full grid grid-cols-1 sm:grid-cols-2 gap-3.5 mb-5">
             
             <!-- Button 1: เช็กคิว -->
-            <button onclick="openModal('queueModal')" class="group bg-white/95 hover:bg-white rounded-[22px] p-3.5 px-4 border border-white shadow-pastel hover:shadow-pastel-hover flex items-center justify-between text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer">
+            <button onclick="openModal('queueModal')" class="group bg-[#FFF5F8] hover:bg-[#FCE4EE] rounded-[22px] p-3.5 px-4 border-2 border-white shadow-pastel hover:shadow-pastel-hover flex items-center justify-between text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer">
                 <div class="flex items-center gap-3.5">
-                    <!-- Cute Pastel Envelope/Calendar Icon -->
+                    <!-- Cute Pastel Letter / Queue Icon -->
                     <div class="w-12 h-12 rounded-2xl bg-[#FFF0F6] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
                         <svg class="w-8 h-8" viewBox="0 0 48 48" fill="none">
-                            <!-- Envelope Back -->
-                            <path d="M8 18L24 8L40 18V36C40 38.2091 38.2091 40 36 40H12C9.79086 40 8 38.2091 8 36V18Z" fill="#FAD2E2"/>
-                            <!-- Letter Card Inside -->
-                            <rect x="13" y="13" width="22" height="18" rx="3" fill="#FFFFFF"/>
-                            <path d="M18 19H30M18 23H26" stroke="#EB9BB8" stroke-width="2" stroke-linecap="round"/>
-                            <!-- Envelope Front Flaps -->
-                            <path d="M8 20L24 31L40 20V36C40 38.2091 38.2091 40 36 40H12C9.79086 40 8 38.2091 8 36V20Z" fill="#F6B8D0"/>
-                            <!-- Cute Pink Ribbon Bow -->
-                            <circle cx="24" cy="31" r="3" fill="#DF7C9F"/>
-                            <path d="M24 31C20 28 17 30 18 33C19 35 22 33 24 31Z" fill="#F29BB8"/>
-                            <path d="M24 31C28 28 31 30 30 33C29 35 26 33 24 31Z" fill="#F29BB8"/>
+                            <!-- Pink Envelope Body -->
+                            <rect x="9" y="16" width="30" height="20" rx="5" fill="#F9C6DA"/>
+                            <!-- White Letter Card Peeking Out -->
+                            <rect x="13" y="11" width="22" height="14" rx="3" fill="#FFFDFD" stroke="#F4B2CC" stroke-width="1.5"/>
+                            <!-- Front Envelope Flap -->
+                            <path d="M9 20L24 29L39 20V31C39 33.7614 36.7614 36 34 36H14C11.2386 36 9 33.7614 9 31V20Z" fill="#F4A9C4"/>
+                            <!-- Cute Heart Seal -->
+                            <path d="M24 26.5C24 26.5 20.5 24 20.5 21.8C20.5 20.5 21.5 19.6 22.7 19.6C23.4 19.6 23.8 20 24 20.4C24.2 20 24.6 19.6 25.3 19.6C26.5 19.6 27.5 20.5 27.5 21.8C27.5 24 24 26.5 24 26.5Z" fill="#FFF1A8"/>
                         </svg>
                     </div>
                     <div>
@@ -577,7 +446,7 @@
             </button>
 
             <!-- Button 2: Terms of Service -->
-            <button onclick="openModal('tosModal')" class="group bg-white/95 hover:bg-white rounded-[22px] p-3.5 px-4 border border-white shadow-pastel hover:shadow-pastel-hover flex items-center justify-between text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer">
+            <button onclick="openModal('tosModal')" class="group bg-[#FFF5F8] hover:bg-[#FCE4EE] rounded-[22px] p-3.5 px-4 border-2 border-white shadow-pastel hover:shadow-pastel-hover flex items-center justify-between text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer">
                 <div class="flex items-center gap-3.5">
                     <!-- Cute Pastel Teddy Bear Icon -->
                     <div class="w-12 h-12 rounded-2xl bg-[#FFF0F6] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
@@ -617,7 +486,7 @@
             </button>
 
             <!-- Button 3: ราคางาน -->
-            <button onclick="openModal('pricingModal')" class="group bg-white/95 hover:bg-white rounded-[22px] p-3.5 px-4 border border-white shadow-pastel hover:shadow-pastel-hover flex items-center justify-between text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer">
+            <button onclick="openModal('pricingModal')" class="group bg-[#FFF5F8] hover:bg-[#FCE4EE] rounded-[22px] p-3.5 px-4 border-2 border-white shadow-pastel hover:shadow-pastel-hover flex items-center justify-between text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer">
                 <div class="flex items-center gap-3.5">
                     <!-- Cute Pastel Paw / Price Tag Icon -->
                     <div class="w-12 h-12 rounded-2xl bg-[#FFF0F6] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
@@ -647,7 +516,7 @@
             </button>
 
             <!-- Button 4: ส่งบรีฟงาน -->
-            <button onclick="openModal('briefModal')" class="group bg-white/95 hover:bg-white rounded-[22px] p-3.5 px-4 border border-white shadow-pastel hover:shadow-pastel-hover flex items-center justify-between text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer">
+            <button onclick="openModal('briefModal')" class="group bg-[#FFF5F8] hover:bg-[#FCE4EE] rounded-[22px] p-3.5 px-4 border-2 border-white shadow-pastel hover:shadow-pastel-hover flex items-center justify-between text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer">
                 <div class="flex items-center gap-3.5">
                     <!-- Cute Pastel Cloud & Stars Icon -->
                     <div class="w-12 h-12 rounded-2xl bg-[#FFF0F6] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
@@ -748,11 +617,11 @@
                 <!-- Item 4 -->
                 <div data-category="website" class="example-item bg-[#FFF9FB] border border-sky-soft rounded-2xl p-3 flex flex-col gap-2">
                     <div class="h-32 rounded-xl bg-gradient-to-br from-[#FADCE8] to-[#FFFFFF] flex flex-col items-center justify-center p-3">
-                        <span class="text-2xl mb-1">🎵🤍</span>
-                        <span class="font-quicksand font-bold text-sm text-sky-deep">Link-in-Bio + Music Box</span>
+                        <span class="text-2xl mb-1">✨🤍</span>
+                        <span class="font-quicksand font-bold text-sm text-sky-deep">Link-in-Bio + Cloud</span>
                     </div>
                     <div class="flex justify-between items-center px-1">
-                        <span class="text-xs font-semibold text-text-main">หน้ารวมลิงก์ + เครื่องเล่นเพลง</span>
+                        <span class="text-xs font-semibold text-text-main">หน้ารวมลิงก์โทนชมพูนม</span>
                         <span class="text-[10px] bg-sky-soft text-sky-deep px-2 py-0.5 rounded-full font-quicksand font-bold">Website</span>
                     </div>
                 </div>
@@ -1016,7 +885,7 @@
         </div>
     </div>
 
-    <!-- TOAST NOTIFICATION (Replaces alert()) -->
+    <!-- TOAST NOTIFICATION -->
     <div id="toastBox" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-white/95 border border-sky-blue/40 text-text-main px-4 py-2.5 rounded-full shadow-pastel-hover text-xs font-prompt font-medium flex items-center gap-2 opacity-0 pointer-events-none transition-all duration-300 translate-y-3">
         <span class="text-sky-blue text-sm">☁️</span>
         <span id="toastMessage">แจ้งเตือน</span>
@@ -1128,197 +997,6 @@
             showToast('ส่งบรีฟงานเรียบร้อยแล้ว! ทางร้านจะติดต่อกลับโดยเร็วที่สุด ♡');
             e.target.reset();
         }
-
-        /* ---------------- 5. MINI MUSIC PLAYER & WEB AUDIO SYNTH ---------------- */
-        const tracks = [
-            {
-                title: "☁️ Pastel Cloud Lullaby - JaoMeowStore Music Box",
-                duration: 186, // 3:06
-                notes: [523.25, 659.25, 783.99, 987.77, 783.99, 659.25, 587.33, 698.46, 880.00, 1046.50, 880.00, 698.46] // Cmaj7 -> Dm7 music box
-            },
-            {
-                title: "✿ Fluffy Cotton Sky - Lo-Fi Breeze",
-                duration: 164, // 2:44
-                notes: [440.00, 523.25, 659.25, 783.99, 659.25, 523.25, 392.00, 493.88, 587.33, 783.99, 587.33, 493.88] // Am7 -> G6
-            },
-            {
-                title: "⭐ Starlight Tea Time - Soft Chime",
-                duration: 195, // 3:15
-                notes: [698.46, 880.00, 1046.50, 1318.51, 1046.50, 880.00, 659.25, 783.99, 987.77, 1174.66, 987.77, 783.99] // Fmaj7 -> Em7
-            }
-        ];
-
-        let currentTrackIndex = 0;
-        let isPlaying = false;
-        let isRepeat = true;
-        let currentSeconds = 22; // เริ่มต้นที่ 0:22 เหมือนในภาพตัวอย่าง
-        let timerInterval = null;
-        let audioCtx = null;
-        let melodyInterval = null;
-        let noteStep = 0;
-
-        function formatTime(sec) {
-            const m = Math.floor(sec / 60);
-            const s = Math.floor(sec % 60);
-            return `${m}:${s < 10 ? '0' : ''}${s}`;
-        }
-
-        function updatePlayerUI() {
-            const track = tracks[currentTrackIndex];
-            document.getElementById('trackTitle').textContent = track.title;
-            document.getElementById('durationDisplay').textContent = formatTime(track.duration);
-            document.getElementById('currentTimeDisplay').textContent = formatTime(currentSeconds);
-
-            const slider = document.getElementById('progressSlider');
-            slider.max = track.duration;
-            slider.value = currentSeconds;
-
-            const playIcon = document.getElementById('playIcon');
-            const pauseIcon = document.getElementById('pauseIcon');
-            const playingDot = document.getElementById('playingDot');
-            const statusBadge = document.getElementById('audioStatusBadge');
-            const vinylDisc = document.getElementById('vinylDisc');
-            const playBtnText = document.getElementById('playBtnText');
-            const tonearm = document.getElementById('tonearm');
-            const vinylHoverIcon = document.getElementById('vinylHoverIcon');
-
-            if (isPlaying) {
-                playIcon.classList.add('hidden');
-                pauseIcon.classList.remove('hidden');
-                playingDot.classList.remove('hidden');
-                if (vinylDisc) {
-                    vinylDisc.classList.remove('vinyl-paused');
-                    vinylDisc.classList.add('vinyl-spinning');
-                }
-                if (tonearm) {
-                    tonearm.classList.remove('-rotate-12');
-                    tonearm.classList.add('rotate-12');
-                }
-                if (vinylHoverIcon) vinylHoverIcon.textContent = '❚❚';
-                if (playBtnText) playBtnText.textContent = 'PAUSE';
-                statusBadge.textContent = '♪ กำลังเล่นเพลง (จิ้มเพื่อปิดเสียง)';
-            } else {
-                playIcon.classList.remove('hidden');
-                pauseIcon.classList.add('hidden');
-                playingDot.classList.add('hidden');
-                if (vinylDisc) {
-                    vinylDisc.classList.remove('vinyl-spinning');
-                    vinylDisc.classList.add('vinyl-paused');
-                }
-                if (tonearm) {
-                    tonearm.classList.remove('rotate-12');
-                    tonearm.classList.add('-rotate-12');
-                }
-                if (vinylHoverIcon) vinylHoverIcon.textContent = '▶';
-                if (playBtnText) playBtnText.textContent = 'PLAY';
-                statusBadge.textContent = 'จิ้มแผ่นเสียงเพื่อเล่นเพลง';
-            }
-        }
-
-        // Soft Music Box Tone Generator (Web Audio API)
-        function playMusicBoxNote(freq) {
-            try {
-                if (!audioCtx) {
-                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                }
-                if (audioCtx.state === 'suspended') {
-                    audioCtx.resume();
-                }
-
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-
-                // Soft bell-like envelope
-                gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.045, audioCtx.currentTime + 0.03);
-                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.1);
-
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-
-                osc.start();
-                osc.stop(audioCtx.currentTime + 1.15);
-            } catch (err) {
-                // Fallback silently if browser restricts audio
-            }
-        }
-
-        function startAudioLoop() {
-            stopAudioLoop();
-            // Progress timer (1s)
-            timerInterval = setInterval(() => {
-                const maxDur = tracks[currentTrackIndex].duration;
-                if (currentSeconds < maxDur) {
-                    currentSeconds++;
-                    updatePlayerUI();
-                } else {
-                    if (isRepeat) {
-                        currentSeconds = 0;
-                        updatePlayerUI();
-                    } else {
-                        nextTrack();
-                    }
-                }
-            }, 1000);
-
-            // Music box chime melody (every 650ms)
-            const playStep = () => {
-                const notes = tracks[currentTrackIndex].notes;
-                playMusicBoxNote(notes[noteStep % notes.length]);
-                noteStep++;
-            };
-            playStep();
-            melodyInterval = setInterval(playStep, 650);
-        }
-
-        function stopAudioLoop() {
-            clearInterval(timerInterval);
-            clearInterval(melodyInterval);
-        }
-
-        function togglePlay() {
-            isPlaying = !isPlaying;
-            if (isPlaying) {
-                startAudioLoop();
-            } else {
-                stopAudioLoop();
-            }
-            updatePlayerUI();
-        }
-
-        function prevTrack() {
-            currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
-            currentSeconds = 0;
-            noteStep = 0;
-            updatePlayerUI();
-            if (isPlaying) startAudioLoop();
-        }
-
-        function nextTrack() {
-            currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
-            currentSeconds = 0;
-            noteStep = 0;
-            updatePlayerUI();
-            if (isPlaying) startAudioLoop();
-        }
-
-        function toggleRepeat() {
-            isRepeat = !isRepeat;
-            const btn = document.getElementById('repeatBtn');
-            btn.classList.toggle('opacity-40', !isRepeat);
-            showToast(isRepeat ? 'เปิดโหมดเล่นเพลงซ้ำแล้ว 🔁' : 'ปิดโหมดเล่นเพลงซ้ำ');
-        }
-
-        function seekAudio(val) {
-            currentSeconds = parseInt(val);
-            document.getElementById('currentTimeDisplay').textContent = formatTime(currentSeconds);
-        }
-
-        // Initialize UI on load
-        updatePlayerUI();
     </script>
 </body>
 </html>
