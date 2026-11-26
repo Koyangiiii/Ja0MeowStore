@@ -1096,7 +1096,7 @@
         function buildGalleryCardHtml(item) {
             const catObj = categories.find(c => c.id === item.categoryId);
             const catName = catObj ? catObj.name : 'ทั่วไป';
-            const safeImg = item.imageUrl || 'https://placehold.co/400x240/FAD2E2/8A5E6F?text=JaoMeowStore';
+            const safeImg = item.imageUrl || 'https://placehold.co/400x400/FAD2E2/8A5E6F?text=JaoMeowStore';
             const linkButtonHtml = item.linkUrl
                 ? `<a href="${escapeAttr(item.linkUrl)}" target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex items-center gap-1 text-[11px] font-semibold text-sky-deep hover:underline">เปิดลิงก์งาน ↗</a>`
                 : '';
@@ -1104,7 +1104,7 @@
             return `
                 <div class="bg-[#FFF9FB] border border-sky-soft rounded-2xl p-3 shadow-xs flex flex-col justify-between">
                     <div>
-                        <img src="${escapeAttr(safeImg)}" alt="${escapeAttr(item.title)}" onerror="this.src='https://placehold.co/400x240/FAD2E2/8A5E6F?text=JaoMeowStore'" class="w-full h-36 object-cover rounded-xl mb-2.5 bg-white">
+                        <img src="${escapeAttr(safeImg)}" alt="${escapeAttr(item.title)}" onerror="this.src='https://placehold.co/400x400/FAD2E2/8A5E6F?text=JaoMeowStore'" class="w-full aspect-square object-cover rounded-xl mb-2.5 bg-white">
                         <span class="inline-block text-[10px] font-semibold bg-sky-soft text-sky-deep px-2 py-0.5 rounded-full mb-1">${escapeHtml(catName)}</span>
                         <h4 class="text-xs font-semibold text-text-main">${escapeHtml(item.title)}</h4>
                     </div>
