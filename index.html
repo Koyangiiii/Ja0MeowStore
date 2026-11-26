@@ -768,7 +768,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 items-start">
                         <div>
                             <label class="block text-xs font-semibold text-[#8A5A72] mb-1">อัปโหลดไฟล์รูปภาพ</label>
-                            <input id="artworkFileInput" type="file" accept="image/*" onchange="handleFilePreview(event)" class="w-full text-xs text-[#8A5A72] file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#FFE6F0] file:text-[#B84D7B] hover:file:bg-[#FFD6E6] cursor-pointer">
+                            <input id="artworkFileInput" type="file" accept="image/*" onchange="handleFilePreview(event)" class="w-full text-xs text-[#8A5A72] file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs font-bold file:bg-[#FFE6F0] file:text-[#B84D7B] hover:file:bg-[#FFD6E6] cursor-pointer">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-[#8A5A72] mb-1">หรือวางลิงก์รูปภาพโดยตรง</label>
@@ -858,9 +858,40 @@
             }
         ];
 
+        const LOCAL_STORAGE_KEY = 'jaomeow_store_state_v1';
+
+        function loadLocalStateFallback() {
+            try {
+                const raw = localStorage.getItem(LOCAL_STORAGE_KEY);
+                if (!raw) return null;
+                return JSON.parse(raw);
+            } catch (_) {
+                return null;
+            }
+        }
+
+        function saveLocalStateFallback(cats, arts, heroCardImg) {
+            try {
+                localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({
+                    categories: cats,
+                    artworks: arts,
+                    heroCardImage: heroCardImg || ''
+                }));
+            } catch (_) {
+                // Ignore storage quota errors
+            }
+        }
+
+        const initialLocal = loadLocalStateFallback();
+
         let state = {
-            categories: JSON.parse(JSON.stringify(DEFAULT_CATEGORIES)),
-            artworks: JSON.parse(JSON.stringify(DEFAULT_ARTWORKS)),
+            categories: initialLocal?.categories
+                ? JSON.parse(JSON.stringify(initialLocal.categories))
+                : JSON.parse(JSON.stringify(DEFAULT_CATEGORIES)),
+            artworks: Array.isArray(initialLocal?.artworks) && initialLocal.artworks.length > 0
+                ? initialLocal.artworks
+                : JSON.parse(JSON.stringify(DEFAULT_ARTWORKS)),
+            heroCardImage: typeof initialLocal?.heroCardImage === 'string' ? initialLocal.heroCardImage : '',
             selectedExampleSubcat: 'งานป้าย',
             selectedExampleLeaf: 'ทั้งหมด',
             selectedGroupSubcat: 'ทั้งหมด',
@@ -906,21 +937,60 @@
                 ? rawData.artworks
                 : JSON.parse(JSON.stringify(DEFAULT_ARTWORKS));
 
+            const heroCardImage = typeof rawData?.heroCardImage === 'string'
+                ? rawData.heroCardImage
+                : (state.heroCardImage || '');
+
             return {
                 categories: {
                     example: exampleCats,
                     group: groupCats
                 },
-                artworks
+                artworks,
+                heroCardImage
             };
         }
 
+        function renderHeroCardBanner() {
+            const mainImg = document.getElementById('heroPngImage');
+            const mainPlaceholder = document.getElementById('heroPngPlaceholder');
+            const adminPreviewImg = document.getElementById('adminHeroCardPreviewImg');
+            const adminPreviewPlaceholder = document.getElementById('adminHeroCardPreviewPlaceholder');
+            const src = state.heroCardImage || '';
+
+            if (mainImg && mainPlaceholder) {
+                if (src) {
+                    mainImg.src = src;
+                    mainImg.classList.remove('hidden');
+                    mainPlaceholder.classList.add('hidden');
+                } else {
+                    mainImg.src = '';
+                    mainImg.classList.add('hidden');
+                    mainPlaceholder.classList.remove('hidden');
+                }
+            }
+
+            if (adminPreviewImg && adminPreviewPlaceholder) {
+                if (src) {
+                    adminPreviewImg.src = src;
+                    adminPreviewImg.classList.remove('hidden');
+                    adminPreviewPlaceholder.classList.add('hidden');
+                } else {
+                    adminPreviewImg.src = '';
+                    adminPreviewImg.classList.add('hidden');
+                    adminPreviewPlaceholder.classList.remove('hidden');
+                }
+            }
+        }
+
         async function persistStoreToFirestore() {
+            saveLocalStateFallback(state.categories, state.artworks, state.heroCardImage);
             if (!storeDocRef || !currentUser) return;
             try {
                 await setDoc(storeDocRef, {
                     categories: state.categories,
                     artworks: state.artworks,
+                    heroCardImage: state.heroCardImage || '',
                     updatedAt: Date.now()
                 }, { merge: true });
             } catch (err) {
@@ -942,11 +1012,14 @@
                         const normalized = normalizeStoreData(snap.data());
                         state.categories = normalized.categories;
                         state.artworks = normalized.artworks;
+                        state.heroCardImage = normalized.heroCardImage;
+                        saveLocalStateFallback(state.categories, state.artworks, state.heroCardImage);
                         refreshActiveViews();
                     } else {
-                        const initial = normalizeStoreData({});
+                        const initial = normalizeStoreData({ heroCardImage: state.heroCardImage });
                         state.categories = initial.categories;
                         state.artworks = initial.artworks;
+                        state.heroCardImage = initial.heroCardImage;
                         persistStoreToFirestore();
                         refreshActiveViews();
                     }
@@ -958,10 +1031,10 @@
         }
 
         async function initFirebaseDatabase() {
+            refreshActiveViews();
             try {
                 const appId = typeof __app_id !== 'undefined' && __app_id ? __app_id : 'jaomeow-store';
                 if (typeof __firebase_config === 'undefined' || !__firebase_config) {
-                    refreshActiveViews();
                     return;
                 }
 
@@ -981,7 +1054,6 @@
 
                 currentUser = auth.currentUser;
                 if (!currentUser) {
-                    refreshActiveViews();
                     return;
                 }
 
@@ -989,11 +1061,11 @@
                 attachStoreListener();
             } catch (err) {
                 console.error('Firebase init error:', err);
-                refreshActiveViews();
             }
         }
 
         function refreshActiveViews() {
+            renderHeroCardBanner();
             renderExampleModal();
             renderGroupModal();
             if (state.isAdminLoggedIn) {
@@ -1065,6 +1137,7 @@
                 state.selectedGroupSubcat = 'ทั้งหมด';
                 renderGroupModal();
             } else if (modalId === 'adminPanelModal') {
+                renderHeroCardBanner();
                 renderAdminCategoryControls();
                 renderAdminArtworkList();
             }
@@ -1332,6 +1405,23 @@
             await persistStoreToFirestore();
         }
 
+        async function handleHeroCardFileUpload(event) {
+            const file = event.target.files?.[0];
+            if (!file) return;
+            const statusEl = document.getElementById('adminHeroCardStatus');
+            const reader = new FileReader();
+            reader.onload = async () => {
+                state.heroCardImage = String(reader.result || '');
+                renderHeroCardBanner();
+                await persistStoreToFirestore();
+                if (statusEl) {
+                    statusEl.textContent = 'อัปเดตรูปในการ์ดแบนเนอร์เรียบร้อยแล้วครับ';
+                    statusEl.classList.remove('hidden');
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
         function handleFilePreview(event) {
             const file = event.target.files?.[0];
             if (!file) return;
@@ -1529,7 +1619,7 @@
         window.handleAddArtwork = handleAddArtwork;
         window.deleteArtwork = deleteArtwork;
         window.handleBriefSubmit = handleBriefSubmit;
-// ... existing code ... -->
+
         initFirebaseDatabase();
     </script>
 </body>
