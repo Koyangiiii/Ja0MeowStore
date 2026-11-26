@@ -49,8 +49,34 @@
 
         .hero-milk-sky {
             background:
-                radial-gradient(circle at 20% 25%, rgba(255, 255, 255, 0.65) 0%, transparent 45%),
-                linear-gradient(180deg, #F7BFD7 0%, #FDE0EC 56%, #FFF9FB 100%);
+                radial-gradient(circle at 22% 24%, rgba(255, 255, 255, 0.75) 0%, transparent 46%),
+                radial-gradient(circle at 82% 76%, rgba(255, 194, 220, 0.55) 0%, transparent 48%),
+                linear-gradient(135deg, #F8C4DB 0%, #FDE3EE 52%, #FFF9FB 100%);
+        }
+
+        .hero-ticket-card {
+            background: linear-gradient(180deg, #FFFDFD 0%, #FFF5F9 100%);
+            border: 3px solid #FFFFFF;
+            box-shadow:
+                0 16px 32px -12px rgba(206, 118, 158, 0.34),
+                0 6px 16px -4px rgba(255, 174, 208, 0.38),
+                inset 0 0 0 1.5px #FFE2EE;
+            transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.28s ease;
+        }
+
+        .hero-ticket-card:hover {
+            transform: translateY(-2px);
+            box-shadow:
+                0 20px 38px -12px rgba(202, 108, 150, 0.42),
+                0 8px 20px -4px rgba(255, 162, 202, 0.45),
+                inset 0 0 0 1.5px #FFD4E6;
+        }
+
+        .png-ready-slot {
+            background:
+                radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.9) 0%, transparent 55%),
+                linear-gradient(160deg, #FFEBF3 0%, #FFDCEB 100%);
+            border: 2px dashed #F5B4CE;
         }
 
         .cute-panel {
@@ -97,6 +123,32 @@
 
         .sticker-badge:hover {
             transform: translateY(-2px) rotate(-1deg);
+        }
+
+        .signature-logo-card {
+            background:
+                radial-gradient(circle at 22% 18%, rgba(255, 255, 255, 0.98) 0%, transparent 52%),
+                linear-gradient(155deg, #FFFFFF 0%, #FFF3F8 58%, #FFE2EE 100%);
+            border: 3px solid #FFFFFF;
+            box-shadow:
+                0 16px 34px -10px rgba(214, 118, 160, 0.36),
+                0 6px 14px -4px rgba(255, 176, 210, 0.42),
+                inset 0 0 0 2px #FFE4EF;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+        }
+
+        .signature-logo-card:hover {
+            transform: translateY(-3px) rotate(0.6deg);
+            box-shadow:
+                0 20px 38px -10px rgba(208, 108, 152, 0.44),
+                0 8px 18px -4px rgba(255, 164, 204, 0.48),
+                inset 0 0 0 2px #FFD5E6;
+        }
+
+        .logo-ribbon-tag {
+            background: linear-gradient(135deg, #FFFDFD 0%, #FFEBF3 100%);
+            border: 2px solid #FFFFFF;
+            box-shadow: 0 8px 18px -8px rgba(204, 116, 156, 0.35);
         }
 
         @keyframes floatCloud {
@@ -216,49 +268,61 @@
             </div>
 
             <div class="relative z-10">
-                <!-- Top Right Admin Button -->
-                <div class="flex justify-end mb-1">
+                <!-- Top Admin Action Bar -->
+                <div class="flex items-center justify-end mb-2">
                     <button
-                        id="adminTopBtn"
                         type="button"
-                        onclick="openAdminAccess()"
-                        class="px-4 py-1.5 rounded-full bg-white/95 hover:bg-pink-50 text-[#8F5571] font-display font-semibold text-xs border-2 border-white shadow-sm hover:shadow transition-all flex items-center gap-1.5 cursor-pointer"
+                        onclick="openAdminEntry()"
+                        class="sticker-badge px-3.5 py-1.5 rounded-full inline-flex items-center gap-1.5 text-xs font-bold text-[#9C5A79] hover:text-[#D46293] cursor-pointer"
                     >
                         <span>🐾</span>
-                        <span id="adminTopLabel">Admin</span>
+                        <span>Admin</span>
                     </button>
                 </div>
 
-                <!-- Center Cloud Emblem with Website & Emotes Pills -->
+                <!-- Center Signature Logo Card with Ribbon Tag & Emotes / Website Pills -->
                 <header class="flex flex-col items-center text-center mb-4 relative">
-                    <div class="relative w-36 h-36 flex items-center justify-center mb-2">
-                        <!-- Decorative paw & sparkles -->
-                        <span class="absolute -left-4 top-3 text-pink-300/90 text-xl select-none pointer-events-none">🐾</span>
-                        <span class="absolute left-3 top-1 text-amber-300 text-xs select-none pointer-events-none">✦</span>
-                        <span class="absolute right-2 top-3 text-amber-300 text-sm select-none pointer-events-none">✦</span>
-                        <span class="absolute right-1 bottom-5 text-amber-200 text-xs select-none pointer-events-none">✦</span>
-
-                        <!-- Main Circle Emblem -->
-                        <div class="w-28 h-28 rounded-full bg-gradient-to-b from-white via-[#FFF7FA] to-[#FDE4EE] border-[3px] border-white shadow-[0_12px_28px_-8px_rgba(198,132,164,0.45)] flex flex-col items-center justify-center">
-                            <span class="font-serif italic font-bold text-xl text-[#A96B86] leading-none">JaoMeow</span>
-                            <span class="text-[10px] tracking-[0.22em] font-semibold text-[#C28FA5] mt-1">STORE</span>
+                    <div class="relative w-full max-w-[310px] pt-3 pb-2 flex flex-col items-center justify-center mb-2">
+                        <!-- Top Ribbon Tag -->
+                        <div class="logo-ribbon-tag relative z-20 -mb-3 px-4 py-1 rounded-full inline-flex items-center gap-1.5 text-[10px] font-bold tracking-[0.18em] text-[#B85E88]">
+                            <span>✦</span>
+                            <span>HANDCRAFTED MILK STUDIO</span>
+                            <span>✦</span>
                         </div>
 
-                        <!-- Cloud puff at bottom of emblem -->
-                        <svg class="absolute bottom-1 left-1/2 -translate-x-1/2 w-24 h-8 text-white pointer-events-none drop-shadow-xs" viewBox="0 0 120 40" fill="currentColor">
-                            <path d="M16 34h88a11 11 0 0 0 1-21.9A16 16 0 0 0 74 9a18 18 0 0 0-33 2A12 12 0 0 0 16 34z"/>
-                        </svg>
+                        <!-- Main Sculpted Squircle-Arch Logo Card -->
+                        <div class="signature-logo-card relative z-10 w-44 h-36 rounded-[44px_24px_48px_28px] px-5 pt-5 pb-4 flex flex-col items-center justify-center overflow-visible">
+                            <!-- Corner Decorative Accent Dots & Cat Ear Puff -->
+                            <svg class="absolute -top-3 left-6 w-9 h-6 text-white drop-shadow-xs pointer-events-none" viewBox="0 0 80 50" fill="currentColor">
+                                <path d="M10 42 L16 8 L34 26 Q40 24 46 26 L64 8 L70 42 Q40 48 10 42 Z"/>
+                            </svg>
+                            <span class="absolute -top-2 right-5 text-amber-300 text-xs select-none pointer-events-none twinkle">✦</span>
+                            <span class="absolute bottom-2 left-3 text-pink-300 text-xs select-none pointer-events-none twinkle-delay">♡</span>
+                            <span class="absolute -bottom-1.5 right-6 text-pink-300/90 text-sm select-none pointer-events-none">🐾</span>
 
-                        <!-- Floating Website Badge -->
-                        <div class="sticker-badge absolute -right-4 top-5 rounded-full px-3 py-1 flex items-center gap-1 text-[11px] font-semibold text-[#A36983]">
-                            <span>Website</span>
-                            <span class="text-pink-400">🌸</span>
-                        </div>
+                            <!-- Inner Frame Line -->
+                            <div class="w-full h-full rounded-[34px_16px_38px_20px] border border-dashed border-[#F7C6DA] flex flex-col items-center justify-center px-2">
+                                <span class="font-serif italic font-bold text-2xl text-[#A85A7E] leading-none tracking-tight">
+                                    JaoMeow
+                                </span>
+                                <div class="mt-1.5 flex items-center gap-1.5">
+                                    <span class="h-[1.5px] w-4 rounded-full bg-[#F4B6CE]"></span>
+                                    <span class="text-[10px] tracking-[0.26em] font-extrabold text-[#C97B9E]">STORE</span>
+                                    <span class="h-[1.5px] w-4 rounded-full bg-[#F4B6CE]"></span>
+                                </div>
+                            </div>
 
-                        <!-- Floating Emotes Badge -->
-                        <div class="sticker-badge absolute -left-3 bottom-4 rounded-full px-3 py-1 flex items-center gap-1 text-[11px] font-semibold text-[#A36983]">
-                            <span>Emotes</span>
-                            <span class="text-pink-400">♡</span>
+                            <!-- Floating Website Badge (Top Right Offset) -->
+                            <div class="sticker-badge absolute -right-6 top-6 rounded-2xl rounded-bl-sm px-3 py-1 flex items-center gap-1 text-[11px] font-bold text-[#9C5A79]">
+                                <span>Website</span>
+                                <span class="text-pink-400">🌸</span>
+                            </div>
+
+                            <!-- Floating Emotes Badge (Bottom Left Offset) -->
+                            <div class="sticker-badge absolute -left-6 bottom-4 rounded-2xl rounded-tr-sm px-3 py-1 flex items-center gap-1 text-[11px] font-bold text-[#9C5A79]">
+                                <span>Emotes</span>
+                                <span class="text-pink-400">♡</span>
+                            </div>
                         </div>
                     </div>
 
@@ -272,27 +336,62 @@
                     </div>
                 </header>
 
-                <!-- Hero Banner Card with Cloud Bottom -->
-                <section class="relative rounded-[26px] overflow-hidden border-[3px] border-white shadow-[0_14px_30px_-10px_rgba(196,126,160,0.32)] mb-4">
-                    <div class="hero-milk-sky relative min-h-[152px] flex flex-col items-end justify-center px-5 py-5 text-right">
-                        <span class="absolute left-5 top-5 text-white/90 text-sm pointer-events-none">✦</span>
-                        <span class="absolute left-12 top-11 text-pink-400/50 text-base pointer-events-none">🐾</span>
-                        <div class="relative z-10 flex flex-col items-end">
-                            <div class="inline-flex items-center gap-2 bg-white/95 px-4 py-1.5 rounded-full border-2 border-white shadow-sm mb-1.5">
-                                <span class="text-xs text-[#D97CA6]">🐾</span>
-                                <span class="font-serif italic font-bold text-xl text-[#E07AA8]">JaoMeowStore</span>
-                                <span class="text-xs text-pink-400">☆</span>
+                <!-- Signature Asymmetric Showcase Banner + PNG Ready Frame -->
+                <section class="hero-ticket-card relative rounded-[34px_16px_38px_22px] p-3.5 mb-4 overflow-visible">
+                    <!-- Top Floating Ribbon Badge -->
+                    <div class="flex items-center justify-between gap-2 mb-2.5 px-1">
+                        <span class="inline-flex items-center gap-1 px-3 py-0.5 rounded-full bg-[#FFF0F6] border border-pink-100 text-[10px] font-bold tracking-wider text-[#B85E88]">
+                            <span>✿</span>
+                            <span>FEATURED SHOWCASE</span>
+                        </span>
+                        <span class="text-[10px] font-semibold text-[#C2849F] flex items-center gap-1">
+                            <span>✦</span>
+                            <span>PNG SLOT READY</span>
+                        </span>
+                    </div>
+
+                    <div class="hero-milk-sky relative rounded-[26px_12px_30px_18px] p-3.5 border-2 border-white overflow-hidden">
+                        <!-- Subtle Decorative Stars & Clouds -->
+                        <span class="twinkle absolute right-24 top-2.5 text-white text-xs pointer-events-none">✦</span>
+                        <span class="twinkle-delay absolute right-8 bottom-3 text-pink-400/75 text-xs pointer-events-none">♡</span>
+
+                        <div class="relative z-10 grid grid-cols-12 gap-3 items-center">
+                            <!-- Left Dedicated PNG Character / Illustration Slot -->
+                            <div class="col-span-5">
+                                <div id="heroPngContainer" class="png-ready-slot relative aspect-square w-full rounded-[22px_10px_24px_14px] flex flex-col items-center justify-center p-2 text-center overflow-hidden">
+                                    <!-- Replace src below with PNG URL or data when ready, and remove hidden from #heroPngImage -->
+                                    <img id="heroPngImage" src="" alt="JaoMeowStore PNG Artwork" class="hidden w-full h-full object-contain drop-shadow-[0_6px_12px_rgba(196,108,148,0.28)]">
+                                    <div id="heroPngPlaceholder" class="flex flex-col items-center justify-center gap-1">
+                                        <span class="w-8 h-8 rounded-2xl bg-white/90 border border-pink-200 flex items-center justify-center text-sm shadow-2xs">🐱</span>
+                                        <span class="text-[10px] font-bold text-[#A85A7E] leading-tight">พื้นที่วาง PNG</span>
+                                        <span class="text-[9px] text-[#B87C97]">พร้อมใส่ภาพครั้งหน้า</span>
+                                    </div>
+                                </div>
                             </div>
-                            <p class="text-xs font-semibold text-[#9E5B79] drop-shadow-[0_1px_1px_rgba(255,255,255,0.85)]">
-                                website / emote / chibi
-                            </p>
-                            <p class="text-[11px] font-medium text-[#B06C8A] drop-shadow-[0_1px_1px_rgba(255,255,255,0.85)]">
-                                commission
-                            </p>
+
+                            <!-- Right Store Title & Commission Info -->
+                            <div class="col-span-7 flex flex-col items-end text-right pr-0.5">
+                                <div class="inline-flex items-center gap-1.5 bg-white/95 px-3.5 py-1 rounded-2xl rounded-br-xs border-2 border-white shadow-xs mb-1.5">
+                                    <span class="text-xs text-[#D97CA6]">🐾</span>
+                                    <span class="font-serif italic font-bold text-lg text-[#E07AA8] leading-none">JaoMeowStore</span>
+                                    <span class="text-xs text-pink-400">☆</span>
+                                </div>
+                                <p class="text-[11px] font-bold text-[#955270] leading-snug">
+                                    website / emote / chibi
+                                </p>
+                                <p class="text-[10px] font-medium text-[#AC6886] mt-0.5">
+                                    custom commission &amp; set
+                                </p>
+                                <div class="mt-2 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/80 text-[10px] font-semibold text-[#B46B8C]">
+                                    <span>♡</span>
+                                    <span>รับทำตามบรีฟ</span>
+                                </div>
+                            </div>
                         </div>
 
-                        <svg class="absolute bottom-0 left-0 w-full h-9 text-white pointer-events-none" viewBox="0 0 1200 100" preserveAspectRatio="none" fill="currentColor">
-                            <path d="M0,55 C60,20 140,20 200,55 C260,18 350,18 410,56 C475,20 565,20 625,55 C690,18 780,18 845,56 C910,20 1000,20 1065,55 C1120,25 1165,28 1200,52 L1200,100 L0,100 Z"></path>
+                        <!-- Scalloped Milk Cloud Edge Along Bottom -->
+                        <svg class="absolute bottom-0 left-0 w-full h-6 text-white/90 pointer-events-none" viewBox="0 0 1200 80" preserveAspectRatio="none" fill="currentColor">
+                            <path d="M0,45 C75,12 155,12 230,46 C305,12 395,12 470,48 C545,12 635,12 710,46 C785,12 875,12 950,48 C1025,14 1115,14 1200,45 L1200,80 L0,80 Z"></path>
                         </svg>
                     </div>
                 </section>
@@ -754,7 +853,188 @@
                 renderGroupGallery();
             }
         }
-// ... existing code ... -->
+
+        function closeAllModals(immediate = false) {
+            backdrop.classList.add('opacity-0');
+            allModalIds.forEach(id => {
+                const modal = document.getElementById(id);
+                if (!modal) return;
+                const inner = modal.querySelector('.modal-card') || modal.firstElementChild;
+                if (inner) {
+                    inner.classList.remove('scale-100');
+                    inner.classList.add('scale-95');
+                }
+                if (immediate) {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                } else {
+                    setTimeout(() => {
+                        if (backdrop.classList.contains('opacity-0')) {
+                            modal.classList.add('hidden');
+                            modal.classList.remove('flex');
+                        }
+                    }, 180);
+                }
+            });
+
+            if (immediate) {
+                backdrop.classList.add('hidden');
+            } else {
+                setTimeout(() => {
+                    if (backdrop.classList.contains('opacity-0')) {
+                        backdrop.classList.add('hidden');
+                    }
+                }, 180);
+            }
+        }
+
+        function escapeHtml(str) {
+            return String(str ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function escapeJsAttr(str) {
+            return String(str ?? '')
+                .replace(/\\/g, '\\\\')
+                .replace(/'/g, "\\'")
+                .replace(/"/g, '&quot;');
+        }
+
+        function sanitizeUrl(url) {
+            const trimmed = String(url ?? '').trim();
+            if (!trimmed) return '';
+            if (/^(https?:\/\/|data:image\/)/i.test(trimmed)) {
+                return trimmed;
+            }
+            return '';
+        }
+
+        function openAdminEntry() {
+            if (isAdminAuthenticated) {
+                openModal('adminPanelModal');
+                renderAdminPanel();
+            } else {
+                const errEl = document.getElementById('adminLoginError');
+                if (errEl) {
+                    errEl.classList.add('hidden');
+                    errEl.textContent = '';
+                }
+                openModal('adminLoginModal');
+            }
+        }
+
+        function handleAdminLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('adminUsernameInput').value.trim();
+            const password = document.getElementById('adminPasswordInput').value;
+            const errEl = document.getElementById('adminLoginError');
+
+            if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+                isAdminAuthenticated = true;
+                errEl.classList.add('hidden');
+                document.getElementById('adminLoginForm').reset();
+                openModal('adminPanelModal');
+                renderAdminPanel();
+            } else {
+                errEl.textContent = 'ชื่อแอดมินหรือรหัสผ่านไม่ถูกต้องครับ';
+                errEl.classList.remove('hidden');
+            }
+        }
+
+        function handleAdminLogout() {
+            isAdminAuthenticated = false;
+            closeAllModals();
+        }
+
+        function getExampleSubcategories() {
+            const fromLeafKeys = Object.keys(storeState.exampleLeafCategories || {});
+            const fromArtworks = storeState.artworks
+                .filter(item => item.mainCategory === 'example')
+                .map(item => item.subCategory)
+                .filter(Boolean);
+            return Array.from(new Set([...DEFAULT_EXAMPLE_SUBCATS, ...fromLeafKeys, ...fromArtworks]));
+        }
+
+        function getLeafCategoriesForExampleSubcat(subcat) {
+            const fromMap = (storeState.exampleLeafCategories && storeState.exampleLeafCategories[subcat]) || [];
+            const fromArtworks = storeState.artworks
+                .filter(item => item.mainCategory === 'example' && item.subCategory === subcat)
+                .flatMap(item => Array.isArray(item.leafCategories) ? item.leafCategories : []);
+            return Array.from(new Set([...fromMap, ...fromArtworks]));
+        }
+
+        function renderExampleGallery() {
+            const tabsEl = document.getElementById('exampleSubcatTabs');
+            const chipsEl = document.getElementById('exampleLeafFilterChips');
+            const gridEl = document.getElementById('exampleGalleryList');
+
+            const subcats = getExampleSubcategories();
+            if (!subcats.includes(activeExampleSubcat)) {
+                activeExampleSubcat = subcats[0] || 'งานป้าย';
+            }
+
+            tabsEl.innerHTML = subcats.map(sub => {
+                const active = sub === activeExampleSubcat;
+                return `
+                    <button
+                        type="button"
+                        onclick="selectExampleSubcat('${escapeJsAttr(sub)}')"
+                        class="px-3.5 py-1.5 rounded-full text-xs font-bold transition cursor-pointer ${active ? 'bg-[#EE7CA8] text-white shadow-xs' : 'bg-[#FFF3F8] text-[#8E5670] hover:bg-[#FFE4EE]'}"
+                    >
+                        ${escapeHtml(sub)}
+                    </button>
+                `;
+            }).join('');
+
+            const leaves = getLeafCategoriesForExampleSubcat(activeExampleSubcat);
+            const chipOptions = ['ทั้งหมด', ...leaves];
+            if (!chipOptions.includes(activeExampleLeafFilter)) {
+                activeExampleLeafFilter = 'ทั้งหมด';
+            }
+
+            chipsEl.innerHTML = chipOptions.map(leaf => {
+                const active = leaf === activeExampleLeafFilter;
+                return `
+                    <button
+                        type="button"
+                        onclick="selectExampleLeafFilter('${escapeJsAttr(leaf)}')"
+                        class="px-3 py-1 rounded-full text-xs font-semibold transition cursor-pointer ${active ? 'bg-[#F89EC2] text-white' : 'bg-[#FFF6F9] text-[#9E5678] border border-pink-100 hover:bg-[#FFEBF2]'}"
+                    >
+                        ${escapeHtml(leaf)}
+                    </button>
+                `;
+            }).join('');
+
+            const filtered = storeState.artworks.filter(item => {
+                if (item.mainCategory !== 'example') return false;
+                if (item.subCategory !== activeExampleSubcat) return false;
+                if (activeExampleLeafFilter === 'ทั้งหมด') return true;
+                return Array.isArray(item.leafCategories) && item.leafCategories.includes(activeExampleLeafFilter);
+            });
+
+            renderArtworkCards(gridEl, filtered, 'ยังไม่มีผลงานในหมวดนี้ครับ');
+        }
+
+        function selectExampleSubcat(subcat) {
+            activeExampleSubcat = subcat;
+            activeExampleLeafFilter = 'ทั้งหมด';
+            renderExampleGallery();
+        }
+
+        function selectExampleLeafFilter(leaf) {
+            activeExampleLeafFilter = leaf;
+            renderExampleGallery();
+        }
+
+        function selectGroupSubcatFilter(cat) {
+            activeGroupSubcatFilter = cat;
+            renderGroupGallery();
+        }
+
         function renderGroupGallery() {
             const chipsEl = document.getElementById('groupSubcatFilterChips');
             const gridEl = document.getElementById('groupGalleryList');
@@ -791,4 +1071,309 @@
 
             renderArtworkCards(gridEl, filtered, 'ยังไม่มีรูปภาพหรือลิงก์ในตัวอย่างกลุ่มครับ');
         }
-// ... existing code ... -->
+
+        function renderArtworkCards(container, items, emptyText) {
+            if (!items || items.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-2 py-10 text-center text-sm text-[#A5788E] bg-[#FFFDFC] rounded-2xl border border-dashed border-pink-200">
+                        ${escapeHtml(emptyText)}
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = items.map(item => {
+                const safeImg = sanitizeUrl(item.imageUrl);
+                const safeLink = sanitizeUrl(item.link);
+                const tags = Array.isArray(item.leafCategories) ? item.leafCategories : [];
+                return `
+                    <article class="rounded-2xl border border-pink-100 bg-white overflow-hidden shadow-2xs flex flex-col">
+                        <div class="aspect-square w-full bg-[#FFF4F8] overflow-hidden">
+                            ${safeImg
+                                ? `<img src="${escapeHtml(safeImg)}" alt="${escapeHtml(item.title)}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400/FFE6F0/A85A7E?text=JaoMeowStore'">`
+                                : `<div class="w-full h-full flex items-center justify-center text-xs text-[#B08398]">ไม่มีรูปภาพ</div>`
+                            }
+                        </div>
+                        <div class="p-2.5 flex-1 flex flex-col justify-between gap-2">
+                            <div>
+                                <div class="font-bold text-xs text-[#6B4257] line-clamp-2">${escapeHtml(item.title)}</div>
+                                ${tags.length > 0 ? `
+                                    <div class="mt-1.5 flex flex-wrap gap-1">
+                                        ${tags.map(t => `<span class="px-2 py-0.5 rounded-full text-[10px] bg-[#FFF0F6] text-[#9E5678] font-medium">${escapeHtml(t)}</span>`).join('')}
+                                    </div>
+                                ` : ''}
+                            </div>
+                            ${safeLink ? `
+                                <a href="${escapeHtml(safeLink)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-full py-1.5 px-2 rounded-xl bg-[#FFF0F6] hover:bg-[#FFE0EC] text-[#B84D7B] text-[11px] font-bold transition">
+                                    เปิดลิงก์งาน ↗
+                                </a>
+                            ` : ''}
+                        </div>
+                    </article>
+                `;
+            }).join('');
+        }
+
+        function renderAdminPanel() {
+            onAdminMainCatChange();
+            renderAdminArtworkList();
+        }
+
+        function onAdminMainCatChange() {
+            const mainCat = document.getElementById('adminMainCatSelect').value;
+            const exampleSubWrapper = document.getElementById('adminExampleSubcatWrapper');
+            const exampleSubSelect = document.getElementById('adminExampleSubcatSelect');
+            const multiCatLabel = document.getElementById('multiCatLabel');
+
+            const exampleSubs = getExampleSubcategories();
+            const currentSelectedSub = exampleSubSelect.value;
+            exampleSubSelect.innerHTML = exampleSubs.map(sub =>
+                `<option value="${escapeHtml(sub)}">${escapeHtml(sub)}</option>`
+            ).join('');
+            exampleSubSelect.value = exampleSubs.includes(currentSelectedSub) ? currentSelectedSub : exampleSubs[0];
+
+            if (mainCat === 'example') {
+                exampleSubWrapper.classList.remove('hidden');
+                multiCatLabel.textContent = 'เลือกหมวดย่อยของตัวอย่างงาน (เลือกได้มากกว่า 1 หมวด)';
+            } else {
+                exampleSubWrapper.classList.add('hidden');
+                multiCatLabel.textContent = 'เลือกหมวดย่อยของตัวอย่างกลุ่ม (เลือกได้มากกว่า 1 หมวด)';
+            }
+
+            renderAdminCategoryControls();
+        }
+
+        function renderAdminCategoryControls() {
+            const mainCat = document.getElementById('adminMainCatSelect').value;
+            const exampleSub = document.getElementById('adminExampleSubcatSelect').value;
+            const customListEl = document.getElementById('adminCustomCategoryList');
+            const checkboxesEl = document.getElementById('multiCategoryCheckboxes');
+
+            const categories = mainCat === 'example'
+                ? getLeafCategoriesForExampleSubcat(exampleSub)
+                : Array.from(new Set(storeState.groupSubcategories || []));
+
+            customListEl.innerHTML = categories.length
+                ? categories.map(cat => `
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-white border border-pink-200 text-[#8A526D]">
+                        <span>${escapeHtml(cat)}</span>
+                        <button type="button" onclick="removeCustomCategory('${escapeJsAttr(cat)}')" class="text-rose-400 hover:text-rose-600 font-bold cursor-pointer" title="ลบหมวด">×</button>
+                    </span>
+                `).join('')
+                : `<span class="text-xs text-[#A5788E]">ยังไม่มีหมวดย่อยในส่วนนี้ สามารถพิมพ์เพิ่มด้านบนได้เลย</span>`;
+
+            checkboxesEl.innerHTML = categories.length
+                ? categories.map((cat, idx) => `
+                    <label class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-pink-200 bg-[#FFFDFC] text-xs font-semibold text-[#6B4257] cursor-pointer hover:bg-[#FFF3F8]">
+                        <input type="checkbox" name="adminLeafCat" value="${escapeHtml(cat)}" ${idx === 0 ? 'checked' : ''} class="rounded accent-[#EE7CA8]">
+                        <span>${escapeHtml(cat)}</span>
+                    </label>
+                `).join('')
+                : `<span class="text-xs text-[#A5788E]">กรุณาเพิ่มหมวดย่อยก่อน หรือบันทึกแบบไม่ระบุหมวดย่อย</span>`;
+        }
+
+        function addCustomCategory() {
+            const input = document.getElementById('newSubCategoryInput');
+            const name = input.value.trim();
+            if (!name) return;
+
+            const mainCat = document.getElementById('adminMainCatSelect').value;
+            if (mainCat === 'example') {
+                const sub = document.getElementById('adminExampleSubcatSelect').value;
+                if (!Array.isArray(storeState.exampleLeafCategories[sub])) {
+                    storeState.exampleLeafCategories[sub] = [];
+                }
+                if (!storeState.exampleLeafCategories[sub].includes(name)) {
+                    storeState.exampleLeafCategories[sub].push(name);
+                }
+            } else {
+                if (!Array.isArray(storeState.groupSubcategories)) {
+                    storeState.groupSubcategories = [];
+                }
+                if (!storeState.groupSubcategories.includes(name)) {
+                    storeState.groupSubcategories.push(name);
+                }
+            }
+
+            input.value = '';
+            renderAdminCategoryControls();
+        }
+
+        function removeCustomCategory(catName) {
+            const mainCat = document.getElementById('adminMainCatSelect').value;
+            if (mainCat === 'example') {
+                const sub = document.getElementById('adminExampleSubcatSelect').value;
+                storeState.exampleLeafCategories[sub] = (storeState.exampleLeafCategories[sub] || []).filter(c => c !== catName);
+            } else {
+                storeState.groupSubcategories = (storeState.groupSubcategories || []).filter(c => c !== catName);
+            }
+            renderAdminCategoryControls();
+        }
+
+        function handleFilePreview(event) {
+            const file = event.target.files && event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                currentPreparedImageData = e.target.result || '';
+                document.getElementById('artworkImageUrlInput').value = '';
+                updateArtworkPreview(currentPreparedImageData);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function handleDirectUrlPreview() {
+            const url = document.getElementById('artworkImageUrlInput').value.trim();
+            currentPreparedImageData = url;
+            updateArtworkPreview(url);
+        }
+
+        function updateArtworkPreview(src) {
+            const img = document.getElementById('artworkPreviewImg');
+            const placeholder = document.getElementById('artworkPreviewPlaceholder');
+            const safeSrc = sanitizeUrl(src);
+
+            if (safeSrc) {
+                img.src = safeSrc;
+                img.classList.remove('hidden');
+                placeholder.classList.add('hidden');
+            } else {
+                img.src = '';
+                img.classList.add('hidden');
+                placeholder.classList.remove('hidden');
+            }
+        }
+
+        function handleAddArtwork(event) {
+            event.preventDefault();
+            const errEl = document.getElementById('adminFormError');
+            const okEl = document.getElementById('adminFormSuccess');
+            errEl.classList.add('hidden');
+            okEl.classList.add('hidden');
+
+            const title = document.getElementById('artworkTitleInput').value.trim();
+            const link = document.getElementById('artworkLinkInput').value.trim();
+            const directUrl = document.getElementById('artworkImageUrlInput').value.trim();
+            const finalImage = sanitizeUrl(directUrl || currentPreparedImageData);
+
+            const mainCategory = document.getElementById('adminMainCatSelect').value;
+            const subCategory = mainCategory === 'example'
+                ? document.getElementById('adminExampleSubcatSelect').value
+                : 'กลุ่มทั้งหมด';
+
+            const checkedLeaves = Array.from(document.querySelectorAll('input[name="adminLeafCat"]:checked'))
+                .map(el => el.value);
+
+            if (!title) {
+                errEl.textContent = 'กรุณากรอกชื่อรูปภาพหรือชื่องานก่อนครับ';
+                errEl.classList.remove('hidden');
+                return;
+            }
+
+            if (!finalImage && !link) {
+                errEl.textContent = 'กรุณาอัปโหลดรูปภาพ วางลิงก์รูปภาพ หรือกรอกลิงก์ผลงานอย่างน้อย 1 อย่างครับ';
+                errEl.classList.remove('hidden');
+                return;
+            }
+
+            const newItem = {
+                id: 'art_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
+                title,
+                imageUrl: finalImage,
+                link: sanitizeUrl(link),
+                mainCategory,
+                subCategory,
+                leafCategories: checkedLeaves,
+                createdAt: Date.now()
+            };
+
+            storeState.artworks.unshift(newItem);
+
+            document.getElementById('adminArtworkForm').reset();
+            currentPreparedImageData = '';
+            updateArtworkPreview('');
+            renderAdminCategoryControls();
+            renderAdminArtworkList();
+
+            okEl.textContent = 'บันทึกรายการเรียบร้อยแล้วครับ!';
+            okEl.classList.remove('hidden');
+        }
+
+        function deleteArtwork(id) {
+            storeState.artworks = storeState.artworks.filter(item => item.id !== id);
+            renderAdminArtworkList();
+        }
+
+        function renderAdminArtworkList() {
+            const listEl = document.getElementById('adminArtworkList');
+            const countEl = document.getElementById('adminItemCount');
+            countEl.textContent = String(storeState.artworks.length);
+
+            if (storeState.artworks.length === 0) {
+                listEl.innerHTML = `<div class="text-xs text-[#A5788E] bg-white p-3 rounded-2xl border border-pink-100 text-center">ยังไม่มีรายการที่เผยแพร่ครับ</div>`;
+                return;
+            }
+
+            listEl.innerHTML = storeState.artworks.map(item => {
+                const safeImg = sanitizeUrl(item.imageUrl);
+                const mainLabel = item.mainCategory === 'example' ? `ตัวอย่างงาน (${item.subCategory})` : 'ตัวอย่างกลุ่ม';
+                const leafText = Array.isArray(item.leafCategories) && item.leafCategories.length > 0
+                    ? item.leafCategories.join(', ')
+                    : 'ไม่ระบุหมวดย่อย';
+
+                return `
+                    <div class="p-2.5 rounded-2xl bg-white border border-pink-100 flex items-center justify-between gap-3">
+                        <div class="flex items-center gap-2.5 min-w-0">
+                            <div class="w-12 h-12 rounded-xl bg-[#FFF4F8] overflow-hidden shrink-0 border border-pink-100">
+                                ${safeImg
+                                    ? `<img src="${escapeHtml(safeImg)}" alt="${escapeHtml(item.title)}" class="w-full h-full object-cover">`
+                                    : `<div class="w-full h-full flex items-center justify-center text-[10px] text-[#B08398]">Link</div>`
+                                }
+                            </div>
+                            <div class="min-w-0">
+                                <div class="font-bold text-xs text-[#6B4257] truncate">${escapeHtml(item.title)}</div>
+                                <div class="text-[11px] text-[#A5788E] truncate">${escapeHtml(mainLabel)} • ${escapeHtml(leafText)}</div>
+                            </div>
+                        </div>
+                        <button type="button" onclick="deleteArtwork('${escapeJsAttr(item.id)}')" class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-rose-50 text-rose-500 hover:bg-rose-100 shrink-0 cursor-pointer">
+                            ลบ
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function handleBriefSubmit(event) {
+            event.preventDefault();
+            const contact = document.getElementById('briefContact').value.trim();
+            const workType = document.getElementById('briefType').value;
+            const detail = document.getElementById('briefDetail').value.trim();
+            const feedback = document.getElementById('briefFeedback');
+
+            const summary = [
+                '【บรีฟงาน JaoMeowStore】',
+                `ผู้ติดต่อ: ${contact}`,
+                `ประเภทงาน: ${workType}`,
+                `รายละเอียด: ${detail}`
+            ].join('\n');
+
+            const helper = document.createElement('textarea');
+            helper.value = summary;
+            helper.setAttribute('readonly', '');
+            helper.style.position = 'fixed';
+            helper.style.left = '-9999px';
+            document.body.appendChild(helper);
+            helper.select();
+            try {
+                document.execCommand('copy');
+                feedback.textContent = 'คัดลอกข้อความบรีฟเรียบร้อยแล้ว สามารถนำไปวางส่งให้แอดมินได้เลยครับ';
+            } catch (err) {
+                feedback.textContent = 'พร้อมส่งบรีฟแล้ว สามารถคัดลอกข้อความด้านล่างไปส่งให้แอดมินได้เลยครับ:\n' + summary;
+            }
+            document.body.removeChild(helper);
+            feedback.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
