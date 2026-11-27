@@ -2110,7 +2110,7 @@
                     ? `&origin=${encodeURIComponent(window.location.origin)}`
                     : '';
                 const loopParam = isMusicLooping ? `&loop=1&playlist=${MUSIC_VIDEO_ID}` : '';
-                hostEl.innerHTML = `<iframe id="jaomeowMusicFrame" width="200" height="120" src="https://www.youtube.com/embed/${MUSIC_VIDEO_ID}?enablejsapi=1&playsinline=1&start=0&autoplay=${autoPlayAfterLoad ? 1 : 0}${loopParam}&rel=0${originParam}" title="Cute Bear Iced Latte & Cozy Pink Desk Lofi - lupi." allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+                hostEl.innerHTML = `<iframe id="jaomeowMusicFrame" width="200" height="120" src="https://www.youtube.com/embed/${MUSIC_VIDEO_ID}?enablejsapi=1&playsinline=1&start=0&autoplay=1&mute=0${loopParam}&rel=0${originParam}" title="Cute Bear Iced Latte & Cozy Pink Desk Lofi - lupi." allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
             }
 
             if (window.YT && typeof window.YT.Player === 'function') {
@@ -2130,13 +2130,9 @@
                                     const dur = event.target.getDuration() || 0;
                                     const totEl = document.getElementById('musicTotalTime');
                                     if (totEl && dur > 0) totEl.textContent = formatClock(dur);
+                                    event.target.playVideo();
                                 } catch (_) {}
                                 startProgressLoop();
-                                if (pendingAutoPlay) {
-                                    try {
-                                        event.target.playVideo();
-                                    } catch (_) {}
-                                }
                             },
                             onStateChange: (event) => {
                                 if (event.data === window.YT.PlayerState.PLAYING) {
