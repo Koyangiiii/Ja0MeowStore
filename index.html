@@ -450,7 +450,7 @@
                                     </p>
                                 </div>
                                 <div class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/85 text-[10px] font-semibold text-[#B46B8C]">
-                                    <span>♡</span>
+                                    <span id="showcaseBadgeIconText">♡</span>
                                     <span id="showcaseBadgeText">รับทำตามบรีฟ</span>
                                 </div>
                             </div>
@@ -1148,8 +1148,9 @@
                                         <div id="livePreviewShowcaseLine2" class="text-[9px] font-medium text-[#AC6886] leading-tight truncate max-w-full">
                                             custom commission &amp; set
                                         </div>
-                                        <span id="livePreviewShowcaseBadge" class="inline-block px-2.5 py-0.5 rounded-full bg-white/90 text-[9px] font-semibold text-[#B46B8C] truncate max-w-full">
-                                            รับทำตามบรีฟ
+                                        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/90 text-[9px] font-semibold text-[#B46B8C] max-w-full">
+                                            <span id="livePreviewShowcaseBadgeIcon">♡</span>
+                                            <span id="livePreviewShowcaseBadge" class="truncate">รับทำตามบรีฟ</span>
                                         </span>
                                     </div>
                                 </div>
@@ -1170,15 +1171,9 @@
                                 </div>
 
                                 <div class="p-3 rounded-xl bg-white/85 border border-pink-100 space-y-2">
-                                    <div class="grid grid-cols-2 gap-2">
-                                        <div>
-                                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ป้ายชื่อในแบนเนอร์</label>
-                                            <input id="adminShowcaseBrandInput" type="text" oninput="syncLiveShowcasePreviewFromInputs()" placeholder="JaoMeowStore" class="w-full px-3 py-1.5 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
-                                        </div>
-                                        <div>
-                                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ป้ายสถานะด้านล่าง</label>
-                                            <input id="adminShowcaseBadgeInput" type="text" oninput="syncLiveShowcasePreviewFromInputs()" placeholder="รับทำตามบรีฟ" class="w-full px-3 py-1.5 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
-                                        </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ป้ายชื่อในแบนเนอร์</label>
+                                        <input id="adminShowcaseBrandInput" type="text" oninput="syncLiveShowcasePreviewFromInputs()" placeholder="JaoMeowStore" class="w-full px-3 py-1.5 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
                                     </div>
                                     <div>
                                         <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ข้อความบรรทัดที่ 1</label>
@@ -1187,6 +1182,16 @@
                                     <div>
                                         <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ข้อความบรรทัดที่ 2</label>
                                         <input id="adminShowcaseLine2Input" type="text" oninput="syncLiveShowcasePreviewFromInputs()" placeholder="custom commission &amp; set" class="w-full px-3 py-1.5 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
+                                    </div>
+                                    <div class="grid grid-cols-3 gap-2">
+                                        <div>
+                                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">สัญลักษณ์</label>
+                                            <input id="adminShowcaseBadgeIconInput" type="text" oninput="syncLiveShowcasePreviewFromInputs()" placeholder="♡" class="w-full px-3 py-1.5 rounded-xl border border-pink-200 bg-white text-center focus:outline-none focus:border-pink-400">
+                                        </div>
+                                        <div class="col-span-2">
+                                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ป้ายสถานะด้านล่าง</label>
+                                            <input id="adminShowcaseBadgeInput" type="text" oninput="syncLiveShowcasePreviewFromInputs()" placeholder="รับทำตามบรีฟ" class="w-full px-3 py-1.5 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1389,6 +1394,7 @@
             brand: 'JaoMeowStore',
             line1: 'งานป้าย / sheet / website',
             line2: 'custom commission & set',
+            badgeIcon: '♡',
             badge: 'รับทำตามบรีฟ'
         };
 
@@ -1508,6 +1514,9 @@
                 line2: typeof initialLocal?.featuredShowcase?.line2 === 'string' && initialLocal.featuredShowcase.line2.trim()
                     ? initialLocal.featuredShowcase.line2.trim()
                     : DEFAULT_FEATURED_SHOWCASE.line2,
+                badgeIcon: typeof initialLocal?.featuredShowcase?.badgeIcon === 'string' && initialLocal.featuredShowcase.badgeIcon.trim()
+                    ? initialLocal.featuredShowcase.badgeIcon.trim()
+                    : DEFAULT_FEATURED_SHOWCASE.badgeIcon,
                 badge: typeof initialLocal?.featuredShowcase?.badge === 'string' && initialLocal.featuredShowcase.badge.trim()
                     ? initialLocal.featuredShowcase.badge.trim()
                     : DEFAULT_FEATURED_SHOWCASE.badge
@@ -1601,6 +1610,7 @@
                 brand: String(rawShowcase.brand || '').trim() || DEFAULT_FEATURED_SHOWCASE.brand,
                 line1: String(rawShowcase.line1 || '').trim() || DEFAULT_FEATURED_SHOWCASE.line1,
                 line2: String(rawShowcase.line2 || '').trim() || DEFAULT_FEATURED_SHOWCASE.line2,
+                badgeIcon: String(rawShowcase.badgeIcon || '').trim() || DEFAULT_FEATURED_SHOWCASE.badgeIcon,
                 badge: String(rawShowcase.badge || '').trim() || DEFAULT_FEATURED_SHOWCASE.badge
             };
 
@@ -1621,11 +1631,13 @@
             const brandEl = document.getElementById('showcaseBrandText');
             const line1El = document.getElementById('showcaseLine1Text');
             const line2El = document.getElementById('showcaseLine2Text');
+            const badgeIconEl = document.getElementById('showcaseBadgeIconText');
             const badgeEl = document.getElementById('showcaseBadgeText');
 
             if (brandEl) brandEl.textContent = state.featuredShowcase.brand || DEFAULT_FEATURED_SHOWCASE.brand;
             if (line1El) line1El.textContent = state.featuredShowcase.line1 || DEFAULT_FEATURED_SHOWCASE.line1;
             if (line2El) line2El.textContent = state.featuredShowcase.line2 || DEFAULT_FEATURED_SHOWCASE.line2;
+            if (badgeIconEl) badgeIconEl.textContent = state.featuredShowcase.badgeIcon || DEFAULT_FEATURED_SHOWCASE.badgeIcon;
             if (badgeEl) badgeEl.textContent = state.featuredShowcase.badge || DEFAULT_FEATURED_SHOWCASE.badge;
         }
 
@@ -1633,11 +1645,13 @@
             const brandInput = document.getElementById('adminShowcaseBrandInput');
             const line1Input = document.getElementById('adminShowcaseLine1Input');
             const line2Input = document.getElementById('adminShowcaseLine2Input');
+            const badgeIconInput = document.getElementById('adminShowcaseBadgeIconInput');
             const badgeInput = document.getElementById('adminShowcaseBadgeInput');
 
             if (brandInput) brandInput.value = state.featuredShowcase.brand || '';
             if (line1Input) line1Input.value = state.featuredShowcase.line1 || '';
             if (line2Input) line2Input.value = state.featuredShowcase.line2 || '';
+            if (badgeIconInput) badgeIconInput.value = state.featuredShowcase.badgeIcon || '';
             if (badgeInput) badgeInput.value = state.featuredShowcase.badge || '';
             syncLiveShowcasePreviewFromInputs();
         }
@@ -1646,16 +1660,19 @@
             const brandVal = (document.getElementById('adminShowcaseBrandInput')?.value || '').trim() || DEFAULT_FEATURED_SHOWCASE.brand;
             const line1Val = (document.getElementById('adminShowcaseLine1Input')?.value || '').trim() || DEFAULT_FEATURED_SHOWCASE.line1;
             const line2Val = (document.getElementById('adminShowcaseLine2Input')?.value || '').trim() || DEFAULT_FEATURED_SHOWCASE.line2;
+            const badgeIconVal = (document.getElementById('adminShowcaseBadgeIconInput')?.value || '').trim() || DEFAULT_FEATURED_SHOWCASE.badgeIcon;
             const badgeVal = (document.getElementById('adminShowcaseBadgeInput')?.value || '').trim() || DEFAULT_FEATURED_SHOWCASE.badge;
 
             const pBrand = document.getElementById('livePreviewShowcaseBrand');
             const pLine1 = document.getElementById('livePreviewShowcaseLine1');
             const pLine2 = document.getElementById('livePreviewShowcaseLine2');
+            const pBadgeIcon = document.getElementById('livePreviewShowcaseBadgeIcon');
             const pBadge = document.getElementById('livePreviewShowcaseBadge');
 
             if (pBrand) pBrand.textContent = brandVal;
             if (pLine1) pLine1.textContent = line1Val;
             if (pLine2) pLine2.textContent = line2Val;
+            if (pBadgeIcon) pBadgeIcon.textContent = badgeIconVal;
             if (pBadge) pBadge.textContent = badgeVal;
         }
 
@@ -1665,6 +1682,7 @@
                 brand: (document.getElementById('adminShowcaseBrandInput')?.value || '').trim() || DEFAULT_FEATURED_SHOWCASE.brand,
                 line1: (document.getElementById('adminShowcaseLine1Input')?.value || '').trim() || DEFAULT_FEATURED_SHOWCASE.line1,
                 line2: (document.getElementById('adminShowcaseLine2Input')?.value || '').trim() || DEFAULT_FEATURED_SHOWCASE.line2,
+                badgeIcon: (document.getElementById('adminShowcaseBadgeIconInput')?.value || '').trim() || DEFAULT_FEATURED_SHOWCASE.badgeIcon,
                 badge: (document.getElementById('adminShowcaseBadgeInput')?.value || '').trim() || DEFAULT_FEATURED_SHOWCASE.badge
             };
 
