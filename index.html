@@ -375,7 +375,7 @@
                     <div class="relative w-full max-w-[310px] pt-3 pb-2 flex flex-col items-center justify-center mb-2">
                         <div class="logo-ribbon-tag relative z-20 -mb-3 px-4 py-1 rounded-full inline-flex items-center gap-1.5 text-[10px] font-bold tracking-[0.18em] text-[#B85E88]">
                             <span>✦</span>
-                            <span>WELCOME TO OUR STORE</span>
+                            <span id="profileRibbonText">WELCOME TO OUR STORE</span>
                             <span>✦</span>
                         </div>
 
@@ -388,24 +388,24 @@
                             <span class="absolute -bottom-1.5 right-6 text-pink-300/90 text-sm select-none pointer-events-none">🐾</span>
 
                             <div class="w-full h-full rounded-[34px_16px_38px_20px] border border-dashed border-[#F7C6DA] flex flex-col items-center justify-center px-2">
-                                <span class="font-serif italic font-bold text-2xl text-[#A85A7E] leading-none tracking-tight">
+                                <span id="profileLogoName" class="font-serif italic font-bold text-2xl text-[#A85A7E] leading-none tracking-tight">
                                     JaoMeow
                                 </span>
                                 <div class="mt-1.5 flex items-center gap-1.5">
                                     <span class="h-[1.5px] w-4 rounded-full bg-[#F4B6CE]"></span>
-                                    <span class="text-[10px] tracking-[0.26em] font-extrabold text-[#C97B9E]">STORE</span>
+                                    <span id="profileLogoSub" class="text-[10px] tracking-[0.26em] font-extrabold text-[#C97B9E]">STORE</span>
                                     <span class="h-[1.5px] w-4 rounded-full bg-[#F4B6CE]"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <h1 class="font-serif italic font-bold text-2xl text-[#E986B1] drop-shadow-[0_1px_0_#FFFFFF] tracking-wide">
+                    <h1 id="profileStoreTitle" class="font-serif italic font-bold text-2xl text-[#E986B1] drop-shadow-[0_1px_0_#FFFFFF] tracking-wide">
                         JaoMeowStore
                     </h1>
                     <div class="mt-1.5 inline-flex items-center gap-1.5 px-4 py-1 rounded-full bg-white/95 border border-white shadow-2xs text-[11px] font-semibold text-[#A56A84]">
                         <span class="text-pink-400">❀</span>
-                        <span>งานป้าย | sheet | website</span>
+                        <span id="profileTaglineText">งานป้าย | sheet | website</span>
                         <span class="text-pink-400">❀</span>
                     </div>
                 </header>
@@ -928,160 +928,259 @@
                 </div>
             </div>
 
+            <!-- Admin Sub-Window Tabs -->
+            <div class="px-4 py-2 border-b border-pink-100 bg-[#FFFDFC] flex flex-wrap gap-1.5 shrink-0">
+                <button type="button" id="adminTabArtworkBtn" onclick="switchAdminTab('artwork')" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-[#EE7CA8] text-white cursor-pointer">เพิ่มรูปงาน &amp; กลุ่ม</button>
+                <button type="button" id="adminTabProfileBtn" onclick="switchAdminTab('profile')" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-[#FFF2F7] text-[#8A5A72] hover:bg-[#FFE3EE] cursor-pointer">การ์ดโปรไฟล์ &amp; หมวด</button>
+                <button type="button" id="adminTabContactBtn" onclick="switchAdminTab('contact')" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-[#FFF2F7] text-[#8A5A72] hover:bg-[#FFE3EE] cursor-pointer">ช่องทางติดต่อ</button>
+            </div>
+
             <div class="p-4 overflow-y-auto space-y-4 text-sm bg-[#FFF9FB]/50">
-                <!-- Contact Links Editor -->
-                <div class="p-4 rounded-2xl bg-[#FFF2F7] border border-pink-100 space-y-3">
-                    <div class="flex items-center justify-between gap-2">
-                        <div class="font-bold text-[#6B4257]">ตั้งค่าลิงก์ช่องทางการติดต่อ</div>
-                        <span class="text-[11px] text-[#A5788E]">Facebook / Line / IG</span>
+                <!-- Tab 1: Unified Add Artwork (Example & Group) + Subcategory Manager + Published Artworks -->
+                <div id="adminPanelTabArtwork" class="space-y-4">
+                    <form id="adminArtworkForm" onsubmit="handleAddArtwork(event)" class="p-4 rounded-2xl bg-white border border-pink-100 space-y-3.5">
+                        <div class="font-bold text-[#6B4257]">เพิ่มรูปภาพตัวอย่างงาน &amp; ตัวอย่างกลุ่ม (เลือกได้หลายรูป ไม่ต้องใส่ชื่อรูปก็ได้)</div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-semibold text-[#8A5A72] mb-1">หมวดหลัก</label>
+                                <select id="adminMainCatSelect" onchange="onAdminMainCatChange()" class="w-full px-3 py-2 rounded-xl border border-pink-200 bg-[#FFFDFC] focus:outline-none">
+                                    <option value="example">ตัวอย่างงาน</option>
+                                    <option value="group">ตัวอย่างกลุ่ม</option>
+                                </select>
+                            </div>
+
+                            <div id="adminExampleSubcatWrapper">
+                                <label class="block text-xs font-semibold text-[#8A5A72] mb-1">หมวดย่อย (ตัวอย่างงาน)</label>
+                                <select id="adminExampleSubcatSelect" onchange="renderAdminCategoryControls()" class="w-full px-3 py-2 rounded-xl border border-pink-200 bg-[#FFFDFC] focus:outline-none">
+                                    <option value="งานป้าย">งานป้าย</option>
+                                    <option value="งานชีต">งานชีต</option>
+                                    <option value="website">website</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ชื่อรูปภาพ (ไม่บังคับ)</label>
+                                <input id="artworkTitleInput" type="text" placeholder="เว้นว่างได้ ไม่ต้องใส่ชื่อ" class="w-full px-3.5 py-2 rounded-xl border border-pink-200 bg-[#FFFDFC] focus:outline-none focus:border-pink-400">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-[#8A5A72] mb-1">แนบลิงก์ (ถ้ามี)</label>
+                                <input id="artworkLinkInput" type="url" placeholder="https://..." class="w-full px-3.5 py-2 rounded-xl border border-pink-200 bg-[#FFFDFC] focus:outline-none focus:border-pink-400">
+                            </div>
+                        </div>
+
+                        <!-- Group Price Field (Shows only when Main Category = ตัวอย่างกลุ่ม) -->
+                        <div id="adminGroupPriceWrapper" class="hidden">
+                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ราคาตัวอย่างกลุ่ม (พิมพ์ได้ทั้งตัวเลขและตัวหนังสือ)</label>
+                            <input id="artworkPriceInput" type="text" placeholder="เช่น 290฿, เริ่มต้น 199 บาท, ตามบรีฟ" class="w-full px-3.5 py-2 rounded-xl border border-pink-200 bg-[#FFFDFC] focus:outline-none focus:border-pink-400">
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 items-start">
+                            <div>
+                                <label class="block text-xs font-semibold text-[#8A5A72] mb-1">อัปโหลดไฟล์รูปภาพ (เลือกได้หลายรูป)</label>
+                                <input id="artworkFileInput" type="file" accept="image/*" multiple onchange="handleFilePreview(event)" class="w-full text-xs text-[#8A5A72] file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs font-bold file:bg-[#FFE6F0] file:text-[#B84D7B] hover:file:bg-[#FFD6E6] cursor-pointer">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-[#8A5A72] mb-1">หรือวางลิงก์รูปภาพโดยตรง</label>
+                                <input id="artworkImageUrlInput" type="url" oninput="handleDirectUrlPreview()" placeholder="https://.../image.jpg" class="w-full px-3.5 py-2 rounded-xl border border-pink-200 bg-[#FFFDFC] focus:outline-none focus:border-pink-400">
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-3.5">
+                            <div class="w-20 h-20 rounded-2xl border-2 border-dashed border-pink-200 bg-[#FFF7FA] flex items-center justify-center overflow-hidden shrink-0">
+                                <img id="artworkPreviewImg" src="" alt="Preview" class="hidden w-full h-full object-cover">
+                                <span id="artworkPreviewPlaceholder" class="text-[11px] text-[#B08398] text-center px-1">1:1 Preview</span>
+                            </div>
+                            <div class="flex-1 min-w-0 space-y-1.5">
+                                <div id="multiSelectedImagesInfo" class="hidden text-[11px] font-semibold text-[#A85A7E]"></div>
+                                <div id="multiSelectedImagesStrip" class="hidden flex flex-wrap gap-1.5"></div>
+                                <div id="multiCatLabel" class="text-xs font-semibold text-[#8A5A72]">เลือกหมวดย่อย (เลือกได้มากกว่า 1 หมวด)</div>
+                                <div id="multiCategoryCheckboxes" class="flex flex-wrap gap-2"></div>
+                            </div>
+                        </div>
+
+                        <div id="adminFormError" class="hidden text-xs text-rose-500 font-semibold bg-rose-50 p-2.5 rounded-xl border border-rose-200"></div>
+                        <div id="adminFormSuccess" class="hidden text-xs text-[#8F3E64] font-semibold bg-[#FFF0F6] p-2.5 rounded-xl border border-pink-200"></div>
+
+                        <button type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#F48FB6] to-[#E86D9C] text-white font-bold shadow hover:opacity-95 transition cursor-pointer">
+                            บันทึกรายการและเผยแพร่
+                        </button>
+                    </form>
+
+                    <!-- Subcategory Management (Moved to Artwork Tab) -->
+                    <div class="p-4 rounded-2xl bg-[#FFF2F7] border border-pink-100 space-y-3">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="font-bold text-[#6B4257]">จัดการหมวดหมู่ย่อย</div>
+                            <span class="text-[11px] text-[#A5788E]">กด × เพื่อลบหมวดย่อย</span>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row gap-2 pt-1">
+                            <input
+                                id="newSubCategoryInput"
+                                type="text"
+                                placeholder="พิมพ์ชื่อหมวดย่อยที่ต้องการเพิ่มเอง..."
+                                class="flex-1 px-3.5 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400"
+                            >
+                            <button
+                                type="button"
+                                onclick="addCustomCategory()"
+                                id="addCustomCategoryBtn"
+                                class="px-4 py-2 rounded-xl bg-[#EE7CA8] hover:bg-[#E46898] text-white font-bold shadow-xs transition cursor-pointer shrink-0"
+                            >
+                                + เพิ่มหมวด
+                            </button>
+                        </div>
+
+                        <div id="adminCategoryFeedback" class="hidden text-xs font-semibold px-3 py-2 rounded-xl"></div>
+                        <div id="adminCustomCategoryList" class="flex flex-wrap gap-1.5 pt-1"></div>
                     </div>
-                    <div class="space-y-2.5">
-                        <div>
-                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ลิงก์ Facebook</label>
-                            <input id="adminContactFacebookInput" type="url" placeholder="https://facebook.com/..." class="w-full px-3.5 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
+
+                    <!-- Published Artworks -->
+                    <div class="p-4 rounded-2xl bg-[#FFF6F9] border border-pink-100 space-y-2.5">
+                        <div class="flex items-center justify-between">
+                            <div class="font-bold text-[#6B4257]">รายการที่เผยแพร่แล้ว (<span id="adminItemCount">0</span>)</div>
                         </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ลิงก์ Line</label>
-                            <input id="adminContactLineInput" type="url" placeholder="https://line.me/ti/p/..." class="w-full px-3.5 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ลิงก์ IG</label>
-                            <input id="adminContactIgInput" type="url" placeholder="https://instagram.com/..." class="w-full px-3.5 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
-                        </div>
+                        <div id="adminArtworkList" class="space-y-2 max-h-56 overflow-y-auto"></div>
                     </div>
-                    <button
-                        type="button"
-                        onclick="saveContactLinksFromAdmin()"
-                        class="w-full py-2 rounded-xl bg-[#EE7CA8] hover:bg-[#E46898] text-white font-bold shadow-xs transition cursor-pointer"
-                    >
-                        บันทึกลิงก์ช่องทางการติดต่อ
-                    </button>
-                    <div id="adminContactFeedback" class="hidden text-xs font-semibold px-3 py-2 rounded-xl"></div>
                 </div>
 
-                <!-- Section 1: Category Management -->
-                <div class="p-4 rounded-2xl bg-[#FFF2F7] border border-pink-100 space-y-3">
-                    <div class="flex items-center justify-between gap-2">
-                        <div class="font-bold text-[#6B4257]">1. เลือกหมวดหลักและจัดการหมวดหมู่ย่อย</div>
-                        <span class="text-[11px] text-[#A5788E]">กด × เพื่อลบหมวดย่อย</span>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div>
-                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">หมวดหลัก</label>
-                            <select id="adminMainCatSelect" onchange="onAdminMainCatChange()" class="w-full px-3 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none">
-                                <option value="example">ตัวอย่างงาน</option>
-                                <option value="group">ตัวอย่างกลุ่ม</option>
-                            </select>
+                <!-- Tab 2: Profile Card Customizer & Top Image Slot + Live Preview -->
+                <div id="adminPanelTabProfile" class="hidden space-y-4">
+                    <!-- Top: Hero Card Banner Image Upload -->
+                    <div class="p-4 rounded-2xl bg-[#FFF2F7] border border-pink-100 space-y-3">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="font-bold text-[#6B4257]">1. รูปภาพการ์ดแบนเนอร์ / โปรไฟล์ (ด้านบน)</div>
+                            <span class="text-[11px] text-[#A5788E]">ลูกค้าทุกคนเห็น</span>
                         </div>
-
-                        <div id="adminExampleSubcatWrapper">
-                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">หมวดย่อย (ตัวอย่างงาน)</label>
-                            <select id="adminExampleSubcatSelect" onchange="renderAdminCategoryControls()" class="w-full px-3 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none">
-                                <option value="งานป้าย">งานป้าย</option>
-                                <option value="งานชีต">งานชีต</option>
-                                <option value="website">website</option>
-                            </select>
+                        <div class="flex items-center gap-3.5">
+                            <div class="w-20 h-20 rounded-2xl border-2 border-dashed border-pink-200 bg-white flex items-center justify-center overflow-hidden shrink-0">
+                                <img id="adminHeroCardPreviewImg" src="" alt="Card Banner Preview" class="hidden w-full h-full object-contain">
+                                <span id="adminHeroCardPreviewPlaceholder" class="text-[11px] text-[#B08398] text-center px-1">รูปการ์ด</span>
+                            </div>
+                            <div class="flex-1 space-y-2">
+                                <input id="adminHeroCardFileInput" type="file" accept="image/*" onchange="handleHeroCardFileUpload(event)" class="w-full text-xs text-[#8A5A72] file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs font-bold file:bg-white file:text-[#B84D7B] hover:file:bg-[#FFE3EE] cursor-pointer">
+                                <div id="adminHeroCardStatus" class="hidden text-xs font-semibold text-[#8F3E64]"></div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="flex flex-col sm:flex-row gap-2 pt-1">
-                        <input
-                            id="newSubCategoryInput"
-                            type="text"
-                            placeholder="พิมพ์ชื่อหมวดย่อยที่ต้องการเพิ่มเอง..."
-                            class="flex-1 px-3.5 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400"
-                        >
+                    <!-- Middle: Live Preview of Profile Card Changes -->
+                    <div class="p-4 rounded-2xl bg-gradient-to-b from-[#FFFDFC] to-[#FFF4F8] border border-pink-100 space-y-2.5">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="font-bold text-[#6B4257]">2. ตัวอย่างการแสดงผลเมื่อเปลี่ยน</div>
+                            <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-[#FFF0F6] text-[#B85E88] font-bold border border-pink-100">LIVE PREVIEW</span>
+                        </div>
+
+                        <div class="py-2 px-3 rounded-2xl bg-[#FFF9FB] border border-dashed border-pink-200 flex flex-col items-center text-center">
+                            <div class="logo-ribbon-tag relative z-20 -mb-2.5 px-3.5 py-0.5 rounded-full inline-flex items-center gap-1 text-[9px] font-bold tracking-[0.16em] text-[#B85E88]">
+                                <span>✦</span>
+                                <span id="livePreviewRibbon">WELCOME TO OUR STORE</span>
+                                <span>✦</span>
+                            </div>
+                            <div class="signature-logo-card relative z-10 w-36 h-28 rounded-[36px_20px_38px_22px] px-4 pt-4 pb-3 flex flex-col items-center justify-center">
+                                <div class="w-full h-full rounded-[28px_14px_30px_16px] border border-dashed border-[#F7C6DA] flex flex-col items-center justify-center px-1.5">
+                                    <span id="livePreviewLogoName" class="font-serif italic font-bold text-xl text-[#A85A7E] leading-none truncate max-w-full">
+                                        JaoMeow
+                                    </span>
+                                    <div class="mt-1 flex items-center gap-1">
+                                        <span class="h-[1.5px] w-3 rounded-full bg-[#F4B6CE]"></span>
+                                        <span id="livePreviewLogoSub" class="text-[9px] tracking-[0.22em] font-extrabold text-[#C97B9E] truncate max-w-[78px]">STORE</span>
+                                        <span class="h-[1.5px] w-3 rounded-full bg-[#F4B6CE]"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="livePreviewStoreTitle" class="mt-2 font-serif italic font-bold text-lg text-[#E986B1] leading-tight">
+                                JaoMeowStore
+                            </div>
+                            <div class="mt-1 inline-flex items-center gap-1 px-3 py-0.5 rounded-full bg-white border border-pink-100 text-[10px] font-semibold text-[#A56A84]">
+                                <span class="text-pink-400">❀</span>
+                                <span id="livePreviewTagline">งานป้าย | sheet | website</span>
+                                <span class="text-pink-400">❀</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom: Organized Profile Card Text Fields -->
+                    <div class="p-4 rounded-2xl bg-white border border-pink-100 space-y-3.5">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="font-bold text-[#6B4257]">3. ปรับแต่งข้อความการ์ดโปรไฟล์ร้าน</div>
+                            <span class="text-[11px] text-[#A5788E]">พิมพ์แล้วดูตัวอย่างด้านบนได้ทันที</span>
+                        </div>
+
+                        <div class="p-3 rounded-xl bg-[#FFF9FB] border border-pink-100 space-y-2.5">
+                            <div class="text-[11px] font-bold text-[#9C5A79]">ข้อความภายในการ์ดโลโก้</div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                                <div>
+                                    <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ริบบิ้นด้านบน</label>
+                                    <input id="adminProfileRibbonInput" type="text" oninput="syncLiveProfilePreviewFromInputs()" placeholder="WELCOME TO OUR STORE" class="w-full px-3 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ชื่อในการ์ดโลโก้</label>
+                                    <input id="adminProfileLogoNameInput" type="text" oninput="syncLiveProfilePreviewFromInputs()" placeholder="JaoMeow" class="w-full px-3 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-[#8A5A72] mb-1">คำใต้ชื่อในการ์ด</label>
+                                <input id="adminProfileLogoSubInput" type="text" oninput="syncLiveProfilePreviewFromInputs()" placeholder="STORE" class="w-full px-3 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
+                            </div>
+                        </div>
+
+                        <div class="p-3 rounded-xl bg-[#FFF9FB] border border-pink-100 space-y-2.5">
+                            <div class="text-[11px] font-bold text-[#9C5A79]">ชื่อร้านและป้ายคำอธิบายด้านล่าง</div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                                <div>
+                                    <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ชื่อร้านหลักด้านล่าง</label>
+                                    <input id="adminProfileStoreTitleInput" type="text" oninput="syncLiveProfilePreviewFromInputs()" placeholder="JaoMeowStore" class="w-full px-3 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ข้อความป้ายใต้ชื่อร้าน</label>
+                                    <input id="adminProfileTaglineInput" type="text" oninput="syncLiveProfilePreviewFromInputs()" placeholder="งานป้าย | sheet | website" class="w-full px-3 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="button" onclick="saveProfileCardFromAdmin()" class="w-full py-2.5 rounded-xl bg-[#EE7CA8] hover:bg-[#E46898] text-white font-bold shadow-xs transition cursor-pointer">
+                            บันทึกข้อมูลการ์ดโปรไฟล์
+                        </button>
+                        <div id="adminProfileFeedback" class="hidden text-xs font-semibold px-3 py-2 rounded-xl"></div>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Contact Links Editor -->
+                <div id="adminPanelTabContact" class="hidden space-y-4">
+                    <div class="p-4 rounded-2xl bg-[#FFF2F7] border border-pink-100 space-y-3">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="font-bold text-[#6B4257]">ตั้งค่าลิงก์ช่องทางการติดต่อ</div>
+                            <span class="text-[11px] text-[#A5788E]">Facebook / Line / IG</span>
+                        </div>
+                        <div class="space-y-2.5">
+                            <div>
+                                <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ลิงก์ Facebook</label>
+                                <input id="adminContactFacebookInput" type="url" placeholder="https://facebook.com/..." class="w-full px-3.5 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ลิงก์ Line</label>
+                                <input id="adminContactLineInput" type="url" placeholder="https://line.me/ti/p/..." class="w-full px-3.5 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ลิงก์ IG</label>
+                                <input id="adminContactIgInput" type="url" placeholder="https://instagram.com/..." class="w-full px-3.5 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
+                            </div>
+                        </div>
                         <button
                             type="button"
-                            onclick="addCustomCategory()"
-                            id="addCustomCategoryBtn"
-                            class="px-4 py-2 rounded-xl bg-[#EE7CA8] hover:bg-[#E46898] text-white font-bold shadow-xs transition cursor-pointer shrink-0"
+                            onclick="saveContactLinksFromAdmin()"
+                            class="w-full py-2 rounded-xl bg-[#EE7CA8] hover:bg-[#E46898] text-white font-bold shadow-xs transition cursor-pointer"
                         >
-                            + เพิ่มหมวด
+                            บันทึกลิงก์ช่องทางการติดต่อ
                         </button>
+                        <div id="adminContactFeedback" class="hidden text-xs font-semibold px-3 py-2 rounded-xl"></div>
                     </div>
-
-                    <div id="adminCategoryFeedback" class="hidden text-xs font-semibold px-3 py-2 rounded-xl"></div>
-                    <div id="adminCustomCategoryList" class="flex flex-wrap gap-1.5 pt-1"></div>
-                </div>
-
-                <!-- Hero Card Banner Image -->
-                <div class="p-4 rounded-2xl bg-[#FFF2F7] border border-pink-100 space-y-3">
-                    <div class="font-bold text-[#6B4257]">รูปภาพในการ์ดแบนเนอร์ (ลูกค้าทุกคนเห็น)</div>
-                    <div class="flex items-center gap-3.5">
-                        <div class="w-20 h-20 rounded-2xl border-2 border-dashed border-pink-200 bg-white flex items-center justify-center overflow-hidden shrink-0">
-                            <img id="adminHeroCardPreviewImg" src="" alt="Card Banner Preview" class="hidden w-full h-full object-contain">
-                            <span id="adminHeroCardPreviewPlaceholder" class="text-[11px] text-[#B08398] text-center px-1">รูปการ์ด</span>
-                        </div>
-                        <div class="flex-1 space-y-2">
-                            <input id="adminHeroCardFileInput" type="file" accept="image/*" onchange="handleHeroCardFileUpload(event)" class="w-full text-xs text-[#8A5A72] file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-white file:text-[#B84D7B] hover:file:bg-[#FFE3EE] cursor-pointer">
-                            <div id="adminHeroCardStatus" class="hidden text-xs font-semibold text-[#8F3E64]"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Section 2: Add Artwork -->
-                <form id="adminArtworkForm" onsubmit="handleAddArtwork(event)" class="p-4 rounded-2xl bg-white border border-pink-100 space-y-3.5">
-                    <div class="font-bold text-[#6B4257]">2. เพิ่มรูปภาพ (เลือกได้หลายรูป ไม่ต้องใส่ชื่อรูปก็ได้)</div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div>
-                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ชื่อรูปภาพ (ไม่บังคับ)</label>
-                            <input id="artworkTitleInput" type="text" placeholder="เว้นว่างได้ ไม่ต้องใส่ชื่อ" class="w-full px-3.5 py-2 rounded-xl border border-pink-200 bg-[#FFFDFC] focus:outline-none focus:border-pink-400">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">แนบลิงก์ (ถ้ามี)</label>
-                            <input id="artworkLinkInput" type="url" placeholder="https://..." class="w-full px-3.5 py-2 rounded-xl border border-pink-200 bg-[#FFFDFC] focus:outline-none focus:border-pink-400">
-                        </div>
-                    </div>
-
-                    <!-- Group Price Field (Shows only when Main Category = ตัวอย่างกลุ่ม) -->
-                    <div id="adminGroupPriceWrapper" class="hidden">
-                        <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ราคาตัวอย่างกลุ่ม (พิมพ์ได้ทั้งตัวเลขและตัวหนังสือ)</label>
-                        <input id="artworkPriceInput" type="text" placeholder="เช่น 290฿, เริ่มต้น 199 บาท, ตามบรีฟ" class="w-full px-3.5 py-2 rounded-xl border border-pink-200 bg-[#FFFDFC] focus:outline-none focus:border-pink-400">
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 items-start">
-                        <div>
-                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">อัปโหลดไฟล์รูปภาพ (เลือกได้หลายรูป)</label>
-                            <input id="artworkFileInput" type="file" accept="image/*" multiple onchange="handleFilePreview(event)" class="w-full text-xs text-[#8A5A72] file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs font-bold file:bg-[#FFE6F0] file:text-[#B84D7B] hover:file:bg-[#FFD6E6] cursor-pointer">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">หรือวางลิงก์รูปภาพโดยตรง</label>
-                            <input id="artworkImageUrlInput" type="url" oninput="handleDirectUrlPreview()" placeholder="https://.../image.jpg" class="w-full px-3.5 py-2 rounded-xl border border-pink-200 bg-[#FFFDFC] focus:outline-none focus:border-pink-400">
-                        </div>
-                    </div>
-
-                    <div class="flex items-start gap-3.5">
-                        <div class="w-20 h-20 rounded-2xl border-2 border-dashed border-pink-200 bg-[#FFF7FA] flex items-center justify-center overflow-hidden shrink-0">
-                            <img id="artworkPreviewImg" src="" alt="Preview" class="hidden w-full h-full object-cover">
-                            <span id="artworkPreviewPlaceholder" class="text-[11px] text-[#B08398] text-center px-1">1:1 Preview</span>
-                        </div>
-                        <div class="flex-1 min-w-0 space-y-1.5">
-                            <div id="multiSelectedImagesInfo" class="hidden text-[11px] font-semibold text-[#A85A7E]"></div>
-                            <div id="multiSelectedImagesStrip" class="hidden flex flex-wrap gap-1.5"></div>
-                            <div id="multiCatLabel" class="text-xs font-semibold text-[#8A5A72]">เลือกหมวดย่อย (เลือกได้มากกว่า 1 หมวด)</div>
-                            <div id="multiCategoryCheckboxes" class="flex flex-wrap gap-2"></div>
-                        </div>
-                    </div>
-
-                    <div id="adminFormError" class="hidden text-xs text-rose-500 font-semibold bg-rose-50 p-2.5 rounded-xl border border-rose-200"></div>
-                    <div id="adminFormSuccess" class="hidden text-xs text-[#8F3E64] font-semibold bg-[#FFF0F6] p-2.5 rounded-xl border border-pink-200"></div>
-
-                    <button type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#F48FB6] to-[#E86D9C] text-white font-bold shadow hover:opacity-95 transition cursor-pointer">
-                        บันทึกรายการและเผยแพร่
-                    </button>
-                </form>
-
-                <!-- Section 3: Published Artworks -->
-                <div class="p-4 rounded-2xl bg-[#FFF6F9] border border-pink-100 space-y-2.5">
-                    <div class="flex items-center justify-between">
-                        <div class="font-bold text-[#6B4257]">3. รายการที่เผยแพร่แล้ว (<span id="adminItemCount">0</span>)</div>
-                    </div>
-                    <div id="adminArtworkList" class="space-y-2 max-h-56 overflow-y-auto"></div>
                 </div>
             </div>
+
             <div class="px-4 py-2.5 border-t border-pink-100 bg-white/95 shrink-0">
                 <button type="button" onclick="closeAllModals()" class="w-full py-2 rounded-xl bg-[#FFF2F7] hover:bg-[#FFE3EE] text-[#8E5B74] text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5">
                     <span>‹</span>
@@ -1213,6 +1312,14 @@
             ig: 'https://instagram.com'
         };
 
+        const DEFAULT_PROFILE_CARD = {
+            ribbon: 'WELCOME TO OUR STORE',
+            logoName: 'JaoMeow',
+            logoSub: 'STORE',
+            storeTitle: 'JaoMeowStore',
+            tagline: 'งานป้าย | sheet | website'
+        };
+
         const DEFAULT_ARTWORKS = [
             {
                 id: 'demo-1',
@@ -1268,13 +1375,14 @@
             }
         }
 
-        function saveLocalStateFallback(cats, arts, heroCardImg, contactLinks) {
+        function saveLocalStateFallback(cats, arts, heroCardImg, contactLinks, profileCard) {
             try {
                 localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({
                     categories: cats,
                     artworks: arts,
                     heroCardImage: heroCardImg || '',
-                    contactLinks: contactLinks || DEFAULT_CONTACT_LINKS
+                    contactLinks: contactLinks || DEFAULT_CONTACT_LINKS,
+                    profileCard: profileCard || DEFAULT_PROFILE_CARD
                 }));
             } catch (_) {}
         }
@@ -1300,6 +1408,24 @@
                     ? initialLocal.contactLinks.ig.trim()
                     : DEFAULT_CONTACT_LINKS.ig
             },
+            profileCard: {
+                ribbon: typeof initialLocal?.profileCard?.ribbon === 'string' && initialLocal.profileCard.ribbon.trim()
+                    ? initialLocal.profileCard.ribbon.trim()
+                    : DEFAULT_PROFILE_CARD.ribbon,
+                logoName: typeof initialLocal?.profileCard?.logoName === 'string' && initialLocal.profileCard.logoName.trim()
+                    ? initialLocal.profileCard.logoName.trim()
+                    : DEFAULT_PROFILE_CARD.logoName,
+                logoSub: typeof initialLocal?.profileCard?.logoSub === 'string' && initialLocal.profileCard.logoSub.trim()
+                    ? initialLocal.profileCard.logoSub.trim()
+                    : DEFAULT_PROFILE_CARD.logoSub,
+                storeTitle: typeof initialLocal?.profileCard?.storeTitle === 'string' && initialLocal.profileCard.storeTitle.trim()
+                    ? initialLocal.profileCard.storeTitle.trim()
+                    : DEFAULT_PROFILE_CARD.storeTitle,
+                tagline: typeof initialLocal?.profileCard?.tagline === 'string' && initialLocal.profileCard.tagline.trim()
+                    ? initialLocal.profileCard.tagline.trim()
+                    : DEFAULT_PROFILE_CARD.tagline
+            },
+            activeAdminTab: 'artwork',
             selectedExampleSubcat: 'งานป้าย',
             selectedExampleLeaf: 'ทั้งหมด',
             selectedGroupSubcat: 'ทั้งหมด',
@@ -1368,6 +1494,18 @@
                 ig: sanitizeHttpUrl(rawLinks.ig, DEFAULT_CONTACT_LINKS.ig)
             };
 
+            const rawProfile = rawData?.profileCard && typeof rawData.profileCard === 'object'
+                ? rawData.profileCard
+                : state.profileCard;
+
+            const profileCard = {
+                ribbon: String(rawProfile.ribbon || '').trim() || DEFAULT_PROFILE_CARD.ribbon,
+                logoName: String(rawProfile.logoName || '').trim() || DEFAULT_PROFILE_CARD.logoName,
+                logoSub: String(rawProfile.logoSub || '').trim() || DEFAULT_PROFILE_CARD.logoSub,
+                storeTitle: String(rawProfile.storeTitle || '').trim() || DEFAULT_PROFILE_CARD.storeTitle,
+                tagline: String(rawProfile.tagline || '').trim() || DEFAULT_PROFILE_CARD.tagline
+            };
+
             return {
                 categories: {
                     example: exampleCats,
@@ -1375,8 +1513,104 @@
                 },
                 artworks,
                 heroCardImage,
-                contactLinks
+                contactLinks,
+                profileCard
             };
+        }
+
+        function renderProfileCard() {
+            const ribbonEl = document.getElementById('profileRibbonText');
+            const logoNameEl = document.getElementById('profileLogoName');
+            const logoSubEl = document.getElementById('profileLogoSub');
+            const titleEl = document.getElementById('profileStoreTitle');
+            const taglineEl = document.getElementById('profileTaglineText');
+
+            if (ribbonEl) ribbonEl.textContent = state.profileCard.ribbon || DEFAULT_PROFILE_CARD.ribbon;
+            if (logoNameEl) logoNameEl.textContent = state.profileCard.logoName || DEFAULT_PROFILE_CARD.logoName;
+            if (logoSubEl) logoSubEl.textContent = state.profileCard.logoSub || DEFAULT_PROFILE_CARD.logoSub;
+            if (titleEl) titleEl.textContent = state.profileCard.storeTitle || DEFAULT_PROFILE_CARD.storeTitle;
+            if (taglineEl) taglineEl.textContent = state.profileCard.tagline || DEFAULT_PROFILE_CARD.tagline;
+        }
+
+        function syncAdminProfileInputs() {
+            const ribbonInput = document.getElementById('adminProfileRibbonInput');
+            const logoNameInput = document.getElementById('adminProfileLogoNameInput');
+            const logoSubInput = document.getElementById('adminProfileLogoSubInput');
+            const titleInput = document.getElementById('adminProfileStoreTitleInput');
+            const taglineInput = document.getElementById('adminProfileTaglineInput');
+
+            if (ribbonInput) ribbonInput.value = state.profileCard.ribbon || '';
+            if (logoNameInput) logoNameInput.value = state.profileCard.logoName || '';
+            if (logoSubInput) logoSubInput.value = state.profileCard.logoSub || '';
+            if (titleInput) titleInput.value = state.profileCard.storeTitle || '';
+            if (taglineInput) taglineInput.value = state.profileCard.tagline || '';
+            syncLiveProfilePreviewFromInputs();
+        }
+
+        function syncLiveProfilePreviewFromInputs() {
+            const ribbonVal = (document.getElementById('adminProfileRibbonInput')?.value || '').trim() || DEFAULT_PROFILE_CARD.ribbon;
+            const logoNameVal = (document.getElementById('adminProfileLogoNameInput')?.value || '').trim() || DEFAULT_PROFILE_CARD.logoName;
+            const logoSubVal = (document.getElementById('adminProfileLogoSubInput')?.value || '').trim() || DEFAULT_PROFILE_CARD.logoSub;
+            const titleVal = (document.getElementById('adminProfileStoreTitleInput')?.value || '').trim() || DEFAULT_PROFILE_CARD.storeTitle;
+            const taglineVal = (document.getElementById('adminProfileTaglineInput')?.value || '').trim() || DEFAULT_PROFILE_CARD.tagline;
+
+            const pRibbon = document.getElementById('livePreviewRibbon');
+            const pLogoName = document.getElementById('livePreviewLogoName');
+            const pLogoSub = document.getElementById('livePreviewLogoSub');
+            const pTitle = document.getElementById('livePreviewStoreTitle');
+            const pTagline = document.getElementById('livePreviewTagline');
+
+            if (pRibbon) pRibbon.textContent = ribbonVal;
+            if (pLogoName) pLogoName.textContent = logoNameVal;
+            if (pLogoSub) pLogoSub.textContent = logoSubVal;
+            if (pTitle) pTitle.textContent = titleVal;
+            if (pTagline) pTagline.textContent = taglineVal;
+        }
+
+        async function saveProfileCardFromAdmin() {
+            const fbEl = document.getElementById('adminProfileFeedback');
+            state.profileCard = {
+                ribbon: (document.getElementById('adminProfileRibbonInput')?.value || '').trim() || DEFAULT_PROFILE_CARD.ribbon,
+                logoName: (document.getElementById('adminProfileLogoNameInput')?.value || '').trim() || DEFAULT_PROFILE_CARD.logoName,
+                logoSub: (document.getElementById('adminProfileLogoSubInput')?.value || '').trim() || DEFAULT_PROFILE_CARD.logoSub,
+                storeTitle: (document.getElementById('adminProfileStoreTitleInput')?.value || '').trim() || DEFAULT_PROFILE_CARD.storeTitle,
+                tagline: (document.getElementById('adminProfileTaglineInput')?.value || '').trim() || DEFAULT_PROFILE_CARD.tagline
+            };
+
+            syncAdminProfileInputs();
+            renderProfileCard();
+            if (fbEl) {
+                fbEl.textContent = 'บันทึกข้อมูลการ์ดโปรไฟล์เรียบร้อยแล้วครับ';
+                fbEl.className = 'text-xs font-semibold px-3 py-2 rounded-xl bg-[#FFF0F6] text-[#8F3E64] border border-pink-200';
+                fbEl.classList.remove('hidden');
+            }
+            await persistStoreToFirestore();
+        }
+
+        function switchAdminTab(tabName) {
+            state.activeAdminTab = tabName || 'artwork';
+            const panels = {
+                artwork: document.getElementById('adminPanelTabArtwork'),
+                profile: document.getElementById('adminPanelTabProfile'),
+                contact: document.getElementById('adminPanelTabContact')
+            };
+            const buttons = {
+                artwork: document.getElementById('adminTabArtworkBtn'),
+                profile: document.getElementById('adminTabProfileBtn'),
+                contact: document.getElementById('adminTabContactBtn')
+            };
+
+            Object.keys(panels).forEach((key) => {
+                if (panels[key]) {
+                    panels[key].classList.toggle('hidden', key !== state.activeAdminTab);
+                }
+                if (buttons[key]) {
+                    const isActive = key === state.activeAdminTab;
+                    buttons[key].className = isActive
+                        ? 'px-3 py-1.5 rounded-xl text-xs font-bold bg-[#EE7CA8] text-white cursor-pointer'
+                        : 'px-3 py-1.5 rounded-xl text-xs font-bold bg-[#FFF2F7] text-[#8A5A72] hover:bg-[#FFE3EE] cursor-pointer';
+                }
+            });
         }
 
         function renderContactLinks() {
@@ -1469,7 +1703,7 @@
         }
 
         async function persistStoreToFirestore() {
-            saveLocalStateFallback(state.categories, state.artworks, state.heroCardImage, state.contactLinks);
+            saveLocalStateFallback(state.categories, state.artworks, state.heroCardImage, state.contactLinks, state.profileCard);
             if (!storeDocRef || !currentUser) return;
             try {
                 await setDoc(storeDocRef, {
@@ -1477,6 +1711,7 @@
                     artworks: state.artworks,
                     heroCardImage: state.heroCardImage || '',
                     contactLinks: state.contactLinks,
+                    profileCard: state.profileCard,
                     updatedAt: Date.now()
                 }, { merge: true });
             } catch (err) {
@@ -1500,17 +1735,20 @@
                         state.artworks = normalized.artworks;
                         state.heroCardImage = normalized.heroCardImage;
                         state.contactLinks = normalized.contactLinks;
-                        saveLocalStateFallback(state.categories, state.artworks, state.heroCardImage, state.contactLinks);
+                        state.profileCard = normalized.profileCard;
+                        saveLocalStateFallback(state.categories, state.artworks, state.heroCardImage, state.contactLinks, state.profileCard);
                         refreshActiveViews();
                     } else {
                         const initial = normalizeStoreData({
                             heroCardImage: state.heroCardImage,
-                            contactLinks: state.contactLinks
+                            contactLinks: state.contactLinks,
+                            profileCard: state.profileCard
                         });
                         state.categories = initial.categories;
                         state.artworks = initial.artworks;
                         state.heroCardImage = initial.heroCardImage;
                         state.contactLinks = initial.contactLinks;
+                        state.profileCard = initial.profileCard;
                         persistStoreToFirestore();
                         refreshActiveViews();
                     }
@@ -1556,11 +1794,13 @@
         }
 
         function refreshActiveViews() {
+            renderProfileCard();
             renderContactLinks();
             renderHeroCardBanner();
             renderExampleModal();
             renderGroupModal();
             if (state.isAdminLoggedIn) {
+                syncAdminProfileInputs();
                 syncAdminContactInputs();
                 renderAdminCategoryControls();
                 renderAdminArtworkList();
@@ -1574,8 +1814,12 @@
                 state.selectedGroupSubcat = 'ทั้งหมด';
                 renderGroupModal();
             } else if (modalId === 'adminPanelModal') {
+                switchAdminTab(state.activeAdminTab || 'artwork');
                 const contactFb = document.getElementById('adminContactFeedback');
                 if (contactFb) contactFb.classList.add('hidden');
+                const profileFb = document.getElementById('adminProfileFeedback');
+                if (profileFb) profileFb.classList.add('hidden');
+                syncAdminProfileInputs();
                 syncAdminContactInputs();
                 renderHeroCardBanner();
                 onAdminMainCatChange();
@@ -2381,6 +2625,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            renderProfileCard();
             renderContactLinks();
             syncLoopButtonUi();
             bindFirstGestureAudioUnlock();
@@ -2402,6 +2647,9 @@
 
         window.handleAdminLogin = handleAdminLogin;
         window.handleAdminLogout = handleAdminLogout;
+        window.switchAdminTab = switchAdminTab;
+        window.syncLiveProfilePreviewFromInputs = syncLiveProfilePreviewFromInputs;
+        window.saveProfileCardFromAdmin = saveProfileCardFromAdmin;
         window.saveContactLinksFromAdmin = saveContactLinksFromAdmin;
         window.selectExampleSubcat = selectExampleSubcat;
         window.selectExampleLeaf = selectExampleLeaf;
