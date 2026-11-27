@@ -356,11 +356,12 @@
 
             <div class="relative z-10">
                 <!-- Top Admin Button -->
-                <div class="flex items-center justify-end mb-3">
+                <div class="flex items-center justify-between gap-2 mb-3">
+                    <span id="cloudSyncStatusBadge" class="px-2.5 py-1 rounded-full bg-white/90 border border-pink-100 text-[10px] font-semibold text-[#A5788E] truncate">กำลังเชื่อมต่อระบบซิงก์...</span>
                     <button
                         type="button"
                         onclick="openAdminEntry()"
-                        class="sticker-badge px-3 py-1.5 rounded-full inline-flex items-center gap-1 text-xs font-bold text-[#9C5A79] hover:text-[#D46293] cursor-pointer"
+                        class="sticker-badge px-3 py-1.5 rounded-full inline-flex items-center gap-1 text-xs font-bold text-[#9C5A79] hover:text-[#D46293] cursor-pointer shrink-0"
                     >
                         <span>🐾</span>
                         <span>Admin</span>
@@ -920,7 +921,7 @@
             <div class="p-4 pb-3 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-[#FFF1F6] via-[#FFF7FA] to-[#FFEAF2]">
                 <div class="space-y-0.5">
                     <h3 class="font-display text-lg font-bold text-[#7A4961]">⚙️ Admin Manager — เจ้าเหมียว</h3>
-                    <p class="text-xs text-[#A5788E]">จัดการหมวดหมู่ย่อย อัปโหลดรูปภาพ ชื่อรูป และลิงก์</p>
+                    <p id="adminSyncStatusText" class="text-xs text-[#A5788E]">จัดการหมวดหมู่ย่อย อัปโหลดรูปภาพ ชื่อรูป และลิงก์</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <button type="button" onclick="handleAdminLogout()" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-50 text-rose-500 border border-rose-200 hover:bg-rose-100 cursor-pointer">ออกจากระบบ</button>
@@ -1526,6 +1527,7 @@
             selectedExampleLeaf: 'ทั้งหมด',
             selectedGroupSubcat: 'ทั้งหมด',
             isAdminLoggedIn: false,
+            cloudSyncConnected: false,
             previewImageData: '',
             selectedBatchImages: []
         };
@@ -1535,6 +1537,21 @@
         let currentUser = null;
         let storeDocRef = null;
         let unsubscribeStore = null;
+
+        function setSyncStatus(text, connected = false) {
+            state.cloudSyncConnected = connected;
+            const badge = document.getElementById('cloudSyncStatusBadge');
+            const adminSub = document.getElementById('adminSyncStatusText');
+            if (badge) {
+                badge.textContent = text;
+                badge.className = connected
+                    ? 'px-2.5 py-1 rounded-full bg-white/95 border border-pink-200 text-[10px] font-bold text-[#9C5A79] truncate'
+                    : 'px-2.5 py-1 rounded-full bg-white/85 border border-pink-100 text-[10px] font-semibold text-[#A5788E] truncate';
+            }
+            if (adminSub && connected) {
+                adminSub.textContent = 'ซิงก์ข้อมูลออนไลน์เรียบร้อย (ทุกเครื่องเห็นเหมือนกัน)';
+            }
+        }
 
         function cloneDefaultCategories() {
             return JSON.parse(JSON.stringify(DEFAULT_CATEGORIES));
@@ -1578,7 +1595,7 @@
 
             const heroCardImage = typeof rawData?.heroCardImage === 'string'
                 ? rawData.heroCardImage
-                : (state.heroCardImage || '');
+                : '';
 
             const rawLinks = rawData?.contactLinks && typeof rawData.contactLinks === 'object'
                 ? rawData.contactLinks
@@ -1688,12 +1705,14 @@
 
             syncAdminShowcaseInputs();
             renderFeaturedShowcase();
+            const savedCloud = await persistStoreToFirestore();
             if (fbEl) {
-                fbEl.textContent = 'บันทึกข้อความ FEATURED SHOWCASE เรียบร้อยแล้วครับ';
+                fbEl.textContent = savedCloud
+                    ? 'บันทึกข้อความ FEATURED SHOWCASE และซิงก์ทุกเครื่องเรียบร้อยแล้วครับ'
+                    : 'บันทึกในเครื่องนี้แล้วครับ (กำลังรอเชื่อมต่อฐานข้อมูลออนไลน์)';
                 fbEl.className = 'text-xs font-semibold px-3 py-2 rounded-xl bg-white text-[#8F3E64] border border-pink-200';
                 fbEl.classList.remove('hidden');
             }
-            await persistStoreToFirestore();
         }
 
         function renderProfileCard() {
@@ -1757,12 +1776,14 @@
 
             syncAdminProfileInputs();
             renderProfileCard();
+            const savedCloud = await persistStoreToFirestore();
             if (fbEl) {
-                fbEl.textContent = 'บันทึกข้อมูลการ์ดโปรไฟล์เรียบร้อยแล้วครับ';
+                fbEl.textContent = savedCloud
+                    ? 'บันทึกข้อมูลการ์ดโปรไฟล์และซิงก์ทุกเครื่องเรียบร้อยแล้วครับ'
+                    : 'บันทึกในเครื่องนี้แล้วครับ (กำลังรอเชื่อมต่อฐานข้อมูลออนไลน์)';
                 fbEl.className = 'text-xs font-semibold px-3 py-2 rounded-xl bg-[#FFF0F6] text-[#8F3E64] border border-pink-200';
                 fbEl.classList.remove('hidden');
             }
-            await persistStoreToFirestore();
         }
 
         function switchAdminTab(tabName) {
@@ -1834,8 +1855,12 @@
 
             syncAdminContactInputs();
             renderContactLinks();
-            showAdminContactNotice('บันทึกลิงก์ช่องทางการติดต่อเรียบร้อยแล้วครับ');
-            await persistStoreToFirestore();
+            const savedCloud = await persistStoreToFirestore();
+            showAdminContactNotice(
+                savedCloud
+                    ? 'บันทึกลิงก์ช่องทางการติดต่อและซิงก์ทุกเครื่องเรียบร้อยแล้วครับ'
+                    : 'บันทึกลิงก์ในเครื่องนี้แล้วครับ (กำลังรอเชื่อมต่อฐานข้อมูลออนไลน์)'
+            );
         }
 
         function showAdminCategoryNotice(msg, isError = false) {
@@ -1895,8 +1920,20 @@
         }
 
         async function persistStoreToFirestore() {
-            saveLocalStateFallback(state.categories, state.artworks, state.heroCardImage, state.contactLinks, state.profileCard, state.featuredShowcase);
-            if (!storeDocRef || !currentUser) return;
+            saveLocalStateFallback(
+                state.categories,
+                state.artworks,
+                state.heroCardImage,
+                state.contactLinks,
+                state.profileCard,
+                state.featuredShowcase
+            );
+
+            if (!storeDocRef || !currentUser) {
+                setSyncStatus('บันทึกเฉพาะเครื่องนี้', false);
+                return false;
+            }
+
             try {
                 await setDoc(storeDocRef, {
                     categories: state.categories,
@@ -1907,8 +1944,12 @@
                     featuredShowcase: state.featuredShowcase,
                     updatedAt: Date.now()
                 }, { merge: true });
+                setSyncStatus('ซิงก์ออนไลน์แล้ว', true);
+                return true;
             } catch (err) {
                 console.error('Firestore write error:', err);
+                setSyncStatus('ซิงก์ไม่สำเร็จ (ไฟล์รูปอาจใหญ่เกิน)', false);
+                return false;
             }
         }
 
@@ -1922,6 +1963,7 @@
             unsubscribeStore = onSnapshot(
                 storeDocRef,
                 (snap) => {
+                    setSyncStatus('ซิงก์ออนไลน์แล้ว', true);
                     if (snap.exists()) {
                         const normalized = normalizeStoreData(snap.data());
                         state.categories = normalized.categories;
@@ -1930,7 +1972,14 @@
                         state.contactLinks = normalized.contactLinks;
                         state.profileCard = normalized.profileCard;
                         state.featuredShowcase = normalized.featuredShowcase;
-                        saveLocalStateFallback(state.categories, state.artworks, state.heroCardImage, state.contactLinks, state.profileCard, state.featuredShowcase);
+                        saveLocalStateFallback(
+                            state.categories,
+                            state.artworks,
+                            state.heroCardImage,
+                            state.contactLinks,
+                            state.profileCard,
+                            state.featuredShowcase
+                        );
                         refreshActiveViews();
                     } else {
                         const initial = normalizeStoreData({
@@ -1951,6 +2000,7 @@
                 },
                 (err) => {
                     console.error('Firestore snapshot error:', err);
+                    setSyncStatus('ออฟไลน์ / เชื่อมต่อไม่ได้', false);
                 }
             );
         }
@@ -1960,6 +2010,7 @@
             try {
                 const appId = typeof __app_id !== 'undefined' && __app_id ? __app_id : 'jaomeow-store';
                 if (typeof __firebase_config === 'undefined' || !__firebase_config) {
+                    setSyncStatus('โหมดบันทึกในเครื่อง', false);
                     return;
                 }
 
@@ -1979,6 +2030,7 @@
 
                 currentUser = auth.currentUser;
                 if (!currentUser) {
+                    setSyncStatus('โหมดบันทึกในเครื่อง', false);
                     return;
                 }
 
@@ -1986,6 +2038,7 @@
                 attachStoreListener();
             } catch (err) {
                 console.error('Firebase init error:', err);
+                setSyncStatus('โหมดบันทึกในเครื่อง', false);
             }
         }
 
@@ -2318,18 +2371,74 @@
             await persistStoreToFirestore();
         }
 
+        function optimizeImageForSync(file, maxDimension = 900, quality = 0.82) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const rawDataUrl = String(reader.result || '');
+                    const img = new Image();
+                    img.onload = () => {
+                        let width = img.naturalWidth || img.width;
+                        let height = img.naturalHeight || img.height;
+                        if (width > maxDimension || height > maxDimension) {
+                            if (width >= height) {
+                                height = Math.round((height * maxDimension) / width);
+                                width = maxDimension;
+                            } else {
+                                width = Math.round((width * maxDimension) / height);
+                                height = maxDimension;
+                            }
+                        }
+
+                        const canvas = document.createElement('canvas');
+                        canvas.width = Math.max(1, width);
+                        canvas.height = Math.max(1, height);
+                        const ctx = canvas.getContext('2d');
+                        if (!ctx) {
+                            resolve(rawDataUrl);
+                            return;
+                        }
+
+                        const isPng = file.type === 'image/png';
+                        if (!isPng) {
+                            ctx.fillStyle = '#FFFFFF';
+                            ctx.fillRect(0, 0, canvas.width, canvas.height);
+                        }
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                        const outputMime = isPng ? 'image/png' : 'image/jpeg';
+                        const compressed = isPng
+                            ? canvas.toDataURL('image/png')
+                            : canvas.toDataURL(outputMime, quality);
+
+                        if (!isPng && compressed.length > rawDataUrl.length) {
+                            resolve(rawDataUrl);
+                        } else {
+                            resolve(compressed);
+                        }
+                    };
+                    img.onerror = () => resolve(rawDataUrl);
+                    img.src = rawDataUrl;
+                };
+                reader.onerror = () => reject(reader.error || new Error('File read error'));
+                reader.readAsDataURL(file);
+            });
+        }
+
         async function handleHeroCardFileUpload(event) {
             const file = event.target.files?.[0];
             const statusEl = document.getElementById('adminHeroCardStatus');
             if (!file) return;
 
             try {
-                const dataUrl = await readFileAsDataUrl(file);
+                const dataUrl = await optimizeImageForSync(file, 700, 0.82);
                 state.heroCardImage = dataUrl;
                 renderHeroCardBanner();
-                await persistStoreToFirestore();
+                const savedCloud = await persistStoreToFirestore();
                 if (statusEl) {
-                    statusEl.textContent = 'อัปเดตรูปการ์ดแบนเนอร์เรียบร้อยแล้วครับ';
+                    statusEl.textContent = savedCloud
+                        ? 'อัปเดตรูปการ์ดแบนเนอร์และซิงก์ทุกเครื่องแล้วครับ'
+                        : 'อัปเดตรูปในเครื่องนี้แล้วครับ';
                     statusEl.classList.remove('hidden');
                 }
             } catch (err) {
@@ -2363,15 +2472,6 @@
             stripEl.classList.remove('hidden');
         }
 
-        function readFileAsDataUrl(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => resolve(String(reader.result || ''));
-                reader.onerror = () => reject(reader.error || new Error('File read error'));
-                reader.readAsDataURL(file);
-            });
-        }
-
         async function handleFilePreview(event) {
             const files = Array.from(event.target.files || []);
             if (files.length === 0) return;
@@ -2380,7 +2480,7 @@
                 const results = await Promise.all(
                     files.map(async (file) => ({
                         name: file.name || 'image',
-                        dataUrl: await readFileAsDataUrl(file)
+                        dataUrl: await optimizeImageForSync(file, 850, 0.8)
                     }))
                 );
                 const validItems = results.filter((r) => Boolean(r.dataUrl));
@@ -2472,6 +2572,7 @@
                 categories: selectedCats
             }));
 
+            const previousArtworks = [...state.artworks];
             state.artworks.unshift(...newItems);
             state.previewImageData = '';
             state.selectedBatchImages = [];
@@ -2482,12 +2583,35 @@
 
             renderAdminArtworkList();
             refreshActiveViews();
-            await persistStoreToFirestore();
+            const savedCloud = await persistStoreToFirestore();
+
+            if (!savedCloud && currentUser && storeDocRef) {
+                state.artworks = previousArtworks;
+                saveLocalStateFallback(
+                    state.categories,
+                    state.artworks,
+                    state.heroCardImage,
+                    state.contactLinks,
+                    state.profileCard,
+                    state.featuredShowcase
+                );
+                renderAdminArtworkList();
+                refreshActiveViews();
+                if (errEl) {
+                    errEl.textContent = 'ขนาดรูปภาพรวมใหญ่เกินขีดจำกัดฐานข้อมูลออนไลน์ จึงไม่สามารถซิงก์ไปยังเครื่องอื่นได้ กรุณาลดจำนวนรูปหรือเลือกรูปขนาดเล็กลงครับ';
+                    errEl.classList.remove('hidden');
+                }
+                return;
+            }
 
             if (okEl) {
-                okEl.textContent = newItems.length > 1
-                    ? `บันทึกรูปภาพ ${newItems.length} รายการและเผยแพร่เรียบร้อยแล้วครับ`
-                    : 'บันทึกรายการและเผยแพร่เรียบร้อยแล้วครับ';
+                okEl.textContent = savedCloud
+                    ? (newItems.length > 1
+                        ? `บันทึกรูปภาพ ${newItems.length} รายการและซิงก์ทุกเครื่องเรียบร้อยแล้วครับ`
+                        : 'บันทึกรายการและซิงก์ทุกเครื่องเรียบร้อยแล้วครับ')
+                    : (newItems.length > 1
+                        ? `บันทึกรูปภาพ ${newItems.length} รายการในเครื่องนี้แล้วครับ`
+                        : 'บันทึกรายการในเครื่องนี้แล้วครับ');
                 okEl.classList.remove('hidden');
             }
         }
