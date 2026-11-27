@@ -293,29 +293,6 @@
             transition: opacity 0.22s ease;
         }
 
-        .modal-backdrop.hidden,
-        #exampleModal.hidden,
-        #groupModal.hidden,
-        #queueModal.hidden,
-        #tosModal.hidden,
-        #pricingModal.hidden,
-        #briefModal.hidden,
-        #adminLoginModal.hidden,
-        #adminPanelModal.hidden {
-            display: none !important;
-        }
-
-        #exampleModal:not(.hidden),
-        #groupModal:not(.hidden),
-        #queueModal:not(.hidden),
-        #tosModal:not(.hidden),
-        #pricingModal:not(.hidden),
-        #briefModal:not(.hidden),
-        #adminLoginModal:not(.hidden),
-        #adminPanelModal:not(.hidden) {
-            display: flex !important;
-        }
-
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -382,7 +359,6 @@
                 <div class="flex items-center justify-end mb-3">
                     <button
                         type="button"
-                        data-admin-open="1"
                         onclick="openAdminEntry()"
                         class="sticker-badge px-3 py-1.5 rounded-full inline-flex items-center gap-1 text-xs font-bold text-[#9C5A79] hover:text-[#D46293] cursor-pointer"
                     >
@@ -500,7 +476,6 @@
                 <section class="grid grid-cols-2 gap-3 mb-4">
                     <button
                         type="button"
-                        data-modal-open="exampleModal"
                         onclick="openModal('exampleModal')"
                         class="cute-panel relative w-full rounded-[24px] py-6 px-3 text-center overflow-hidden cursor-pointer group flex flex-col justify-center items-center min-h-[156px]"
                     >
@@ -523,7 +498,6 @@
 
                     <button
                         type="button"
-                        data-modal-open="groupModal"
                         onclick="openModal('groupModal')"
                         class="cute-panel relative w-full rounded-[24px] py-6 px-3 text-center overflow-hidden cursor-pointer group flex flex-col justify-center items-center min-h-[156px]"
                     >
@@ -547,7 +521,7 @@
 
                 <!-- Four Menu Buttons in 2 Columns -->
                 <section class="grid grid-cols-2 gap-3 mb-4">
-                    <button type="button" data-modal-open="queueModal" onclick="openModal('queueModal')" class="cute-pill-btn w-full rounded-[22px] p-3.5 flex flex-col items-start justify-between gap-2.5 text-left cursor-pointer group min-h-[108px]">
+                    <button type="button" onclick="openModal('queueModal')" class="cute-pill-btn w-full rounded-[22px] p-3.5 flex flex-col items-start justify-between gap-2.5 text-left cursor-pointer group min-h-[108px]">
                         <div class="w-full flex items-center justify-between">
                             <span class="w-9 h-9 rounded-2xl bg-[#FFEAF2] border border-pink-100 flex items-center justify-center text-base shrink-0">👛</span>
                             <span class="text-[#C59BB0] group-hover:translate-x-0.5 transition-transform text-sm font-bold">›</span>
@@ -558,7 +532,7 @@
                         </div>
                     </button>
 
-                    <button type="button" data-modal-open="tosModal" onclick="openModal('tosModal')" class="cute-pill-btn w-full rounded-[22px] p-3.5 flex flex-col items-start justify-between gap-2.5 text-left cursor-pointer group min-h-[108px]">
+                    <button type="button" onclick="openModal('tosModal')" class="cute-pill-btn w-full rounded-[22px] p-3.5 flex flex-col items-start justify-between gap-2.5 text-left cursor-pointer group min-h-[108px]">
                         <div class="w-full flex items-center justify-between">
                             <span class="w-9 h-9 rounded-2xl bg-[#FFEAF2] border border-pink-100 flex items-center justify-center text-base shrink-0">🧸</span>
                             <span class="text-[#C59BB0] group-hover:translate-x-0.5 transition-transform text-sm font-bold">›</span>
@@ -569,7 +543,7 @@
                         </div>
                     </button>
 
-                    <button type="button" data-modal-open="pricingModal" onclick="openModal('pricingModal')" class="cute-pill-btn w-full rounded-[22px] p-3.5 flex flex-col items-start justify-between gap-2.5 text-left cursor-pointer group min-h-[108px]">
+                    <button type="button" onclick="openModal('pricingModal')" class="cute-pill-btn w-full rounded-[22px] p-3.5 flex flex-col items-start justify-between gap-2.5 text-left cursor-pointer group min-h-[108px]">
                         <div class="w-full flex items-center justify-between">
                             <span class="w-9 h-9 rounded-2xl bg-[#FFEAF2] border border-pink-100 flex items-center justify-center text-base shrink-0">🐾</span>
                             <span class="text-[#C59BB0] group-hover:translate-x-0.5 transition-transform text-sm font-bold">›</span>
@@ -580,7 +554,7 @@
                         </div>
                     </button>
 
-                    <button type="button" data-modal-open="briefModal" onclick="openModal('briefModal')" class="cute-pill-btn w-full rounded-[22px] p-3.5 flex flex-col items-start justify-between gap-2.5 text-left cursor-pointer group min-h-[108px]">
+                    <button type="button" onclick="openModal('briefModal')" class="cute-pill-btn w-full rounded-[22px] p-3.5 flex flex-col items-start justify-between gap-2.5 text-left cursor-pointer group min-h-[108px]">
                         <div class="w-full flex items-center justify-between">
                             <span class="w-9 h-9 rounded-2xl bg-[#FFEAF2] border border-pink-100 flex items-center justify-center text-base shrink-0">☁️</span>
                             <span class="text-[#C59BB0] group-hover:translate-x-0.5 transition-transform text-sm font-bold">›</span>
@@ -610,7 +584,6 @@
                         <div class="flex items-center justify-center gap-2 mb-1.5">
                             <button
                                 type="button"
-                                data-music-action="restart"
                                 onclick="restartMusicTrack()"
                                 title="เริ่มเพลงใหม่"
                                 aria-label="เริ่มเพลงใหม่"
@@ -625,7 +598,6 @@
                             <button
                                 type="button"
                                 id="musicToggleBtn"
-                                data-music-action="toggle"
                                 onclick="toggleMusicPlayer()"
                                 title="เล่นหรือหยุดเพลง"
                                 aria-label="เล่นหรือหยุดเพลง"
@@ -642,7 +614,6 @@
 
                             <button
                                 type="button"
-                                data-music-action="forward"
                                 onclick="skipMusicForward()"
                                 title="ข้ามไปข้างหน้า 10 วินาที"
                                 aria-label="ข้ามไปข้างหน้า 10 วินาที"
@@ -657,7 +628,6 @@
                             <button
                                 type="button"
                                 id="musicLoopBtn"
-                                data-music-action="loop"
                                 onclick="toggleMusicLoop()"
                                 title="เล่นซ้ำเพลง"
                                 aria-label="เล่นซ้ำเพลง"
@@ -687,22 +657,6 @@
                             >
                             <span id="musicTotalTime" class="text-[9px] font-semibold text-[#9A798B] tabular-nums shrink-0">3:05:00</span>
                         </div>
-
-                        <div class="flex items-center gap-1.5 mt-1.5">
-                            <span class="text-[10px] text-[#B86A8E] shrink-0 select-none" aria-hidden="true">🔈</span>
-                            <input
-                                id="musicVolumeSlider"
-                                type="range"
-                                min="0"
-                                max="100"
-                                value="20"
-                                step="1"
-                                oninput="setMusicVolumeLevel(this.value)"
-                                aria-label="ปรับระดับเสียงเพลง"
-                                class="mini-player-slider flex-1"
-                            >
-                            <span id="musicVolumeLabel" class="text-[9px] font-semibold text-[#9A798B] tabular-nums w-6 text-right shrink-0">20%</span>
-                        </div>
                     </div>
                 </div>
 
@@ -714,7 +668,7 @@
     </div>
 
     <!-- Backdrop -->
-    <div id="modalBackdrop" data-modal-close="1" onclick="closeAllModals()" class="modal-backdrop fixed inset-0 z-40 hidden opacity-0 bg-[#5A3649]/35 backdrop-blur-xs"></div>
+    <div id="modalBackdrop" onclick="closeAllModals()" class="modal-backdrop fixed inset-0 z-40 hidden opacity-0 bg-[#5A3649]/35 backdrop-blur-xs"></div>
 
     <!-- 1. EXAMPLE WORK MODAL -->
     <div id="exampleModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
@@ -724,7 +678,7 @@
                     <h3 class="font-display text-lg font-bold text-[#7A4961]">EXAMPLE WORK</h3>
                     <p class="text-xs text-[#A5788E]">เลือกดูตัวอย่างงานแยกตามหมวดหมู่</p>
                 </div>
-                <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
+                <button type="button" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
             </div>
             <div class="px-4 pt-3 pb-2.5 border-b border-pink-50 space-y-2 bg-[#FFFDFC]">
                 <div class="flex flex-wrap gap-1.5" id="exampleSubcatTabs"></div>
@@ -732,7 +686,7 @@
             </div>
             <div id="exampleGalleryList" class="p-4 overflow-y-auto grid grid-cols-2 gap-3 flex-1 bg-[#FFF9FB]/60"></div>
             <div class="px-4 py-2.5 border-t border-pink-100 bg-white/95 shrink-0">
-                <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-full py-2 rounded-xl bg-[#FFF2F7] hover:bg-[#FFE3EE] text-[#8E5B74] text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5">
+                <button type="button" onclick="closeAllModals()" class="w-full py-2 rounded-xl bg-[#FFF2F7] hover:bg-[#FFE3EE] text-[#8E5B74] text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5">
                     <span>‹</span>
                     <span>กลับไปหน้าหลัก</span>
                 </button>
@@ -748,14 +702,14 @@
                     <h3 class="font-display text-lg font-bold text-[#7A4961]">ตัวอย่างกลุ่มทั้งหมด</h3>
                     <p class="text-xs text-[#A5788E]">รูปภาพ ชื่อผลงาน และลิงก์ของตัวอย่างกลุ่ม</p>
                 </div>
-                <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
+                <button type="button" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
             </div>
             <div class="px-4 py-2.5 border-b border-pink-50 bg-[#FFFDFC]">
                 <div class="flex flex-wrap gap-1.5" id="groupSubcatFilterChips"></div>
             </div>
             <div id="groupGalleryList" class="p-4 overflow-y-auto grid grid-cols-2 gap-3 flex-1 bg-[#FFF9FB]/60"></div>
             <div class="px-4 py-2.5 border-t border-pink-100 bg-white/95 shrink-0">
-                <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-full py-2 rounded-xl bg-[#FFF2F7] hover:bg-[#FFE3EE] text-[#8E5B74] text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5">
+                <button type="button" onclick="closeAllModals()" class="w-full py-2 rounded-xl bg-[#FFF2F7] hover:bg-[#FFE3EE] text-[#8E5B74] text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5">
                     <span>‹</span>
                     <span>กลับไปหน้าหลัก</span>
                 </button>
@@ -768,7 +722,7 @@
         <div class="modal-card bg-[#FFFDFC]/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-md w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
             <div class="p-4 pb-3 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-[#FFF2F7] to-[#FFF9FB]">
                 <h3 class="font-display text-lg font-bold text-[#7A4961]">📋 เช็กคิวงานปัจจุบัน</h3>
-                <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
+                <button type="button" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
             </div>
             <div class="p-4 overflow-y-auto space-y-2.5 text-sm bg-[#FFF9FB]/50">
                 <div class="p-3.5 rounded-2xl bg-[#FFF0F6] border border-pink-100 flex items-center justify-between gap-2">
@@ -794,7 +748,7 @@
                 </div>
             </div>
             <div class="px-4 py-2.5 border-t border-pink-100 bg-white/95 shrink-0">
-                <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-full py-2 rounded-xl bg-[#FFF2F7] hover:bg-[#FFE3EE] text-[#8E5B74] text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5">
+                <button type="button" onclick="closeAllModals()" class="w-full py-2 rounded-xl bg-[#FFF2F7] hover:bg-[#FFE3EE] text-[#8E5B74] text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5">
                     <span>‹</span>
                     <span>กลับไปหน้าหลัก</span>
                 </button>
@@ -807,7 +761,7 @@
         <div class="modal-card bg-[#FFFDFC]/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-md w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
             <div class="p-4 pb-3 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-[#FFF2F7] to-[#FFF9FB]">
                 <h3 class="font-display text-lg font-bold text-[#7A4961]">📜 กฎการจ้างงาน</h3>
-                <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
+                <button type="button" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
             </div>
             <div class="p-4 overflow-y-auto space-y-2.5 text-sm text-[#6E495C] leading-relaxed bg-[#FFF9FB]/50">
                 <div class="p-3 rounded-2xl bg-white border border-pink-100">1. บรีฟรายละเอียดให้ชัดเจนก่อนเริ่มงาน สามารถแก้ไขจุดเล็กน้อยได้ฟรีตามจำนวนครั้งที่ตกลง</div>
@@ -816,7 +770,7 @@
                 <div class="p-3 rounded-2xl bg-white border border-pink-100">4. หากต้องการนำไปใช้เชิงพาณิชย์ กรุณาแจ้งล่วงหน้าเพื่อคำนวณเรตให้เหมาะสมครับ</div>
             </div>
             <div class="px-4 py-2.5 border-t border-pink-100 bg-white/95 shrink-0">
-                <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-full py-2 rounded-xl bg-[#FFF2F7] hover:bg-[#FFE3EE] text-[#8E5B74] text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5">
+                <button type="button" onclick="closeAllModals()" class="w-full py-2 rounded-xl bg-[#FFF2F7] hover:bg-[#FFE3EE] text-[#8E5B74] text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5">
                     <span>‹</span>
                     <span>กลับไปหน้าหลัก</span>
                 </button>
@@ -829,7 +783,7 @@
         <div class="modal-card bg-[#FFFDFC]/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-md w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
             <div class="p-4 pb-3 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-[#FFF2F7] to-[#FFF9FB]">
                 <h3 class="font-display text-lg font-bold text-[#7A4961]">💰 เรตราคางานเบื้องต้น</h3>
-                <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
+                <button type="button" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
             </div>
             <div class="p-4 overflow-y-auto space-y-2.5 text-sm bg-[#FFF9FB]/50">
                 <div class="p-3.5 rounded-2xl bg-[#FFF0F6] border border-pink-100 flex items-center justify-between gap-2">
@@ -855,7 +809,7 @@
                 </div>
             </div>
             <div class="px-4 py-2.5 border-t border-pink-100 bg-white/95 shrink-0">
-                <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-full py-2 rounded-xl bg-[#FFF2F7] hover:bg-[#FFE3EE] text-[#8E5B74] text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5">
+                <button type="button" onclick="closeAllModals()" class="w-full py-2 rounded-xl bg-[#FFF2F7] hover:bg-[#FFE3EE] text-[#8E5B74] text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5">
                     <span>‹</span>
                     <span>กลับไปหน้าหลัก</span>
                 </button>
@@ -868,7 +822,7 @@
         <div class="modal-card bg-[#FFFDFC]/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-md w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
             <div class="p-4 pb-3 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-[#FFF2F7] to-[#FFF9FB]">
                 <h3 class="font-display text-lg font-bold text-[#7A4961]">💌 ส่งบรีฟงาน</h3>
-                <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
+                <button type="button" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
             </div>
             <form id="briefForm" onsubmit="handleBriefSubmit(event)" class="p-4 overflow-y-auto space-y-3.5 text-sm bg-[#FFF9FB]/50">
                 <div>
@@ -895,7 +849,7 @@
                 <div id="briefFeedback" class="hidden p-3 rounded-xl bg-pink-50 border border-pink-200 text-[#8F3E64] text-xs font-semibold"></div>
             </form>
             <div class="px-4 py-2.5 border-t border-pink-100 bg-white/95 shrink-0">
-                <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-full py-2 rounded-xl bg-[#FFF2F7] hover:bg-[#FFE3EE] text-[#8E5B74] text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5">
+                <button type="button" onclick="closeAllModals()" class="w-full py-2 rounded-xl bg-[#FFF2F7] hover:bg-[#FFE3EE] text-[#8E5B74] text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5">
                     <span>‹</span>
                     <span>กลับไปหน้าหลัก</span>
                 </button>
@@ -908,7 +862,7 @@
         <div class="modal-card bg-[#FFFDFC]/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-sm w-full flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
             <div class="p-4 pb-3 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-[#FFF2F7] to-[#FFF9FB]">
                 <h3 class="font-display text-lg font-bold text-[#7A4961]">🐾 Admin Login</h3>
-                <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
+                <button type="button" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
             </div>
             <form id="adminLoginForm" onsubmit="handleAdminLogin(event)" class="p-5 space-y-3.5 text-sm bg-[#FFF9FB]/50">
                 <div>
@@ -924,12 +878,6 @@
                     เข้าสู่ระบบแอดมิน
                 </button>
             </form>
-            <div class="px-4 py-2.5 border-t border-pink-100 bg-white/95 shrink-0">
-                <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-full py-2 rounded-xl bg-[#FFF2F7] hover:bg-[#FFE3EE] text-[#8E5B74] text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5">
-                    <span>‹</span>
-                    <span>กลับไปหน้าหลัก</span>
-                </button>
-            </div>
         </div>
     </div>
 
@@ -942,8 +890,8 @@
                     <p class="text-xs text-[#A5788E]">จัดการหมวดหมู่ย่อย อัปโหลดรูปภาพ ชื่อรูป และลิงก์</p>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button type="button" data-admin-logout="1" onclick="handleAdminLogout()" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-50 text-rose-500 border border-rose-200 hover:bg-rose-100 cursor-pointer">ออกจากระบบ</button>
-                    <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
+                    <button type="button" onclick="handleAdminLogout()" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-50 text-rose-500 border border-rose-200 hover:bg-rose-100 cursor-pointer">ออกจากระบบ</button>
+                    <button type="button" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
                 </div>
             </div>
 
@@ -1025,16 +973,16 @@
                         </div>
                     </div>
 
-                    <!-- Group Price Input (Shown when mainCat === 'group', supports numbers and text) -->
-                    <div id="groupPriceFieldWrapper" class="hidden">
-                        <label class="block text-xs font-semibold text-[#B84D7B] mb-1">ราคาตัวอย่างกลุ่ม (พิมพ์ได้ทั้งตัวเลขและตัวหนังสือ)</label>
-                        <input id="artworkPriceInput" type="text" placeholder="เช่น 290฿, เริ่มต้น 199 บาท หรือ ตามบรีฟ" class="w-full px-3.5 py-2 rounded-xl border border-pink-200 bg-[#FFF7FA] focus:outline-none focus:border-pink-400">
+                    <!-- Group Price Field (Shows only when Main Category = ตัวอย่างกลุ่ม) -->
+                    <div id="adminGroupPriceWrapper" class="hidden">
+                        <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ราคาตัวอย่างกลุ่ม (พิมพ์ได้ทั้งตัวเลขและตัวหนังสือ)</label>
+                        <input id="artworkPriceInput" type="text" placeholder="เช่น 290฿, เริ่มต้น 199 บาท, ตามบรีฟ" class="w-full px-3.5 py-2 rounded-xl border border-pink-200 bg-[#FFFDFC] focus:outline-none focus:border-pink-400">
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 items-start">
                         <div>
                             <label class="block text-xs font-semibold text-[#8A5A72] mb-1">อัปโหลดไฟล์รูปภาพ (เลือกได้หลายรูป)</label>
-                            <input id="artworkFileInput" type="file" accept="image/*" multiple onchange="handleFilePreview(event)" class="w-full text-xs text-[#8A5A72] file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs font-bold file:bg-[#FFE6F0] file:text-[#B84D7B] hover:file:bg-[#FFD6E6] cursor-pointer">
+                            <input id="artworkFileInput" type="file" accept="image/*" multiple onchange="handleFilePreview(event)" class="w-full text-xs text-[#8A5A72] file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#FFE6F0] file:text-[#B84D7B] hover:file:bg-[#FFD6E6] cursor-pointer">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-[#8A5A72] mb-1">หรือวางลิงก์รูปภาพโดยตรง</label>
@@ -1071,15 +1019,116 @@
                     <div id="adminArtworkList" class="space-y-2 max-h-56 overflow-y-auto"></div>
                 </div>
             </div>
-
             <div class="px-4 py-2.5 border-t border-pink-100 bg-white/95 shrink-0">
-                <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-full py-2 rounded-xl bg-[#FFF2F7] hover:bg-[#FFE3EE] text-[#8E5B74] text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5">
+                <button type="button" onclick="closeAllModals()" class="w-full py-2 rounded-xl bg-[#FFF2F7] hover:bg-[#FFE3EE] text-[#8E5B74] text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5">
                     <span>‹</span>
                     <span>กลับไปหน้าหลัก</span>
                 </button>
             </div>
         </div>
     </div>
+
+    <!-- Immediate Global Modal Handlers -->
+    <script>
+        window.__jaomeowAdminLoggedIn = false;
+
+        window.closeAllModals = function () {
+            var backdrop = document.getElementById('modalBackdrop');
+            var modalIds = [
+                'exampleModal',
+                'groupModal',
+                'queueModal',
+                'tosModal',
+                'pricingModal',
+                'briefModal',
+                'adminLoginModal',
+                'adminPanelModal'
+            ];
+
+            for (var i = 0; i < modalIds.length; i++) {
+                var modal = document.getElementById(modalIds[i]);
+                if (!modal) continue;
+                var card = modal.querySelector('.modal-card');
+                if (card) {
+                    card.classList.remove('scale-100');
+                    card.classList.add('scale-95');
+                }
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                modal.style.display = 'none';
+            }
+
+            if (backdrop) {
+                backdrop.classList.add('opacity-0');
+                backdrop.classList.add('hidden');
+                backdrop.style.display = 'none';
+            }
+        };
+
+        window.openModal = function (modalId) {
+            var backdrop = document.getElementById('modalBackdrop');
+            var target = document.getElementById(modalId);
+            if (!target) return;
+
+            var modalIds = [
+                'exampleModal',
+                'groupModal',
+                'queueModal',
+                'tosModal',
+                'pricingModal',
+                'briefModal',
+                'adminLoginModal',
+                'adminPanelModal'
+            ];
+
+            for (var i = 0; i < modalIds.length; i++) {
+                if (modalIds[i] === modalId) continue;
+                var el = document.getElementById(modalIds[i]);
+                if (el) {
+                    el.classList.add('hidden');
+                    el.classList.remove('flex');
+                    el.style.display = 'none';
+                }
+            }
+
+            if (typeof window.__onModalWillOpen === 'function') {
+                try {
+                    window.__onModalWillOpen(modalId);
+                } catch (e) {
+                    console.error(e);
+                }
+            }
+
+            if (backdrop) {
+                backdrop.classList.remove('hidden');
+                backdrop.style.display = 'block';
+                backdrop.style.pointerEvents = 'auto';
+                backdrop.classList.remove('opacity-0');
+            }
+
+            target.classList.remove('hidden');
+            target.classList.add('flex');
+            target.style.display = 'flex';
+            target.style.pointerEvents = 'auto';
+
+            var card = target.querySelector('.modal-card');
+            if (card) {
+                card.style.pointerEvents = 'auto';
+                card.classList.remove('scale-95');
+                card.classList.add('scale-100');
+            }
+        };
+
+        window.openAdminEntry = function () {
+            if (window.__jaomeowAdminLoggedIn) {
+                window.openModal('adminPanelModal');
+            } else {
+                var errEl = document.getElementById('adminLoginError');
+                if (errEl) errEl.classList.add('hidden');
+                window.openModal('adminLoginModal');
+            }
+        };
+    </script>
 
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js';
@@ -1099,6 +1148,7 @@
             {
                 id: 'demo-1',
                 title: 'เซ็ตป้ายร้านชมพูนม',
+                price: '',
                 link: 'https://example.com',
                 image: 'https://placehold.co/400x400/FFE6F0/A85A7E?text=Sign+Set',
                 mainCat: 'example',
@@ -1108,6 +1158,7 @@
             {
                 id: 'demo-2',
                 title: 'ชีตตัวละครเจ้าเหมียว',
+                price: '',
                 link: 'https://example.com',
                 image: 'https://placehold.co/400x400/FFF0F6/9C5A79?text=Chibi+Sheet',
                 mainCat: 'example',
@@ -1117,6 +1168,7 @@
             {
                 id: 'demo-3',
                 title: 'เว็บคอมมิชชันพาสเทล',
+                price: '',
                 link: 'https://example.com',
                 image: 'https://placehold.co/400x400/FCE4EE/B85E88?text=Website+UI',
                 mainCat: 'example',
@@ -1126,8 +1178,8 @@
             {
                 id: 'demo-4',
                 title: 'เซ็ตอีโมตกลุ่มน่ารัก',
+                price: 'เริ่มต้น 290฿',
                 link: 'https://example.com',
-                price: '',
                 image: 'https://placehold.co/400x400/FFEAF3/A85A7E?text=Group+Emotes',
                 mainCat: 'group',
                 subCat: '',
@@ -1154,14 +1206,12 @@
                     artworks: arts,
                     heroCardImage: heroCardImg || ''
                 }));
-            } catch (_) {
-                // Ignore storage quota errors
-            }
+            } catch (_) {}
         }
 
         const initialLocal = loadLocalStateFallback();
 
-        const storeState = {
+        let state = {
             categories: initialLocal?.categories
                 ? JSON.parse(JSON.stringify(initialLocal.categories))
                 : JSON.parse(JSON.stringify(DEFAULT_CATEGORIES)),
@@ -1177,8 +1227,8 @@
             selectedBatchImages: []
         };
 
-        let storeDb = null;
-        let storeAuth = null;
+        let db = null;
+        let auth = null;
         let currentUser = null;
         let storeDocRef = null;
         let unsubscribeStore = null;
@@ -1217,7 +1267,7 @@
 
             const heroCardImage = typeof rawData?.heroCardImage === 'string'
                 ? rawData.heroCardImage
-                : (storeState.heroCardImage || '');
+                : (state.heroCardImage || '');
 
             return {
                 categories: {
@@ -1244,7 +1294,7 @@
             const mainPlaceholder = document.getElementById('heroPngPlaceholder');
             const adminPreviewImg = document.getElementById('adminHeroCardPreviewImg');
             const adminPreviewPlaceholder = document.getElementById('adminHeroCardPreviewPlaceholder');
-            const src = storeState.heroCardImage || '';
+            const src = state.heroCardImage || '';
 
             if (mainImg && mainPlaceholder) {
                 if (src) {
@@ -1272,13 +1322,13 @@
         }
 
         async function persistStoreToFirestore() {
-            saveLocalStateFallback(storeState.categories, storeState.artworks, storeState.heroCardImage);
+            saveLocalStateFallback(state.categories, state.artworks, state.heroCardImage);
             if (!storeDocRef || !currentUser) return;
             try {
                 await setDoc(storeDocRef, {
-                    categories: storeState.categories,
-                    artworks: storeState.artworks,
-                    heroCardImage: storeState.heroCardImage || '',
+                    categories: state.categories,
+                    artworks: state.artworks,
+                    heroCardImage: state.heroCardImage || '',
                     updatedAt: Date.now()
                 }, { merge: true });
             } catch (err) {
@@ -1298,16 +1348,16 @@
                 (snap) => {
                     if (snap.exists()) {
                         const normalized = normalizeStoreData(snap.data());
-                        storeState.categories = normalized.categories;
-                        storeState.artworks = normalized.artworks;
-                        storeState.heroCardImage = normalized.heroCardImage;
-                        saveLocalStateFallback(storeState.categories, storeState.artworks, storeState.heroCardImage);
+                        state.categories = normalized.categories;
+                        state.artworks = normalized.artworks;
+                        state.heroCardImage = normalized.heroCardImage;
+                        saveLocalStateFallback(state.categories, state.artworks, state.heroCardImage);
                         refreshActiveViews();
                     } else {
-                        const initial = normalizeStoreData({ heroCardImage: storeState.heroCardImage });
-                        storeState.categories = initial.categories;
-                        storeState.artworks = initial.artworks;
-                        storeState.heroCardImage = initial.heroCardImage;
+                        const initial = normalizeStoreData({ heroCardImage: state.heroCardImage });
+                        state.categories = initial.categories;
+                        state.artworks = initial.artworks;
+                        state.heroCardImage = initial.heroCardImage;
                         persistStoreToFirestore();
                         refreshActiveViews();
                     }
@@ -1321,31 +1371,31 @@
         async function initFirebaseDatabase() {
             refreshActiveViews();
             try {
-                const appId = (typeof window.__app_id !== 'undefined' && window.__app_id) ? window.__app_id : 'jaomeow-store';
-                if (typeof window.__firebase_config === 'undefined' || !window.__firebase_config) {
+                const appId = typeof __app_id !== 'undefined' && __app_id ? __app_id : 'jaomeow-store';
+                if (typeof __firebase_config === 'undefined' || !__firebase_config) {
                     return;
                 }
 
-                const firebaseConfig = typeof window.__firebase_config === 'string'
-                    ? JSON.parse(window.__firebase_config)
-                    : window.__firebase_config;
+                const firebaseConfig = typeof __firebase_config === 'string'
+                    ? JSON.parse(__firebase_config)
+                    : __firebase_config;
 
                 const app = initializeApp(firebaseConfig);
-                storeAuth = getAuth(app);
-                storeDb = getFirestore(app);
+                auth = getAuth(app);
+                db = getFirestore(app);
 
-                if (typeof window.__initial_auth_token !== 'undefined' && window.__initial_auth_token) {
-                    await signInWithCustomToken(storeAuth, window.__initial_auth_token);
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
                 } else {
-                    await signInAnonymously(storeAuth);
+                    await signInAnonymously(auth);
                 }
 
-                currentUser = storeAuth.currentUser;
+                currentUser = auth.currentUser;
                 if (!currentUser) {
                     return;
                 }
 
-                storeDocRef = doc(storeDb, 'artifacts', appId, 'public', 'data', 'storeShowcase', 'main');
+                storeDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'storeShowcase', 'main');
                 attachStoreListener();
             } catch (err) {
                 console.error('Firebase init error:', err);
@@ -1356,113 +1406,24 @@
             renderHeroCardBanner();
             renderExampleModal();
             renderGroupModal();
-            if (storeState.isAdminLoggedIn) {
+            if (state.isAdminLoggedIn) {
                 renderAdminCategoryControls();
                 renderAdminArtworkList();
             }
         }
 
-        function closeAllModals() {
-            const backdrop = document.getElementById('modalBackdrop');
-            const modalIds = [
-                'exampleModal',
-                'groupModal',
-                'queueModal',
-                'tosModal',
-                'pricingModal',
-                'briefModal',
-                'adminLoginModal',
-                'adminPanelModal'
-            ];
-
-            modalIds.forEach((id) => {
-                const modal = document.getElementById(id);
-                if (!modal) return;
-                const card = modal.querySelector('.modal-card');
-                if (card) {
-                    card.classList.remove('scale-100');
-                    card.classList.add('scale-95');
-                }
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
-                modal.style.display = 'none';
-            });
-
-            if (backdrop) {
-                backdrop.classList.add('opacity-0');
-                backdrop.classList.add('hidden');
-                backdrop.style.display = 'none';
-            }
-        }
-
-        function openModal(modalId) {
-            const backdrop = document.getElementById('modalBackdrop');
-            const target = document.getElementById(modalId);
-            if (!target) return;
-
-            const otherModals = [
-                'exampleModal',
-                'groupModal',
-                'queueModal',
-                'tosModal',
-                'pricingModal',
-                'briefModal',
-                'adminLoginModal',
-                'adminPanelModal'
-            ].filter((id) => id !== modalId);
-
-            otherModals.forEach((id) => {
-                const el = document.getElementById(id);
-                if (el) {
-                    el.classList.add('hidden');
-                    el.classList.remove('flex');
-                    el.style.display = 'none';
-                }
-            });
-
+        window.__onModalWillOpen = function (modalId) {
             if (modalId === 'exampleModal') {
                 renderExampleModal();
             } else if (modalId === 'groupModal') {
-                storeState.selectedGroupSubcat = 'ทั้งหมด';
+                state.selectedGroupSubcat = 'ทั้งหมด';
                 renderGroupModal();
             } else if (modalId === 'adminPanelModal') {
                 renderHeroCardBanner();
-                renderAdminCategoryControls();
+                onAdminMainCatChange();
                 renderAdminArtworkList();
             }
-
-            if (backdrop) {
-                backdrop.classList.remove('hidden');
-                backdrop.style.display = 'block';
-                backdrop.style.pointerEvents = 'auto';
-                requestAnimationFrame(() => {
-                    backdrop.classList.remove('opacity-0');
-                });
-            }
-
-            target.classList.remove('hidden');
-            target.classList.add('flex');
-            target.style.display = 'flex';
-            target.style.pointerEvents = 'auto';
-            const card = target.querySelector('.modal-card');
-            if (card) {
-                card.style.pointerEvents = 'auto';
-                requestAnimationFrame(() => {
-                    card.classList.remove('scale-95');
-                    card.classList.add('scale-100');
-                });
-            }
-        }
-
-        function openAdminEntry() {
-            if (storeState.isAdminLoggedIn) {
-                openModal('adminPanelModal');
-            } else {
-                const errEl = document.getElementById('adminLoginError');
-                if (errEl) errEl.classList.add('hidden');
-                openModal('adminLoginModal');
-            }
-        }
+        };
 
         function handleAdminLogin(event) {
             event.preventDefault();
@@ -1471,9 +1432,10 @@
             const errEl = document.getElementById('adminLoginError');
 
             if (userInput === 'เจ้าเหมียว' && passInput === '01082546') {
-                storeState.isAdminLoggedIn = true;
+                state.isAdminLoggedIn = true;
+                window.__jaomeowAdminLoggedIn = true;
                 if (errEl) errEl.classList.add('hidden');
-                openModal('adminPanelModal');
+                window.openModal('adminPanelModal');
             } else if (errEl) {
                 errEl.textContent = 'ชื่อแอดมินหรือรหัสผ่านไม่ถูกต้องครับ';
                 errEl.classList.remove('hidden');
@@ -1481,10 +1443,11 @@
         }
 
         function handleAdminLogout() {
-            storeState.isAdminLoggedIn = false;
+            state.isAdminLoggedIn = false;
+            window.__jaomeowAdminLoggedIn = false;
             const form = document.getElementById('adminLoginForm');
             if (form) form.reset();
-            closeAllModals();
+            window.closeAllModals();
         }
 
         function renderExampleModal() {
@@ -1493,13 +1456,13 @@
             const listEl = document.getElementById('exampleGalleryList');
             if (!tabsEl || !chipsEl || !listEl) return;
 
-            const subcats = Object.keys(storeState.categories.example || {});
-            if (!subcats.includes(storeState.selectedExampleSubcat)) {
-                storeState.selectedExampleSubcat = subcats[0] || 'งานป้าย';
+            const subcats = Object.keys(state.categories.example || {});
+            if (!subcats.includes(state.selectedExampleSubcat)) {
+                state.selectedExampleSubcat = subcats[0] || 'งานป้าย';
             }
 
             tabsEl.innerHTML = subcats.map((sub) => {
-                const active = sub === storeState.selectedExampleSubcat;
+                const active = sub === state.selectedExampleSubcat;
                 return `<button type="button" onclick="selectExampleSubcat('${escapeHtml(sub)}')" class="px-3 py-1.5 rounded-full text-xs font-bold transition cursor-pointer ${
                     active
                         ? 'bg-[#EE7CA8] text-white shadow-xs'
@@ -1507,16 +1470,16 @@
                 }">${escapeHtml(sub)}</button>`;
             }).join('');
 
-            const leafList = Array.isArray(storeState.categories.example[storeState.selectedExampleSubcat])
-                ? storeState.categories.example[storeState.selectedExampleSubcat]
+            const leafList = Array.isArray(state.categories.example[state.selectedExampleSubcat])
+                ? state.categories.example[state.selectedExampleSubcat]
                 : [];
             const allFilterOptions = ['ทั้งหมด', ...leafList];
-            if (!allFilterOptions.includes(storeState.selectedExampleLeaf)) {
-                storeState.selectedExampleLeaf = 'ทั้งหมด';
+            if (!allFilterOptions.includes(state.selectedExampleLeaf)) {
+                state.selectedExampleLeaf = 'ทั้งหมด';
             }
 
             chipsEl.innerHTML = allFilterOptions.map((leaf) => {
-                const active = leaf === storeState.selectedExampleLeaf;
+                const active = leaf === state.selectedExampleLeaf;
                 return `<button type="button" onclick="selectExampleLeaf('${escapeHtml(leaf)}')" class="px-2.5 py-1 rounded-xl text-[11px] font-semibold border transition cursor-pointer ${
                     active
                         ? 'bg-[#FFE3EE] border-[#F4A7C6] text-[#9E3F6B]'
@@ -1524,24 +1487,24 @@
                 }">${escapeHtml(leaf)}</button>`;
             }).join('');
 
-            const filtered = storeState.artworks.filter((item) => {
+            const filtered = state.artworks.filter((item) => {
                 if (item.mainCat !== 'example') return false;
-                if (item.subCat !== storeState.selectedExampleSubcat) return false;
-                if (storeState.selectedExampleLeaf === 'ทั้งหมด') return true;
-                return Array.isArray(item.categories) && item.categories.includes(storeState.selectedExampleLeaf);
+                if (item.subCat !== state.selectedExampleSubcat) return false;
+                if (state.selectedExampleLeaf === 'ทั้งหมด') return true;
+                return Array.isArray(item.categories) && item.categories.includes(state.selectedExampleLeaf);
             });
 
             renderGalleryCards(listEl, filtered, 'ยังไม่มีตัวอย่างงานในหมวดนี้ครับ');
         }
 
         function selectExampleSubcat(subcat) {
-            storeState.selectedExampleSubcat = subcat;
-            storeState.selectedExampleLeaf = 'ทั้งหมด';
+            state.selectedExampleSubcat = subcat;
+            state.selectedExampleLeaf = 'ทั้งหมด';
             renderExampleModal();
         }
 
         function selectExampleLeaf(leaf) {
-            storeState.selectedExampleLeaf = leaf;
+            state.selectedExampleLeaf = leaf;
             renderExampleModal();
         }
 
@@ -1550,16 +1513,16 @@
             const listEl = document.getElementById('groupGalleryList');
             if (!chipsEl || !listEl) return;
 
-            const groupItems = storeState.artworks.filter((item) => item.mainCat === 'group');
-            const baseGroupCats = Array.isArray(storeState.categories.group) ? storeState.categories.group : [];
+            const groupItems = state.artworks.filter((item) => item.mainCat === 'group');
+            const baseGroupCats = Array.isArray(state.categories.group) ? state.categories.group : [];
             const filterList = ['ทั้งหมด', ...baseGroupCats];
 
-            if (!filterList.includes(storeState.selectedGroupSubcat)) {
-                storeState.selectedGroupSubcat = 'ทั้งหมด';
+            if (!filterList.includes(state.selectedGroupSubcat)) {
+                state.selectedGroupSubcat = 'ทั้งหมด';
             }
 
             chipsEl.innerHTML = filterList.map((catName) => {
-                const active = catName === storeState.selectedGroupSubcat;
+                const active = catName === state.selectedGroupSubcat;
                 const countText = catName === 'ทั้งหมด' ? ` (${groupItems.length})` : '';
                 return `<button type="button" onclick="selectGroupSubcat('${escapeHtml(catName)}')" class="px-3 py-1 rounded-full text-xs font-bold transition cursor-pointer ${
                     active
@@ -1568,15 +1531,15 @@
                 }">${escapeHtml(catName)}${countText}</button>`;
             }).join('');
 
-            const filtered = storeState.selectedGroupSubcat === 'ทั้งหมด'
+            const filtered = state.selectedGroupSubcat === 'ทั้งหมด'
                 ? groupItems
-                : groupItems.filter((item) => Array.isArray(item.categories) && item.categories.includes(storeState.selectedGroupSubcat));
+                : groupItems.filter((item) => Array.isArray(item.categories) && item.categories.includes(state.selectedGroupSubcat));
 
             renderGalleryCards(listEl, filtered, 'ยังไม่มีตัวอย่างกลุ่มในหมวดนี้ครับ');
         }
 
         function selectGroupSubcat(catName) {
-            storeState.selectedGroupSubcat = catName;
+            state.selectedGroupSubcat = catName;
             renderGroupModal();
         }
 
@@ -1589,9 +1552,7 @@
             containerEl.innerHTML = items.map((item) => {
                 const safeImg = item.image || 'https://placehold.co/400x400/FFE6F0/A85A7E?text=JaoMeow';
                 const safeTitle = escapeHtml(item.title || '');
-                const safePrice = item.mainCat === 'group' && (item.price || '').trim()
-                    ? escapeHtml(item.price.trim())
-                    : '';
+                const safePrice = item.price ? escapeHtml(item.price) : '';
                 const safeLink = item.link ? escapeHtml(item.link) : '';
                 const tagsText = Array.isArray(item.categories) && item.categories.length > 0
                     ? escapeHtml(item.categories.join(', '))
@@ -1604,7 +1565,7 @@
                                 <img src="${safeImg}" alt="${safeTitle || 'ผลงาน'}" onerror="this.src='https://placehold.co/400x400/FFE6F0/A85A7E?text=JaoMeow'" class="w-full h-full object-cover">
                             </div>
                             ${safeTitle ? `<div class="font-bold text-xs text-[#6B4257] line-clamp-1">${safeTitle}</div>` : ''}
-                            ${safePrice ? `<div class="inline-flex px-2 py-0.5 rounded-full bg-[#FFF0F6] border border-pink-100 text-[10px] font-bold text-[#D45A8B]">${safePrice}</div>` : ''}
+                            ${safePrice ? `<div class="inline-block px-2 py-0.5 rounded-full bg-[#FFF0F6] border border-pink-100 text-[10px] font-bold text-[#D95C91]">${safePrice}</div>` : ''}
                             ${tagsText ? `<div class="text-[10px] text-[#A87A90] line-clamp-1">${tagsText}</div>` : ''}
                         </div>
                         ${safeLink
@@ -1619,7 +1580,7 @@
         function onAdminMainCatChange() {
             const mainCat = document.getElementById('adminMainCatSelect')?.value || 'example';
             const subcatWrapper = document.getElementById('adminExampleSubcatWrapper');
-            const groupPriceWrapper = document.getElementById('groupPriceFieldWrapper');
+            const groupPriceWrapper = document.getElementById('adminGroupPriceWrapper');
             if (subcatWrapper) {
                 subcatWrapper.classList.toggle('hidden', mainCat !== 'example');
             }
@@ -1637,29 +1598,25 @@
             const customListEl = document.getElementById('adminCustomCategoryList');
             const checkboxesEl = document.getElementById('multiCategoryCheckboxes');
             const labelEl = document.getElementById('multiCatLabel');
-            const groupPriceWrapper = document.getElementById('groupPriceFieldWrapper');
-            if (groupPriceWrapper) {
-                groupPriceWrapper.classList.toggle('hidden', mainCat !== 'group');
-            }
             if (!customListEl || !checkboxesEl) return;
 
             let availableCats = [];
             let activeSub = '';
 
             if (mainCat === 'example') {
-                const subKeys = Object.keys(storeState.categories.example || {});
+                const subKeys = Object.keys(state.categories.example || {});
                 if (subcatSelect) {
                     const prevVal = subcatSelect.value;
                     subcatSelect.innerHTML = subKeys.map((k) => `<option value="${escapeHtml(k)}">${escapeHtml(k)}</option>`).join('');
                     if (subKeys.includes(prevVal)) subcatSelect.value = prevVal;
                 }
                 activeSub = subcatSelect?.value || subKeys[0] || 'งานป้าย';
-                availableCats = Array.isArray(storeState.categories.example[activeSub])
-                    ? storeState.categories.example[activeSub]
+                availableCats = Array.isArray(state.categories.example[activeSub])
+                    ? state.categories.example[activeSub]
                     : [];
                 if (labelEl) labelEl.textContent = `เลือกหมวดย่อยใน "${activeSub}" (เลือกได้หลายหมวด)`;
             } else {
-                availableCats = Array.isArray(storeState.categories.group) ? storeState.categories.group : [];
+                availableCats = Array.isArray(state.categories.group) ? state.categories.group : [];
                 if (labelEl) labelEl.textContent = 'เลือกหมวดกลุ่ม (เลือกได้หลายหมวด)';
             }
 
@@ -1700,18 +1657,18 @@
 
             if (mainCat === 'example') {
                 const activeSub = subcatSelect?.value || 'งานป้าย';
-                if (!Array.isArray(storeState.categories.example[activeSub])) {
-                    storeState.categories.example[activeSub] = [];
+                if (!Array.isArray(state.categories.example[activeSub])) {
+                    state.categories.example[activeSub] = [];
                 }
-                if (!storeState.categories.example[activeSub].includes(newName)) {
-                    storeState.categories.example[activeSub].push(newName);
+                if (!state.categories.example[activeSub].includes(newName)) {
+                    state.categories.example[activeSub].push(newName);
                 }
             } else {
-                if (!Array.isArray(storeState.categories.group)) {
-                    storeState.categories.group = [];
+                if (!Array.isArray(state.categories.group)) {
+                    state.categories.group = [];
                 }
-                if (!storeState.categories.group.includes(newName)) {
-                    storeState.categories.group.push(newName);
+                if (!state.categories.group.includes(newName)) {
+                    state.categories.group.push(newName);
                 }
             }
 
@@ -1724,20 +1681,20 @@
 
         async function deleteCustomCategory(mainCat, subCat, catName) {
             if (mainCat === 'example') {
-                const list = storeState.categories.example?.[subCat];
+                const list = state.categories.example?.[subCat];
                 if (Array.isArray(list)) {
-                    storeState.categories.example[subCat] = list.filter((item) => item !== catName);
+                    state.categories.example[subCat] = list.filter((item) => item !== catName);
                 }
-                if (storeState.selectedExampleLeaf === catName) {
-                    storeState.selectedExampleLeaf = 'ทั้งหมด';
+                if (state.selectedExampleLeaf === catName) {
+                    state.selectedExampleLeaf = 'ทั้งหมด';
                 }
             } else {
-                const list = storeState.categories.group;
+                const list = state.categories.group;
                 if (Array.isArray(list)) {
-                    storeState.categories.group = list.filter((item) => item !== catName);
+                    state.categories.group = list.filter((item) => item !== catName);
                 }
-                if (storeState.selectedGroupSubcat === catName) {
-                    storeState.selectedGroupSubcat = 'ทั้งหมด';
+                if (state.selectedGroupSubcat === catName) {
+                    state.selectedGroupSubcat = 'ทั้งหมด';
                 }
             }
 
@@ -1754,7 +1711,7 @@
 
             try {
                 const dataUrl = await readFileAsDataUrl(file);
-                storeState.heroCardImage = dataUrl;
+                state.heroCardImage = dataUrl;
                 renderHeroCardBanner();
                 await persistStoreToFirestore();
                 if (statusEl) {
@@ -1775,7 +1732,7 @@
             const stripEl = document.getElementById('multiSelectedImagesStrip');
             if (!infoEl || !stripEl) return;
 
-            const batch = storeState.selectedBatchImages || [];
+            const batch = state.selectedBatchImages || [];
             if (batch.length <= 1) {
                 infoEl.classList.add('hidden');
                 stripEl.classList.add('hidden');
@@ -1813,9 +1770,9 @@
                     }))
                 );
                 const validItems = results.filter((r) => Boolean(r.dataUrl));
-                storeState.selectedBatchImages = validItems;
-                storeState.previewImageData = validItems[0]?.dataUrl || '';
-                updateAdminPreviewImage(storeState.previewImageData);
+                state.selectedBatchImages = validItems;
+                state.previewImageData = validItems[0]?.dataUrl || '';
+                updateAdminPreviewImage(state.previewImageData);
                 renderBatchPreviewStrip();
             } catch (err) {
                 console.error('Multi-file read error:', err);
@@ -1826,8 +1783,8 @@
             const urlInput = document.getElementById('artworkImageUrlInput');
             const val = (urlInput?.value || '').trim();
             if (val) {
-                storeState.selectedBatchImages = [];
-                storeState.previewImageData = val;
+                state.selectedBatchImages = [];
+                state.previewImageData = val;
                 updateAdminPreviewImage(val);
                 renderBatchPreviewStrip();
             }
@@ -1855,21 +1812,23 @@
             if (errEl) errEl.classList.add('hidden');
             if (okEl) okEl.classList.add('hidden');
 
-            const mainCat = document.getElementById('adminMainCatSelect')?.value || 'example';
             const rawTitle = (document.getElementById('artworkTitleInput')?.value || '').trim();
             const link = (document.getElementById('artworkLinkInput')?.value || '').trim();
-            const price = mainCat === 'group' ? (document.getElementById('artworkPriceInput')?.value || '').trim() : '';
             const urlDirect = (document.getElementById('artworkImageUrlInput')?.value || '').trim();
+            const mainCat = document.getElementById('adminMainCatSelect')?.value || 'example';
+            const rawPrice = mainCat === 'group'
+                ? (document.getElementById('artworkPriceInput')?.value || '').trim()
+                : '';
 
-            const imagesToSave = storeState.selectedBatchImages.length > 0
-                ? storeState.selectedBatchImages.map((item, idx) => ({
+            const imagesToSave = state.selectedBatchImages.length > 0
+                ? state.selectedBatchImages.map((item, idx) => ({
                     src: item.dataUrl,
                     title: rawTitle
-                        ? (storeState.selectedBatchImages.length > 1 ? `${rawTitle} (${idx + 1})` : rawTitle)
+                        ? (state.selectedBatchImages.length > 1 ? `${rawTitle} (${idx + 1})` : rawTitle)
                         : ''
                 }))
-                : ((storeState.previewImageData || urlDirect)
-                    ? [{ src: storeState.previewImageData || urlDirect, title: rawTitle }]
+                : ((state.previewImageData || urlDirect)
+                    ? [{ src: state.previewImageData || urlDirect, title: rawTitle }]
                     : []);
 
             if (imagesToSave.length === 0) {
@@ -1891,20 +1850,21 @@
             const newItems = imagesToSave.map((imgEntry, idx) => ({
                 id: `art-${nowStamp}-${idx}`,
                 title: imgEntry.title,
+                price: rawPrice,
                 link,
-                price,
                 image: imgEntry.src,
                 mainCat,
                 subCat,
                 categories: selectedCats
             }));
 
-            storeState.artworks.unshift(...newItems);
-            storeState.previewImageData = '';
-            storeState.selectedBatchImages = [];
+            state.artworks.unshift(...newItems);
+            state.previewImageData = '';
+            state.selectedBatchImages = [];
             updateAdminPreviewImage('');
             renderBatchPreviewStrip();
             document.getElementById('adminArtworkForm')?.reset();
+            onAdminMainCatChange();
 
             renderAdminArtworkList();
             refreshActiveViews();
@@ -1919,7 +1879,7 @@
         }
 
         async function deleteArtwork(id) {
-            storeState.artworks = storeState.artworks.filter((item) => item.id !== id);
+            state.artworks = state.artworks.filter((item) => item.id !== id);
             renderAdminArtworkList();
             refreshActiveViews();
             await persistStoreToFirestore();
@@ -1930,31 +1890,29 @@
             const countEl = document.getElementById('adminItemCount');
             if (!listEl) return;
 
-            if (countEl) countEl.textContent = String(storeState.artworks.length);
+            if (countEl) countEl.textContent = String(state.artworks.length);
 
-            if (storeState.artworks.length === 0) {
+            if (state.artworks.length === 0) {
                 listEl.innerHTML = `<div class="text-xs text-[#A5788E] py-4 text-center">ยังไม่มีรายการที่เผยแพร่</div>`;
                 return;
             }
 
-            listEl.innerHTML = storeState.artworks.map((item) => {
+            listEl.innerHTML = state.artworks.map((item) => {
                 const scopeLabel = item.mainCat === 'example'
                     ? `ตัวอย่างงาน / ${escapeHtml(item.subCat || '')}`
                     : 'ตัวอย่างกลุ่ม';
                 const safeImg = item.image || 'https://placehold.co/100x100/FFE6F0/A85A7E?text=Art';
                 const hasTitle = Boolean((item.title || '').trim());
                 const displayTitle = hasTitle ? escapeHtml(item.title.trim()) : '';
-                const priceTag = item.mainCat === 'group' && (item.price || '').trim()
-                    ? `<span class="px-2 py-0.5 rounded-full bg-[#FFF0F6] text-[#B84D7B] text-[10px] font-bold">${escapeHtml(item.price.trim())}</span>`
-                    : '';
+                const priceBadge = item.price ? ` · ราคา: ${escapeHtml(item.price)}` : '';
 
                 return `
                     <div class="flex items-center justify-between gap-2.5 p-2 rounded-2xl bg-white border border-pink-100">
                         <div class="flex items-center gap-2.5 min-w-0">
                             <img src="${safeImg}" alt="${displayTitle || 'รูปภาพ'}" onerror="this.src='https://placehold.co/100x100/FFE6F0/A85A7E?text=Art'" class="w-11 h-11 rounded-xl object-cover bg-[#FFF4F8] shrink-0">
                             <div class="min-w-0 space-y-0.5">
-                                ${(displayTitle || priceTag) ? `<div class="flex items-center gap-1.5 flex-wrap">${displayTitle ? `<span class="font-bold text-xs text-[#6B4257] truncate">${displayTitle}</span>` : ''}${priceTag}</div>` : ''}
-                                <div class="text-[10px] text-[#A5788E] truncate">${scopeLabel}${item.categories?.length ? ' · ' + escapeHtml(item.categories.join(', ')) : ''}</div>
+                                ${displayTitle ? `<div class="font-bold text-xs text-[#6B4257] truncate">${displayTitle}</div>` : ''}
+                                <div class="text-[10px] text-[#A5788E] truncate">${scopeLabel}${priceBadge}${item.categories?.length ? ' · ' + escapeHtml(item.categories.join(', ')) : ''}</div>
                             </div>
                         </div>
                         <button type="button" onclick="deleteArtwork('${escapeHtml(item.id)}')" class="px-2.5 py-1 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-500 text-[11px] font-bold shrink-0 cursor-pointer">ลบ</button>
@@ -2010,33 +1968,15 @@
 
         const MUSIC_VIDEO_ID = 'aoUX55g5iK0';
         const RELAXED_DEFAULT_VOLUME = 20;
-        let currentMusicVolume = RELAXED_DEFAULT_VOLUME;
         let isMusicPlaying = false;
         let isMusicLooping = true;
         let ytPlayerReady = false;
         let ytPlayerInstance = null;
         let pendingAutoPlay = true;
-        let hasStartedFromBeginning = false;
         let progressTimer = null;
         let isSeekingSlider = false;
         let unlockGestureBound = false;
-
-        function setMusicVolumeLevel(val) {
-            const clamped = Math.max(0, Math.min(100, Math.round(Number(val) || 0)));
-            currentMusicVolume = clamped;
-            const labelEl = document.getElementById('musicVolumeLabel');
-            if (labelEl) labelEl.textContent = `${clamped}%`;
-            if (ytPlayerInstance && ytPlayerReady) {
-                try {
-                    if (clamped === 0) {
-                        ytPlayerInstance.mute();
-                    } else {
-                        ytPlayerInstance.unMute();
-                        ytPlayerInstance.setVolume(clamped);
-                    }
-                } catch (_) {}
-            }
-        }
+        let hasResetInitialPosition = false;
 
         function formatClock(sec) {
             const total = Math.max(0, Math.floor(Number(sec) || 0));
@@ -2076,10 +2016,8 @@
             }
             try {
                 ytPlayerInstance.seekTo(0, true);
-                if (currentMusicVolume > 0) {
-                    ytPlayerInstance.unMute();
-                    ytPlayerInstance.setVolume(currentMusicVolume);
-                }
+                ytPlayerInstance.unMute();
+                ytPlayerInstance.setVolume(RELAXED_DEFAULT_VOLUME);
                 ytPlayerInstance.playVideo();
                 setMusicUiState(true);
             } catch (_) {}
@@ -2142,14 +2080,12 @@
                 if (!pendingAutoPlay && isMusicPlaying) return;
                 try {
                     if (ytPlayerInstance && ytPlayerReady) {
-                        if (!hasStartedFromBeginning) {
+                        if (!hasResetInitialPosition) {
                             ytPlayerInstance.seekTo(0, true);
-                            hasStartedFromBeginning = true;
+                            hasResetInitialPosition = true;
                         }
-                        if (currentMusicVolume > 0) {
-                            ytPlayerInstance.unMute();
-                            ytPlayerInstance.setVolume(currentMusicVolume);
-                        }
+                        ytPlayerInstance.unMute();
+                        ytPlayerInstance.setVolume(RELAXED_DEFAULT_VOLUME);
                         ytPlayerInstance.playVideo();
                         pendingAutoPlay = false;
                         setMusicUiState(true);
@@ -2185,10 +2121,9 @@
                                 ytPlayerReady = true;
                                 try {
                                     event.target.seekTo(0, true);
-                                    if (currentMusicVolume > 0) {
-                                        event.target.unMute();
-                                        event.target.setVolume(currentMusicVolume);
-                                    }
+                                    hasResetInitialPosition = true;
+                                    event.target.unMute();
+                                    event.target.setVolume(RELAXED_DEFAULT_VOLUME);
                                     if (typeof event.target.setLoop === 'function') {
                                         event.target.setLoop(isMusicLooping);
                                     }
@@ -2207,14 +2142,12 @@
                                 if (event.data === window.YT.PlayerState.PLAYING) {
                                     pendingAutoPlay = false;
                                     try {
-                                        if (!hasStartedFromBeginning) {
+                                        if (!hasResetInitialPosition) {
                                             event.target.seekTo(0, true);
-                                            hasStartedFromBeginning = true;
+                                            hasResetInitialPosition = true;
                                         }
-                                        if (currentMusicVolume > 0) {
-                                            event.target.unMute();
-                                            event.target.setVolume(currentMusicVolume);
-                                        }
+                                        event.target.unMute();
+                                        event.target.setVolume(RELAXED_DEFAULT_VOLUME);
                                     } catch (_) {}
                                     setMusicUiState(true);
                                     startProgressLoop();
@@ -2222,10 +2155,8 @@
                                     if (isMusicLooping) {
                                         try {
                                             event.target.seekTo(0, true);
-                                            if (currentMusicVolume > 0) {
-                                                event.target.unMute();
-                                                event.target.setVolume(currentMusicVolume);
-                                            }
+                                            event.target.unMute();
+                                            event.target.setVolume(RELAXED_DEFAULT_VOLUME);
                                             event.target.playVideo();
                                         } catch (_) {}
                                     } else {
@@ -2239,14 +2170,8 @@
                     });
                 } else if (ytPlayerReady && autoPlayAfterLoad) {
                     try {
-                        if (!hasStartedFromBeginning) {
-                            ytPlayerInstance.seekTo(0, true);
-                            hasStartedFromBeginning = true;
-                        }
-                        if (currentMusicVolume > 0) {
-                            ytPlayerInstance.unMute();
-                            ytPlayerInstance.setVolume(currentMusicVolume);
-                        }
+                        ytPlayerInstance.unMute();
+                        ytPlayerInstance.setVolume(RELAXED_DEFAULT_VOLUME);
                         ytPlayerInstance.playVideo();
                     } catch (_) {}
                 }
@@ -2275,14 +2200,12 @@
                 ensureYouTubePlayer(true);
                 if (ytPlayerInstance && ytPlayerReady && typeof ytPlayerInstance.playVideo === 'function') {
                     try {
-                        if (!hasStartedFromBeginning) {
+                        if (!hasResetInitialPosition) {
                             ytPlayerInstance.seekTo(0, true);
-                            hasStartedFromBeginning = true;
+                            hasResetInitialPosition = true;
                         }
-                        if (currentMusicVolume > 0) {
-                            ytPlayerInstance.unMute();
-                            ytPlayerInstance.setVolume(currentMusicVolume);
-                        }
+                        ytPlayerInstance.unMute();
+                        ytPlayerInstance.setVolume(RELAXED_DEFAULT_VOLUME);
                         ytPlayerInstance.playVideo();
                     } catch (_) {}
                 }
@@ -2303,14 +2226,13 @@
             }
         }
 
-        function initStorefrontInteractions() {
+        document.addEventListener('DOMContentLoaded', () => {
             syncLoopButtonUi();
             bindFirstGestureAudioUnlock();
             ensureYouTubePlayer(true);
 
             const seekEl = document.getElementById('musicSeekSlider');
-            if (seekEl && !seekEl.dataset.bound) {
-                seekEl.dataset.bound = '1';
+            if (seekEl) {
                 seekEl.addEventListener('pointerdown', () => { isSeekingSlider = true; });
                 seekEl.addEventListener('pointerup', () => {
                     isSeekingSlider = false;
@@ -2321,11 +2243,8 @@
                     seekMusicBySlider(seekEl.value);
                 });
             }
-        }
+        });
 
-        window.openModal = openModal;
-        window.closeAllModals = closeAllModals;
-        window.openAdminEntry = openAdminEntry;
         window.handleAdminLogin = handleAdminLogin;
         window.handleAdminLogout = handleAdminLogout;
         window.selectExampleSubcat = selectExampleSubcat;
@@ -2342,68 +2261,12 @@
         window.deleteArtwork = deleteArtwork;
         window.handleBriefSubmit = handleBriefSubmit;
         window.toggleMusicPlayer = toggleMusicPlayer;
-        window.setMusicVolumeLevel = setMusicVolumeLevel;
         window.seekMusicBySlider = seekMusicBySlider;
         window.restartMusicTrack = restartMusicTrack;
         window.skipMusicForward = skipMusicForward;
         window.toggleMusicLoop = toggleMusicLoop;
 
-        if (!window.__jaomeowClickDelegated) {
-            window.__jaomeowClickDelegated = true;
-            document.addEventListener('click', (event) => {
-                const target = event.target instanceof Element ? event.target : null;
-                if (!target) return;
-
-                if (target.id === 'modalBackdrop') {
-                    closeAllModals();
-                    return;
-                }
-
-                const actionEl = target.closest('[data-modal-open], [data-modal-close], [data-admin-open], [data-admin-logout], [data-music-action]');
-                if (!actionEl) return;
-
-                if (actionEl.hasAttribute('data-modal-close')) {
-                    event.preventDefault();
-                    closeAllModals();
-                    return;
-                }
-
-                if (actionEl.hasAttribute('data-admin-open')) {
-                    event.preventDefault();
-                    openAdminEntry();
-                    return;
-                }
-
-                if (actionEl.hasAttribute('data-admin-logout')) {
-                    event.preventDefault();
-                    handleAdminLogout();
-                    return;
-                }
-
-                const modalId = actionEl.getAttribute('data-modal-open');
-                if (modalId) {
-                    event.preventDefault();
-                    openModal(modalId);
-                    return;
-                }
-
-                const musicAction = actionEl.getAttribute('data-music-action');
-                if (musicAction === 'toggle') toggleMusicPlayer();
-                else if (musicAction === 'restart') restartMusicTrack();
-                else if (musicAction === 'forward') skipMusicForward();
-                else if (musicAction === 'loop') toggleMusicLoop();
-            }, true);
-        }
-
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => {
-                initStorefrontInteractions();
-                initFirebaseDatabase();
-            }, { once: true });
-        } else {
-            initStorefrontInteractions();
-            initFirebaseDatabase();
-        }
+        initFirebaseDatabase();
     </script>
 </body>
 </html>
