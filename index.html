@@ -875,6 +875,7 @@
                     <p id="adminSyncStatusText" class="text-xs text-[#A5788E] truncate">ซิงก์ข้อมูลอัตโนมัติทุกเครื่อง</p>
                 </div>
                 <div class="flex items-center gap-1.5 shrink-0">
+                    <button type="button" onclick="syncStoreFromCloud()" class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-white text-[#8A5A72] border border-pink-200 hover:bg-pink-50 cursor-pointer">ซิงก์</button>
                     <button type="button" onclick="handleAdminLogout()" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-50 text-rose-500 border border-rose-200 hover:bg-rose-100 cursor-pointer">ออกจากระบบ</button>
                     <button type="button" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
                 </div>
@@ -1736,7 +1737,7 @@
             }
         }
 
-        function optimizeImageDataUrl(dataUrl, maxDim = 560, quality = 0.68) {
+        function optimizeImageDataUrl(dataUrl, maxDim = 520, quality = 0.65) {
             return new Promise((resolve) => {
                 if (!dataUrl || typeof dataUrl !== 'string' || !dataUrl.startsWith('data:image/')) {
                     resolve(dataUrl || '');
@@ -1840,6 +1841,82 @@
             };
         }
 
+        let firestoreSdkPromise = null;
+        let firestoreUnsubscribe = null;
+
+        async function getFirestoreSdk() {
+            if (!hasFirebaseConfig()) return null;
+            if (firestoreSdkPromise) return firestoreSdkPromise;
+
+            firestoreSdkPromise = (async () => {
+                try {
+                    const [{ initializeApp, getApps }, firestoreMod] = await Promise.all([
+                        import('https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js'),
+                        import('https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js')
+                    ]);
+                    const existing = getApps();
+                    const app = existing.length > 0
+                        ? existing[0]
+                        : initializeApp(STORE_CONFIG.firebaseConfig);
+                    const db = firestoreMod.getFirestore(app);
+                    return { db, ...firestoreMod };
+                } catch (err) {
+                    console.warn('Firestore SDK fallback to REST:', err);
+                    firestoreSdkPromise = null;
+                    return null;
+                }
+            })();
+
+            return firestoreSdkPromise;
+        }
+
+        async function subscribeFirestoreRealtime(storeId = getActiveStoreId()) {
+            const sdk = await getFirestoreSdk();
+            if (!sdk) return;
+
+            if (typeof firestoreUnsubscribe === 'function') {
+                try { firestoreUnsubscribe(); } catch (_) {}
+                firestoreUnsubscribe = null;
+            }
+
+            try {
+                const colName = String(STORE_CONFIG.firestoreCollection || 'jaomeow_stores').trim();
+                const docRef = sdk.doc(sdk.db, colName, String(storeId));
+
+                firestoreUnsubscribe = sdk.onSnapshot(
+                    docRef,
+                    (snap) => {
+                        if (!snap.exists()) return;
+                        const data = snap.data() || {};
+                        const rawJson = data.payloadJson;
+                        if (!rawJson) return;
+                        try {
+                            const normalized = normalizeStoreData(JSON.parse(rawJson));
+                            const remoteTs = Number(normalized.updatedAt || 0);
+                            const localTs = Number(state.updatedAt || 0);
+                            const remoteSig = computeDataSignature(normalized);
+                            const currentSig = computeDataSignature(state);
+
+                            if (remoteTs > localTs || (remoteSig && remoteSig !== currentSig && remoteTs >= localTs)) {
+                                applyNormalizedDataToState(normalized, storeId);
+                                writeLocalCache(buildSyncPayload(), storeId);
+                                refreshActiveViews();
+                            }
+                            setStatusBadge('ซิงก์เรียลไทม์ผ่าน Firestore แล้ว');
+                        } catch (parseErr) {
+                            console.error('Firestore snapshot parse error:', parseErr);
+                        }
+                    },
+                    (err) => {
+                        console.warn('Firestore onSnapshot error:', err);
+                        setStatusBadge('ซิงก์อัตโนมัติผ่านคลาวด์');
+                    }
+                );
+            } catch (err) {
+                console.warn('Firestore subscribe failed:', err);
+            }
+        }
+
         async function pushStoreToCloud(storeId = state.storeId) {
             const payload = buildSyncPayload();
             writeLocalCache(payload, storeId);
@@ -1850,7 +1927,24 @@
                 } catch (_) {}
             }
 
-            const fsOk = await pushStoreToFirestore(payload, storeId);
+            let fsOk = false;
+            const sdk = await getFirestoreSdk();
+            if (sdk) {
+                try {
+                    const colName = String(STORE_CONFIG.firestoreCollection || 'jaomeow_stores').trim();
+                    const docRef = sdk.doc(sdk.db, colName, String(storeId));
+                    await sdk.setDoc(docRef, {
+                        payloadJson: JSON.stringify(payload),
+                        updatedAt: Number(payload.updatedAt || Date.now())
+                    }, { merge: true });
+                    fsOk = true;
+                } catch (_) {}
+            }
+
+            if (!fsOk) {
+                fsOk = await pushStoreToFirestore(payload, storeId);
+            }
+
             let anySuccess = fsOk;
             const endpoints = STORE_CONFIG.syncEndpoints || [];
 
@@ -1870,11 +1964,11 @@
             }
 
             if (fsOk) {
-                setStatusBadge('ซิงก์ข้อมูลขึ้น Firebase Firestore แล้ว');
+                setStatusBadge('ซิงก์เรียลไทม์ผ่าน Firestore แล้ว');
             } else if (anySuccess) {
                 setStatusBadge('ซิงก์ข้อมูลออนไลน์เรียบร้อยแล้ว');
             } else {
-                setStatusBadge('บันทึกไว้ในเครื่อง — ตรวจ Firestore Rules / เครือข่าย');
+                setStatusBadge('บันทึกในเครื่อง — ตรวจ Firestore Rules / เครือข่าย');
             }
             return anySuccess;
         }
@@ -1932,7 +2026,7 @@
                     writeLocalCache(buildSyncPayload(), sid);
                     refreshActiveViews();
                 }
-                setStatusBadge('ซิงก์ข้อมูลอัตโนมัติทุกเครื่องแล้ว');
+                setStatusBadge('ซิงก์เรียลไทม์ผ่าน Firestore แล้ว');
                 isSyncInFlight = false;
                 return true;
             }
@@ -1944,6 +2038,7 @@
         }
 
         function startAutoSyncEngine() {
+            subscribeFirestoreRealtime(state.storeId);
             if (autoSyncTimer) {
                 clearInterval(autoSyncTimer);
             }
@@ -1951,10 +2046,11 @@
                 if (document.visibilityState === 'visible') {
                     syncStoreFromCloud();
                 }
-            }, 5000);
+            }, 6000);
 
             document.addEventListener('visibilitychange', () => {
                 if (document.visibilityState === 'visible') {
+                    subscribeFirestoreRealtime(state.storeId);
                     syncStoreFromCloud();
                 }
             });
@@ -2761,7 +2857,7 @@
 
             try {
                 const rawDataUrl = await readFileAsDataUrl(file);
-                const optimizedDataUrl = await optimizeImageDataUrl(rawDataUrl, 560, 0.68);
+                const optimizedDataUrl = await optimizeImageDataUrl(rawDataUrl, 520, 0.65);
                 state.heroCardImage = optimizedDataUrl;
                 saveStoreState();
                 if (statusEl) {
@@ -2807,7 +2903,7 @@
                 const results = await Promise.all(
                     files.map(async (file) => {
                         const rawUrl = await readFileAsDataUrl(file);
-                        const optimizedUrl = await optimizeImageDataUrl(rawUrl, 560, 0.68);
+                        const optimizedUrl = await optimizeImageDataUrl(rawUrl, 520, 0.65);
                         return {
                             name: file.name || 'image',
                             dataUrl: optimizedUrl
