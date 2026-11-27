@@ -872,10 +872,9 @@
             <div class="p-4 pb-3 border-b border-pink-100 flex items-center justify-between gap-2 bg-gradient-to-r from-[#FFF1F6] via-[#FFF7FA] to-[#FFEAF2]">
                 <div class="space-y-0.5 min-w-0">
                     <h3 class="font-display text-lg font-bold text-[#7A4961] truncate">⚙️ Admin Manager</h3>
-                    <p id="adminSyncStatusText" class="text-xs text-[#A5788E] truncate">ซิงก์ข้อมูลอัตโนมัติทุกเครื่อง</p>
+                    <p id="adminSyncStatusText" class="text-xs text-[#A5788E] truncate">อัปเดตข้อมูลอัตโนมัติทุกเครื่อง</p>
                 </div>
                 <div class="flex items-center gap-1.5 shrink-0">
-                    <button type="button" onclick="syncStoreFromCloud()" class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-white text-[#8A5A72] border border-pink-200 hover:bg-pink-50 cursor-pointer">ซิงก์</button>
                     <button type="button" onclick="handleAdminLogout()" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-50 text-rose-500 border border-rose-200 hover:bg-rose-100 cursor-pointer">ออกจากระบบ</button>
                     <button type="button" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
                 </div>
@@ -1902,14 +1901,14 @@
                                 writeLocalCache(buildSyncPayload(), storeId);
                                 refreshActiveViews();
                             }
-                            setStatusBadge('ซิงก์เรียลไทม์ผ่าน Firestore แล้ว');
+                            setStatusBadge('อัปเดตเรียลไทม์ผ่าน Firestore แล้ว');
                         } catch (parseErr) {
                             console.error('Firestore snapshot parse error:', parseErr);
                         }
                     },
                     (err) => {
                         console.warn('Firestore onSnapshot error:', err);
-                        setStatusBadge('ซิงก์อัตโนมัติผ่านคลาวด์');
+                        setStatusBadge('อัปเดตอัตโนมัติผ่านคลาวด์');
                     }
                 );
             } catch (err) {
@@ -1964,9 +1963,9 @@
             }
 
             if (fsOk) {
-                setStatusBadge('ซิงก์เรียลไทม์ผ่าน Firestore แล้ว');
+                setStatusBadge('อัปเดตเรียลไทม์ผ่าน Firestore แล้ว');
             } else if (anySuccess) {
-                setStatusBadge('ซิงก์ข้อมูลออนไลน์เรียบร้อยแล้ว');
+                setStatusBadge('อัปเดตข้อมูลออนไลน์เรียบร้อยแล้ว');
             } else {
                 setStatusBadge('บันทึกในเครื่อง — ตรวจ Firestore Rules / เครือข่าย');
             }
@@ -2026,13 +2025,13 @@
                     writeLocalCache(buildSyncPayload(), sid);
                     refreshActiveViews();
                 }
-                setStatusBadge('ซิงก์เรียลไทม์ผ่าน Firestore แล้ว');
+                setStatusBadge('อัปเดตเรียลไทม์ผ่าน Firestore แล้ว');
                 isSyncInFlight = false;
                 return true;
             }
 
             refreshActiveViews();
-            setStatusBadge('ซิงก์ข้อมูลอัตโนมัติทุกเครื่อง');
+            setStatusBadge('อัปเดตข้อมูลอัตโนมัติทุกเครื่อง');
             isSyncInFlight = false;
             return false;
         }
@@ -2090,7 +2089,7 @@
             state.updatedAt = Date.now();
             writeLocalCache(buildSyncPayload(), state.storeId);
             refreshActiveViews();
-            setStatusBadge('กำลังบันทึกและซิงก์ข้อมูลอัตโนมัติ...');
+            setStatusBadge('กำลังบันทึกข้อมูลอัตโนมัติ...');
             pushStoreToCloud(state.storeId);
         }
 
