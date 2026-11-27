@@ -315,6 +315,11 @@
         #adminPanelModal:not(.hidden) {
             display: flex !important;
         }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
         ::-webkit-scrollbar-track {
             background: #FFF3F7;
             border-radius: 999px;
@@ -377,6 +382,7 @@
                 <div class="flex items-center justify-end mb-3">
                     <button
                         type="button"
+                        data-admin-open="1"
                         onclick="openAdminEntry()"
                         class="sticker-badge px-3 py-1.5 rounded-full inline-flex items-center gap-1 text-xs font-bold text-[#9C5A79] hover:text-[#D46293] cursor-pointer"
                     >
@@ -494,6 +500,7 @@
                 <section class="grid grid-cols-2 gap-3 mb-4">
                     <button
                         type="button"
+                        data-modal-open="exampleModal"
                         onclick="openModal('exampleModal')"
                         class="cute-panel relative w-full rounded-[24px] py-6 px-3 text-center overflow-hidden cursor-pointer group flex flex-col justify-center items-center min-h-[156px]"
                     >
@@ -516,6 +523,7 @@
 
                     <button
                         type="button"
+                        data-modal-open="groupModal"
                         onclick="openModal('groupModal')"
                         class="cute-panel relative w-full rounded-[24px] py-6 px-3 text-center overflow-hidden cursor-pointer group flex flex-col justify-center items-center min-h-[156px]"
                     >
@@ -539,7 +547,7 @@
 
                 <!-- Four Menu Buttons in 2 Columns -->
                 <section class="grid grid-cols-2 gap-3 mb-4">
-                    <button type="button" onclick="openModal('queueModal')" class="cute-pill-btn w-full rounded-[22px] p-3.5 flex flex-col items-start justify-between gap-2.5 text-left cursor-pointer group min-h-[108px]">
+                    <button type="button" data-modal-open="queueModal" onclick="openModal('queueModal')" class="cute-pill-btn w-full rounded-[22px] p-3.5 flex flex-col items-start justify-between gap-2.5 text-left cursor-pointer group min-h-[108px]">
                         <div class="w-full flex items-center justify-between">
                             <span class="w-9 h-9 rounded-2xl bg-[#FFEAF2] border border-pink-100 flex items-center justify-center text-base shrink-0">👛</span>
                             <span class="text-[#C59BB0] group-hover:translate-x-0.5 transition-transform text-sm font-bold">›</span>
@@ -550,7 +558,7 @@
                         </div>
                     </button>
 
-                    <button type="button" onclick="openModal('tosModal')" class="cute-pill-btn w-full rounded-[22px] p-3.5 flex flex-col items-start justify-between gap-2.5 text-left cursor-pointer group min-h-[108px]">
+                    <button type="button" data-modal-open="tosModal" onclick="openModal('tosModal')" class="cute-pill-btn w-full rounded-[22px] p-3.5 flex flex-col items-start justify-between gap-2.5 text-left cursor-pointer group min-h-[108px]">
                         <div class="w-full flex items-center justify-between">
                             <span class="w-9 h-9 rounded-2xl bg-[#FFEAF2] border border-pink-100 flex items-center justify-center text-base shrink-0">🧸</span>
                             <span class="text-[#C59BB0] group-hover:translate-x-0.5 transition-transform text-sm font-bold">›</span>
@@ -561,7 +569,7 @@
                         </div>
                     </button>
 
-                    <button type="button" onclick="openModal('pricingModal')" class="cute-pill-btn w-full rounded-[22px] p-3.5 flex flex-col items-start justify-between gap-2.5 text-left cursor-pointer group min-h-[108px]">
+                    <button type="button" data-modal-open="pricingModal" onclick="openModal('pricingModal')" class="cute-pill-btn w-full rounded-[22px] p-3.5 flex flex-col items-start justify-between gap-2.5 text-left cursor-pointer group min-h-[108px]">
                         <div class="w-full flex items-center justify-between">
                             <span class="w-9 h-9 rounded-2xl bg-[#FFEAF2] border border-pink-100 flex items-center justify-center text-base shrink-0">🐾</span>
                             <span class="text-[#C59BB0] group-hover:translate-x-0.5 transition-transform text-sm font-bold">›</span>
@@ -572,7 +580,7 @@
                         </div>
                     </button>
 
-                    <button type="button" onclick="openModal('briefModal')" class="cute-pill-btn w-full rounded-[22px] p-3.5 flex flex-col items-start justify-between gap-2.5 text-left cursor-pointer group min-h-[108px]">
+                    <button type="button" data-modal-open="briefModal" onclick="openModal('briefModal')" class="cute-pill-btn w-full rounded-[22px] p-3.5 flex flex-col items-start justify-between gap-2.5 text-left cursor-pointer group min-h-[108px]">
                         <div class="w-full flex items-center justify-between">
                             <span class="w-9 h-9 rounded-2xl bg-[#FFEAF2] border border-pink-100 flex items-center justify-center text-base shrink-0">☁️</span>
                             <span class="text-[#C59BB0] group-hover:translate-x-0.5 transition-transform text-sm font-bold">›</span>
@@ -602,6 +610,7 @@
                         <div class="flex items-center justify-center gap-2 mb-1.5">
                             <button
                                 type="button"
+                                data-music-action="restart"
                                 onclick="restartMusicTrack()"
                                 title="เริ่มเพลงใหม่"
                                 aria-label="เริ่มเพลงใหม่"
@@ -616,6 +625,7 @@
                             <button
                                 type="button"
                                 id="musicToggleBtn"
+                                data-music-action="toggle"
                                 onclick="toggleMusicPlayer()"
                                 title="เล่นหรือหยุดเพลง"
                                 aria-label="เล่นหรือหยุดเพลง"
@@ -632,6 +642,7 @@
 
                             <button
                                 type="button"
+                                data-music-action="forward"
                                 onclick="skipMusicForward()"
                                 title="ข้ามไปข้างหน้า 10 วินาที"
                                 aria-label="ข้ามไปข้างหน้า 10 วินาที"
@@ -646,6 +657,7 @@
                             <button
                                 type="button"
                                 id="musicLoopBtn"
+                                data-music-action="loop"
                                 onclick="toggleMusicLoop()"
                                 title="เล่นซ้ำเพลง"
                                 aria-label="เล่นซ้ำเพลง"
@@ -690,6 +702,310 @@
                                 class="mini-player-slider flex-1"
                             >
                             <span id="musicVolumeLabel" class="text-[9px] font-semibold text-[#9A798B] tabular-nums w-6 text-right shrink-0">20%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="pt-1 text-center text-xs text-[#9E6780] font-medium">
+                    © 2026 JaoMeowStore Studio All Rights Reserved ☁
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <!-- Backdrop -->
+    <div id="modalBackdrop" data-modal-close="1" onclick="closeAllModals()" class="modal-backdrop fixed inset-0 z-40 hidden opacity-0 bg-[#5A3649]/35 backdrop-blur-xs"></div>
+
+    <!-- 1. EXAMPLE WORK MODAL -->
+    <div id="exampleModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
+        <div class="modal-card bg-[#FFFDFC]/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-md w-full max-h-[86vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
+            <div class="p-4 pb-3 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-[#FFF1F6] via-[#FFF7FA] to-[#FFEAF2]">
+                <div class="space-y-0.5">
+                    <h3 class="font-display text-lg font-bold text-[#7A4961]">EXAMPLE WORK</h3>
+                    <p class="text-xs text-[#A5788E]">เลือกดูตัวอย่างงานแยกตามหมวดหมู่</p>
+                </div>
+                <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
+            </div>
+            <div class="px-4 pt-3 pb-2.5 border-b border-pink-50 space-y-2 bg-[#FFFDFC]">
+                <div class="flex flex-wrap gap-1.5" id="exampleSubcatTabs"></div>
+                <div class="flex flex-wrap gap-1.5" id="exampleLeafFilterChips"></div>
+            </div>
+            <div id="exampleGalleryList" class="p-4 overflow-y-auto grid grid-cols-2 gap-3 flex-1 bg-[#FFF9FB]/60"></div>
+            <div class="px-4 py-2.5 border-t border-pink-100 bg-white/95 shrink-0">
+                <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-full py-2 rounded-xl bg-[#FFF2F7] hover:bg-[#FFE3EE] text-[#8E5B74] text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5">
+                    <span>‹</span>
+                    <span>กลับไปหน้าหลัก</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. GROUP WORK MODAL -->
+    <div id="groupModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
+        <div class="modal-card bg-[#FFFDFC]/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-md w-full max-h-[86vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
+            <div class="p-4 pb-3 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-[#FFEAF2] via-[#FFF7FA] to-[#FFF1F6]">
+                <div class="space-y-0.5">
+                    <h3 class="font-display text-lg font-bold text-[#7A4961]">ตัวอย่างกลุ่มทั้งหมด</h3>
+                    <p class="text-xs text-[#A5788E]">รูปภาพ ชื่อผลงาน และลิงก์ของตัวอย่างกลุ่ม</p>
+                </div>
+                <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
+            </div>
+            <div class="px-4 py-2.5 border-b border-pink-50 bg-[#FFFDFC]">
+                <div class="flex flex-wrap gap-1.5" id="groupSubcatFilterChips"></div>
+            </div>
+            <div id="groupGalleryList" class="p-4 overflow-y-auto grid grid-cols-2 gap-3 flex-1 bg-[#FFF9FB]/60"></div>
+            <div class="px-4 py-2.5 border-t border-pink-100 bg-white/95 shrink-0">
+                <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-full py-2 rounded-xl bg-[#FFF2F7] hover:bg-[#FFE3EE] text-[#8E5B74] text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5">
+                    <span>‹</span>
+                    <span>กลับไปหน้าหลัก</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. QUEUE MODAL -->
+    <div id="queueModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
+        <div class="modal-card bg-[#FFFDFC]/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-md w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
+            <div class="p-4 pb-3 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-[#FFF2F7] to-[#FFF9FB]">
+                <h3 class="font-display text-lg font-bold text-[#7A4961]">📋 เช็กคิวงานปัจจุบัน</h3>
+                <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
+            </div>
+            <div class="p-4 overflow-y-auto space-y-2.5 text-sm bg-[#FFF9FB]/50">
+                <div class="p-3.5 rounded-2xl bg-[#FFF0F6] border border-pink-100 flex items-center justify-between gap-2">
+                    <div class="space-y-0.5">
+                        <div class="font-bold text-[#6B4257]">คิวที่ 1 — คุณมินนี่</div>
+                        <div class="text-xs text-[#A5788E]">งานเว็บไซต์ + เซ็ตอีโมต</div>
+                    </div>
+                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-pink-200/80 text-[#8F3E64] shrink-0">กำลังทำร่าง</span>
+                </div>
+                <div class="p-3.5 rounded-2xl bg-white border border-pink-100 flex items-center justify-between gap-2">
+                    <div class="space-y-0.5">
+                        <div class="font-bold text-[#6B4257]">คิวที่ 2 — คุณปลายฟ้า</div>
+                        <div class="text-xs text-[#A5788E]">งานชีตตัวละคร &amp; ป้ายร้าน</div>
+                    </div>
+                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-[#FFE6F0] text-[#9E5678] shrink-0">รอคิวถัดไป</span>
+                </div>
+                <div class="p-3.5 rounded-2xl bg-[#FFF6F9] border border-pink-100 flex items-center justify-between gap-2">
+                    <div class="space-y-0.5">
+                        <div class="font-bold text-[#6B4257]">คิวว่างเปิดรับเพิ่ม</div>
+                        <div class="text-xs text-[#A5788E]">สามารถส่งบรีฟเพื่อจองคิวล่วงหน้าได้</div>
+                    </div>
+                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-rose-100 text-rose-600 shrink-0">ว่าง 2 คิว</span>
+                </div>
+            </div>
+            <div class="px-4 py-2.5 border-t border-pink-100 bg-white/95 shrink-0">
+                <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-full py-2 rounded-xl bg-[#FFF2F7] hover:bg-[#FFE3EE] text-[#8E5B74] text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5">
+                    <span>‹</span>
+                    <span>กลับไปหน้าหลัก</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. TOS MODAL -->
+    <div id="tosModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
+        <div class="modal-card bg-[#FFFDFC]/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-md w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
+            <div class="p-4 pb-3 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-[#FFF2F7] to-[#FFF9FB]">
+                <h3 class="font-display text-lg font-bold text-[#7A4961]">📜 กฎการจ้างงาน</h3>
+                <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
+            </div>
+            <div class="p-4 overflow-y-auto space-y-2.5 text-sm text-[#6E495C] leading-relaxed bg-[#FFF9FB]/50">
+                <div class="p-3 rounded-2xl bg-white border border-pink-100">1. บรีฟรายละเอียดให้ชัดเจนก่อนเริ่มงาน สามารถแก้ไขจุดเล็กน้อยได้ฟรีตามจำนวนครั้งที่ตกลง</div>
+                <div class="p-3 rounded-2xl bg-white border border-pink-100">2. ชำระมัดจำ 50% หลังจากตกลงรายละเอียดและรับคิวเรียบร้อยแล้ว ส่วนที่เหลือชำระก่อนส่งไฟล์จริง</div>
+                <div class="p-3 rounded-2xl bg-white border border-pink-100">3. ไม่อนุญาตให้นำผลงานไปแอบอ้างเป็นฝีมือตนเอง หรือนำไปเทรน AI ทุกกรณี</div>
+                <div class="p-3 rounded-2xl bg-white border border-pink-100">4. หากต้องการนำไปใช้เชิงพาณิชย์ กรุณาแจ้งล่วงหน้าเพื่อคำนวณเรตให้เหมาะสมครับ</div>
+            </div>
+            <div class="px-4 py-2.5 border-t border-pink-100 bg-white/95 shrink-0">
+                <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-full py-2 rounded-xl bg-[#FFF2F7] hover:bg-[#FFE3EE] text-[#8E5B74] text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5">
+                    <span>‹</span>
+                    <span>กลับไปหน้าหลัก</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. PRICING MODAL -->
+    <div id="pricingModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
+        <div class="modal-card bg-[#FFFDFC]/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-md w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
+            <div class="p-4 pb-3 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-[#FFF2F7] to-[#FFF9FB]">
+                <h3 class="font-display text-lg font-bold text-[#7A4961]">💰 เรตราคางานเบื้องต้น</h3>
+                <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
+            </div>
+            <div class="p-4 overflow-y-auto space-y-2.5 text-sm bg-[#FFF9FB]/50">
+                <div class="p-3.5 rounded-2xl bg-[#FFF0F6] border border-pink-100 flex items-center justify-between gap-2">
+                    <div class="space-y-0.5">
+                        <div class="font-bold text-[#6B4257]">งานป้าย / ป้ายร้าน / ป้ายประกาศ</div>
+                        <div class="text-xs text-[#A5788E]">ไฟล์พร้อมใช้งาน สีชมพูนมคมชัด</div>
+                    </div>
+                    <span class="font-display font-bold text-[#E06897] text-base shrink-0">เริ่มต้น 150฿</span>
+                </div>
+                <div class="p-3.5 rounded-2xl bg-white border border-pink-100 flex items-center justify-between gap-2">
+                    <div class="space-y-0.5">
+                        <div class="font-bold text-[#6B4257]">งานชีต / ชิบิ / อีโมต</div>
+                        <div class="text-xs text-[#A5788E]">น่ารักสไตล์เจ้าเหมียว ปรับโทนได้</div>
+                    </div>
+                    <span class="font-display font-bold text-[#E06897] text-base shrink-0">เริ่มต้น 250฿</span>
+                </div>
+                <div class="p-3.5 rounded-2xl bg-[#FFF5F9] border border-pink-100 flex items-center justify-between gap-2">
+                    <div class="space-y-0.5">
+                        <div class="font-bold text-[#6B4257]">งาน Website / หน้าเพจร้านค้า</div>
+                        <div class="text-xs text-[#A5788E]">รองรับมือถือและเดสก์ท็อป ครบจบในหน้าเดียว</div>
+                    </div>
+                    <span class="font-display font-bold text-[#E06897] text-base shrink-0">เริ่มต้น 590฿</span>
+                </div>
+            </div>
+            <div class="px-4 py-2.5 border-t border-pink-100 bg-white/95 shrink-0">
+                <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-full py-2 rounded-xl bg-[#FFF2F7] hover:bg-[#FFE3EE] text-[#8E5B74] text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5">
+                    <span>‹</span>
+                    <span>กลับไปหน้าหลัก</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. BRIEF MODAL -->
+    <div id="briefModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
+        <div class="modal-card bg-[#FFFDFC]/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-md w-full max-h-[85vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
+            <div class="p-4 pb-3 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-[#FFF2F7] to-[#FFF9FB]">
+                <h3 class="font-display text-lg font-bold text-[#7A4961]">💌 ส่งบรีฟงาน</h3>
+                <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
+            </div>
+            <form id="briefForm" onsubmit="handleBriefSubmit(event)" class="p-4 overflow-y-auto space-y-3.5 text-sm bg-[#FFF9FB]/50">
+                <div>
+                    <label class="block font-semibold text-[#6B4257] mb-1">ชื่อผู้จ้าง / ช่องทางติดต่อ</label>
+                    <input id="briefContact" type="text" required placeholder="เช่น คุณเหมียว / FB: JaoMeow" class="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
+                </div>
+                <div>
+                    <label class="block font-semibold text-[#6B4257] mb-1">ประเภทงานที่สนใจ</label>
+                    <select id="briefType" class="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
+                        <option value="งานป้าย">งานป้าย</option>
+                        <option value="งานชีต">งานชีต</option>
+                        <option value="Website">Website</option>
+                        <option value="Emote / Chibi">Emote / Chibi</option>
+                        <option value="งานกลุ่ม">งานกลุ่ม</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-semibold text-[#6B4257] mb-1">รายละเอียดบรีฟ / โทนสี / งบประมาณ</label>
+                    <textarea id="briefDetail" rows="3" required placeholder="พิมพ์รายละเอียดงานที่ต้องการได้เลยครับ..." class="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400"></textarea>
+                </div>
+                <button type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#F48FB6] to-[#E86D9C] text-white font-bold shadow hover:opacity-95 transition cursor-pointer">
+                    คัดลอกข้อความบรีฟพร้อมส่ง
+                </button>
+                <div id="briefFeedback" class="hidden p-3 rounded-xl bg-pink-50 border border-pink-200 text-[#8F3E64] text-xs font-semibold"></div>
+            </form>
+            <div class="px-4 py-2.5 border-t border-pink-100 bg-white/95 shrink-0">
+                <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-full py-2 rounded-xl bg-[#FFF2F7] hover:bg-[#FFE3EE] text-[#8E5B74] text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5">
+                    <span>‹</span>
+                    <span>กลับไปหน้าหลัก</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. ADMIN LOGIN MODAL -->
+    <div id="adminLoginModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
+        <div class="modal-card bg-[#FFFDFC]/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-sm w-full flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
+            <div class="p-4 pb-3 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-[#FFF2F7] to-[#FFF9FB]">
+                <h3 class="font-display text-lg font-bold text-[#7A4961]">🐾 Admin Login</h3>
+                <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
+            </div>
+            <form id="adminLoginForm" onsubmit="handleAdminLogin(event)" class="p-5 space-y-3.5 text-sm bg-[#FFF9FB]/50">
+                <div>
+                    <label class="block font-semibold text-[#6B4257] mb-1">Admin Name</label>
+                    <input id="adminUsernameInput" type="text" required placeholder="กรอกชื่อแอดมิน" autocomplete="off" class="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
+                </div>
+                <div>
+                    <label class="block font-semibold text-[#6B4257] mb-1">Password</label>
+                    <input id="adminPasswordInput" type="password" required placeholder="กรอกรหัสผ่าน" class="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
+                </div>
+                <div id="adminLoginError" class="hidden text-xs text-rose-500 font-semibold bg-rose-50 p-2.5 rounded-xl border border-rose-200"></div>
+                <button type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#F48FB6] to-[#E86D9C] text-white font-bold shadow hover:opacity-95 transition cursor-pointer">
+                    เข้าสู่ระบบแอดมิน
+                </button>
+            </form>
+            <div class="px-4 py-2.5 border-t border-pink-100 bg-white/95 shrink-0">
+                <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-full py-2 rounded-xl bg-[#FFF2F7] hover:bg-[#FFE3EE] text-[#8E5B74] text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5">
+                    <span>‹</span>
+                    <span>กลับไปหน้าหลัก</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 8. ADMIN PANEL MODAL -->
+    <div id="adminPanelModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
+        <div class="modal-card bg-[#FFFDFC]/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-lg w-full max-h-[88vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
+            <div class="p-4 pb-3 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-[#FFF1F6] via-[#FFF7FA] to-[#FFEAF2]">
+                <div class="space-y-0.5">
+                    <h3 class="font-display text-lg font-bold text-[#7A4961]">⚙️ Admin Manager — เจ้าเหมียว</h3>
+                    <p class="text-xs text-[#A5788E]">จัดการหมวดหมู่ย่อย อัปโหลดรูปภาพ ชื่อรูป และลิงก์</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button type="button" data-admin-logout="1" onclick="handleAdminLogout()" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-50 text-rose-500 border border-rose-200 hover:bg-rose-100 cursor-pointer">ออกจากระบบ</button>
+                    <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
+                </div>
+            </div>
+
+            <div class="p-4 overflow-y-auto space-y-4 text-sm bg-[#FFF9FB]/50">
+                <!-- Section 1: Category Management -->
+                <div class="p-4 rounded-2xl bg-[#FFF2F7] border border-pink-100 space-y-3">
+                    <div class="flex items-center justify-between gap-2">
+                        <div class="font-bold text-[#6B4257]">1. เลือกหมวดหลักและจัดการหมวดหมู่ย่อย</div>
+                        <span class="text-[11px] text-[#A5788E]">กด × เพื่อลบหมวดย่อย</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">หมวดหลัก</label>
+                            <select id="adminMainCatSelect" onchange="onAdminMainCatChange()" class="w-full px-3 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none">
+                                <option value="example">ตัวอย่างงาน</option>
+                                <option value="group">ตัวอย่างกลุ่ม</option>
+                            </select>
+                        </div>
+
+                        <div id="adminExampleSubcatWrapper">
+                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">หมวดย่อย (ตัวอย่างงาน)</label>
+                            <select id="adminExampleSubcatSelect" onchange="renderAdminCategoryControls()" class="w-full px-3 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none">
+                                <option value="งานป้าย">งานป้าย</option>
+                                <option value="งานชีต">งานชีต</option>
+                                <option value="website">website</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-2 pt-1">
+                        <input
+                            id="newSubCategoryInput"
+                            type="text"
+                            placeholder="พิมพ์ชื่อหมวดย่อยที่ต้องการเพิ่มเอง..."
+                            class="flex-1 px-3.5 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400"
+                        >
+                        <button
+                            type="button"
+                            onclick="addCustomCategory()"
+                            id="addCustomCategoryBtn"
+                            class="px-4 py-2 rounded-xl bg-[#EE7CA8] hover:bg-[#E46898] text-white font-bold shadow-xs transition cursor-pointer shrink-0"
+                        >
+                            + เพิ่มหมวด
+                        </button>
+                    </div>
+
+                    <div id="adminCategoryFeedback" class="hidden text-xs font-semibold px-3 py-2 rounded-xl"></div>
+                    <div id="adminCustomCategoryList" class="flex flex-wrap gap-1.5 pt-1"></div>
+                </div>
+
+                <!-- Hero Card Banner Image -->
+                <div class="p-4 rounded-2xl bg-[#FFF2F7] border border-pink-100 space-y-3">
+                    <div class="font-bold text-[#6B4257]">รูปภาพในการ์ดแบนเนอร์ (ลูกค้าทุกคนเห็น)</div>
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-20 h-20 rounded-2xl border-2 border-dashed border-pink-200 bg-white flex items-center justify-center overflow-hidden shrink-0">
+                            <img id="adminHeroCardPreviewImg" src="" alt="Card Banner Preview" class="hidden w-full h-full object-contain">
+                            <span id="adminHeroCardPreviewPlaceholder" class="text-[11px] text-[#B08398] text-center px-1">รูปการ์ด</span>
+                        </div>
+                        <div class="flex-1 space-y-2">
+                            <input id="adminHeroCardFileInput" type="file" accept="image/*" onchange="handleHeroCardFileUpload(event)" class="w-full text-xs text-[#8A5A72] file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-white file:text-[#B84D7B] hover:file:bg-[#FFE3EE] cursor-pointer">
+                            <div id="adminHeroCardStatus" class="hidden text-xs font-semibold text-[#8F3E64]"></div>
                         </div>
                     </div>
                 </div>
@@ -757,7 +1073,7 @@
             </div>
 
             <div class="px-4 py-2.5 border-t border-pink-100 bg-white/95 shrink-0">
-                <button type="button" onclick="closeAllModals()" class="w-full py-2 rounded-xl bg-[#FFF2F7] hover:bg-[#FFE3EE] text-[#8E5B74] text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5">
+                <button type="button" data-modal-close="1" onclick="closeAllModals()" class="w-full py-2 rounded-xl bg-[#FFF2F7] hover:bg-[#FFE3EE] text-[#8E5B74] text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5">
                     <span>‹</span>
                     <span>กลับไปหน้าหลัก</span>
                 </button>
@@ -845,7 +1161,7 @@
 
         const initialLocal = loadLocalStateFallback();
 
-        let state = {
+        const storeState = {
             categories: initialLocal?.categories
                 ? JSON.parse(JSON.stringify(initialLocal.categories))
                 : JSON.parse(JSON.stringify(DEFAULT_CATEGORIES)),
@@ -861,8 +1177,8 @@
             selectedBatchImages: []
         };
 
-        let db = null;
-        let auth = null;
+        let storeDb = null;
+        let storeAuth = null;
         let currentUser = null;
         let storeDocRef = null;
         let unsubscribeStore = null;
@@ -901,7 +1217,7 @@
 
             const heroCardImage = typeof rawData?.heroCardImage === 'string'
                 ? rawData.heroCardImage
-                : (state.heroCardImage || '');
+                : (storeState.heroCardImage || '');
 
             return {
                 categories: {
@@ -928,7 +1244,7 @@
             const mainPlaceholder = document.getElementById('heroPngPlaceholder');
             const adminPreviewImg = document.getElementById('adminHeroCardPreviewImg');
             const adminPreviewPlaceholder = document.getElementById('adminHeroCardPreviewPlaceholder');
-            const src = state.heroCardImage || '';
+            const src = storeState.heroCardImage || '';
 
             if (mainImg && mainPlaceholder) {
                 if (src) {
@@ -956,13 +1272,13 @@
         }
 
         async function persistStoreToFirestore() {
-            saveLocalStateFallback(state.categories, state.artworks, state.heroCardImage);
+            saveLocalStateFallback(storeState.categories, storeState.artworks, storeState.heroCardImage);
             if (!storeDocRef || !currentUser) return;
             try {
                 await setDoc(storeDocRef, {
-                    categories: state.categories,
-                    artworks: state.artworks,
-                    heroCardImage: state.heroCardImage || '',
+                    categories: storeState.categories,
+                    artworks: storeState.artworks,
+                    heroCardImage: storeState.heroCardImage || '',
                     updatedAt: Date.now()
                 }, { merge: true });
             } catch (err) {
@@ -982,16 +1298,16 @@
                 (snap) => {
                     if (snap.exists()) {
                         const normalized = normalizeStoreData(snap.data());
-                        state.categories = normalized.categories;
-                        state.artworks = normalized.artworks;
-                        state.heroCardImage = normalized.heroCardImage;
-                        saveLocalStateFallback(state.categories, state.artworks, state.heroCardImage);
+                        storeState.categories = normalized.categories;
+                        storeState.artworks = normalized.artworks;
+                        storeState.heroCardImage = normalized.heroCardImage;
+                        saveLocalStateFallback(storeState.categories, storeState.artworks, storeState.heroCardImage);
                         refreshActiveViews();
                     } else {
-                        const initial = normalizeStoreData({ heroCardImage: state.heroCardImage });
-                        state.categories = initial.categories;
-                        state.artworks = initial.artworks;
-                        state.heroCardImage = initial.heroCardImage;
+                        const initial = normalizeStoreData({ heroCardImage: storeState.heroCardImage });
+                        storeState.categories = initial.categories;
+                        storeState.artworks = initial.artworks;
+                        storeState.heroCardImage = initial.heroCardImage;
                         persistStoreToFirestore();
                         refreshActiveViews();
                     }
@@ -1005,31 +1321,31 @@
         async function initFirebaseDatabase() {
             refreshActiveViews();
             try {
-                const appId = typeof __app_id !== 'undefined' && __app_id ? __app_id : 'jaomeow-store';
-                if (typeof __firebase_config === 'undefined' || !__firebase_config) {
+                const appId = (typeof window.__app_id !== 'undefined' && window.__app_id) ? window.__app_id : 'jaomeow-store';
+                if (typeof window.__firebase_config === 'undefined' || !window.__firebase_config) {
                     return;
                 }
 
-                const firebaseConfig = typeof __firebase_config === 'string'
-                    ? JSON.parse(__firebase_config)
-                    : __firebase_config;
+                const firebaseConfig = typeof window.__firebase_config === 'string'
+                    ? JSON.parse(window.__firebase_config)
+                    : window.__firebase_config;
 
                 const app = initializeApp(firebaseConfig);
-                auth = getAuth(app);
-                db = getFirestore(app);
+                storeAuth = getAuth(app);
+                storeDb = getFirestore(app);
 
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
+                if (typeof window.__initial_auth_token !== 'undefined' && window.__initial_auth_token) {
+                    await signInWithCustomToken(storeAuth, window.__initial_auth_token);
                 } else {
-                    await signInAnonymously(auth);
+                    await signInAnonymously(storeAuth);
                 }
 
-                currentUser = auth.currentUser;
+                currentUser = storeAuth.currentUser;
                 if (!currentUser) {
                     return;
                 }
 
-                storeDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'storeShowcase', 'main');
+                storeDocRef = doc(storeDb, 'artifacts', appId, 'public', 'data', 'storeShowcase', 'main');
                 attachStoreListener();
             } catch (err) {
                 console.error('Firebase init error:', err);
@@ -1040,7 +1356,7 @@
             renderHeroCardBanner();
             renderExampleModal();
             renderGroupModal();
-            if (state.isAdminLoggedIn) {
+            if (storeState.isAdminLoggedIn) {
                 renderAdminCategoryControls();
                 renderAdminArtworkList();
             }
@@ -1107,7 +1423,7 @@
             if (modalId === 'exampleModal') {
                 renderExampleModal();
             } else if (modalId === 'groupModal') {
-                state.selectedGroupSubcat = 'ทั้งหมด';
+                storeState.selectedGroupSubcat = 'ทั้งหมด';
                 renderGroupModal();
             } else if (modalId === 'adminPanelModal') {
                 renderHeroCardBanner();
@@ -1118,6 +1434,7 @@
             if (backdrop) {
                 backdrop.classList.remove('hidden');
                 backdrop.style.display = 'block';
+                backdrop.style.pointerEvents = 'auto';
                 requestAnimationFrame(() => {
                     backdrop.classList.remove('opacity-0');
                 });
@@ -1126,8 +1443,10 @@
             target.classList.remove('hidden');
             target.classList.add('flex');
             target.style.display = 'flex';
+            target.style.pointerEvents = 'auto';
             const card = target.querySelector('.modal-card');
             if (card) {
+                card.style.pointerEvents = 'auto';
                 requestAnimationFrame(() => {
                     card.classList.remove('scale-95');
                     card.classList.add('scale-100');
@@ -1136,7 +1455,7 @@
         }
 
         function openAdminEntry() {
-            if (state.isAdminLoggedIn) {
+            if (storeState.isAdminLoggedIn) {
                 openModal('adminPanelModal');
             } else {
                 const errEl = document.getElementById('adminLoginError');
@@ -1152,7 +1471,7 @@
             const errEl = document.getElementById('adminLoginError');
 
             if (userInput === 'เจ้าเหมียว' && passInput === '01082546') {
-                state.isAdminLoggedIn = true;
+                storeState.isAdminLoggedIn = true;
                 if (errEl) errEl.classList.add('hidden');
                 openModal('adminPanelModal');
             } else if (errEl) {
@@ -1162,7 +1481,7 @@
         }
 
         function handleAdminLogout() {
-            state.isAdminLoggedIn = false;
+            storeState.isAdminLoggedIn = false;
             const form = document.getElementById('adminLoginForm');
             if (form) form.reset();
             closeAllModals();
@@ -1174,13 +1493,13 @@
             const listEl = document.getElementById('exampleGalleryList');
             if (!tabsEl || !chipsEl || !listEl) return;
 
-            const subcats = Object.keys(state.categories.example || {});
-            if (!subcats.includes(state.selectedExampleSubcat)) {
-                state.selectedExampleSubcat = subcats[0] || 'งานป้าย';
+            const subcats = Object.keys(storeState.categories.example || {});
+            if (!subcats.includes(storeState.selectedExampleSubcat)) {
+                storeState.selectedExampleSubcat = subcats[0] || 'งานป้าย';
             }
 
             tabsEl.innerHTML = subcats.map((sub) => {
-                const active = sub === state.selectedExampleSubcat;
+                const active = sub === storeState.selectedExampleSubcat;
                 return `<button type="button" onclick="selectExampleSubcat('${escapeHtml(sub)}')" class="px-3 py-1.5 rounded-full text-xs font-bold transition cursor-pointer ${
                     active
                         ? 'bg-[#EE7CA8] text-white shadow-xs'
@@ -1188,16 +1507,16 @@
                 }">${escapeHtml(sub)}</button>`;
             }).join('');
 
-            const leafList = Array.isArray(state.categories.example[state.selectedExampleSubcat])
-                ? state.categories.example[state.selectedExampleSubcat]
+            const leafList = Array.isArray(storeState.categories.example[storeState.selectedExampleSubcat])
+                ? storeState.categories.example[storeState.selectedExampleSubcat]
                 : [];
             const allFilterOptions = ['ทั้งหมด', ...leafList];
-            if (!allFilterOptions.includes(state.selectedExampleLeaf)) {
-                state.selectedExampleLeaf = 'ทั้งหมด';
+            if (!allFilterOptions.includes(storeState.selectedExampleLeaf)) {
+                storeState.selectedExampleLeaf = 'ทั้งหมด';
             }
 
             chipsEl.innerHTML = allFilterOptions.map((leaf) => {
-                const active = leaf === state.selectedExampleLeaf;
+                const active = leaf === storeState.selectedExampleLeaf;
                 return `<button type="button" onclick="selectExampleLeaf('${escapeHtml(leaf)}')" class="px-2.5 py-1 rounded-xl text-[11px] font-semibold border transition cursor-pointer ${
                     active
                         ? 'bg-[#FFE3EE] border-[#F4A7C6] text-[#9E3F6B]'
@@ -1205,24 +1524,24 @@
                 }">${escapeHtml(leaf)}</button>`;
             }).join('');
 
-            const filtered = state.artworks.filter((item) => {
+            const filtered = storeState.artworks.filter((item) => {
                 if (item.mainCat !== 'example') return false;
-                if (item.subCat !== state.selectedExampleSubcat) return false;
-                if (state.selectedExampleLeaf === 'ทั้งหมด') return true;
-                return Array.isArray(item.categories) && item.categories.includes(state.selectedExampleLeaf);
+                if (item.subCat !== storeState.selectedExampleSubcat) return false;
+                if (storeState.selectedExampleLeaf === 'ทั้งหมด') return true;
+                return Array.isArray(item.categories) && item.categories.includes(storeState.selectedExampleLeaf);
             });
 
             renderGalleryCards(listEl, filtered, 'ยังไม่มีตัวอย่างงานในหมวดนี้ครับ');
         }
 
         function selectExampleSubcat(subcat) {
-            state.selectedExampleSubcat = subcat;
-            state.selectedExampleLeaf = 'ทั้งหมด';
+            storeState.selectedExampleSubcat = subcat;
+            storeState.selectedExampleLeaf = 'ทั้งหมด';
             renderExampleModal();
         }
 
         function selectExampleLeaf(leaf) {
-            state.selectedExampleLeaf = leaf;
+            storeState.selectedExampleLeaf = leaf;
             renderExampleModal();
         }
 
@@ -1231,16 +1550,16 @@
             const listEl = document.getElementById('groupGalleryList');
             if (!chipsEl || !listEl) return;
 
-            const groupItems = state.artworks.filter((item) => item.mainCat === 'group');
-            const baseGroupCats = Array.isArray(state.categories.group) ? state.categories.group : [];
+            const groupItems = storeState.artworks.filter((item) => item.mainCat === 'group');
+            const baseGroupCats = Array.isArray(storeState.categories.group) ? storeState.categories.group : [];
             const filterList = ['ทั้งหมด', ...baseGroupCats];
 
-            if (!filterList.includes(state.selectedGroupSubcat)) {
-                state.selectedGroupSubcat = 'ทั้งหมด';
+            if (!filterList.includes(storeState.selectedGroupSubcat)) {
+                storeState.selectedGroupSubcat = 'ทั้งหมด';
             }
 
             chipsEl.innerHTML = filterList.map((catName) => {
-                const active = catName === state.selectedGroupSubcat;
+                const active = catName === storeState.selectedGroupSubcat;
                 const countText = catName === 'ทั้งหมด' ? ` (${groupItems.length})` : '';
                 return `<button type="button" onclick="selectGroupSubcat('${escapeHtml(catName)}')" class="px-3 py-1 rounded-full text-xs font-bold transition cursor-pointer ${
                     active
@@ -1249,15 +1568,15 @@
                 }">${escapeHtml(catName)}${countText}</button>`;
             }).join('');
 
-            const filtered = state.selectedGroupSubcat === 'ทั้งหมด'
+            const filtered = storeState.selectedGroupSubcat === 'ทั้งหมด'
                 ? groupItems
-                : groupItems.filter((item) => Array.isArray(item.categories) && item.categories.includes(state.selectedGroupSubcat));
+                : groupItems.filter((item) => Array.isArray(item.categories) && item.categories.includes(storeState.selectedGroupSubcat));
 
             renderGalleryCards(listEl, filtered, 'ยังไม่มีตัวอย่างกลุ่มในหมวดนี้ครับ');
         }
 
         function selectGroupSubcat(catName) {
-            state.selectedGroupSubcat = catName;
+            storeState.selectedGroupSubcat = catName;
             renderGroupModal();
         }
 
@@ -1328,19 +1647,19 @@
             let activeSub = '';
 
             if (mainCat === 'example') {
-                const subKeys = Object.keys(state.categories.example || {});
+                const subKeys = Object.keys(storeState.categories.example || {});
                 if (subcatSelect) {
                     const prevVal = subcatSelect.value;
                     subcatSelect.innerHTML = subKeys.map((k) => `<option value="${escapeHtml(k)}">${escapeHtml(k)}</option>`).join('');
                     if (subKeys.includes(prevVal)) subcatSelect.value = prevVal;
                 }
                 activeSub = subcatSelect?.value || subKeys[0] || 'งานป้าย';
-                availableCats = Array.isArray(state.categories.example[activeSub])
-                    ? state.categories.example[activeSub]
+                availableCats = Array.isArray(storeState.categories.example[activeSub])
+                    ? storeState.categories.example[activeSub]
                     : [];
                 if (labelEl) labelEl.textContent = `เลือกหมวดย่อยใน "${activeSub}" (เลือกได้หลายหมวด)`;
             } else {
-                availableCats = Array.isArray(state.categories.group) ? state.categories.group : [];
+                availableCats = Array.isArray(storeState.categories.group) ? storeState.categories.group : [];
                 if (labelEl) labelEl.textContent = 'เลือกหมวดกลุ่ม (เลือกได้หลายหมวด)';
             }
 
@@ -1381,18 +1700,18 @@
 
             if (mainCat === 'example') {
                 const activeSub = subcatSelect?.value || 'งานป้าย';
-                if (!Array.isArray(state.categories.example[activeSub])) {
-                    state.categories.example[activeSub] = [];
+                if (!Array.isArray(storeState.categories.example[activeSub])) {
+                    storeState.categories.example[activeSub] = [];
                 }
-                if (!state.categories.example[activeSub].includes(newName)) {
-                    state.categories.example[activeSub].push(newName);
+                if (!storeState.categories.example[activeSub].includes(newName)) {
+                    storeState.categories.example[activeSub].push(newName);
                 }
             } else {
-                if (!Array.isArray(state.categories.group)) {
-                    state.categories.group = [];
+                if (!Array.isArray(storeState.categories.group)) {
+                    storeState.categories.group = [];
                 }
-                if (!state.categories.group.includes(newName)) {
-                    state.categories.group.push(newName);
+                if (!storeState.categories.group.includes(newName)) {
+                    storeState.categories.group.push(newName);
                 }
             }
 
@@ -1405,20 +1724,20 @@
 
         async function deleteCustomCategory(mainCat, subCat, catName) {
             if (mainCat === 'example') {
-                const list = state.categories.example?.[subCat];
+                const list = storeState.categories.example?.[subCat];
                 if (Array.isArray(list)) {
-                    state.categories.example[subCat] = list.filter((item) => item !== catName);
+                    storeState.categories.example[subCat] = list.filter((item) => item !== catName);
                 }
-                if (state.selectedExampleLeaf === catName) {
-                    state.selectedExampleLeaf = 'ทั้งหมด';
+                if (storeState.selectedExampleLeaf === catName) {
+                    storeState.selectedExampleLeaf = 'ทั้งหมด';
                 }
             } else {
-                const list = state.categories.group;
+                const list = storeState.categories.group;
                 if (Array.isArray(list)) {
-                    state.categories.group = list.filter((item) => item !== catName);
+                    storeState.categories.group = list.filter((item) => item !== catName);
                 }
-                if (state.selectedGroupSubcat === catName) {
-                    state.selectedGroupSubcat = 'ทั้งหมด';
+                if (storeState.selectedGroupSubcat === catName) {
+                    storeState.selectedGroupSubcat = 'ทั้งหมด';
                 }
             }
 
@@ -1435,7 +1754,7 @@
 
             try {
                 const dataUrl = await readFileAsDataUrl(file);
-                state.heroCardImage = dataUrl;
+                storeState.heroCardImage = dataUrl;
                 renderHeroCardBanner();
                 await persistStoreToFirestore();
                 if (statusEl) {
@@ -1456,7 +1775,7 @@
             const stripEl = document.getElementById('multiSelectedImagesStrip');
             if (!infoEl || !stripEl) return;
 
-            const batch = state.selectedBatchImages || [];
+            const batch = storeState.selectedBatchImages || [];
             if (batch.length <= 1) {
                 infoEl.classList.add('hidden');
                 stripEl.classList.add('hidden');
@@ -1494,9 +1813,9 @@
                     }))
                 );
                 const validItems = results.filter((r) => Boolean(r.dataUrl));
-                state.selectedBatchImages = validItems;
-                state.previewImageData = validItems[0]?.dataUrl || '';
-                updateAdminPreviewImage(state.previewImageData);
+                storeState.selectedBatchImages = validItems;
+                storeState.previewImageData = validItems[0]?.dataUrl || '';
+                updateAdminPreviewImage(storeState.previewImageData);
                 renderBatchPreviewStrip();
             } catch (err) {
                 console.error('Multi-file read error:', err);
@@ -1507,8 +1826,8 @@
             const urlInput = document.getElementById('artworkImageUrlInput');
             const val = (urlInput?.value || '').trim();
             if (val) {
-                state.selectedBatchImages = [];
-                state.previewImageData = val;
+                storeState.selectedBatchImages = [];
+                storeState.previewImageData = val;
                 updateAdminPreviewImage(val);
                 renderBatchPreviewStrip();
             }
@@ -1542,15 +1861,15 @@
             const price = mainCat === 'group' ? (document.getElementById('artworkPriceInput')?.value || '').trim() : '';
             const urlDirect = (document.getElementById('artworkImageUrlInput')?.value || '').trim();
 
-            const imagesToSave = state.selectedBatchImages.length > 0
-                ? state.selectedBatchImages.map((item, idx) => ({
+            const imagesToSave = storeState.selectedBatchImages.length > 0
+                ? storeState.selectedBatchImages.map((item, idx) => ({
                     src: item.dataUrl,
                     title: rawTitle
-                        ? (state.selectedBatchImages.length > 1 ? `${rawTitle} (${idx + 1})` : rawTitle)
+                        ? (storeState.selectedBatchImages.length > 1 ? `${rawTitle} (${idx + 1})` : rawTitle)
                         : ''
                 }))
-                : ((state.previewImageData || urlDirect)
-                    ? [{ src: state.previewImageData || urlDirect, title: rawTitle }]
+                : ((storeState.previewImageData || urlDirect)
+                    ? [{ src: storeState.previewImageData || urlDirect, title: rawTitle }]
                     : []);
 
             if (imagesToSave.length === 0) {
@@ -1580,9 +1899,9 @@
                 categories: selectedCats
             }));
 
-            state.artworks.unshift(...newItems);
-            state.previewImageData = '';
-            state.selectedBatchImages = [];
+            storeState.artworks.unshift(...newItems);
+            storeState.previewImageData = '';
+            storeState.selectedBatchImages = [];
             updateAdminPreviewImage('');
             renderBatchPreviewStrip();
             document.getElementById('adminArtworkForm')?.reset();
@@ -1600,7 +1919,7 @@
         }
 
         async function deleteArtwork(id) {
-            state.artworks = state.artworks.filter((item) => item.id !== id);
+            storeState.artworks = storeState.artworks.filter((item) => item.id !== id);
             renderAdminArtworkList();
             refreshActiveViews();
             await persistStoreToFirestore();
@@ -1611,14 +1930,14 @@
             const countEl = document.getElementById('adminItemCount');
             if (!listEl) return;
 
-            if (countEl) countEl.textContent = String(state.artworks.length);
+            if (countEl) countEl.textContent = String(storeState.artworks.length);
 
-            if (state.artworks.length === 0) {
+            if (storeState.artworks.length === 0) {
                 listEl.innerHTML = `<div class="text-xs text-[#A5788E] py-4 text-center">ยังไม่มีรายการที่เผยแพร่</div>`;
                 return;
             }
 
-            listEl.innerHTML = state.artworks.map((item) => {
+            listEl.innerHTML = storeState.artworks.map((item) => {
                 const scopeLabel = item.mainCat === 'example'
                     ? `ตัวอย่างงาน / ${escapeHtml(item.subCat || '')}`
                     : 'ตัวอย่างกลุ่ม';
@@ -1984,13 +2303,14 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
+        function initStorefrontInteractions() {
             syncLoopButtonUi();
             bindFirstGestureAudioUnlock();
             ensureYouTubePlayer(true);
 
             const seekEl = document.getElementById('musicSeekSlider');
-            if (seekEl) {
+            if (seekEl && !seekEl.dataset.bound) {
+                seekEl.dataset.bound = '1';
                 seekEl.addEventListener('pointerdown', () => { isSeekingSlider = true; });
                 seekEl.addEventListener('pointerup', () => {
                     isSeekingSlider = false;
@@ -2001,7 +2321,7 @@
                     seekMusicBySlider(seekEl.value);
                 });
             }
-        });
+        }
 
         window.openModal = openModal;
         window.closeAllModals = closeAllModals;
@@ -2028,7 +2348,62 @@
         window.skipMusicForward = skipMusicForward;
         window.toggleMusicLoop = toggleMusicLoop;
 
-        initFirebaseDatabase();
+        if (!window.__jaomeowClickDelegated) {
+            window.__jaomeowClickDelegated = true;
+            document.addEventListener('click', (event) => {
+                const target = event.target instanceof Element ? event.target : null;
+                if (!target) return;
+
+                if (target.id === 'modalBackdrop') {
+                    closeAllModals();
+                    return;
+                }
+
+                const actionEl = target.closest('[data-modal-open], [data-modal-close], [data-admin-open], [data-admin-logout], [data-music-action]');
+                if (!actionEl) return;
+
+                if (actionEl.hasAttribute('data-modal-close')) {
+                    event.preventDefault();
+                    closeAllModals();
+                    return;
+                }
+
+                if (actionEl.hasAttribute('data-admin-open')) {
+                    event.preventDefault();
+                    openAdminEntry();
+                    return;
+                }
+
+                if (actionEl.hasAttribute('data-admin-logout')) {
+                    event.preventDefault();
+                    handleAdminLogout();
+                    return;
+                }
+
+                const modalId = actionEl.getAttribute('data-modal-open');
+                if (modalId) {
+                    event.preventDefault();
+                    openModal(modalId);
+                    return;
+                }
+
+                const musicAction = actionEl.getAttribute('data-music-action');
+                if (musicAction === 'toggle') toggleMusicPlayer();
+                else if (musicAction === 'restart') restartMusicTrack();
+                else if (musicAction === 'forward') skipMusicForward();
+                else if (musicAction === 'loop') toggleMusicLoop();
+            }, true);
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                initStorefrontInteractions();
+                initFirebaseDatabase();
+            }, { once: true });
+        } else {
+            initStorefrontInteractions();
+            initFirebaseDatabase();
+        }
     </script>
 </body>
 </html>
