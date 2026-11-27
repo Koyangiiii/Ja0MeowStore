@@ -918,12 +918,13 @@
     <!-- 8. ADMIN PANEL MODAL -->
     <div id="adminPanelModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
         <div class="modal-card bg-[#FFFDFC]/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-lg w-full max-h-[88vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
-            <div class="p-4 pb-3 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-[#FFF1F6] via-[#FFF7FA] to-[#FFEAF2]">
-                <div class="space-y-0.5">
-                    <h3 class="font-display text-lg font-bold text-[#7A4961]">⚙️ Admin Manager — เจ้าเหมียว</h3>
-                    <p id="adminSyncStatusText" class="text-xs text-[#A5788E]">จัดการหมวดหมู่ย่อย อัปโหลดรูปภาพ ชื่อรูป และลิงก์</p>
+            <div class="p-4 pb-3 border-b border-pink-100 flex items-center justify-between gap-2 bg-gradient-to-r from-[#FFF1F6] via-[#FFF7FA] to-[#FFEAF2]">
+                <div class="space-y-0.5 min-w-0">
+                    <h3 class="font-display text-lg font-bold text-[#7A4961] truncate">⚙️ Admin Manager — เจ้าเหมียว</h3>
+                    <p id="adminSyncStatusText" class="text-xs text-[#A5788E] truncate">จัดการหมวดหมู่ย่อย อัปโหลดรูปภาพ ชื่อรูป และลิงก์</p>
                 </div>
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-1.5 shrink-0">
+                    <button type="button" onclick="forceSyncAdminNow()" class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-white text-[#9C5A79] border border-pink-200 hover:bg-[#FFF0F6] cursor-pointer">ซิงก์ล่าสุด</button>
                     <button type="button" onclick="handleAdminLogout()" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-50 text-rose-500 border border-rose-200 hover:bg-rose-100 cursor-pointer">ออกจากระบบ</button>
                     <button type="button" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
                 </div>
@@ -1366,7 +1367,7 @@
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js';
         import { getAuth, signInAnonymously, signInWithCustomToken } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js';
-        import { getFirestore, doc, setDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js';
+        import { getFirestore, doc, getDoc, setDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js';
 
         const DEFAULT_CATEGORIES = {
             example: {
@@ -1642,6 +1643,61 @@
                 profileCard,
                 featuredShowcase
             };
+        }
+
+        function applyCloudSnapshotData(rawData) {
+            const normalized = normalizeStoreData(rawData);
+            state.categories = normalized.categories;
+            state.artworks = normalized.artworks;
+            state.heroCardImage = normalized.heroCardImage;
+            state.contactLinks = normalized.contactLinks;
+            state.profileCard = normalized.profileCard;
+            state.featuredShowcase = normalized.featuredShowcase;
+            saveLocalStateFallback(
+                state.categories,
+                state.artworks,
+                state.heroCardImage,
+                state.contactLinks,
+                state.profileCard,
+                state.featuredShowcase
+            );
+            refreshActiveViews();
+        }
+
+        async function pullLatestCloudData() {
+            if (!storeDocRef) return false;
+            try {
+                if (!currentUser && auth) {
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                    currentUser = auth.currentUser;
+                }
+                const snap = await getDoc(storeDocRef);
+                setSyncStatus('ซิงก์ออนไลน์แล้ว', true);
+                if (snap.exists()) {
+                    applyCloudSnapshotData(snap.data());
+                    return true;
+                }
+            } catch (err) {
+                console.error('Pull latest cloud data error:', err);
+            }
+            return false;
+        }
+
+        async function forceSyncAdminNow() {
+            const adminSub = document.getElementById('adminSyncStatusText');
+            if (adminSub) adminSub.textContent = 'กำลังดึงข้อมูลล่าสุดจากระบบ...';
+            const ok = await pullLatestCloudData();
+            if (adminSub) {
+                adminSub.textContent = ok
+                    ? 'อัปเดตข้อมูลล่าสุดจากระบบเรียบร้อยแล้วครับ'
+                    : (state.cloudSyncConnected
+                        ? 'ซิงก์ข้อมูลออนไลน์เรียบร้อย (ทุกเครื่องเห็นเหมือนกัน)'
+                        : 'กำลังรอเชื่อมต่อฐานข้อมูลออนไลน์');
+            }
         }
 
         function renderFeaturedShowcase() {
@@ -1965,22 +2021,7 @@
                 (snap) => {
                     setSyncStatus('ซิงก์ออนไลน์แล้ว', true);
                     if (snap.exists()) {
-                        const normalized = normalizeStoreData(snap.data());
-                        state.categories = normalized.categories;
-                        state.artworks = normalized.artworks;
-                        state.heroCardImage = normalized.heroCardImage;
-                        state.contactLinks = normalized.contactLinks;
-                        state.profileCard = normalized.profileCard;
-                        state.featuredShowcase = normalized.featuredShowcase;
-                        saveLocalStateFallback(
-                            state.categories,
-                            state.artworks,
-                            state.heroCardImage,
-                            state.contactLinks,
-                            state.profileCard,
-                            state.featuredShowcase
-                        );
-                        refreshActiveViews();
+                        applyCloudSnapshotData(snap.data());
                     } else {
                         const initial = normalizeStoreData({
                             heroCardImage: state.heroCardImage,
@@ -2036,6 +2077,7 @@
 
                 storeDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'storeShowcase', 'main');
                 attachStoreListener();
+                await pullLatestCloudData();
             } catch (err) {
                 console.error('Firebase init error:', err);
                 setSyncStatus('โหมดบันทึกในเครื่อง', false);
@@ -2078,10 +2120,11 @@
                 renderHeroCardBanner();
                 onAdminMainCatChange();
                 renderAdminArtworkList();
+                pullLatestCloudData();
             }
         };
 
-        function handleAdminLogin(event) {
+        async function handleAdminLogin(event) {
             if (event && typeof event.preventDefault === 'function') {
                 event.preventDefault();
             }
@@ -2100,6 +2143,7 @@
                     errEl.textContent = '';
                     errEl.classList.add('hidden');
                 }
+                await pullLatestCloudData();
                 if (typeof window.openModal === 'function') {
                     window.openModal('adminPanelModal');
                 }
@@ -2984,6 +3028,7 @@
 
         window.handleAdminLogin = handleAdminLogin;
         window.handleAdminLogout = handleAdminLogout;
+        window.forceSyncAdminNow = forceSyncAdminNow;
         window.switchAdminTab = switchAdminTab;
         window.syncLiveProfilePreviewFromInputs = syncLiveProfilePreviewFromInputs;
         window.saveProfileCardFromAdmin = saveProfileCardFromAdmin;
