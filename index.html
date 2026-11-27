@@ -934,7 +934,7 @@
             <div class="px-4 py-2 border-b border-pink-100 bg-[#FFFDFC] flex flex-wrap gap-1.5 shrink-0">
                 <button type="button" id="adminTabArtworkBtn" onclick="switchAdminTab('artwork')" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-[#EE7CA8] text-white cursor-pointer">เพิ่มรูปงาน &amp; กลุ่ม</button>
                 <button type="button" id="adminTabProfileBtn" onclick="switchAdminTab('profile')" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-[#FFF2F7] text-[#8A5A72] hover:bg-[#FFE3EE] cursor-pointer">การ์ดโปรไฟล์ &amp; หมวด</button>
-                <button type="button" id="adminTabContactBtn" onclick="switchAdminTab('contact')" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-[#FFF2F7] text-[#8A5A72] hover:bg-[#FFE3EE] cursor-pointer">ช่องทางติดต่อ</button>
+                <button type="button" id="adminTabContactBtn" onclick="switchAdminTab('contact')" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-[#FFF2F7] text-[#8A5A72] hover:bg-[#FFE3EE] cursor-pointer">ช่องทางติดต่อ &amp; ซิงก์</button>
             </div>
 
             <div class="p-4 overflow-y-auto space-y-4 text-sm bg-[#FFF9FB]/50">
@@ -1206,7 +1206,7 @@
                     </div>
                 </div>
 
-                <!-- Tab 3: Contact Links Editor -->
+                <!-- Tab 3: Contact Links Editor & Cloud Sync Config -->
                 <div id="adminPanelTabContact" class="hidden space-y-4">
                     <div class="p-4 rounded-2xl bg-[#FFF2F7] border border-pink-100 space-y-3">
                         <div class="flex items-center justify-between gap-2">
@@ -1235,6 +1235,40 @@
                             บันทึกลิงก์ช่องทางการติดต่อ
                         </button>
                         <div id="adminContactFeedback" class="hidden text-xs font-semibold px-3 py-2 rounded-xl"></div>
+                    </div>
+
+                    <!-- Cloud Sync Setup Box (For syncing across different devices/browsers) -->
+                    <div class="p-4 rounded-2xl bg-white border border-pink-100 space-y-2.5">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="font-bold text-[#6B4257]">เชื่อมต่อฐานข้อมูลกลาง (ให้ทุกเครื่องเห็นตรงกัน)</div>
+                            <span id="cloudConfigStateBadge" class="text-[10px] px-2 py-0.5 rounded-full bg-[#FFF0F6] text-[#9C5A79] border border-pink-100 font-bold">ยังไม่ตั้งค่า</span>
+                        </div>
+                        <p class="text-[11px] text-[#8A5A72] leading-relaxed">
+                            หากเปิดเว็บจากเครื่องอื่นหรือคนละเบราว์เซอร์โดยไม่มีฐานข้อมูลกลาง ระบบจะเก็บไว้เฉพาะในเครื่องนั้นๆ ครับ วาง JSON ของ Firebase Config ด้านล่างเพื่อให้ทุกเครื่องซิงก์ข้อมูลเดียวกันได้ครับ
+                        </p>
+                        <textarea
+                            id="adminFirebaseConfigInput"
+                            rows="4"
+                            placeholder='{"apiKey":"...","authDomain":"...","projectId":"...","storageBucket":"...","messagingSenderId":"...","appId":"..."}'
+                            class="w-full px-3 py-2 rounded-xl border border-pink-200 bg-[#FFFDFC] text-xs font-mono focus:outline-none focus:border-pink-400"
+                        ></textarea>
+                        <div class="flex gap-2">
+                            <button
+                                type="button"
+                                onclick="saveFirebaseConfigFromAdmin()"
+                                class="flex-1 py-2 rounded-xl bg-[#EE7CA8] hover:bg-[#E46898] text-white text-xs font-bold shadow-xs transition cursor-pointer"
+                            >
+                                บันทึกและเชื่อมต่อฐานข้อมูลกลาง
+                            </button>
+                            <button
+                                type="button"
+                                onclick="clearFirebaseConfigFromAdmin()"
+                                class="px-3 py-2 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-500 border border-rose-200 text-xs font-bold transition cursor-pointer"
+                            >
+                                ล้างค่า
+                            </button>
+                        </div>
+                        <div id="adminCloudConfigFeedback" class="hidden text-xs font-semibold px-3 py-2 rounded-xl"></div>
                     </div>
                 </div>
             </div>
@@ -1365,7 +1399,7 @@
     </script>
 
     <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js';
+        import { initializeApp, getApps, getApp } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js';
         import { getAuth, signInAnonymously, signInWithCustomToken } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js';
         import { getFirestore, doc, getDoc, setDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js';
 
@@ -1444,6 +1478,112 @@
         ];
 
         const LOCAL_STORAGE_KEY = 'jaomeow_store_state_v1';
+        const FIREBASE_CONFIG_STORAGE_KEY = 'jaomeow_firebase_config_v1';
+
+        function loadSavedFirebaseConfig() {
+            if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+                try {
+                    const parsed = typeof __firebase_config === 'string'
+                        ? JSON.parse(__firebase_config)
+                        : __firebase_config;
+                    if (parsed && parsed.apiKey && parsed.projectId) {
+                        return { config: parsed, source: 'env' };
+                    }
+                } catch (_) {}
+            }
+
+            try {
+                const raw = localStorage.getItem(FIREBASE_CONFIG_STORAGE_KEY);
+                if (!raw) return null;
+                const parsed = JSON.parse(raw);
+                if (parsed && parsed.apiKey && parsed.projectId) {
+                    return { config: parsed, source: 'local' };
+                }
+            } catch (_) {}
+
+            return null;
+        }
+
+        function updateCloudConfigBadge() {
+            const badge = document.getElementById('cloudConfigStateBadge');
+            const input = document.getElementById('adminFirebaseConfigInput');
+            const loaded = loadSavedFirebaseConfig();
+            if (badge) {
+                if (state.cloudSyncConnected) {
+                    badge.textContent = 'เชื่อมต่อแล้ว';
+                    badge.className = 'text-[10px] px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold';
+                } else if (loaded) {
+                    badge.textContent = 'ตั้งค่าแล้ว (กำลังซิงก์)';
+                    badge.className = 'text-[10px] px-2 py-0.5 rounded-full bg-[#FFF0F6] text-[#9C5A79] border border-pink-200 font-bold';
+                } else {
+                    badge.textContent = 'ยังไม่ตั้งค่า';
+                    badge.className = 'text-[10px] px-2 py-0.5 rounded-full bg-[#FFF0F6] text-[#9C5A79] border border-pink-100 font-bold';
+                }
+            }
+            if (input && !input.value.trim()) {
+                try {
+                    const savedRaw = localStorage.getItem(FIREBASE_CONFIG_STORAGE_KEY);
+                    if (savedRaw) input.value = savedRaw;
+                } catch (_) {}
+            }
+        }
+
+        function showCloudConfigFeedback(msg, isError = false) {
+            const el = document.getElementById('adminCloudConfigFeedback');
+            if (!el) return;
+            el.textContent = msg;
+            el.className = isError
+                ? 'text-xs font-semibold px-3 py-2 rounded-xl bg-rose-50 text-rose-500 border border-rose-200'
+                : 'text-xs font-semibold px-3 py-2 rounded-xl bg-[#FFF0F6] text-[#8F3E64] border border-pink-200';
+            el.classList.remove('hidden');
+        }
+
+        async function saveFirebaseConfigFromAdmin() {
+            const rawText = (document.getElementById('adminFirebaseConfigInput')?.value || '').trim();
+            if (!rawText) {
+                showCloudConfigFeedback('กรุณาวาง JSON ของ Firebase Config ก่อนครับ', true);
+                return;
+            }
+            let parsed = null;
+            try {
+                parsed = JSON.parse(rawText);
+            } catch (_) {
+                showCloudConfigFeedback('รูปแบบ JSON ไม่ถูกต้อง กรุณาตรวจสอบเครื่องหมายคำพูดและจุลภาคครับ', true);
+                return;
+            }
+            if (!parsed || typeof parsed !== 'object' || !parsed.apiKey || !parsed.projectId) {
+                showCloudConfigFeedback('ต้องมีค่า apiKey และ projectId ใน Firebase Config ครับ', true);
+                return;
+            }
+            try {
+                localStorage.setItem(FIREBASE_CONFIG_STORAGE_KEY, JSON.stringify(parsed, null, 2));
+            } catch (_) {}
+            await initFirebaseDatabase();
+            updateCloudConfigBadge();
+            if (state.cloudSyncConnected) {
+                await persistStoreToFirestore();
+                showCloudConfigFeedback('เชื่อมต่อฐานข้อมูลกลางและซิงก์ข้อมูลสำเร็จแล้วครับ');
+            } else {
+                showCloudConfigFeedback('บันทึก Config แล้ว แต่ยังไม่สามารถเชื่อมต่อฐานข้อมูลได้ กรุณาตรวจสอบค่า Config อีกครั้งครับ', true);
+            }
+        }
+
+        async function clearFirebaseConfigFromAdmin() {
+            try {
+                localStorage.removeItem(FIREBASE_CONFIG_STORAGE_KEY);
+            } catch (_) {}
+            const input = document.getElementById('adminFirebaseConfigInput');
+            if (input) input.value = '';
+            if (unsubscribeStore) {
+                unsubscribeStore();
+                unsubscribeStore = null;
+            }
+            storeDocRef = null;
+            currentUser = null;
+            setSyncStatus('บันทึกในเครื่อง', false);
+            updateCloudConfigBadge();
+            showCloudConfigFeedback('ล้างค่าฐานข้อมูลกลางเรียบร้อยแล้วครับ ระบบจะกลับมาเก็บในเครื่อง');
+        }
 
         function loadLocalStateFallback() {
             try {
@@ -1552,6 +1692,7 @@
             if (adminSub && connected) {
                 adminSub.textContent = 'ซิงก์ข้อมูลออนไลน์เรียบร้อย (ทุกเครื่องเห็นเหมือนกัน)';
             }
+            updateCloudConfigBadge();
         }
 
         function cloneDefaultCategories() {
@@ -1696,7 +1837,7 @@
                     ? 'อัปเดตข้อมูลล่าสุดจากระบบเรียบร้อยแล้วครับ'
                     : (state.cloudSyncConnected
                         ? 'ซิงก์ข้อมูลออนไลน์เรียบร้อย (ทุกเครื่องเห็นเหมือนกัน)'
-                        : 'กำลังรอเชื่อมต่อฐานข้อมูลออนไลน์');
+                        : 'กำลังบันทึกในเครื่อง — ตั้งค่าฐานข้อมูลกลางได้ที่แท็บ "ช่องทางติดต่อ & ซิงก์"');
             }
         }
 
@@ -1765,7 +1906,7 @@
             if (fbEl) {
                 fbEl.textContent = savedCloud
                     ? 'บันทึกข้อความ FEATURED SHOWCASE และซิงก์ทุกเครื่องเรียบร้อยแล้วครับ'
-                    : 'บันทึกในเครื่องนี้แล้วครับ (กำลังรอเชื่อมต่อฐานข้อมูลออนไลน์)';
+                    : 'บันทึกในเครื่องนี้แล้วครับ (ตั้งค่าฐานข้อมูลกลางได้ที่แท็บ "ช่องทางติดต่อ & ซิงก์" เพื่อให้ทุกเครื่องตรงกัน)';
                 fbEl.className = 'text-xs font-semibold px-3 py-2 rounded-xl bg-white text-[#8F3E64] border border-pink-200';
                 fbEl.classList.remove('hidden');
             }
@@ -1836,7 +1977,7 @@
             if (fbEl) {
                 fbEl.textContent = savedCloud
                     ? 'บันทึกข้อมูลการ์ดโปรไฟล์และซิงก์ทุกเครื่องเรียบร้อยแล้วครับ'
-                    : 'บันทึกในเครื่องนี้แล้วครับ (กำลังรอเชื่อมต่อฐานข้อมูลออนไลน์)';
+                    : 'บันทึกในเครื่องนี้แล้วครับ (ตั้งค่าฐานข้อมูลกลางได้ที่แท็บ "ช่องทางติดต่อ & ซิงก์" เพื่อให้ทุกเครื่องตรงกัน)';
                 fbEl.className = 'text-xs font-semibold px-3 py-2 rounded-xl bg-[#FFF0F6] text-[#8F3E64] border border-pink-200';
                 fbEl.classList.remove('hidden');
             }
@@ -1886,6 +2027,7 @@
             if (fbInput) fbInput.value = state.contactLinks.facebook || '';
             if (lineInput) lineInput.value = state.contactLinks.line || '';
             if (igInput) igInput.value = state.contactLinks.ig || '';
+            updateCloudConfigBadge();
         }
 
         function showAdminContactNotice(msg, isError = false) {
@@ -1915,7 +2057,7 @@
             showAdminContactNotice(
                 savedCloud
                     ? 'บันทึกลิงก์ช่องทางการติดต่อและซิงก์ทุกเครื่องเรียบร้อยแล้วครับ'
-                    : 'บันทึกลิงก์ในเครื่องนี้แล้วครับ (กำลังรอเชื่อมต่อฐานข้อมูลออนไลน์)'
+                    : 'บันทึกลิงก์ในเครื่องนี้แล้วครับ (ตั้งค่าฐานข้อมูลกลางด้านล่างเพื่อให้ทุกเครื่องตรงกัน)'
             );
         }
 
@@ -1986,7 +2128,7 @@
             );
 
             if (!storeDocRef || !currentUser) {
-                setSyncStatus('บันทึกเฉพาะเครื่องนี้', false);
+                setSyncStatus('บันทึกในเครื่อง', false);
                 return false;
             }
 
@@ -2041,7 +2183,7 @@
                 },
                 (err) => {
                     console.error('Firestore snapshot error:', err);
-                    setSyncStatus('ออฟไลน์ / เชื่อมต่อไม่ได้', false);
+                    setSyncStatus('บันทึกในเครื่อง', false);
                 }
             );
         }
@@ -2050,16 +2192,19 @@
             refreshActiveViews();
             try {
                 const appId = typeof __app_id !== 'undefined' && __app_id ? __app_id : 'jaomeow-store';
-                if (typeof __firebase_config === 'undefined' || !__firebase_config) {
-                    setSyncStatus('โหมดบันทึกในเครื่อง', false);
+                const loadedCfg = loadSavedFirebaseConfig();
+                if (!loadedCfg || !loadedCfg.config) {
+                    setSyncStatus('บันทึกในเครื่อง', false);
                     return;
                 }
 
-                const firebaseConfig = typeof __firebase_config === 'string'
-                    ? JSON.parse(__firebase_config)
-                    : __firebase_config;
+                const firebaseConfig = loadedCfg.config;
+                const appName = loadedCfg.source === 'env' ? '[DEFAULT]' : 'JaoMeowCloudApp';
+                const existingApps = getApps();
+                const app = existingApps.some((a) => a.name === appName)
+                    ? getApp(appName)
+                    : initializeApp(firebaseConfig, appName);
 
-                const app = initializeApp(firebaseConfig);
                 auth = getAuth(app);
                 db = getFirestore(app);
 
@@ -2071,7 +2216,7 @@
 
                 currentUser = auth.currentUser;
                 if (!currentUser) {
-                    setSyncStatus('โหมดบันทึกในเครื่อง', false);
+                    setSyncStatus('บันทึกในเครื่อง', false);
                     return;
                 }
 
@@ -2080,7 +2225,7 @@
                 await pullLatestCloudData();
             } catch (err) {
                 console.error('Firebase init error:', err);
-                setSyncStatus('โหมดบันทึกในเครื่อง', false);
+                setSyncStatus('บันทึกในเครื่อง', false);
             }
         }
 
@@ -2114,6 +2259,8 @@
                 if (profileFb) profileFb.classList.add('hidden');
                 const showcaseFb = document.getElementById('adminShowcaseFeedback');
                 if (showcaseFb) showcaseFb.classList.add('hidden');
+                const cfgFb = document.getElementById('adminCloudConfigFeedback');
+                if (cfgFb) cfgFb.classList.add('hidden');
                 syncAdminProfileInputs();
                 syncAdminShowcaseInputs();
                 syncAdminContactInputs();
@@ -3035,6 +3182,8 @@
         window.syncLiveShowcasePreviewFromInputs = syncLiveShowcasePreviewFromInputs;
         window.saveFeaturedShowcaseFromAdmin = saveFeaturedShowcaseFromAdmin;
         window.saveContactLinksFromAdmin = saveContactLinksFromAdmin;
+        window.saveFirebaseConfigFromAdmin = saveFirebaseConfigFromAdmin;
+        window.clearFirebaseConfigFromAdmin = clearFirebaseConfigFromAdmin;
         window.selectExampleSubcat = selectExampleSubcat;
         window.selectExampleLeaf = selectExampleLeaf;
         window.selectGroupSubcat = selectGroupSubcat;
