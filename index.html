@@ -567,6 +567,7 @@
                     </div>
                     <div class="grid grid-cols-3 gap-2">
                         <a
+                            id="contactLinkFacebook"
                             href="https://facebook.com"
                             target="_blank"
                             rel="noopener noreferrer"
@@ -576,6 +577,7 @@
                             <span>Facebook</span>
                         </a>
                         <a
+                            id="contactLinkLine"
                             href="https://line.me"
                             target="_blank"
                             rel="noopener noreferrer"
@@ -585,6 +587,7 @@
                             <span>Line</span>
                         </a>
                         <a
+                            id="contactLinkIg"
                             href="https://instagram.com"
                             target="_blank"
                             rel="noopener noreferrer"
@@ -926,6 +929,36 @@
             </div>
 
             <div class="p-4 overflow-y-auto space-y-4 text-sm bg-[#FFF9FB]/50">
+                <!-- Contact Links Editor -->
+                <div class="p-4 rounded-2xl bg-[#FFF2F7] border border-pink-100 space-y-3">
+                    <div class="flex items-center justify-between gap-2">
+                        <div class="font-bold text-[#6B4257]">ตั้งค่าลิงก์ช่องทางการติดต่อ</div>
+                        <span class="text-[11px] text-[#A5788E]">Facebook / Line / IG</span>
+                    </div>
+                    <div class="space-y-2.5">
+                        <div>
+                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ลิงก์ Facebook</label>
+                            <input id="adminContactFacebookInput" type="url" placeholder="https://facebook.com/..." class="w-full px-3.5 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ลิงก์ Line</label>
+                            <input id="adminContactLineInput" type="url" placeholder="https://line.me/ti/p/..." class="w-full px-3.5 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ลิงก์ IG</label>
+                            <input id="adminContactIgInput" type="url" placeholder="https://instagram.com/..." class="w-full px-3.5 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
+                        </div>
+                    </div>
+                    <button
+                        type="button"
+                        onclick="saveContactLinksFromAdmin()"
+                        class="w-full py-2 rounded-xl bg-[#EE7CA8] hover:bg-[#E46898] text-white font-bold shadow-xs transition cursor-pointer"
+                    >
+                        บันทึกลิงก์ช่องทางการติดต่อ
+                    </button>
+                    <div id="adminContactFeedback" class="hidden text-xs font-semibold px-3 py-2 rounded-xl"></div>
+                </div>
+
                 <!-- Section 1: Category Management -->
                 <div class="p-4 rounded-2xl bg-[#FFF2F7] border border-pink-100 space-y-3">
                     <div class="flex items-center justify-between gap-2">
@@ -1012,7 +1045,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 items-start">
                         <div>
                             <label class="block text-xs font-semibold text-[#8A5A72] mb-1">อัปโหลดไฟล์รูปภาพ (เลือกได้หลายรูป)</label>
-                            <input id="artworkFileInput" type="file" accept="image/*" multiple onchange="handleFilePreview(event)" class="w-full text-xs text-[#8A5A72] file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#FFE6F0] file:text-[#B84D7B] hover:file:bg-[#FFD6E6] cursor-pointer">
+                            <input id="artworkFileInput" type="file" accept="image/*" multiple onchange="handleFilePreview(event)" class="w-full text-xs text-[#8A5A72] file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs font-bold file:bg-[#FFE6F0] file:text-[#B84D7B] hover:file:bg-[#FFD6E6] cursor-pointer">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-[#8A5A72] mb-1">หรือวางลิงก์รูปภาพโดยตรง</label>
@@ -1174,6 +1207,12 @@
             group: ['เซ็ตอีโมตกลุ่ม', 'งานกลุ่มตัวละคร', 'เซ็ตป้ายร้านค้า']
         };
 
+        const DEFAULT_CONTACT_LINKS = {
+            facebook: 'https://facebook.com',
+            line: 'https://line.me',
+            ig: 'https://instagram.com'
+        };
+
         const DEFAULT_ARTWORKS = [
             {
                 id: 'demo-1',
@@ -1229,12 +1268,13 @@
             }
         }
 
-        function saveLocalStateFallback(cats, arts, heroCardImg) {
+        function saveLocalStateFallback(cats, arts, heroCardImg, contactLinks) {
             try {
                 localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({
                     categories: cats,
                     artworks: arts,
-                    heroCardImage: heroCardImg || ''
+                    heroCardImage: heroCardImg || '',
+                    contactLinks: contactLinks || DEFAULT_CONTACT_LINKS
                 }));
             } catch (_) {}
         }
@@ -1249,6 +1289,17 @@
                 ? initialLocal.artworks
                 : JSON.parse(JSON.stringify(DEFAULT_ARTWORKS)),
             heroCardImage: typeof initialLocal?.heroCardImage === 'string' ? initialLocal.heroCardImage : '',
+            contactLinks: {
+                facebook: typeof initialLocal?.contactLinks?.facebook === 'string' && initialLocal.contactLinks.facebook.trim()
+                    ? initialLocal.contactLinks.facebook.trim()
+                    : DEFAULT_CONTACT_LINKS.facebook,
+                line: typeof initialLocal?.contactLinks?.line === 'string' && initialLocal.contactLinks.line.trim()
+                    ? initialLocal.contactLinks.line.trim()
+                    : DEFAULT_CONTACT_LINKS.line,
+                ig: typeof initialLocal?.contactLinks?.ig === 'string' && initialLocal.contactLinks.ig.trim()
+                    ? initialLocal.contactLinks.ig.trim()
+                    : DEFAULT_CONTACT_LINKS.ig
+            },
             selectedExampleSubcat: 'งานป้าย',
             selectedExampleLeaf: 'ทั้งหมด',
             selectedGroupSubcat: 'ทั้งหมด',
@@ -1265,6 +1316,14 @@
 
         function cloneDefaultCategories() {
             return JSON.parse(JSON.stringify(DEFAULT_CATEGORIES));
+        }
+
+        function sanitizeHttpUrl(rawUrl, fallbackUrl) {
+            const trimmed = String(rawUrl || '').trim();
+            if (!trimmed) return fallbackUrl;
+            if (/^https?:\/\//i.test(trimmed)) return trimmed;
+            if (/^line:\/\//i.test(trimmed)) return trimmed;
+            return `https://${trimmed}`;
         }
 
         function normalizeStoreData(rawData) {
@@ -1299,14 +1358,72 @@
                 ? rawData.heroCardImage
                 : (state.heroCardImage || '');
 
+            const rawLinks = rawData?.contactLinks && typeof rawData.contactLinks === 'object'
+                ? rawData.contactLinks
+                : state.contactLinks;
+
+            const contactLinks = {
+                facebook: sanitizeHttpUrl(rawLinks.facebook, DEFAULT_CONTACT_LINKS.facebook),
+                line: sanitizeHttpUrl(rawLinks.line, DEFAULT_CONTACT_LINKS.line),
+                ig: sanitizeHttpUrl(rawLinks.ig, DEFAULT_CONTACT_LINKS.ig)
+            };
+
             return {
                 categories: {
                     example: exampleCats,
                     group: groupCats
                 },
                 artworks,
-                heroCardImage
+                heroCardImage,
+                contactLinks
             };
+        }
+
+        function renderContactLinks() {
+            const fbEl = document.getElementById('contactLinkFacebook');
+            const lineEl = document.getElementById('contactLinkLine');
+            const igEl = document.getElementById('contactLinkIg');
+
+            if (fbEl) fbEl.href = state.contactLinks.facebook || DEFAULT_CONTACT_LINKS.facebook;
+            if (lineEl) lineEl.href = state.contactLinks.line || DEFAULT_CONTACT_LINKS.line;
+            if (igEl) igEl.href = state.contactLinks.ig || DEFAULT_CONTACT_LINKS.ig;
+        }
+
+        function syncAdminContactInputs() {
+            const fbInput = document.getElementById('adminContactFacebookInput');
+            const lineInput = document.getElementById('adminContactLineInput');
+            const igInput = document.getElementById('adminContactIgInput');
+
+            if (fbInput) fbInput.value = state.contactLinks.facebook || '';
+            if (lineInput) lineInput.value = state.contactLinks.line || '';
+            if (igInput) igInput.value = state.contactLinks.ig || '';
+        }
+
+        function showAdminContactNotice(msg, isError = false) {
+            const el = document.getElementById('adminContactFeedback');
+            if (!el) return;
+            el.textContent = msg;
+            el.className = isError
+                ? 'text-xs font-semibold px-3 py-2 rounded-xl bg-rose-50 text-rose-500 border border-rose-200'
+                : 'text-xs font-semibold px-3 py-2 rounded-xl bg-white text-[#8F3E64] border border-pink-200';
+            el.classList.remove('hidden');
+        }
+
+        async function saveContactLinksFromAdmin() {
+            const fbVal = (document.getElementById('adminContactFacebookInput')?.value || '').trim();
+            const lineVal = (document.getElementById('adminContactLineInput')?.value || '').trim();
+            const igVal = (document.getElementById('adminContactIgInput')?.value || '').trim();
+
+            state.contactLinks = {
+                facebook: sanitizeHttpUrl(fbVal, DEFAULT_CONTACT_LINKS.facebook),
+                line: sanitizeHttpUrl(lineVal, DEFAULT_CONTACT_LINKS.line),
+                ig: sanitizeHttpUrl(igVal, DEFAULT_CONTACT_LINKS.ig)
+            };
+
+            syncAdminContactInputs();
+            renderContactLinks();
+            showAdminContactNotice('บันทึกลิงก์ช่องทางการติดต่อเรียบร้อยแล้วครับ');
+            await persistStoreToFirestore();
         }
 
         function showAdminCategoryNotice(msg, isError = false) {
@@ -1352,13 +1469,14 @@
         }
 
         async function persistStoreToFirestore() {
-            saveLocalStateFallback(state.categories, state.artworks, state.heroCardImage);
+            saveLocalStateFallback(state.categories, state.artworks, state.heroCardImage, state.contactLinks);
             if (!storeDocRef || !currentUser) return;
             try {
                 await setDoc(storeDocRef, {
                     categories: state.categories,
                     artworks: state.artworks,
                     heroCardImage: state.heroCardImage || '',
+                    contactLinks: state.contactLinks,
                     updatedAt: Date.now()
                 }, { merge: true });
             } catch (err) {
@@ -1381,13 +1499,18 @@
                         state.categories = normalized.categories;
                         state.artworks = normalized.artworks;
                         state.heroCardImage = normalized.heroCardImage;
-                        saveLocalStateFallback(state.categories, state.artworks, state.heroCardImage);
+                        state.contactLinks = normalized.contactLinks;
+                        saveLocalStateFallback(state.categories, state.artworks, state.heroCardImage, state.contactLinks);
                         refreshActiveViews();
                     } else {
-                        const initial = normalizeStoreData({ heroCardImage: state.heroCardImage });
+                        const initial = normalizeStoreData({
+                            heroCardImage: state.heroCardImage,
+                            contactLinks: state.contactLinks
+                        });
                         state.categories = initial.categories;
                         state.artworks = initial.artworks;
                         state.heroCardImage = initial.heroCardImage;
+                        state.contactLinks = initial.contactLinks;
                         persistStoreToFirestore();
                         refreshActiveViews();
                     }
@@ -1433,10 +1556,12 @@
         }
 
         function refreshActiveViews() {
+            renderContactLinks();
             renderHeroCardBanner();
             renderExampleModal();
             renderGroupModal();
             if (state.isAdminLoggedIn) {
+                syncAdminContactInputs();
                 renderAdminCategoryControls();
                 renderAdminArtworkList();
             }
@@ -1449,6 +1574,9 @@
                 state.selectedGroupSubcat = 'ทั้งหมด';
                 renderGroupModal();
             } else if (modalId === 'adminPanelModal') {
+                const contactFb = document.getElementById('adminContactFeedback');
+                if (contactFb) contactFb.classList.add('hidden');
+                syncAdminContactInputs();
                 renderHeroCardBanner();
                 onAdminMainCatChange();
                 renderAdminArtworkList();
@@ -2253,6 +2381,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            renderContactLinks();
             syncLoopButtonUi();
             bindFirstGestureAudioUnlock();
             ensureYouTubePlayer(true);
@@ -2273,6 +2402,7 @@
 
         window.handleAdminLogin = handleAdminLogin;
         window.handleAdminLogout = handleAdminLogout;
+        window.saveContactLinksFromAdmin = saveContactLinksFromAdmin;
         window.selectExampleSubcat = selectExampleSubcat;
         window.selectExampleLeaf = selectExampleLeaf;
         window.selectGroupSubcat = selectGroupSubcat;
