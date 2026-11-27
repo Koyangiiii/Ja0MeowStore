@@ -438,20 +438,20 @@
                             <div class="col-span-7 flex flex-col items-end text-right pr-0.5 min-w-0 space-y-1.5">
                                 <div class="max-w-full inline-flex items-center gap-1 bg-white/95 px-2.5 py-1 rounded-2xl rounded-br-xs border-2 border-white shadow-xs">
                                     <span class="text-[11px] text-[#D97CA6] shrink-0">🐾</span>
-                                    <span class="font-serif italic font-bold text-sm text-[#E07AA8] leading-none truncate">JaoMeowStore</span>
+                                    <span id="showcaseBrandText" class="font-serif italic font-bold text-sm text-[#E07AA8] leading-none truncate">JaoMeowStore</span>
                                     <span class="text-[11px] text-pink-400 shrink-0">☆</span>
                                 </div>
                                 <div class="space-y-0.5">
-                                    <p class="text-[11px] font-bold text-[#955270] leading-snug">
+                                    <p id="showcaseLine1Text" class="text-[11px] font-bold text-[#955270] leading-snug">
                                         งานป้าย / sheet / website
                                     </p>
-                                    <p class="text-[10px] font-medium text-[#AC6886] leading-snug">
+                                    <p id="showcaseLine2Text" class="text-[10px] font-medium text-[#AC6886] leading-snug">
                                         custom commission &amp; set
                                     </p>
                                 </div>
                                 <div class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/85 text-[10px] font-semibold text-[#B46B8C]">
                                     <span>♡</span>
-                                    <span>รับทำตามบรีฟ</span>
+                                    <span id="showcaseBadgeText">รับทำตามบรีฟ</span>
                                 </div>
                             </div>
                         </div>
@@ -938,6 +938,34 @@
             <div class="p-4 overflow-y-auto space-y-4 text-sm bg-[#FFF9FB]/50">
                 <!-- Tab 1: Unified Add Artwork (Example & Group) + Subcategory Manager + Published Artworks -->
                 <div id="adminPanelTabArtwork" class="space-y-4">
+                    <!-- Subcategory Management Moved to Top of Artwork Tab -->
+                    <div class="p-4 rounded-2xl bg-[#FFF2F7] border border-pink-100 space-y-3">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="font-bold text-[#6B4257]">จัดการหมวดหมู่ย่อย</div>
+                            <span class="text-[11px] text-[#A5788E]">กด × เพื่อลบหมวดย่อย</span>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row gap-2 pt-1">
+                            <input
+                                id="newSubCategoryInput"
+                                type="text"
+                                placeholder="พิมพ์ชื่อหมวดย่อยที่ต้องการเพิ่มเอง..."
+                                class="flex-1 px-3.5 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400"
+                            >
+                            <button
+                                type="button"
+                                onclick="addCustomCategory()"
+                                id="addCustomCategoryBtn"
+                                class="px-4 py-2 rounded-xl bg-[#EE7CA8] hover:bg-[#E46898] text-white font-bold shadow-xs transition cursor-pointer shrink-0"
+                            >
+                                + เพิ่มหมวด
+                            </button>
+                        </div>
+
+                        <div id="adminCategoryFeedback" class="hidden text-xs font-semibold px-3 py-2 rounded-xl"></div>
+                        <div id="adminCustomCategoryList" class="flex flex-wrap gap-1.5 pt-1"></div>
+                    </div>
+
                     <form id="adminArtworkForm" onsubmit="handleAddArtwork(event)" class="p-4 rounded-2xl bg-white border border-pink-100 space-y-3.5">
                         <div class="font-bold text-[#6B4257]">เพิ่มรูปภาพตัวอย่างงาน &amp; ตัวอย่างกลุ่ม (เลือกได้หลายรูป ไม่ต้องใส่ชื่อรูปก็ได้)</div>
 
@@ -1008,34 +1036,6 @@
                             บันทึกรายการและเผยแพร่
                         </button>
                     </form>
-
-                    <!-- Subcategory Management (Moved to Artwork Tab) -->
-                    <div class="p-4 rounded-2xl bg-[#FFF2F7] border border-pink-100 space-y-3">
-                        <div class="flex items-center justify-between gap-2">
-                            <div class="font-bold text-[#6B4257]">จัดการหมวดหมู่ย่อย</div>
-                            <span class="text-[11px] text-[#A5788E]">กด × เพื่อลบหมวดย่อย</span>
-                        </div>
-
-                        <div class="flex flex-col sm:flex-row gap-2 pt-1">
-                            <input
-                                id="newSubCategoryInput"
-                                type="text"
-                                placeholder="พิมพ์ชื่อหมวดย่อยที่ต้องการเพิ่มเอง..."
-                                class="flex-1 px-3.5 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400"
-                            >
-                            <button
-                                type="button"
-                                onclick="addCustomCategory()"
-                                id="addCustomCategoryBtn"
-                                class="px-4 py-2 rounded-xl bg-[#EE7CA8] hover:bg-[#E46898] text-white font-bold shadow-xs transition cursor-pointer shrink-0"
-                            >
-                                + เพิ่มหมวด
-                            </button>
-                        </div>
-
-                        <div id="adminCategoryFeedback" class="hidden text-xs font-semibold px-3 py-2 rounded-xl"></div>
-                        <div id="adminCustomCategoryList" class="flex flex-wrap gap-1.5 pt-1"></div>
-                    </div>
 
                     <!-- Published Artworks -->
                     <div class="p-4 rounded-2xl bg-[#FFF6F9] border border-pink-100 space-y-2.5">
@@ -1145,6 +1145,38 @@
                             บันทึกข้อมูลการ์ดโปรไฟล์
                         </button>
                         <div id="adminProfileFeedback" class="hidden text-xs font-semibold px-3 py-2 rounded-xl"></div>
+                    </div>
+
+                    <!-- Editable Featured Showcase Texts -->
+                    <div class="p-4 rounded-2xl bg-[#FFF2F7] border border-pink-100 space-y-3">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="font-bold text-[#6B4257]">4. แก้ไขข้อความส่วน FEATURED SHOWCASE</div>
+                            <span class="text-[11px] text-[#A5788E]">แบนเนอร์ด้านล่างโปรไฟล์</span>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                            <div>
+                                <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ป้ายชื่อในแบนเนอร์</label>
+                                <input id="adminShowcaseBrandInput" type="text" placeholder="JaoMeowStore" class="w-full px-3 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ป้ายสถานะด้านล่าง</label>
+                                <input id="adminShowcaseBadgeInput" type="text" placeholder="รับทำตามบรีฟ" class="w-full px-3 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                            <div>
+                                <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ข้อความบรรทัดที่ 1</label>
+                                <input id="adminShowcaseLine1Input" type="text" placeholder="งานป้าย / sheet / website" class="w-full px-3 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ข้อความบรรทัดที่ 2</label>
+                                <input id="adminShowcaseLine2Input" type="text" placeholder="custom commission &amp; set" class="w-full px-3 py-2 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
+                            </div>
+                        </div>
+                        <button type="button" onclick="saveFeaturedShowcaseFromAdmin()" class="w-full py-2 rounded-xl bg-[#EE7CA8] hover:bg-[#E46898] text-white font-bold shadow-xs transition cursor-pointer">
+                            บันทึกข้อความ FEATURED SHOWCASE
+                        </button>
+                        <div id="adminShowcaseFeedback" class="hidden text-xs font-semibold px-3 py-2 rounded-xl"></div>
                     </div>
                 </div>
 
@@ -1282,12 +1314,26 @@
         };
 
         window.openAdminEntry = function () {
-            if (window.__jaomeowAdminLoggedIn) {
+            var isLoggedIn = Boolean(window.__jaomeowAdminLoggedIn);
+            if (isLoggedIn) {
                 window.openModal('adminPanelModal');
             } else {
+                var loginForm = document.getElementById('adminLoginForm');
+                if (loginForm && typeof loginForm.reset === 'function') {
+                    loginForm.reset();
+                }
                 var errEl = document.getElementById('adminLoginError');
-                if (errEl) errEl.classList.add('hidden');
+                if (errEl) {
+                    errEl.textContent = '';
+                    errEl.classList.add('hidden');
+                }
                 window.openModal('adminLoginModal');
+                setTimeout(function () {
+                    var userInput = document.getElementById('adminUsernameInput');
+                    if (userInput && typeof userInput.focus === 'function') {
+                        userInput.focus();
+                    }
+                }, 60);
             }
         };
     </script>
@@ -1318,6 +1364,13 @@
             logoSub: 'STORE',
             storeTitle: 'JaoMeowStore',
             tagline: 'งานป้าย | sheet | website'
+        };
+
+        const DEFAULT_FEATURED_SHOWCASE = {
+            brand: 'JaoMeowStore',
+            line1: 'งานป้าย / sheet / website',
+            line2: 'custom commission & set',
+            badge: 'รับทำตามบรีฟ'
         };
 
         const DEFAULT_ARTWORKS = [
@@ -1375,14 +1428,15 @@
             }
         }
 
-        function saveLocalStateFallback(cats, arts, heroCardImg, contactLinks, profileCard) {
+        function saveLocalStateFallback(cats, arts, heroCardImg, contactLinks, profileCard, featuredShowcase) {
             try {
                 localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({
                     categories: cats,
                     artworks: arts,
                     heroCardImage: heroCardImg || '',
                     contactLinks: contactLinks || DEFAULT_CONTACT_LINKS,
-                    profileCard: profileCard || DEFAULT_PROFILE_CARD
+                    profileCard: profileCard || DEFAULT_PROFILE_CARD,
+                    featuredShowcase: featuredShowcase || DEFAULT_FEATURED_SHOWCASE
                 }));
             } catch (_) {}
         }
@@ -1424,6 +1478,20 @@
                 tagline: typeof initialLocal?.profileCard?.tagline === 'string' && initialLocal.profileCard.tagline.trim()
                     ? initialLocal.profileCard.tagline.trim()
                     : DEFAULT_PROFILE_CARD.tagline
+            },
+            featuredShowcase: {
+                brand: typeof initialLocal?.featuredShowcase?.brand === 'string' && initialLocal.featuredShowcase.brand.trim()
+                    ? initialLocal.featuredShowcase.brand.trim()
+                    : DEFAULT_FEATURED_SHOWCASE.brand,
+                line1: typeof initialLocal?.featuredShowcase?.line1 === 'string' && initialLocal.featuredShowcase.line1.trim()
+                    ? initialLocal.featuredShowcase.line1.trim()
+                    : DEFAULT_FEATURED_SHOWCASE.line1,
+                line2: typeof initialLocal?.featuredShowcase?.line2 === 'string' && initialLocal.featuredShowcase.line2.trim()
+                    ? initialLocal.featuredShowcase.line2.trim()
+                    : DEFAULT_FEATURED_SHOWCASE.line2,
+                badge: typeof initialLocal?.featuredShowcase?.badge === 'string' && initialLocal.featuredShowcase.badge.trim()
+                    ? initialLocal.featuredShowcase.badge.trim()
+                    : DEFAULT_FEATURED_SHOWCASE.badge
             },
             activeAdminTab: 'artwork',
             selectedExampleSubcat: 'งานป้าย',
@@ -1506,6 +1574,17 @@
                 tagline: String(rawProfile.tagline || '').trim() || DEFAULT_PROFILE_CARD.tagline
             };
 
+            const rawShowcase = rawData?.featuredShowcase && typeof rawData.featuredShowcase === 'object'
+                ? rawData.featuredShowcase
+                : state.featuredShowcase;
+
+            const featuredShowcase = {
+                brand: String(rawShowcase.brand || '').trim() || DEFAULT_FEATURED_SHOWCASE.brand,
+                line1: String(rawShowcase.line1 || '').trim() || DEFAULT_FEATURED_SHOWCASE.line1,
+                line2: String(rawShowcase.line2 || '').trim() || DEFAULT_FEATURED_SHOWCASE.line2,
+                badge: String(rawShowcase.badge || '').trim() || DEFAULT_FEATURED_SHOWCASE.badge
+            };
+
             return {
                 categories: {
                     example: exampleCats,
@@ -1514,8 +1593,52 @@
                 artworks,
                 heroCardImage,
                 contactLinks,
-                profileCard
+                profileCard,
+                featuredShowcase
             };
+        }
+
+        function renderFeaturedShowcase() {
+            const brandEl = document.getElementById('showcaseBrandText');
+            const line1El = document.getElementById('showcaseLine1Text');
+            const line2El = document.getElementById('showcaseLine2Text');
+            const badgeEl = document.getElementById('showcaseBadgeText');
+
+            if (brandEl) brandEl.textContent = state.featuredShowcase.brand || DEFAULT_FEATURED_SHOWCASE.brand;
+            if (line1El) line1El.textContent = state.featuredShowcase.line1 || DEFAULT_FEATURED_SHOWCASE.line1;
+            if (line2El) line2El.textContent = state.featuredShowcase.line2 || DEFAULT_FEATURED_SHOWCASE.line2;
+            if (badgeEl) badgeEl.textContent = state.featuredShowcase.badge || DEFAULT_FEATURED_SHOWCASE.badge;
+        }
+
+        function syncAdminShowcaseInputs() {
+            const brandInput = document.getElementById('adminShowcaseBrandInput');
+            const line1Input = document.getElementById('adminShowcaseLine1Input');
+            const line2Input = document.getElementById('adminShowcaseLine2Input');
+            const badgeInput = document.getElementById('adminShowcaseBadgeInput');
+
+            if (brandInput) brandInput.value = state.featuredShowcase.brand || '';
+            if (line1Input) line1Input.value = state.featuredShowcase.line1 || '';
+            if (line2Input) line2Input.value = state.featuredShowcase.line2 || '';
+            if (badgeInput) badgeInput.value = state.featuredShowcase.badge || '';
+        }
+
+        async function saveFeaturedShowcaseFromAdmin() {
+            const fbEl = document.getElementById('adminShowcaseFeedback');
+            state.featuredShowcase = {
+                brand: (document.getElementById('adminShowcaseBrandInput')?.value || '').trim() || DEFAULT_FEATURED_SHOWCASE.brand,
+                line1: (document.getElementById('adminShowcaseLine1Input')?.value || '').trim() || DEFAULT_FEATURED_SHOWCASE.line1,
+                line2: (document.getElementById('adminShowcaseLine2Input')?.value || '').trim() || DEFAULT_FEATURED_SHOWCASE.line2,
+                badge: (document.getElementById('adminShowcaseBadgeInput')?.value || '').trim() || DEFAULT_FEATURED_SHOWCASE.badge
+            };
+
+            syncAdminShowcaseInputs();
+            renderFeaturedShowcase();
+            if (fbEl) {
+                fbEl.textContent = 'บันทึกข้อความ FEATURED SHOWCASE เรียบร้อยแล้วครับ';
+                fbEl.className = 'text-xs font-semibold px-3 py-2 rounded-xl bg-white text-[#8F3E64] border border-pink-200';
+                fbEl.classList.remove('hidden');
+            }
+            await persistStoreToFirestore();
         }
 
         function renderProfileCard() {
@@ -1703,7 +1826,7 @@
         }
 
         async function persistStoreToFirestore() {
-            saveLocalStateFallback(state.categories, state.artworks, state.heroCardImage, state.contactLinks, state.profileCard);
+            saveLocalStateFallback(state.categories, state.artworks, state.heroCardImage, state.contactLinks, state.profileCard, state.featuredShowcase);
             if (!storeDocRef || !currentUser) return;
             try {
                 await setDoc(storeDocRef, {
@@ -1712,6 +1835,7 @@
                     heroCardImage: state.heroCardImage || '',
                     contactLinks: state.contactLinks,
                     profileCard: state.profileCard,
+                    featuredShowcase: state.featuredShowcase,
                     updatedAt: Date.now()
                 }, { merge: true });
             } catch (err) {
@@ -1736,19 +1860,22 @@
                         state.heroCardImage = normalized.heroCardImage;
                         state.contactLinks = normalized.contactLinks;
                         state.profileCard = normalized.profileCard;
-                        saveLocalStateFallback(state.categories, state.artworks, state.heroCardImage, state.contactLinks, state.profileCard);
+                        state.featuredShowcase = normalized.featuredShowcase;
+                        saveLocalStateFallback(state.categories, state.artworks, state.heroCardImage, state.contactLinks, state.profileCard, state.featuredShowcase);
                         refreshActiveViews();
                     } else {
                         const initial = normalizeStoreData({
                             heroCardImage: state.heroCardImage,
                             contactLinks: state.contactLinks,
-                            profileCard: state.profileCard
+                            profileCard: state.profileCard,
+                            featuredShowcase: state.featuredShowcase
                         });
                         state.categories = initial.categories;
                         state.artworks = initial.artworks;
                         state.heroCardImage = initial.heroCardImage;
                         state.contactLinks = initial.contactLinks;
                         state.profileCard = initial.profileCard;
+                        state.featuredShowcase = initial.featuredShowcase;
                         persistStoreToFirestore();
                         refreshActiveViews();
                     }
@@ -1795,12 +1922,14 @@
 
         function refreshActiveViews() {
             renderProfileCard();
+            renderFeaturedShowcase();
             renderContactLinks();
             renderHeroCardBanner();
             renderExampleModal();
             renderGroupModal();
             if (state.isAdminLoggedIn) {
                 syncAdminProfileInputs();
+                syncAdminShowcaseInputs();
                 syncAdminContactInputs();
                 renderAdminCategoryControls();
                 renderAdminArtworkList();
@@ -1819,7 +1948,10 @@
                 if (contactFb) contactFb.classList.add('hidden');
                 const profileFb = document.getElementById('adminProfileFeedback');
                 if (profileFb) profileFb.classList.add('hidden');
+                const showcaseFb = document.getElementById('adminShowcaseFeedback');
+                if (showcaseFb) showcaseFb.classList.add('hidden');
                 syncAdminProfileInputs();
+                syncAdminShowcaseInputs();
                 syncAdminContactInputs();
                 renderHeroCardBanner();
                 onAdminMainCatChange();
@@ -1828,18 +1960,29 @@
         };
 
         function handleAdminLogin(event) {
-            event.preventDefault();
+            if (event && typeof event.preventDefault === 'function') {
+                event.preventDefault();
+            }
             const userInput = (document.getElementById('adminUsernameInput')?.value || '').trim();
             const passInput = (document.getElementById('adminPasswordInput')?.value || '').trim();
             const errEl = document.getElementById('adminLoginError');
 
-            if (userInput === 'เจ้าเหมียว' && passInput === '01082546') {
+            const normalizedUser = userInput.toLowerCase();
+            const validUsers = ['เจ้าเหมียว', 'jaomeow', 'jaomeowstore', 'admin'];
+            const validPasswords = ['01082546'];
+
+            if (validUsers.includes(normalizedUser) && validPasswords.includes(passInput)) {
                 state.isAdminLoggedIn = true;
                 window.__jaomeowAdminLoggedIn = true;
-                if (errEl) errEl.classList.add('hidden');
-                window.openModal('adminPanelModal');
+                if (errEl) {
+                    errEl.textContent = '';
+                    errEl.classList.add('hidden');
+                }
+                if (typeof window.openModal === 'function') {
+                    window.openModal('adminPanelModal');
+                }
             } else if (errEl) {
-                errEl.textContent = 'ชื่อแอดมินหรือรหัสผ่านไม่ถูกต้องครับ';
+                errEl.textContent = 'ชื่อแอดมินหรือรหัสผ่านไม่ถูกต้องครับ (ตรวจสอบชื่อและรหัสผ่านอีกครั้ง)';
                 errEl.classList.remove('hidden');
             }
         }
@@ -2626,6 +2769,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             renderProfileCard();
+            renderFeaturedShowcase();
             renderContactLinks();
             syncLoopButtonUi();
             bindFirstGestureAudioUnlock();
@@ -2650,6 +2794,7 @@
         window.switchAdminTab = switchAdminTab;
         window.syncLiveProfilePreviewFromInputs = syncLiveProfilePreviewFromInputs;
         window.saveProfileCardFromAdmin = saveProfileCardFromAdmin;
+        window.saveFeaturedShowcaseFromAdmin = saveFeaturedShowcaseFromAdmin;
         window.saveContactLinksFromAdmin = saveContactLinksFromAdmin;
         window.selectExampleSubcat = selectExampleSubcat;
         window.selectExampleLeaf = selectExampleLeaf;
