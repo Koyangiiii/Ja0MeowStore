@@ -1538,21 +1538,45 @@
             return `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/${col}/${docId}${apiKey}`;
         }
 
+        function getFirestoreCollectionUrl() {
+            if (!hasFirebaseConfig()) return '';
+            const projectId = encodeURIComponent(String(STORE_CONFIG.firebaseConfig.projectId).trim());
+            const col = encodeURIComponent(String(STORE_CONFIG.firestoreCollection || 'jaomeow_stores').trim());
+            const apiKey = STORE_CONFIG.firebaseConfig.apiKey
+                ? `?key=${encodeURIComponent(String(STORE_CONFIG.firebaseConfig.apiKey).trim())}`
+                : '';
+            return `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/${col}${apiKey}`;
+        }
+
         async function pushStoreToFirestore(payload, storeId = getActiveStoreId()) {
             const docUrl = getFirestoreDocumentUrl(storeId);
             if (!docUrl) return false;
+            const firestoreBody = JSON.stringify({
+                fields: {
+                    payloadJson: { stringValue: JSON.stringify(payload) },
+                    updatedAt: { integerValue: String(payload.updatedAt || Date.now()) }
+                }
+            });
+
             try {
                 const res = await fetch(docUrl, {
                     method: 'PATCH',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        fields: {
-                            payloadJson: { stringValue: JSON.stringify(payload) },
-                            updatedAt: { integerValue: String(payload.updatedAt || Date.now()) }
-                        }
-                    })
+                    body: firestoreBody
                 });
-                return res.ok;
+                if (res.ok) return true;
+            } catch (_) {}
+
+            try {
+                const colUrl = getFirestoreCollectionUrl();
+                const sep = colUrl.includes('?') ? '&' : '?';
+                const createUrl = `${colUrl}${sep}documentId=${encodeURIComponent(storeId)}`;
+                const createRes = await fetch(createUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: firestoreBody
+                });
+                return createRes.ok;
             } catch (_) {
                 return false;
             }
@@ -1826,7 +1850,8 @@
                 } catch (_) {}
             }
 
-            let anySuccess = await pushStoreToFirestore(payload, storeId);
+            const fsOk = await pushStoreToFirestore(payload, storeId);
+            let anySuccess = fsOk;
             const endpoints = STORE_CONFIG.syncEndpoints || [];
 
             for (const base of endpoints) {
@@ -1844,7 +1869,13 @@
                 } catch (_) {}
             }
 
-            setStatusBadge(anySuccess ? 'ซิงก์ข้อมูลอัตโนมัติทุกเครื่องแล้ว' : 'บันทึกและซิงก์ข้อมูลอัตโนมัติแล้ว');
+            if (fsOk) {
+                setStatusBadge('ซิงก์ข้อมูลขึ้น Firebase Firestore แล้ว');
+            } else if (anySuccess) {
+                setStatusBadge('ซิงก์ข้อมูลออนไลน์เรียบร้อยแล้ว');
+            } else {
+                setStatusBadge('บันทึกไว้ในเครื่อง — ตรวจ Firestore Rules / เครือข่าย');
+            }
             return anySuccess;
         }
 
