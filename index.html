@@ -1376,6 +1376,16 @@
         const STORE_CONFIG = {
             storeKey: 'jaomeow_store_v1',
             defaultStoreId: 'jaomeow',
+            firebaseConfig: {
+                apiKey: 'AIzaSyDeoR_v_GPgWOIJumybt_kzFtqwU6n6Ng4',
+                authDomain: 'jaomeow-store.firebaseapp.com',
+                projectId: 'jaomeow-store',
+                storageBucket: 'jaomeow-store.firebasestorage.app',
+                messagingSenderId: '256575705000',
+                appId: '1:256575705000:web:e9916d1c123aa3d987179d',
+                measurementId: 'G-K3RESX0N81'
+            },
+            firestoreCollection: 'jaomeow_stores',
             syncEndpoints: [
                 'https://kvdb.io',
                 'https://api.jsonstorage.net/v1/json'
@@ -1473,8 +1483,6 @@
             ]
         };
 
-        const ACTIVE_STORE_STORAGE_KEY = `${STORE_CONFIG.storeKey}_active_id_v1`;
-
         function getActiveStoreId() {
             return STORE_CONFIG.defaultStoreId;
         }
@@ -1482,6 +1490,26 @@
         function setActiveStoreId() {
             window.__jaomeowStoreId = STORE_CONFIG.defaultStoreId;
             return STORE_CONFIG.defaultStoreId;
+        }
+
+        function getLocalCacheKey(storeId = STORE_CONFIG.defaultStoreId) {
+            return `${STORE_CONFIG.storeKey}_cache_${storeId}`;
+        }
+
+        function readLocalCache(storeId = STORE_CONFIG.defaultStoreId) {
+            try {
+                const raw = window.localStorage?.getItem(getLocalCacheKey(storeId));
+                if (!raw) return null;
+                return JSON.parse(raw);
+            } catch (_) {
+                return null;
+            }
+        }
+
+        function writeLocalCache(payload, storeId = STORE_CONFIG.defaultStoreId) {
+            try {
+                window.localStorage?.setItem(getLocalCacheKey(storeId), JSON.stringify(payload));
+            } catch (_) {}
         }
 
         function getSyncUrlForEndpoint(endpoint, storeId = getActiveStoreId()) {
@@ -1492,6 +1520,61 @@
                 return `${cleanBase}/${safeBucket}_${safeStore}`;
             }
             return `${cleanBase}/${safeBucket}/store_${safeStore}.json`;
+        }
+
+        function hasFirebaseConfig() {
+            const cfg = STORE_CONFIG.firebaseConfig;
+            return Boolean(cfg && typeof cfg === 'object' && cfg.projectId);
+        }
+
+        function getFirestoreDocumentUrl(storeId = getActiveStoreId()) {
+            if (!hasFirebaseConfig()) return '';
+            const projectId = encodeURIComponent(String(STORE_CONFIG.firebaseConfig.projectId).trim());
+            const col = encodeURIComponent(String(STORE_CONFIG.firestoreCollection || 'jaomeow_stores').trim());
+            const docId = encodeURIComponent(String(storeId || STORE_CONFIG.defaultStoreId).trim());
+            const apiKey = STORE_CONFIG.firebaseConfig.apiKey
+                ? `?key=${encodeURIComponent(String(STORE_CONFIG.firebaseConfig.apiKey).trim())}`
+                : '';
+            return `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/${col}/${docId}${apiKey}`;
+        }
+
+        async function pushStoreToFirestore(payload, storeId = getActiveStoreId()) {
+            const docUrl = getFirestoreDocumentUrl(storeId);
+            if (!docUrl) return false;
+            try {
+                const res = await fetch(docUrl, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        fields: {
+                            payloadJson: { stringValue: JSON.stringify(payload) },
+                            updatedAt: { integerValue: String(payload.updatedAt || Date.now()) }
+                        }
+                    })
+                });
+                return res.ok;
+            } catch (_) {
+                return false;
+            }
+        }
+
+        async function fetchStoreFromFirestore(storeId = getActiveStoreId()) {
+            const docUrl = getFirestoreDocumentUrl(storeId);
+            if (!docUrl) return null;
+            try {
+                const sep = docUrl.includes('?') ? '&' : '?';
+                const res = await fetch(`${docUrl}${sep}_t=${Date.now()}`, {
+                    cache: 'no-store',
+                    headers: { 'Cache-Control': 'no-cache' }
+                });
+                if (!res.ok) return null;
+                const doc = await res.json();
+                const rawJson = doc?.fields?.payloadJson?.stringValue;
+                if (!rawJson) return null;
+                return normalizeStoreData(JSON.parse(rawJson));
+            } catch (_) {
+                return null;
+            }
         }
 
         function sanitizeHttpUrl(rawUrl, fallbackUrl = '') {
@@ -1671,11 +1754,12 @@
 
         const currentStoreIdAtBoot = getActiveStoreId();
         window.__jaomeowStoreId = currentStoreIdAtBoot;
-        const initialNormalized = normalizeStoreData({});
+        const cachedAtBoot = readLocalCache(currentStoreIdAtBoot);
+        const initialNormalized = normalizeStoreData(cachedAtBoot || {});
 
         let state = {
             storeId: currentStoreIdAtBoot,
-            updatedAt: 0,
+            updatedAt: Number(initialNormalized.updatedAt || 0),
             categories: initialNormalized.categories,
             artworks: initialNormalized.artworks,
             heroCardImage: initialNormalized.heroCardImage,
@@ -1734,14 +1818,16 @@
 
         async function pushStoreToCloud(storeId = state.storeId) {
             const payload = buildSyncPayload();
+            writeLocalCache(payload, storeId);
+
             if (syncChannel) {
                 try {
                     syncChannel.postMessage({ type: 'store-updated', storeId, payload });
                 } catch (_) {}
             }
 
+            let anySuccess = await pushStoreToFirestore(payload, storeId);
             const endpoints = STORE_CONFIG.syncEndpoints || [];
-            let anySuccess = false;
 
             for (const base of endpoints) {
                 const url = getSyncUrlForEndpoint(base, storeId);
@@ -1758,7 +1844,7 @@
                 } catch (_) {}
             }
 
-            setStatusBadge(anySuccess ? 'ซิงก์ข้อมูลอัตโนมัติทุกเครื่องแล้ว' : 'ซิงก์ข้อมูลอัตโนมัติทุกเครื่อง');
+            setStatusBadge(anySuccess ? 'ซิงก์ข้อมูลอัตโนมัติทุกเครื่องแล้ว' : 'บันทึกและซิงก์ข้อมูลอัตโนมัติแล้ว');
             return anySuccess;
         }
 
@@ -1766,8 +1852,13 @@
         let isSyncInFlight = false;
 
         async function fetchLatestRemotePayload(storeId) {
-            const endpoints = STORE_CONFIG.syncEndpoints || [];
             let newest = null;
+            const fsData = await fetchStoreFromFirestore(storeId);
+            if (fsData && Number(fsData.updatedAt || 0) > 0) {
+                newest = fsData;
+            }
+
+            const endpoints = STORE_CONFIG.syncEndpoints || [];
             const cacheBust = `_t=${Date.now()}`;
 
             for (const base of endpoints) {
@@ -1807,6 +1898,7 @@
                 const currentSig = computeDataSignature(state);
                 if (remoteTime > localTime || (remoteSig && remoteSig !== currentSig && remoteTime >= localTime) || localTime === 0) {
                     applyNormalizedDataToState(newestRemote, sid);
+                    writeLocalCache(buildSyncPayload(), sid);
                     refreshActiveViews();
                 }
                 setStatusBadge('ซิงก์ข้อมูลอัตโนมัติทุกเครื่องแล้ว');
@@ -1840,12 +1932,26 @@
                 syncStoreFromCloud();
             });
 
+            window.addEventListener('storage', (event) => {
+                if (event.key === getLocalCacheKey(state.storeId) && event.newValue) {
+                    try {
+                        const parsed = JSON.parse(event.newValue);
+                        const normalized = normalizeStoreData(parsed);
+                        if (Number(normalized.updatedAt || 0) >= Number(state.updatedAt || 0)) {
+                            applyNormalizedDataToState(normalized, state.storeId);
+                            refreshActiveViews();
+                        }
+                    } catch (_) {}
+                }
+            });
+
             if (syncChannel) {
                 syncChannel.onmessage = (event) => {
                     if (event?.data?.type === 'store-updated' && event?.data?.payload) {
                         const normalized = normalizeStoreData(event.data.payload);
                         if (Number(normalized.updatedAt || 0) >= Number(state.updatedAt || 0)) {
                             applyNormalizedDataToState(normalized, state.storeId);
+                            writeLocalCache(buildSyncPayload(), state.storeId);
                             refreshActiveViews();
                         }
                     }
@@ -1855,8 +1961,9 @@
 
         function saveStoreState() {
             state.updatedAt = Date.now();
+            writeLocalCache(buildSyncPayload(), state.storeId);
             refreshActiveViews();
-            setStatusBadge('กำลังซิงก์ข้อมูลอัตโนมัติทุกเครื่อง...');
+            setStatusBadge('กำลังบันทึกและซิงก์ข้อมูลอัตโนมัติ...');
             pushStoreToCloud(state.storeId);
         }
 
