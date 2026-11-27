@@ -357,7 +357,7 @@
             <div class="relative z-10">
                 <!-- Top Admin Button -->
                 <div class="flex items-center justify-between gap-2 mb-3">
-                    <span id="cloudSyncStatusBadge" class="px-2.5 py-1 rounded-full bg-white/90 border border-pink-100 text-[10px] font-semibold text-[#A5788E] truncate">กำลังเชื่อมต่อระบบซิงก์...</span>
+                    <span id="cloudSyncStatusBadge" class="px-2.5 py-1 rounded-full bg-white/90 border border-pink-100 text-[10px] font-semibold text-[#A5788E] truncate">พร้อมใช้งาน</span>
                     <button
                         type="button"
                         onclick="openAdminEntry()"
@@ -610,7 +610,7 @@
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center gap-1.5 mb-1.5">
                             <span class="text-[10px] text-[#E07AA8] shrink-0">❀</span>
-                            <div class="text-[11px] font-bold text-[#6D536E] truncate">
+                            <div id="musicTrackTitleText" class="text-[11px] font-bold text-[#6D536E] truncate">
                                 Cute Bear Iced Latte &amp; Cozy Pink Desk Lofi — lupi.
                             </div>
                         </div>
@@ -694,7 +694,7 @@
                     </div>
                 </div>
 
-                <footer class="pt-1 text-center text-xs text-[#9E6780] font-medium">
+                <footer id="storeFooterText" class="pt-1 text-center text-xs text-[#9E6780] font-medium">
                     © 2026 JaoMeowStore Studio All Rights Reserved ☁
                 </footer>
             </div>
@@ -758,29 +758,7 @@
                 <h3 class="font-display text-lg font-bold text-[#7A4961]">📋 เช็กคิวงานปัจจุบัน</h3>
                 <button type="button" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
             </div>
-            <div class="p-4 overflow-y-auto space-y-2.5 text-sm bg-[#FFF9FB]/50">
-                <div class="p-3.5 rounded-2xl bg-[#FFF0F6] border border-pink-100 flex items-center justify-between gap-2">
-                    <div class="space-y-0.5">
-                        <div class="font-bold text-[#6B4257]">คิวที่ 1 — คุณมินนี่</div>
-                        <div class="text-xs text-[#A5788E]">งานเว็บไซต์ + เซ็ตอีโมต</div>
-                    </div>
-                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-pink-200/80 text-[#8F3E64] shrink-0">กำลังทำร่าง</span>
-                </div>
-                <div class="p-3.5 rounded-2xl bg-white border border-pink-100 flex items-center justify-between gap-2">
-                    <div class="space-y-0.5">
-                        <div class="font-bold text-[#6B4257]">คิวที่ 2 — คุณปลายฟ้า</div>
-                        <div class="text-xs text-[#A5788E]">งานชีตตัวละคร &amp; ป้ายร้าน</div>
-                    </div>
-                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-[#FFE6F0] text-[#9E5678] shrink-0">รอคิวถัดไป</span>
-                </div>
-                <div class="p-3.5 rounded-2xl bg-[#FFF6F9] border border-pink-100 flex items-center justify-between gap-2">
-                    <div class="space-y-0.5">
-                        <div class="font-bold text-[#6B4257]">คิวว่างเปิดรับเพิ่ม</div>
-                        <div class="text-xs text-[#A5788E]">สามารถส่งบรีฟเพื่อจองคิวล่วงหน้าได้</div>
-                    </div>
-                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-rose-100 text-rose-600 shrink-0">ว่าง 2 คิว</span>
-                </div>
-            </div>
+            <div id="queueListContainer" class="p-4 overflow-y-auto space-y-2.5 text-sm bg-[#FFF9FB]/50"></div>
             <div class="px-4 py-2.5 border-t border-pink-100 bg-white/95 shrink-0">
                 <button type="button" onclick="closeAllModals()" class="w-full py-2 rounded-xl bg-[#FFF2F7] hover:bg-[#FFE3EE] text-[#8E5B74] text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5">
                     <span>‹</span>
@@ -797,12 +775,7 @@
                 <h3 class="font-display text-lg font-bold text-[#7A4961]">📜 กฎการจ้างงาน</h3>
                 <button type="button" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
             </div>
-            <div class="p-4 overflow-y-auto space-y-2.5 text-sm text-[#6E495C] leading-relaxed bg-[#FFF9FB]/50">
-                <div class="p-3 rounded-2xl bg-white border border-pink-100">1. บรีฟรายละเอียดให้ชัดเจนก่อนเริ่มงาน สามารถแก้ไขจุดเล็กน้อยได้ฟรีตามจำนวนครั้งที่ตกลง</div>
-                <div class="p-3 rounded-2xl bg-white border border-pink-100">2. ชำระมัดจำ 50% หลังจากตกลงรายละเอียดและรับคิวเรียบร้อยแล้ว ส่วนที่เหลือชำระก่อนส่งไฟล์จริง</div>
-                <div class="p-3 rounded-2xl bg-white border border-pink-100">3. ไม่อนุญาตให้นำผลงานไปแอบอ้างเป็นฝีมือตนเอง หรือนำไปเทรน AI ทุกกรณี</div>
-                <div class="p-3 rounded-2xl bg-white border border-pink-100">4. หากต้องการนำไปใช้เชิงพาณิชย์ กรุณาแจ้งล่วงหน้าเพื่อคำนวณเรตให้เหมาะสมครับ</div>
-            </div>
+            <div id="tosListContainer" class="p-4 overflow-y-auto space-y-2.5 text-sm text-[#6E495C] leading-relaxed bg-[#FFF9FB]/50"></div>
             <div class="px-4 py-2.5 border-t border-pink-100 bg-white/95 shrink-0">
                 <button type="button" onclick="closeAllModals()" class="w-full py-2 rounded-xl bg-[#FFF2F7] hover:bg-[#FFE3EE] text-[#8E5B74] text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5">
                     <span>‹</span>
@@ -819,29 +792,7 @@
                 <h3 class="font-display text-lg font-bold text-[#7A4961]">💰 เรตราคางานเบื้องต้น</h3>
                 <button type="button" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
             </div>
-            <div class="p-4 overflow-y-auto space-y-2.5 text-sm bg-[#FFF9FB]/50">
-                <div class="p-3.5 rounded-2xl bg-[#FFF0F6] border border-pink-100 flex items-center justify-between gap-2">
-                    <div class="space-y-0.5">
-                        <div class="font-bold text-[#6B4257]">งานป้าย / ป้ายร้าน / ป้ายประกาศ</div>
-                        <div class="text-xs text-[#A5788E]">ไฟล์พร้อมใช้งาน สีชมพูนมคมชัด</div>
-                    </div>
-                    <span class="font-display font-bold text-[#E06897] text-base shrink-0">เริ่มต้น 150฿</span>
-                </div>
-                <div class="p-3.5 rounded-2xl bg-white border border-pink-100 flex items-center justify-between gap-2">
-                    <div class="space-y-0.5">
-                        <div class="font-bold text-[#6B4257]">งานชีต / ชิบิ / อีโมต</div>
-                        <div class="text-xs text-[#A5788E]">น่ารักสไตล์เจ้าเหมียว ปรับโทนได้</div>
-                    </div>
-                    <span class="font-display font-bold text-[#E06897] text-base shrink-0">เริ่มต้น 250฿</span>
-                </div>
-                <div class="p-3.5 rounded-2xl bg-[#FFF5F9] border border-pink-100 flex items-center justify-between gap-2">
-                    <div class="space-y-0.5">
-                        <div class="font-bold text-[#6B4257]">งาน Website / หน้าเพจร้านค้า</div>
-                        <div class="text-xs text-[#A5788E]">รองรับมือถือและเดสก์ท็อป ครบจบในหน้าเดียว</div>
-                    </div>
-                    <span class="font-display font-bold text-[#E06897] text-base shrink-0">เริ่มต้น 590฿</span>
-                </div>
-            </div>
+            <div id="pricingListContainer" class="p-4 overflow-y-auto space-y-2.5 text-sm bg-[#FFF9FB]/50"></div>
             <div class="px-4 py-2.5 border-t border-pink-100 bg-white/95 shrink-0">
                 <button type="button" onclick="closeAllModals()" class="w-full py-2 rounded-xl bg-[#FFF2F7] hover:bg-[#FFE3EE] text-[#8E5B74] text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5">
                     <span>‹</span>
@@ -920,11 +871,10 @@
         <div class="modal-card bg-[#FFFDFC]/95 backdrop-blur-md border-2 border-white rounded-[28px] shadow-2xl max-w-lg w-full max-h-[88vh] flex flex-col overflow-hidden pointer-events-auto transform scale-95 transition-transform duration-200">
             <div class="p-4 pb-3 border-b border-pink-100 flex items-center justify-between gap-2 bg-gradient-to-r from-[#FFF1F6] via-[#FFF7FA] to-[#FFEAF2]">
                 <div class="space-y-0.5 min-w-0">
-                    <h3 class="font-display text-lg font-bold text-[#7A4961] truncate">⚙️ Admin Manager — เจ้าเหมียว</h3>
-                    <p id="adminSyncStatusText" class="text-xs text-[#A5788E] truncate">จัดการหมวดหมู่ย่อย อัปโหลดรูปภาพ ชื่อรูป และลิงก์</p>
+                    <h3 class="font-display text-lg font-bold text-[#7A4961] truncate">⚙️ Admin Manager</h3>
+                    <p id="adminSyncStatusText" class="text-xs text-[#A5788E] truncate">จัดการรูปงาน โปรไฟล์ร้าน คิว ราคา และลิงก์ติดต่อ</p>
                 </div>
                 <div class="flex items-center gap-1.5 shrink-0">
-                    <button type="button" onclick="forceSyncAdminNow()" class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-white text-[#9C5A79] border border-pink-200 hover:bg-[#FFF0F6] cursor-pointer">ซิงก์ล่าสุด</button>
                     <button type="button" onclick="handleAdminLogout()" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-50 text-rose-500 border border-rose-200 hover:bg-rose-100 cursor-pointer">ออกจากระบบ</button>
                     <button type="button" onclick="closeAllModals()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-[#9B637E] border border-pink-200 flex items-center justify-center font-bold cursor-pointer">✕</button>
                 </div>
@@ -933,14 +883,14 @@
             <!-- Admin Sub-Window Tabs -->
             <div class="px-4 py-2 border-b border-pink-100 bg-[#FFFDFC] flex flex-wrap gap-1.5 shrink-0">
                 <button type="button" id="adminTabArtworkBtn" onclick="switchAdminTab('artwork')" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-[#EE7CA8] text-white cursor-pointer">เพิ่มรูปงาน &amp; กลุ่ม</button>
-                <button type="button" id="adminTabProfileBtn" onclick="switchAdminTab('profile')" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-[#FFF2F7] text-[#8A5A72] hover:bg-[#FFE3EE] cursor-pointer">การ์ดโปรไฟล์ &amp; หมวด</button>
-                <button type="button" id="adminTabContactBtn" onclick="switchAdminTab('contact')" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-[#FFF2F7] text-[#8A5A72] hover:bg-[#FFE3EE] cursor-pointer">ช่องทางติดต่อ &amp; ซิงก์</button>
+                <button type="button" id="adminTabProfileBtn" onclick="switchAdminTab('profile')" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-[#FFF2F7] text-[#8A5A72] hover:bg-[#FFE3EE] cursor-pointer">การ์ดโปรไฟล์ &amp; แบนเนอร์</button>
+                <button type="button" id="adminTabStoreBtn" onclick="switchAdminTab('store')" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-[#FFF2F7] text-[#8A5A72] hover:bg-[#FFE3EE] cursor-pointer">คิว / ราคา / กฎร้าน</button>
+                <button type="button" id="adminTabContactBtn" onclick="switchAdminTab('contact')" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-[#FFF2F7] text-[#8A5A72] hover:bg-[#FFE3EE] cursor-pointer">ติดต่อ &amp; ย้ายข้อมูล</button>
             </div>
 
             <div class="p-4 overflow-y-auto space-y-4 text-sm bg-[#FFF9FB]/50">
                 <!-- Tab 1: Unified Add Artwork (Example & Group) + Subcategory Manager + Published Artworks -->
                 <div id="adminPanelTabArtwork" class="space-y-4">
-                    <!-- Subcategory Management Moved to Top of Artwork Tab -->
                     <div class="p-4 rounded-2xl bg-[#FFF2F7] border border-pink-100 space-y-3">
                         <div class="flex items-center justify-between gap-2">
                             <div class="font-bold text-[#6B4257]">จัดการหมวดหมู่ย่อย</div>
@@ -969,7 +919,7 @@
                     </div>
 
                     <form id="adminArtworkForm" onsubmit="handleAddArtwork(event)" class="p-4 rounded-2xl bg-white border border-pink-100 space-y-3.5">
-                        <div class="font-bold text-[#6B4257]">เพิ่มรูปภาพตัวอย่างงาน &amp; ตัวอย่างกลุ่ม (เลือกได้หลายรูป ไม่ต้องใส่ชื่อรูปก็ได้)</div>
+                        <div class="font-bold text-[#6B4257]">เพิ่มรูปภาพตัวอย่างงาน &amp; ตัวอย่างกลุ่ม</div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
@@ -992,7 +942,7 @@
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
-                                <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ชื่อรูปภาพ (ไม่บังคับ)</label>
+                                <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ชื่อรูปภาพ (เว้นว่างได้)</label>
                                 <input id="artworkTitleInput" type="text" placeholder="เว้นว่างได้ ไม่ต้องใส่ชื่อ" class="w-full px-3.5 py-2 rounded-xl border border-pink-200 bg-[#FFFDFC] focus:outline-none focus:border-pink-400">
                             </div>
                             <div>
@@ -1001,9 +951,8 @@
                             </div>
                         </div>
 
-                        <!-- Group Price Field (Shows only when Main Category = ตัวอย่างกลุ่ม) -->
                         <div id="adminGroupPriceWrapper" class="hidden">
-                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ราคาตัวอย่างกลุ่ม (พิมพ์ได้ทั้งตัวเลขและตัวหนังสือ)</label>
+                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ราคาตัวอย่างกลุ่ม</label>
                             <input id="artworkPriceInput" type="text" placeholder="เช่น 290฿, เริ่มต้น 199 บาท, ตามบรีฟ" class="w-full px-3.5 py-2 rounded-xl border border-pink-200 bg-[#FFFDFC] focus:outline-none focus:border-pink-400">
                         </div>
 
@@ -1013,7 +962,7 @@
                                 <input id="artworkFileInput" type="file" accept="image/*" multiple onchange="handleFilePreview(event)" class="w-full text-xs text-[#8A5A72] file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs font-bold file:bg-[#FFE6F0] file:text-[#B84D7B] hover:file:bg-[#FFD6E6] cursor-pointer">
                             </div>
                             <div>
-                                <label class="block text-xs font-semibold text-[#8A5A72] mb-1">หรือวางลิงก์รูปภาพโดยตรง</label>
+                                <label class="block text-xs font-semibold text-[#8A5A72] mb-1">หรือวางลิงก์รูปภาพ</label>
                                 <input id="artworkImageUrlInput" type="url" oninput="handleDirectUrlPreview()" placeholder="https://.../image.jpg" class="w-full px-3.5 py-2 rounded-xl border border-pink-200 bg-[#FFFDFC] focus:outline-none focus:border-pink-400">
                             </div>
                         </div>
@@ -1026,7 +975,7 @@
                             <div class="flex-1 min-w-0 space-y-1.5">
                                 <div id="multiSelectedImagesInfo" class="hidden text-[11px] font-semibold text-[#A85A7E]"></div>
                                 <div id="multiSelectedImagesStrip" class="hidden flex flex-wrap gap-1.5"></div>
-                                <div id="multiCatLabel" class="text-xs font-semibold text-[#8A5A72]">เลือกหมวดย่อย (เลือกได้มากกว่า 1 หมวด)</div>
+                                <div id="multiCatLabel" class="text-xs font-semibold text-[#8A5A72]">เลือกหมวดย่อย</div>
                                 <div id="multiCategoryCheckboxes" class="flex flex-wrap gap-2"></div>
                             </div>
                         </div>
@@ -1039,7 +988,6 @@
                         </button>
                     </form>
 
-                    <!-- Published Artworks -->
                     <div class="p-4 rounded-2xl bg-[#FFF6F9] border border-pink-100 space-y-2.5">
                         <div class="flex items-center justify-between">
                             <div class="font-bold text-[#6B4257]">รายการที่เผยแพร่แล้ว (<span id="adminItemCount">0</span>)</div>
@@ -1050,17 +998,14 @@
 
                 <!-- Tab 2: Profile Card Customizer & Top Image Slot + Live Preview -->
                 <div id="adminPanelTabProfile" class="hidden space-y-4">
-                    <!-- 1. Profile Card Text Fields with Left Preview & Right Inputs -->
                     <div class="p-4 rounded-2xl bg-white border border-pink-100 space-y-3.5">
                         <div class="flex items-center justify-between gap-2">
-                            <div class="font-bold text-[#6B4257]">1. ปรับแต่งข้อความการ์ดโปรไฟล์ร้าน</div>
-                            <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-[#FFF0F6] text-[#B85E88] font-bold border border-pink-100">LIVE PREVIEW</span>
+                            <div class="font-bold text-[#6B4257]">1. การ์ดโปรไฟล์ร้าน</div>
+                            <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-[#FFF0F6] text-[#B85E88] font-bold border border-pink-100">พรีวิวสด</span>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-12 gap-3.5 items-stretch">
-                            <!-- Left: Profile Card Live Preview -->
                             <div class="md:col-span-5 p-3 rounded-2xl bg-[#FFF9FB] border border-dashed border-pink-200 flex flex-col items-center justify-center text-center">
-                                <div class="text-[10px] font-bold text-[#9C5A79] mb-2">ตัวอย่างการ์ดโปรไฟล์</div>
                                 <div class="logo-ribbon-tag relative z-20 -mb-2 px-2.5 py-0.5 rounded-full inline-flex items-center gap-1 text-[8px] font-bold tracking-[0.14em] text-[#B85E88]">
                                     <span>✦</span>
                                     <span id="livePreviewRibbon">WELCOME TO OUR STORE</span>
@@ -1084,10 +1029,8 @@
                                 </div>
                             </div>
 
-                            <!-- Right: Profile Card Inputs -->
                             <div class="md:col-span-7 space-y-2.5">
                                 <div class="p-3 rounded-xl bg-[#FFF9FB] border border-pink-100 space-y-2">
-                                    <div class="text-[11px] font-bold text-[#9C5A79]">ข้อความภายในการ์ดโลโก้</div>
                                     <div>
                                         <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ริบบิ้นด้านบน</label>
                                         <input id="adminProfileRibbonInput" type="text" oninput="syncLiveProfilePreviewFromInputs()" placeholder="WELCOME TO OUR STORE" class="w-full px-3 py-1.5 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
@@ -1105,7 +1048,6 @@
                                 </div>
 
                                 <div class="p-3 rounded-xl bg-[#FFF9FB] border border-pink-100 space-y-2">
-                                    <div class="text-[11px] font-bold text-[#9C5A79]">ชื่อร้านและป้ายด้านล่าง</div>
                                     <div>
                                         <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ชื่อร้านหลักด้านล่าง</label>
                                         <input id="adminProfileStoreTitleInput" type="text" oninput="syncLiveProfilePreviewFromInputs()" placeholder="JaoMeowStore" class="w-full px-3 py-1.5 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
@@ -1119,22 +1061,19 @@
                         </div>
 
                         <button type="button" onclick="saveProfileCardFromAdmin()" class="w-full py-2.5 rounded-xl bg-[#EE7CA8] hover:bg-[#E46898] text-white font-bold shadow-xs transition cursor-pointer">
-                            บันทึกข้อมูลการ์ดโปรไฟล์
+                            บันทึกการ์ดโปรไฟล์
                         </button>
                         <div id="adminProfileFeedback" class="hidden text-xs font-semibold px-3 py-2 rounded-xl"></div>
                     </div>
 
-                    <!-- 2. Featured Showcase Image + Texts with Left Preview & Right Inputs -->
                     <div class="p-4 rounded-2xl bg-[#FFF2F7] border border-pink-100 space-y-3.5">
                         <div class="flex items-center justify-between gap-2">
-                            <div class="font-bold text-[#6B4257]">2. รูปภาพและข้อความส่วน FEATURED SHOWCASE</div>
-                            <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-white text-[#B85E88] font-bold border border-pink-100">LIVE PREVIEW</span>
+                            <div class="font-bold text-[#6B4257]">2. FEATURED SHOWCASE</div>
+                            <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-white text-[#B85E88] font-bold border border-pink-100">พรีวิวสด</span>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-12 gap-3.5 items-stretch">
-                            <!-- Left: Featured Showcase Live Preview -->
                             <div class="md:col-span-5 p-3 rounded-2xl bg-white/85 border border-dashed border-pink-200 flex flex-col justify-center">
-                                <div class="text-[10px] font-bold text-[#9C5A79] text-center mb-2">ตัวอย่าง FEATURED SHOWCASE</div>
                                 <div class="hero-milk-sky rounded-2xl p-2.5 border-2 border-white flex flex-col items-center text-center gap-2">
                                     <div class="w-20 h-20 rounded-2xl bg-white/80 border border-pink-100 flex items-center justify-center overflow-hidden shrink-0">
                                         <img id="livePreviewShowcaseImg" src="" alt="Showcase Preview" class="hidden w-full h-full object-contain">
@@ -1158,7 +1097,6 @@
                                 </div>
                             </div>
 
-                            <!-- Right: Featured Showcase Upload & Text Inputs -->
                             <div class="md:col-span-7 space-y-2.5">
                                 <div class="p-3 rounded-xl bg-white/85 border border-pink-100 flex items-center gap-3">
                                     <div class="w-14 h-14 rounded-xl border-2 border-dashed border-pink-200 bg-[#FFFDFC] flex items-center justify-center overflow-hidden shrink-0">
@@ -1166,7 +1104,7 @@
                                         <span id="adminHeroCardPreviewPlaceholder" class="text-[10px] text-[#B08398] text-center px-1">รูปแบนเนอร์</span>
                                     </div>
                                     <div class="flex-1 min-w-0 space-y-1">
-                                        <label class="block text-xs font-semibold text-[#8A5A72]">อัปโหลดรูปภาพการ์ดแบนเนอร์</label>
+                                        <label class="block text-xs font-semibold text-[#8A5A72]">อัปโหลดรูปแบนเนอร์</label>
                                         <input id="adminHeroCardFileInput" type="file" accept="image/*" onchange="handleHeroCardFileUpload(event)" class="w-full text-[11px] text-[#8A5A72] file:mr-2 file:py-1.5 file:px-2.5 file:rounded-xl file:border-0 file:text-[11px] file:font-bold file:bg-[#FFE6F0] file:text-[#B84D7B] hover:file:bg-[#FFD6E6] cursor-pointer">
                                         <div id="adminHeroCardStatus" class="hidden text-[11px] font-semibold text-[#8F3E64]"></div>
                                     </div>
@@ -1200,19 +1138,35 @@
                         </div>
 
                         <button type="button" onclick="saveFeaturedShowcaseFromAdmin()" class="w-full py-2.5 rounded-xl bg-[#EE7CA8] hover:bg-[#E46898] text-white font-bold shadow-xs transition cursor-pointer">
-                            บันทึกข้อความ FEATURED SHOWCASE
+                            บันทึก FEATURED SHOWCASE
                         </button>
                         <div id="adminShowcaseFeedback" class="hidden text-xs font-semibold px-3 py-2 rounded-xl"></div>
                     </div>
                 </div>
 
-                <!-- Tab 3: Contact Links Editor & Cloud Sync Config -->
+                <!-- Tab 3: Store Queue / Pricing / TOS Editor -->
+                <div id="adminPanelTabStore" class="hidden space-y-4">
+                    <div class="p-4 rounded-2xl bg-white border border-pink-100 space-y-3">
+                        <div class="font-bold text-[#6B4257]">คิวงานปัจจุบัน (1 บรรทัดต่อ 1 คิว: ชื่อ | รายละเอียด | สถานะ)</div>
+                        <textarea id="adminQueueEditorInput" rows="4" class="w-full px-3 py-2 rounded-xl border border-pink-200 bg-[#FFFDFC] text-xs focus:outline-none focus:border-pink-400"></textarea>
+
+                        <div class="font-bold text-[#6B4257] pt-1">เรตราคา (1 บรรทัดต่อ 1 รายการ: ชื่องาน | คำอธิบาย | ราคา)</div>
+                        <textarea id="adminPricingEditorInput" rows="4" class="w-full px-3 py-2 rounded-xl border border-pink-200 bg-[#FFFDFC] text-xs focus:outline-none focus:border-pink-400"></textarea>
+
+                        <div class="font-bold text-[#6B4257] pt-1">กฎการจ้างงาน / TOS (1 บรรทัดต่อ 1 ข้อ)</div>
+                        <textarea id="adminTosEditorInput" rows="4" class="w-full px-3 py-2 rounded-xl border border-pink-200 bg-[#FFFDFC] text-xs focus:outline-none focus:border-pink-400"></textarea>
+
+                        <button type="button" onclick="saveStoreDetailsFromAdmin()" class="w-full py-2.5 rounded-xl bg-[#EE7CA8] hover:bg-[#E46898] text-white font-bold shadow-xs transition cursor-pointer">
+                            บันทึกคิว / ราคา / กฎร้าน
+                        </button>
+                        <div id="adminStoreDetailsFeedback" class="hidden text-xs font-semibold px-3 py-2 rounded-xl"></div>
+                    </div>
+                </div>
+
+                <!-- Tab 4: Contact Links & Easy Data Transfer -->
                 <div id="adminPanelTabContact" class="hidden space-y-4">
                     <div class="p-4 rounded-2xl bg-[#FFF2F7] border border-pink-100 space-y-3">
-                        <div class="flex items-center justify-between gap-2">
-                            <div class="font-bold text-[#6B4257]">ตั้งค่าลิงก์ช่องทางการติดต่อ</div>
-                            <span class="text-[11px] text-[#A5788E]">Facebook / Line / IG</span>
-                        </div>
+                        <div class="font-bold text-[#6B4257]">ช่องทางการติดต่อ</div>
                         <div class="space-y-2.5">
                             <div>
                                 <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ลิงก์ Facebook</label>
@@ -1232,43 +1186,39 @@
                             onclick="saveContactLinksFromAdmin()"
                             class="w-full py-2 rounded-xl bg-[#EE7CA8] hover:bg-[#E46898] text-white font-bold shadow-xs transition cursor-pointer"
                         >
-                            บันทึกลิงก์ช่องทางการติดต่อ
+                            บันทึกลิงก์ติดต่อ
                         </button>
                         <div id="adminContactFeedback" class="hidden text-xs font-semibold px-3 py-2 rounded-xl"></div>
                     </div>
 
-                    <!-- Cloud Sync Setup Box (For syncing across different devices/browsers) -->
                     <div class="p-4 rounded-2xl bg-white border border-pink-100 space-y-2.5">
-                        <div class="flex items-center justify-between gap-2">
-                            <div class="font-bold text-[#6B4257]">เชื่อมต่อฐานข้อมูลกลาง (ให้ทุกเครื่องเห็นตรงกัน)</div>
-                            <span id="cloudConfigStateBadge" class="text-[10px] px-2 py-0.5 rounded-full bg-[#FFF0F6] text-[#9C5A79] border border-pink-100 font-bold">ยังไม่ตั้งค่า</span>
-                        </div>
+                        <div class="font-bold text-[#6B4257]">ย้ายข้อมูลร้านไปอีกเครื่องแบบง่ายๆ</div>
                         <p class="text-[11px] text-[#8A5A72] leading-relaxed">
-                            หากเปิดเว็บจากเครื่องอื่นหรือคนละเบราว์เซอร์โดยไม่มีฐานข้อมูลกลาง ระบบจะเก็บไว้เฉพาะในเครื่องนั้นๆ ครับ วาง JSON ของ Firebase Config ด้านล่างเพื่อให้ทุกเครื่องซิงก์ข้อมูลเดียวกันได้ครับ
+                            กดคัดลอกรหัสร้านจากเครื่องนี้ แล้วนำไปวางในช่องด้านล่างของอีกเครื่องแล้วกด "นำเข้ารหัส" ได้เลยครับ
                         </p>
-                        <textarea
-                            id="adminFirebaseConfigInput"
-                            rows="4"
-                            placeholder='{"apiKey":"...","authDomain":"...","projectId":"...","storageBucket":"...","messagingSenderId":"...","appId":"..."}'
-                            class="w-full px-3 py-2 rounded-xl border border-pink-200 bg-[#FFFDFC] text-xs font-mono focus:outline-none focus:border-pink-400"
-                        ></textarea>
                         <div class="flex gap-2">
                             <button
                                 type="button"
-                                onclick="saveFirebaseConfigFromAdmin()"
-                                class="flex-1 py-2 rounded-xl bg-[#EE7CA8] hover:bg-[#E46898] text-white text-xs font-bold shadow-xs transition cursor-pointer"
+                                onclick="copyStoreBackupCode()"
+                                class="flex-1 py-2 rounded-xl bg-[#FFF2F7] hover:bg-[#FFE3EE] text-[#8E5B74] border border-pink-200 text-xs font-bold transition cursor-pointer"
                             >
-                                บันทึกและเชื่อมต่อฐานข้อมูลกลาง
+                                คัดลอกรหัสร้าน
                             </button>
                             <button
                                 type="button"
-                                onclick="clearFirebaseConfigFromAdmin()"
-                                class="px-3 py-2 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-500 border border-rose-200 text-xs font-bold transition cursor-pointer"
+                                onclick="importStoreBackupCode()"
+                                class="flex-1 py-2 rounded-xl bg-[#EE7CA8] hover:bg-[#E46898] text-white text-xs font-bold shadow-xs transition cursor-pointer"
                             >
-                                ล้างค่า
+                                นำเข้ารหัส
                             </button>
                         </div>
-                        <div id="adminCloudConfigFeedback" class="hidden text-xs font-semibold px-3 py-2 rounded-xl"></div>
+                        <textarea
+                            id="adminStoreTransferInput"
+                            rows="3"
+                            placeholder="วางรหัสร้านที่คัดลอกมาที่นี่..."
+                            class="w-full px-3 py-2 rounded-xl border border-pink-200 bg-[#FFFDFC] text-xs focus:outline-none focus:border-pink-400"
+                        ></textarea>
+                        <div id="adminTransferFeedback" class="hidden text-xs font-semibold px-3 py-2 rounded-xl"></div>
                     </div>
                 </div>
             </div>
@@ -1399,190 +1349,143 @@
     </script>
 
     <script type="module">
-        import { initializeApp, getApps, getApp } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js';
-        import { getAuth, signInAnonymously, signInWithCustomToken } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js';
-        import { getFirestore, doc, getDoc, setDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js';
-
-        const DEFAULT_CATEGORIES = {
-            example: {
-                'งานป้าย': ['ป้ายร้าน', 'ป้ายประกาศ', 'ป้ายโปรโมชัน'],
-                'งานชีต': ['ชีตตัวละคร', 'ชีตชิบิ', 'ชีตอีโมต'],
-                'website': ['หน้าเพจร้านค้า', 'พอร์ตโฟลิโอ', 'เว็บคอมมิชชัน']
+        // =========================================================================
+        // STORE_CONFIG (จุดตั้งค่าหลักของร้าน สำหรับเจ้าของร้าน หรือนำไปปรับขายต่อ)
+        // =========================================================================
+        const STORE_CONFIG = {
+            storeKey: 'jaomeow_store_v1',
+            adminUsers: ['เจ้าเหมียว', 'jaomeow', 'jaomeowstore', 'admin'],
+            adminPasswords: ['01082546'],
+            musicVideoId: 'aoUX55g5iK0',
+            musicTrackTitle: 'Cute Bear Iced Latte & Cozy Pink Desk Lofi — lupi.',
+            footerText: '© 2026 JaoMeowStore Studio All Rights Reserved ☁',
+            defaultProfileCard: {
+                ribbon: 'WELCOME TO OUR STORE',
+                logoName: 'JaoMeow',
+                logoSub: 'STORE',
+                storeTitle: 'JaoMeowStore',
+                tagline: 'งานป้าย | sheet | website'
             },
-            group: ['เซ็ตอีโมตกลุ่ม', 'งานกลุ่มตัวละคร', 'เซ็ตป้ายร้านค้า']
+            defaultFeaturedShowcase: {
+                brand: 'JaoMeowStore',
+                line1: 'งานป้าย / sheet / website',
+                line2: 'custom commission & set',
+                badgeIcon: '♡',
+                badge: 'รับทำตามบรีฟ'
+            },
+            defaultContactLinks: {
+                facebook: 'https://facebook.com',
+                line: 'https://line.me',
+                ig: 'https://instagram.com'
+            },
+            defaultCategories: {
+                example: {
+                    'งานป้าย': ['ป้ายร้าน', 'ป้ายประกาศ', 'ป้ายโปรโมชัน'],
+                    'งานชีต': ['ชีตตัวละคร', 'ชีตชิบิ', 'ชีตอีโมต'],
+                    'website': ['หน้าเพจร้านค้า', 'พอร์ตโฟลิโอ', 'เว็บคอมมิชชัน']
+                },
+                group: ['เซ็ตอีโมตกลุ่ม', 'งานกลุ่มตัวละคร', 'เซ็ตป้ายร้านค้า']
+            },
+            defaultQueueItems: [
+                { title: 'คิวที่ 1 — คุณมินนี่', detail: 'งานเว็บไซต์ + เซ็ตอีโมต', status: 'กำลังทำร่าง', highlight: true },
+                { title: 'คิวที่ 2 — คุณปลายฟ้า', detail: 'งานชีตตัวละคร & ป้ายร้าน', status: 'รอคิวถัดไป', highlight: false },
+                { title: 'คิวว่างเปิดรับเพิ่ม', detail: 'สามารถส่งบรีฟเพื่อจองคิวล่วงหน้าได้', status: 'ว่าง 2 คิว', highlight: false }
+            ],
+            defaultPricingItems: [
+                { title: 'งานป้าย / ป้ายร้าน / ป้ายประกาศ', detail: 'ไฟล์พร้อมใช้งาน สีชมพูนมคมชัด', price: 'เริ่มต้น 150฿', highlight: true },
+                { title: 'งานชีต / ชิบิ / อีโมต', detail: 'น่ารักสไตล์เจ้าเหมียว ปรับโทนได้', price: 'เริ่มต้น 250฿', highlight: false },
+                { title: 'งาน Website / หน้าเพจร้านค้า', detail: 'รองรับมือถือและเดสก์ท็อป ครบจบในหน้าเดียว', price: 'เริ่มต้น 590฿', highlight: false }
+            ],
+            defaultTosItems: [
+                '1. บรีฟรายละเอียดให้ชัดเจนก่อนเริ่มงาน สามารถแก้ไขจุดเล็กน้อยได้ฟรีตามจำนวนครั้งที่ตกลง',
+                '2. ชำระมัดจำ 50% หลังจากตกลงรายละเอียดและรับคิวเรียบร้อยแล้ว ส่วนที่เหลือชำระก่อนส่งไฟล์จริง',
+                '3. ไม่อนุญาตให้นำผลงานไปแอบอ้างเป็นฝีมือตนเอง หรือนำไปเทรน AI ทุกกรณี',
+                '4. หากต้องการนำไปใช้เชิงพาณิชย์ กรุณาแจ้งล่วงหน้าเพื่อคำนวณเรตให้เหมาะสมครับ'
+            ],
+            defaultArtworks: [
+                {
+                    id: 'demo-1',
+                    title: 'เซ็ตป้ายร้านชมพูนม',
+                    price: '',
+                    link: 'https://example.com',
+                    image: 'https://placehold.co/400x400/FFE6F0/A85A7E?text=Sign+Set',
+                    mainCat: 'example',
+                    subCat: 'งานป้าย',
+                    categories: ['ป้ายร้าน']
+                },
+                {
+                    id: 'demo-2',
+                    title: 'ชีตตัวละครเจ้าเหมียว',
+                    price: '',
+                    link: 'https://example.com',
+                    image: 'https://placehold.co/400x400/FFF0F6/9C5A79?text=Chibi+Sheet',
+                    mainCat: 'example',
+                    subCat: 'งานชีต',
+                    categories: ['ชีตชิบิ']
+                },
+                {
+                    id: 'demo-3',
+                    title: 'เว็บคอมมิชชันพาสเทล',
+                    price: '',
+                    link: 'https://example.com',
+                    image: 'https://placehold.co/400x400/FCE4EE/B85E88?text=Website+UI',
+                    mainCat: 'example',
+                    subCat: 'website',
+                    categories: ['หน้าเพจร้านค้า']
+                },
+                {
+                    id: 'demo-4',
+                    title: 'เซ็ตอีโมตกลุ่มน่ารัก',
+                    price: 'เริ่มต้น 290฿',
+                    link: 'https://example.com',
+                    image: 'https://placehold.co/400x400/FFEAF3/A85A7E?text=Group+Emotes',
+                    mainCat: 'group',
+                    subCat: '',
+                    categories: ['เซ็ตอีโมตกลุ่ม']
+                }
+            ]
         };
 
-        const DEFAULT_CONTACT_LINKS = {
-            facebook: 'https://facebook.com',
-            line: 'https://line.me',
-            ig: 'https://instagram.com'
-        };
+        const LOCAL_STORAGE_KEY = `${STORE_CONFIG.storeKey}_state_v1`;
 
-        const DEFAULT_PROFILE_CARD = {
-            ribbon: 'WELCOME TO OUR STORE',
-            logoName: 'JaoMeow',
-            logoSub: 'STORE',
-            storeTitle: 'JaoMeowStore',
-            tagline: 'งานป้าย | sheet | website'
-        };
-
-        const DEFAULT_FEATURED_SHOWCASE = {
-            brand: 'JaoMeowStore',
-            line1: 'งานป้าย / sheet / website',
-            line2: 'custom commission & set',
-            badgeIcon: '♡',
-            badge: 'รับทำตามบรีฟ'
-        };
-
-        const DEFAULT_ARTWORKS = [
-            {
-                id: 'demo-1',
-                title: 'เซ็ตป้ายร้านชมพูนม',
-                price: '',
-                link: 'https://example.com',
-                image: 'https://placehold.co/400x400/FFE6F0/A85A7E?text=Sign+Set',
-                mainCat: 'example',
-                subCat: 'งานป้าย',
-                categories: ['ป้ายร้าน']
-            },
-            {
-                id: 'demo-2',
-                title: 'ชีตตัวละครเจ้าเหมียว',
-                price: '',
-                link: 'https://example.com',
-                image: 'https://placehold.co/400x400/FFF0F6/9C5A79?text=Chibi+Sheet',
-                mainCat: 'example',
-                subCat: 'งานชีต',
-                categories: ['ชีตชิบิ']
-            },
-            {
-                id: 'demo-3',
-                title: 'เว็บคอมมิชชันพาสเทล',
-                price: '',
-                link: 'https://example.com',
-                image: 'https://placehold.co/400x400/FCE4EE/B85E88?text=Website+UI',
-                mainCat: 'example',
-                subCat: 'website',
-                categories: ['หน้าเพจร้านค้า']
-            },
-            {
-                id: 'demo-4',
-                title: 'เซ็ตอีโมตกลุ่มน่ารัก',
-                price: 'เริ่มต้น 290฿',
-                link: 'https://example.com',
-                image: 'https://placehold.co/400x400/FFEAF3/A85A7E?text=Group+Emotes',
-                mainCat: 'group',
-                subCat: '',
-                categories: ['เซ็ตอีโมตกลุ่ม']
-            }
-        ];
-
-        const LOCAL_STORAGE_KEY = 'jaomeow_store_state_v1';
-        const FIREBASE_CONFIG_STORAGE_KEY = 'jaomeow_firebase_config_v1';
-
-        function loadSavedFirebaseConfig() {
-            if (typeof __firebase_config !== 'undefined' && __firebase_config) {
-                try {
-                    const parsed = typeof __firebase_config === 'string'
-                        ? JSON.parse(__firebase_config)
-                        : __firebase_config;
-                    if (parsed && parsed.apiKey && parsed.projectId) {
-                        return { config: parsed, source: 'env' };
+        function optimizeImageDataUrl(dataUrl, maxDim = 900, quality = 0.82) {
+            return new Promise((resolve) => {
+                if (!dataUrl || typeof dataUrl !== 'string' || !dataUrl.startsWith('data:image/')) {
+                    resolve(dataUrl || '');
+                    return;
+                }
+                const img = new Image();
+                img.onload = () => {
+                    try {
+                        let w = img.naturalWidth || img.width || maxDim;
+                        let h = img.naturalHeight || img.height || maxDim;
+                        if (w > maxDim || h > maxDim) {
+                            if (w >= h) {
+                                h = Math.round((h * maxDim) / w);
+                                w = maxDim;
+                            } else {
+                                w = Math.round((w * maxDim) / h);
+                                h = maxDim;
+                            }
+                        }
+                        const canvas = document.createElement('canvas');
+                        canvas.width = Math.max(1, w);
+                        canvas.height = Math.max(1, h);
+                        const ctx = canvas.getContext('2d');
+                        if (!ctx) {
+                            resolve(dataUrl);
+                            return;
+                        }
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        const out = canvas.toDataURL('image/jpeg', quality);
+                        resolve(out && out.length < dataUrl.length ? out : dataUrl);
+                    } catch (_) {
+                        resolve(dataUrl);
                     }
-                } catch (_) {}
-            }
-
-            try {
-                const raw = localStorage.getItem(FIREBASE_CONFIG_STORAGE_KEY);
-                if (!raw) return null;
-                const parsed = JSON.parse(raw);
-                if (parsed && parsed.apiKey && parsed.projectId) {
-                    return { config: parsed, source: 'local' };
-                }
-            } catch (_) {}
-
-            return null;
-        }
-
-        function updateCloudConfigBadge() {
-            const badge = document.getElementById('cloudConfigStateBadge');
-            const input = document.getElementById('adminFirebaseConfigInput');
-            const loaded = loadSavedFirebaseConfig();
-            if (badge) {
-                if (state.cloudSyncConnected) {
-                    badge.textContent = 'เชื่อมต่อแล้ว';
-                    badge.className = 'text-[10px] px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold';
-                } else if (loaded) {
-                    badge.textContent = 'ตั้งค่าแล้ว (กำลังซิงก์)';
-                    badge.className = 'text-[10px] px-2 py-0.5 rounded-full bg-[#FFF0F6] text-[#9C5A79] border border-pink-200 font-bold';
-                } else {
-                    badge.textContent = 'ยังไม่ตั้งค่า';
-                    badge.className = 'text-[10px] px-2 py-0.5 rounded-full bg-[#FFF0F6] text-[#9C5A79] border border-pink-100 font-bold';
-                }
-            }
-            if (input && !input.value.trim()) {
-                try {
-                    const savedRaw = localStorage.getItem(FIREBASE_CONFIG_STORAGE_KEY);
-                    if (savedRaw) input.value = savedRaw;
-                } catch (_) {}
-            }
-        }
-
-        function showCloudConfigFeedback(msg, isError = false) {
-            const el = document.getElementById('adminCloudConfigFeedback');
-            if (!el) return;
-            el.textContent = msg;
-            el.className = isError
-                ? 'text-xs font-semibold px-3 py-2 rounded-xl bg-rose-50 text-rose-500 border border-rose-200'
-                : 'text-xs font-semibold px-3 py-2 rounded-xl bg-[#FFF0F6] text-[#8F3E64] border border-pink-200';
-            el.classList.remove('hidden');
-        }
-
-        async function saveFirebaseConfigFromAdmin() {
-            const rawText = (document.getElementById('adminFirebaseConfigInput')?.value || '').trim();
-            if (!rawText) {
-                showCloudConfigFeedback('กรุณาวาง JSON ของ Firebase Config ก่อนครับ', true);
-                return;
-            }
-            let parsed = null;
-            try {
-                parsed = JSON.parse(rawText);
-            } catch (_) {
-                showCloudConfigFeedback('รูปแบบ JSON ไม่ถูกต้อง กรุณาตรวจสอบเครื่องหมายคำพูดและจุลภาคครับ', true);
-                return;
-            }
-            if (!parsed || typeof parsed !== 'object' || !parsed.apiKey || !parsed.projectId) {
-                showCloudConfigFeedback('ต้องมีค่า apiKey และ projectId ใน Firebase Config ครับ', true);
-                return;
-            }
-            try {
-                localStorage.setItem(FIREBASE_CONFIG_STORAGE_KEY, JSON.stringify(parsed, null, 2));
-            } catch (_) {}
-            await initFirebaseDatabase();
-            updateCloudConfigBadge();
-            if (state.cloudSyncConnected) {
-                await persistStoreToFirestore();
-                showCloudConfigFeedback('เชื่อมต่อฐานข้อมูลกลางและซิงก์ข้อมูลสำเร็จแล้วครับ');
-            } else {
-                showCloudConfigFeedback('บันทึก Config แล้ว แต่ยังไม่สามารถเชื่อมต่อฐานข้อมูลได้ กรุณาตรวจสอบค่า Config อีกครั้งครับ', true);
-            }
-        }
-
-        async function clearFirebaseConfigFromAdmin() {
-            try {
-                localStorage.removeItem(FIREBASE_CONFIG_STORAGE_KEY);
-            } catch (_) {}
-            const input = document.getElementById('adminFirebaseConfigInput');
-            if (input) input.value = '';
-            if (unsubscribeStore) {
-                unsubscribeStore();
-                unsubscribeStore = null;
-            }
-            storeDocRef = null;
-            currentUser = null;
-            setSyncStatus('บันทึกในเครื่อง', false);
-            updateCloudConfigBadge();
-            showCloudConfigFeedback('ล้างค่าฐานข้อมูลกลางเรียบร้อยแล้วครับ ระบบจะกลับมาเก็บในเครื่อง');
+                };
+                img.onerror = () => resolve(dataUrl);
+                img.src = dataUrl;
+            });
         }
 
         function loadLocalStateFallback() {
@@ -1595,15 +1498,18 @@
             }
         }
 
-        function saveLocalStateFallback(cats, arts, heroCardImg, contactLinks, profileCard, featuredShowcase) {
+        function saveLocalStateFallback(payload) {
             try {
                 localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({
-                    categories: cats,
-                    artworks: arts,
-                    heroCardImage: heroCardImg || '',
-                    contactLinks: contactLinks || DEFAULT_CONTACT_LINKS,
-                    profileCard: profileCard || DEFAULT_PROFILE_CARD,
-                    featuredShowcase: featuredShowcase || DEFAULT_FEATURED_SHOWCASE
+                    categories: payload.categories,
+                    artworks: payload.artworks,
+                    heroCardImage: payload.heroCardImage || '',
+                    contactLinks: payload.contactLinks || STORE_CONFIG.defaultContactLinks,
+                    profileCard: payload.profileCard || STORE_CONFIG.defaultProfileCard,
+                    featuredShowcase: payload.featuredShowcase || STORE_CONFIG.defaultFeaturedShowcase,
+                    queueItems: payload.queueItems || STORE_CONFIG.defaultQueueItems,
+                    pricingItems: payload.pricingItems || STORE_CONFIG.defaultPricingItems,
+                    tosItems: payload.tosItems || STORE_CONFIG.defaultTosItems
                 }));
             } catch (_) {}
         }
@@ -1613,102 +1519,106 @@
         let state = {
             categories: initialLocal?.categories
                 ? JSON.parse(JSON.stringify(initialLocal.categories))
-                : JSON.parse(JSON.stringify(DEFAULT_CATEGORIES)),
+                : JSON.parse(JSON.stringify(STORE_CONFIG.defaultCategories)),
             artworks: Array.isArray(initialLocal?.artworks) && initialLocal.artworks.length > 0
                 ? initialLocal.artworks
-                : JSON.parse(JSON.stringify(DEFAULT_ARTWORKS)),
+                : JSON.parse(JSON.stringify(STORE_CONFIG.defaultArtworks)),
             heroCardImage: typeof initialLocal?.heroCardImage === 'string' ? initialLocal.heroCardImage : '',
             contactLinks: {
                 facebook: typeof initialLocal?.contactLinks?.facebook === 'string' && initialLocal.contactLinks.facebook.trim()
                     ? initialLocal.contactLinks.facebook.trim()
-                    : DEFAULT_CONTACT_LINKS.facebook,
+                    : STORE_CONFIG.defaultContactLinks.facebook,
                 line: typeof initialLocal?.contactLinks?.line === 'string' && initialLocal.contactLinks.line.trim()
                     ? initialLocal.contactLinks.line.trim()
-                    : DEFAULT_CONTACT_LINKS.line,
+                    : STORE_CONFIG.defaultContactLinks.line,
                 ig: typeof initialLocal?.contactLinks?.ig === 'string' && initialLocal.contactLinks.ig.trim()
                     ? initialLocal.contactLinks.ig.trim()
-                    : DEFAULT_CONTACT_LINKS.ig
+                    : STORE_CONFIG.defaultContactLinks.ig
             },
             profileCard: {
-                ribbon: typeof initialLocal?.profileCard?.ribbon === 'string' && initialLocal.profileCard.ribbon.trim()
-                    ? initialLocal.profileCard.ribbon.trim()
-                    : DEFAULT_PROFILE_CARD.ribbon,
-                logoName: typeof initialLocal?.profileCard?.logoName === 'string' && initialLocal.profileCard.logoName.trim()
-                    ? initialLocal.profileCard.logoName.trim()
-                    : DEFAULT_PROFILE_CARD.logoName,
-                logoSub: typeof initialLocal?.profileCard?.logoSub === 'string' && initialLocal.profileCard.logoSub.trim()
-                    ? initialLocal.profileCard.logoSub.trim()
-                    : DEFAULT_PROFILE_CARD.logoSub,
-                storeTitle: typeof initialLocal?.profileCard?.storeTitle === 'string' && initialLocal.profileCard.storeTitle.trim()
-                    ? initialLocal.profileCard.storeTitle.trim()
-                    : DEFAULT_PROFILE_CARD.storeTitle,
-                tagline: typeof initialLocal?.profileCard?.tagline === 'string' && initialLocal.profileCard.tagline.trim()
-                    ? initialLocal.profileCard.tagline.trim()
-                    : DEFAULT_PROFILE_CARD.tagline
+                ribbon: String(initialLocal?.profileCard?.ribbon || '').trim() || STORE_CONFIG.defaultProfileCard.ribbon,
+                logoName: String(initialLocal?.profileCard?.logoName || '').trim() || STORE_CONFIG.defaultProfileCard.logoName,
+                logoSub: String(initialLocal?.profileCard?.logoSub || '').trim() || STORE_CONFIG.defaultProfileCard.logoSub,
+                storeTitle: String(initialLocal?.profileCard?.storeTitle || '').trim() || STORE_CONFIG.defaultProfileCard.storeTitle,
+                tagline: String(initialLocal?.profileCard?.tagline || '').trim() || STORE_CONFIG.defaultProfileCard.tagline
             },
             featuredShowcase: {
-                brand: typeof initialLocal?.featuredShowcase?.brand === 'string' && initialLocal.featuredShowcase.brand.trim()
-                    ? initialLocal.featuredShowcase.brand.trim()
-                    : DEFAULT_FEATURED_SHOWCASE.brand,
-                line1: typeof initialLocal?.featuredShowcase?.line1 === 'string' && initialLocal.featuredShowcase.line1.trim()
-                    ? initialLocal.featuredShowcase.line1.trim()
-                    : DEFAULT_FEATURED_SHOWCASE.line1,
-                line2: typeof initialLocal?.featuredShowcase?.line2 === 'string' && initialLocal.featuredShowcase.line2.trim()
-                    ? initialLocal.featuredShowcase.line2.trim()
-                    : DEFAULT_FEATURED_SHOWCASE.line2,
-                badgeIcon: typeof initialLocal?.featuredShowcase?.badgeIcon === 'string' && initialLocal.featuredShowcase.badgeIcon.trim()
-                    ? initialLocal.featuredShowcase.badgeIcon.trim()
-                    : DEFAULT_FEATURED_SHOWCASE.badgeIcon,
-                badge: typeof initialLocal?.featuredShowcase?.badge === 'string' && initialLocal.featuredShowcase.badge.trim()
-                    ? initialLocal.featuredShowcase.badge.trim()
-                    : DEFAULT_FEATURED_SHOWCASE.badge
+                brand: String(initialLocal?.featuredShowcase?.brand || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.brand,
+                line1: String(initialLocal?.featuredShowcase?.line1 || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.line1,
+                line2: String(initialLocal?.featuredShowcase?.line2 || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.line2,
+                badgeIcon: String(initialLocal?.featuredShowcase?.badgeIcon || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.badgeIcon,
+                badge: String(initialLocal?.featuredShowcase?.badge || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.badge
             },
+            queueItems: Array.isArray(initialLocal?.queueItems) && initialLocal.queueItems.length > 0
+                ? initialLocal.queueItems
+                : JSON.parse(JSON.stringify(STORE_CONFIG.defaultQueueItems)),
+            pricingItems: Array.isArray(initialLocal?.pricingItems) && initialLocal.pricingItems.length > 0
+                ? initialLocal.pricingItems
+                : JSON.parse(JSON.stringify(STORE_CONFIG.defaultPricingItems)),
+            tosItems: Array.isArray(initialLocal?.tosItems) && initialLocal.tosItems.length > 0
+                ? initialLocal.tosItems
+                : [...STORE_CONFIG.defaultTosItems],
             activeAdminTab: 'artwork',
             selectedExampleSubcat: 'งานป้าย',
             selectedExampleLeaf: 'ทั้งหมด',
             selectedGroupSubcat: 'ทั้งหมด',
             isAdminLoggedIn: false,
-            cloudSyncConnected: false,
             previewImageData: '',
             selectedBatchImages: []
         };
 
-        let db = null;
-        let auth = null;
-        let currentUser = null;
-        let storeDocRef = null;
-        let unsubscribeStore = null;
-
-        function setSyncStatus(text, connected = false) {
-            state.cloudSyncConnected = connected;
+        function setStatusBadge(text) {
             const badge = document.getElementById('cloudSyncStatusBadge');
-            const adminSub = document.getElementById('adminSyncStatusText');
-            if (badge) {
-                badge.textContent = text;
-                badge.className = connected
-                    ? 'px-2.5 py-1 rounded-full bg-white/95 border border-pink-200 text-[10px] font-bold text-[#9C5A79] truncate'
-                    : 'px-2.5 py-1 rounded-full bg-white/85 border border-pink-100 text-[10px] font-semibold text-[#A5788E] truncate';
-            }
-            if (adminSub && connected) {
-                adminSub.textContent = 'ซิงก์ข้อมูลออนไลน์เรียบร้อย (ทุกเครื่องเห็นเหมือนกัน)';
-            }
-            updateCloudConfigBadge();
+            if (badge) badge.textContent = text;
         }
 
-        function cloneDefaultCategories() {
-            return JSON.parse(JSON.stringify(DEFAULT_CATEGORIES));
+        function showTransferFeedback(msg, isError = false) {
+            const el = document.getElementById('adminTransferFeedback');
+            if (!el) return;
+            el.textContent = msg;
+            el.className = isError
+                ? 'text-xs font-semibold px-3 py-2 rounded-xl bg-rose-50 text-rose-500 border border-rose-200'
+                : 'text-xs font-semibold px-3 py-2 rounded-xl bg-[#FFF0F6] text-[#8F3E64] border border-pink-200';
+            el.classList.remove('hidden');
         }
 
-        function sanitizeHttpUrl(rawUrl, fallbackUrl) {
-            const trimmed = String(rawUrl || '').trim();
-            if (!trimmed) return fallbackUrl;
-            if (/^https?:\/\//i.test(trimmed)) return trimmed;
-            if (/^line:\/\//i.test(trimmed)) return trimmed;
-            return `https://${trimmed}`;
+        function copyStoreBackupCode() {
+            const payload = {
+                categories: state.categories,
+                artworks: state.artworks,
+                heroCardImage: state.heroCardImage || '',
+                contactLinks: state.contactLinks,
+                profileCard: state.profileCard,
+                featuredShowcase: state.featuredShowcase,
+                queueItems: state.queueItems,
+                pricingItems: state.pricingItems,
+                tosItems: state.tosItems
+            };
+            const codeText = JSON.stringify(payload);
+            const inputEl = document.getElementById('adminStoreTransferInput');
+            if (inputEl) inputEl.value = codeText;
+
+            let copied = false;
+            try {
+                const ta = document.createElement('textarea');
+                ta.value = codeText;
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                copied = document.execCommand('copy');
+                document.body.removeChild(ta);
+            } catch (_) {}
+
+            showTransferFeedback(
+                copied
+                    ? 'คัดลอกรหัสร้านแล้วครับ นำไปวางในช่องด้านล่างของอีกเครื่องได้เลย!'
+                    : 'สร้างรหัสร้านในช่องด้านล่างแล้วครับ สามารถคัดลอกไปใช้อีกเครื่องได้เลย'
+            );
         }
 
         function normalizeStoreData(rawData) {
-            const fallbackCats = cloneDefaultCategories();
+            const fallbackCats = JSON.parse(JSON.stringify(STORE_CONFIG.defaultCategories));
             const rawCats = rawData && typeof rawData.categories === 'object' && rawData.categories !== null
                 ? rawData.categories
                 : fallbackCats;
@@ -1733,7 +1643,7 @@
 
             const artworks = Array.isArray(rawData?.artworks) && rawData.artworks.length > 0
                 ? rawData.artworks
-                : JSON.parse(JSON.stringify(DEFAULT_ARTWORKS));
+                : JSON.parse(JSON.stringify(STORE_CONFIG.defaultArtworks));
 
             const heroCardImage = typeof rawData?.heroCardImage === 'string'
                 ? rawData.heroCardImage
@@ -1744,9 +1654,9 @@
                 : state.contactLinks;
 
             const contactLinks = {
-                facebook: sanitizeHttpUrl(rawLinks.facebook, DEFAULT_CONTACT_LINKS.facebook),
-                line: sanitizeHttpUrl(rawLinks.line, DEFAULT_CONTACT_LINKS.line),
-                ig: sanitizeHttpUrl(rawLinks.ig, DEFAULT_CONTACT_LINKS.ig)
+                facebook: sanitizeHttpUrl(rawLinks.facebook, STORE_CONFIG.defaultContactLinks.facebook),
+                line: sanitizeHttpUrl(rawLinks.line, STORE_CONFIG.defaultContactLinks.line),
+                ig: sanitizeHttpUrl(rawLinks.ig, STORE_CONFIG.defaultContactLinks.ig)
             };
 
             const rawProfile = rawData?.profileCard && typeof rawData.profileCard === 'object'
@@ -1754,11 +1664,11 @@
                 : state.profileCard;
 
             const profileCard = {
-                ribbon: String(rawProfile.ribbon || '').trim() || DEFAULT_PROFILE_CARD.ribbon,
-                logoName: String(rawProfile.logoName || '').trim() || DEFAULT_PROFILE_CARD.logoName,
-                logoSub: String(rawProfile.logoSub || '').trim() || DEFAULT_PROFILE_CARD.logoSub,
-                storeTitle: String(rawProfile.storeTitle || '').trim() || DEFAULT_PROFILE_CARD.storeTitle,
-                tagline: String(rawProfile.tagline || '').trim() || DEFAULT_PROFILE_CARD.tagline
+                ribbon: String(rawProfile.ribbon || '').trim() || STORE_CONFIG.defaultProfileCard.ribbon,
+                logoName: String(rawProfile.logoName || '').trim() || STORE_CONFIG.defaultProfileCard.logoName,
+                logoSub: String(rawProfile.logoSub || '').trim() || STORE_CONFIG.defaultProfileCard.logoSub,
+                storeTitle: String(rawProfile.storeTitle || '').trim() || STORE_CONFIG.defaultProfileCard.storeTitle,
+                tagline: String(rawProfile.tagline || '').trim() || STORE_CONFIG.defaultProfileCard.tagline
             };
 
             const rawShowcase = rawData?.featuredShowcase && typeof rawData.featuredShowcase === 'object'
@@ -1766,12 +1676,24 @@
                 : state.featuredShowcase;
 
             const featuredShowcase = {
-                brand: String(rawShowcase.brand || '').trim() || DEFAULT_FEATURED_SHOWCASE.brand,
-                line1: String(rawShowcase.line1 || '').trim() || DEFAULT_FEATURED_SHOWCASE.line1,
-                line2: String(rawShowcase.line2 || '').trim() || DEFAULT_FEATURED_SHOWCASE.line2,
-                badgeIcon: String(rawShowcase.badgeIcon || '').trim() || DEFAULT_FEATURED_SHOWCASE.badgeIcon,
-                badge: String(rawShowcase.badge || '').trim() || DEFAULT_FEATURED_SHOWCASE.badge
+                brand: String(rawShowcase.brand || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.brand,
+                line1: String(rawShowcase.line1 || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.line1,
+                line2: String(rawShowcase.line2 || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.line2,
+                badgeIcon: String(rawShowcase.badgeIcon || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.badgeIcon,
+                badge: String(rawShowcase.badge || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.badge
             };
+
+            const queueItems = Array.isArray(rawData?.queueItems) && rawData.queueItems.length > 0
+                ? rawData.queueItems
+                : state.queueItems;
+
+            const pricingItems = Array.isArray(rawData?.pricingItems) && rawData.pricingItems.length > 0
+                ? rawData.pricingItems
+                : state.pricingItems;
+
+            const tosItems = Array.isArray(rawData?.tosItems) && rawData.tosItems.length > 0
+                ? rawData.tosItems
+                : state.tosItems;
 
             return {
                 categories: {
@@ -1782,62 +1704,170 @@
                 heroCardImage,
                 contactLinks,
                 profileCard,
-                featuredShowcase
+                featuredShowcase,
+                queueItems,
+                pricingItems,
+                tosItems
             };
         }
 
-        function applyCloudSnapshotData(rawData) {
-            const normalized = normalizeStoreData(rawData);
+        function importStoreBackupCode() {
+            const rawText = (document.getElementById('adminStoreTransferInput')?.value || '').trim();
+            if (!rawText) {
+                showTransferFeedback('กรุณาวางรหัสร้านก่อนกดนำเข้ารหัสครับ', true);
+                return;
+            }
+            let parsed = null;
+            try {
+                parsed = JSON.parse(rawText);
+            } catch (_) {
+                showTransferFeedback('รหัสร้านไม่ถูกต้อง กรุณาคัดลอกมาวางใหม่อีกครั้งครับ', true);
+                return;
+            }
+
+            const normalized = normalizeStoreData(parsed);
             state.categories = normalized.categories;
             state.artworks = normalized.artworks;
             state.heroCardImage = normalized.heroCardImage;
             state.contactLinks = normalized.contactLinks;
             state.profileCard = normalized.profileCard;
             state.featuredShowcase = normalized.featuredShowcase;
-            saveLocalStateFallback(
-                state.categories,
-                state.artworks,
-                state.heroCardImage,
-                state.contactLinks,
-                state.profileCard,
-                state.featuredShowcase
-            );
+            state.queueItems = normalized.queueItems;
+            state.pricingItems = normalized.pricingItems;
+            state.tosItems = normalized.tosItems;
+
+            saveLocalStateFallback(state);
             refreshActiveViews();
+            showTransferFeedback('นำเข้ารหัสและอัปเดตข้อมูลร้านเรียบร้อยแล้วครับ');
         }
 
-        async function pullLatestCloudData() {
-            if (!storeDocRef) return false;
-            try {
-                if (!currentUser && auth) {
-                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                        await signInWithCustomToken(auth, __initial_auth_token);
-                    } else {
-                        await signInAnonymously(auth);
-                    }
-                    currentUser = auth.currentUser;
-                }
-                const snap = await getDoc(storeDocRef);
-                setSyncStatus('ซิงก์ออนไลน์แล้ว', true);
-                if (snap.exists()) {
-                    applyCloudSnapshotData(snap.data());
-                    return true;
-                }
-            } catch (err) {
-                console.error('Pull latest cloud data error:', err);
+        function sanitizeHttpUrl(rawUrl, fallbackUrl) {
+            const trimmed = String(rawUrl || '').trim();
+            if (!trimmed) return fallbackUrl;
+            if (/^https?:\/\//i.test(trimmed)) return trimmed;
+            if (/^line:\/\//i.test(trimmed)) return trimmed;
+            return `https://${trimmed}`;
+        }
+
+        function saveStoreState() {
+            saveLocalStateFallback(state);
+            refreshActiveViews();
+            setStatusBadge('อัปเดตตรงกันแล้ว');
+        }
+
+        function renderStoreDetailsModals() {
+            const queueEl = document.getElementById('queueListContainer');
+            if (queueEl) {
+                queueEl.innerHTML = (state.queueItems || []).map((q, idx) => {
+                    const bgClass = idx === 0
+                        ? 'bg-[#FFF0F6] border-pink-100'
+                        : (idx === 1 ? 'bg-white border-pink-100' : 'bg-[#FFF6F9] border-pink-100');
+                    const badgeClass = idx === 0
+                        ? 'bg-pink-200/80 text-[#8F3E64]'
+                        : (idx === 1 ? 'bg-[#FFE6F0] text-[#9E5678]' : 'bg-rose-100 text-rose-600');
+                    return `
+                        <div class="p-3.5 rounded-2xl ${bgClass} border flex items-center justify-between gap-2">
+                            <div class="space-y-0.5">
+                                <div class="font-bold text-[#6B4257]">${escapeHtml(q.title || '')}</div>
+                                <div class="text-xs text-[#A5788E]">${escapeHtml(q.detail || '')}</div>
+                            </div>
+                            <span class="px-3 py-1 rounded-full text-xs font-bold ${badgeClass} shrink-0">${escapeHtml(q.status || '')}</span>
+                        </div>
+                    `;
+                }).join('');
             }
-            return false;
+
+            const pricingEl = document.getElementById('pricingListContainer');
+            if (pricingEl) {
+                pricingEl.innerHTML = (state.pricingItems || []).map((p, idx) => {
+                    const bgClass = idx === 0
+                        ? 'bg-[#FFF0F6] border-pink-100'
+                        : (idx === 1 ? 'bg-white border-pink-100' : 'bg-[#FFF5F9] border-pink-100');
+                    return `
+                        <div class="p-3.5 rounded-2xl ${bgClass} border flex items-center justify-between gap-2">
+                            <div class="space-y-0.5">
+                                <div class="font-bold text-[#6B4257]">${escapeHtml(p.title || '')}</div>
+                                <div class="text-xs text-[#A5788E]">${escapeHtml(p.detail || '')}</div>
+                            </div>
+                            <span class="font-display font-bold text-[#E06897] text-base shrink-0">${escapeHtml(p.price || '')}</span>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            const tosEl = document.getElementById('tosListContainer');
+            if (tosEl) {
+                tosEl.innerHTML = (state.tosItems || []).map((line) => (
+                    `<div class="p-3 rounded-2xl bg-white border border-pink-100">${escapeHtml(line)}</div>`
+                )).join('');
+            }
         }
 
-        async function forceSyncAdminNow() {
-            const adminSub = document.getElementById('adminSyncStatusText');
-            if (adminSub) adminSub.textContent = 'กำลังดึงข้อมูลล่าสุดจากระบบ...';
-            const ok = await pullLatestCloudData();
-            if (adminSub) {
-                adminSub.textContent = ok
-                    ? 'อัปเดตข้อมูลล่าสุดจากระบบเรียบร้อยแล้วครับ'
-                    : (state.cloudSyncConnected
-                        ? 'ซิงก์ข้อมูลออนไลน์เรียบร้อย (ทุกเครื่องเห็นเหมือนกัน)'
-                        : 'กำลังบันทึกในเครื่อง — ตั้งค่าฐานข้อมูลกลางได้ที่แท็บ "ช่องทางติดต่อ & ซิงก์"');
+        function syncAdminStoreDetailsInputs() {
+            const qInput = document.getElementById('adminQueueEditorInput');
+            const pInput = document.getElementById('adminPricingEditorInput');
+            const tInput = document.getElementById('adminTosEditorInput');
+
+            if (qInput) {
+                qInput.value = (state.queueItems || [])
+                    .map((q) => `${q.title || ''} | ${q.detail || ''} | ${q.status || ''}`)
+                    .join('\n');
+            }
+            if (pInput) {
+                pInput.value = (state.pricingItems || [])
+                    .map((p) => `${p.title || ''} | ${p.detail || ''} | ${p.price || ''}`)
+                    .join('\n');
+            }
+            if (tInput) {
+                tInput.value = (state.tosItems || []).join('\n');
+            }
+        }
+
+        function saveStoreDetailsFromAdmin() {
+            const fbEl = document.getElementById('adminStoreDetailsFeedback');
+            const rawQueue = (document.getElementById('adminQueueEditorInput')?.value || '').split('\n');
+            const rawPricing = (document.getElementById('adminPricingEditorInput')?.value || '').split('\n');
+            const rawTos = (document.getElementById('adminTosEditorInput')?.value || '').split('\n');
+
+            const parsedQueue = rawQueue
+                .map((line) => line.trim())
+                .filter(Boolean)
+                .map((line, idx) => {
+                    const parts = line.split('|').map((s) => s.trim());
+                    return {
+                        title: parts[0] || `คิวที่ ${idx + 1}`,
+                        detail: parts[1] || '',
+                        status: parts[2] || 'รอคิว',
+                        highlight: idx === 0
+                    };
+                });
+
+            const parsedPricing = rawPricing
+                .map((line) => line.trim())
+                .filter(Boolean)
+                .map((line, idx) => {
+                    const parts = line.split('|').map((s) => s.trim());
+                    return {
+                        title: parts[0] || `แพ็กเกจ ${idx + 1}`,
+                        detail: parts[1] || '',
+                        price: parts[2] || 'สอบถามราคา',
+                        highlight: idx === 0
+                    };
+                });
+
+            const parsedTos = rawTos.map((line) => line.trim()).filter(Boolean);
+
+            state.queueItems = parsedQueue.length > 0 ? parsedQueue : STORE_CONFIG.defaultQueueItems;
+            state.pricingItems = parsedPricing.length > 0 ? parsedPricing : STORE_CONFIG.defaultPricingItems;
+            state.tosItems = parsedTos.length > 0 ? parsedTos : STORE_CONFIG.defaultTosItems;
+
+            syncAdminStoreDetailsInputs();
+            renderStoreDetailsModals();
+            saveStoreState();
+            if (fbEl) {
+                fbEl.textContent = 'บันทึกคิว / ราคา / กฎร้านเรียบร้อยแล้วครับ';
+                fbEl.className = 'text-xs font-semibold px-3 py-2 rounded-xl bg-[#FFF0F6] text-[#8F3E64] border border-pink-200';
+                fbEl.classList.remove('hidden');
             }
         }
 
@@ -1848,11 +1878,11 @@
             const badgeIconEl = document.getElementById('showcaseBadgeIconText');
             const badgeEl = document.getElementById('showcaseBadgeText');
 
-            if (brandEl) brandEl.textContent = state.featuredShowcase.brand || DEFAULT_FEATURED_SHOWCASE.brand;
-            if (line1El) line1El.textContent = state.featuredShowcase.line1 || DEFAULT_FEATURED_SHOWCASE.line1;
-            if (line2El) line2El.textContent = state.featuredShowcase.line2 || DEFAULT_FEATURED_SHOWCASE.line2;
-            if (badgeIconEl) badgeIconEl.textContent = state.featuredShowcase.badgeIcon || DEFAULT_FEATURED_SHOWCASE.badgeIcon;
-            if (badgeEl) badgeEl.textContent = state.featuredShowcase.badge || DEFAULT_FEATURED_SHOWCASE.badge;
+            if (brandEl) brandEl.textContent = state.featuredShowcase.brand || STORE_CONFIG.defaultFeaturedShowcase.brand;
+            if (line1El) line1El.textContent = state.featuredShowcase.line1 || STORE_CONFIG.defaultFeaturedShowcase.line1;
+            if (line2El) line2El.textContent = state.featuredShowcase.line2 || STORE_CONFIG.defaultFeaturedShowcase.line2;
+            if (badgeIconEl) badgeIconEl.textContent = state.featuredShowcase.badgeIcon || STORE_CONFIG.defaultFeaturedShowcase.badgeIcon;
+            if (badgeEl) badgeEl.textContent = state.featuredShowcase.badge || STORE_CONFIG.defaultFeaturedShowcase.badge;
         }
 
         function syncAdminShowcaseInputs() {
@@ -1871,11 +1901,11 @@
         }
 
         function syncLiveShowcasePreviewFromInputs() {
-            const brandVal = (document.getElementById('adminShowcaseBrandInput')?.value || '').trim() || DEFAULT_FEATURED_SHOWCASE.brand;
-            const line1Val = (document.getElementById('adminShowcaseLine1Input')?.value || '').trim() || DEFAULT_FEATURED_SHOWCASE.line1;
-            const line2Val = (document.getElementById('adminShowcaseLine2Input')?.value || '').trim() || DEFAULT_FEATURED_SHOWCASE.line2;
-            const badgeIconVal = (document.getElementById('adminShowcaseBadgeIconInput')?.value || '').trim() || DEFAULT_FEATURED_SHOWCASE.badgeIcon;
-            const badgeVal = (document.getElementById('adminShowcaseBadgeInput')?.value || '').trim() || DEFAULT_FEATURED_SHOWCASE.badge;
+            const brandVal = (document.getElementById('adminShowcaseBrandInput')?.value || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.brand;
+            const line1Val = (document.getElementById('adminShowcaseLine1Input')?.value || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.line1;
+            const line2Val = (document.getElementById('adminShowcaseLine2Input')?.value || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.line2;
+            const badgeIconVal = (document.getElementById('adminShowcaseBadgeIconInput')?.value || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.badgeIcon;
+            const badgeVal = (document.getElementById('adminShowcaseBadgeInput')?.value || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.badge;
 
             const pBrand = document.getElementById('livePreviewShowcaseBrand');
             const pLine1 = document.getElementById('livePreviewShowcaseLine1');
@@ -1890,23 +1920,21 @@
             if (pBadge) pBadge.textContent = badgeVal;
         }
 
-        async function saveFeaturedShowcaseFromAdmin() {
+        function saveFeaturedShowcaseFromAdmin() {
             const fbEl = document.getElementById('adminShowcaseFeedback');
             state.featuredShowcase = {
-                brand: (document.getElementById('adminShowcaseBrandInput')?.value || '').trim() || DEFAULT_FEATURED_SHOWCASE.brand,
-                line1: (document.getElementById('adminShowcaseLine1Input')?.value || '').trim() || DEFAULT_FEATURED_SHOWCASE.line1,
-                line2: (document.getElementById('adminShowcaseLine2Input')?.value || '').trim() || DEFAULT_FEATURED_SHOWCASE.line2,
-                badgeIcon: (document.getElementById('adminShowcaseBadgeIconInput')?.value || '').trim() || DEFAULT_FEATURED_SHOWCASE.badgeIcon,
-                badge: (document.getElementById('adminShowcaseBadgeInput')?.value || '').trim() || DEFAULT_FEATURED_SHOWCASE.badge
+                brand: (document.getElementById('adminShowcaseBrandInput')?.value || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.brand,
+                line1: (document.getElementById('adminShowcaseLine1Input')?.value || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.line1,
+                line2: (document.getElementById('adminShowcaseLine2Input')?.value || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.line2,
+                badgeIcon: (document.getElementById('adminShowcaseBadgeIconInput')?.value || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.badgeIcon,
+                badge: (document.getElementById('adminShowcaseBadgeInput')?.value || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.badge
             };
 
             syncAdminShowcaseInputs();
             renderFeaturedShowcase();
-            const savedCloud = await persistStoreToFirestore();
+            saveStoreState();
             if (fbEl) {
-                fbEl.textContent = savedCloud
-                    ? 'บันทึกข้อความ FEATURED SHOWCASE และซิงก์ทุกเครื่องเรียบร้อยแล้วครับ'
-                    : 'บันทึกในเครื่องนี้แล้วครับ (ตั้งค่าฐานข้อมูลกลางได้ที่แท็บ "ช่องทางติดต่อ & ซิงก์" เพื่อให้ทุกเครื่องตรงกัน)';
+                fbEl.textContent = 'บันทึกข้อความ FEATURED SHOWCASE เรียบร้อยแล้วครับ';
                 fbEl.className = 'text-xs font-semibold px-3 py-2 rounded-xl bg-white text-[#8F3E64] border border-pink-200';
                 fbEl.classList.remove('hidden');
             }
@@ -1918,12 +1946,16 @@
             const logoSubEl = document.getElementById('profileLogoSub');
             const titleEl = document.getElementById('profileStoreTitle');
             const taglineEl = document.getElementById('profileTaglineText');
+            const footerEl = document.getElementById('storeFooterText');
+            const musicTitleEl = document.getElementById('musicTrackTitleText');
 
-            if (ribbonEl) ribbonEl.textContent = state.profileCard.ribbon || DEFAULT_PROFILE_CARD.ribbon;
-            if (logoNameEl) logoNameEl.textContent = state.profileCard.logoName || DEFAULT_PROFILE_CARD.logoName;
-            if (logoSubEl) logoSubEl.textContent = state.profileCard.logoSub || DEFAULT_PROFILE_CARD.logoSub;
-            if (titleEl) titleEl.textContent = state.profileCard.storeTitle || DEFAULT_PROFILE_CARD.storeTitle;
-            if (taglineEl) taglineEl.textContent = state.profileCard.tagline || DEFAULT_PROFILE_CARD.tagline;
+            if (ribbonEl) ribbonEl.textContent = state.profileCard.ribbon || STORE_CONFIG.defaultProfileCard.ribbon;
+            if (logoNameEl) logoNameEl.textContent = state.profileCard.logoName || STORE_CONFIG.defaultProfileCard.logoName;
+            if (logoSubEl) logoSubEl.textContent = state.profileCard.logoSub || STORE_CONFIG.defaultProfileCard.logoSub;
+            if (titleEl) titleEl.textContent = state.profileCard.storeTitle || STORE_CONFIG.defaultProfileCard.storeTitle;
+            if (taglineEl) taglineEl.textContent = state.profileCard.tagline || STORE_CONFIG.defaultProfileCard.tagline;
+            if (footerEl) footerEl.textContent = STORE_CONFIG.footerText;
+            if (musicTitleEl) musicTitleEl.textContent = STORE_CONFIG.musicTrackTitle;
         }
 
         function syncAdminProfileInputs() {
@@ -1942,11 +1974,11 @@
         }
 
         function syncLiveProfilePreviewFromInputs() {
-            const ribbonVal = (document.getElementById('adminProfileRibbonInput')?.value || '').trim() || DEFAULT_PROFILE_CARD.ribbon;
-            const logoNameVal = (document.getElementById('adminProfileLogoNameInput')?.value || '').trim() || DEFAULT_PROFILE_CARD.logoName;
-            const logoSubVal = (document.getElementById('adminProfileLogoSubInput')?.value || '').trim() || DEFAULT_PROFILE_CARD.logoSub;
-            const titleVal = (document.getElementById('adminProfileStoreTitleInput')?.value || '').trim() || DEFAULT_PROFILE_CARD.storeTitle;
-            const taglineVal = (document.getElementById('adminProfileTaglineInput')?.value || '').trim() || DEFAULT_PROFILE_CARD.tagline;
+            const ribbonVal = (document.getElementById('adminProfileRibbonInput')?.value || '').trim() || STORE_CONFIG.defaultProfileCard.ribbon;
+            const logoNameVal = (document.getElementById('adminProfileLogoNameInput')?.value || '').trim() || STORE_CONFIG.defaultProfileCard.logoName;
+            const logoSubVal = (document.getElementById('adminProfileLogoSubInput')?.value || '').trim() || STORE_CONFIG.defaultProfileCard.logoSub;
+            const titleVal = (document.getElementById('adminProfileStoreTitleInput')?.value || '').trim() || STORE_CONFIG.defaultProfileCard.storeTitle;
+            const taglineVal = (document.getElementById('adminProfileTaglineInput')?.value || '').trim() || STORE_CONFIG.defaultProfileCard.tagline;
 
             const pRibbon = document.getElementById('livePreviewRibbon');
             const pLogoName = document.getElementById('livePreviewLogoName');
@@ -1961,23 +1993,26 @@
             if (pTagline) pTagline.textContent = taglineVal;
         }
 
-        async function saveProfileCardFromAdmin() {
+        function saveProfileCardFromAdmin() {
             const fbEl = document.getElementById('adminProfileFeedback');
-            state.profileCard = {
-                ribbon: (document.getElementById('adminProfileRibbonInput')?.value || '').trim() || DEFAULT_PROFILE_CARD.ribbon,
-                logoName: (document.getElementById('adminProfileLogoNameInput')?.value || '').trim() || DEFAULT_PROFILE_CARD.logoName,
-                logoSub: (document.getElementById('adminProfileLogoSubInput')?.value || '').trim() || DEFAULT_PROFILE_CARD.logoSub,
-                storeTitle: (document.getElementById('adminProfileStoreTitleInput')?.value || '').trim() || DEFAULT_PROFILE_CARD.storeTitle,
-                tagline: (document.getElementById('adminProfileTaglineInput')?.value || '').trim() || DEFAULT_PROFILE_CARD.tagline
+            const ribbon = (document.getElementById('adminProfileRibbonInput')?.value || '').trim() || STORE_CONFIG.defaultProfileCard.ribbon;
+            const logoName = (document.getElementById('adminProfileLogoNameInput')?.value || '').trim() || STORE_CONFIG.defaultProfileCard.logoName;
+            const logoSub = (document.getElementById('adminProfileLogoSubInput')?.value || '').trim() || STORE_CONFIG.defaultProfileCard.logoSub;
+            const storeTitle = (document.getElementById('adminProfileStoreTitleInput')?.value || '').trim() || STORE_CONFIG.defaultProfileCard.storeTitle;
+            const tagline = (document.getElementById('adminProfileTaglineInput')?.value || '').trim() || STORE_CONFIG.defaultProfileCard.tagline;
+
+            state.profileCard = { ribbon, logoName, logoSub, storeTitle, tagline };
+            state.featuredShowcase = {
+                ...state.featuredShowcase,
+                brand: storeTitle,
+                line1: tagline
             };
 
             syncAdminProfileInputs();
-            renderProfileCard();
-            const savedCloud = await persistStoreToFirestore();
+            syncAdminShowcaseInputs();
+            saveStoreState();
             if (fbEl) {
-                fbEl.textContent = savedCloud
-                    ? 'บันทึกข้อมูลการ์ดโปรไฟล์และซิงก์ทุกเครื่องเรียบร้อยแล้วครับ'
-                    : 'บันทึกในเครื่องนี้แล้วครับ (ตั้งค่าฐานข้อมูลกลางได้ที่แท็บ "ช่องทางติดต่อ & ซิงก์" เพื่อให้ทุกเครื่องตรงกัน)';
+                fbEl.textContent = 'บันทึกและอัปเดตข้อมูลให้ตรงกันทั้งหน้าแล้วครับ';
                 fbEl.className = 'text-xs font-semibold px-3 py-2 rounded-xl bg-[#FFF0F6] text-[#8F3E64] border border-pink-200';
                 fbEl.classList.remove('hidden');
             }
@@ -1988,11 +2023,13 @@
             const panels = {
                 artwork: document.getElementById('adminPanelTabArtwork'),
                 profile: document.getElementById('adminPanelTabProfile'),
+                store: document.getElementById('adminPanelTabStore'),
                 contact: document.getElementById('adminPanelTabContact')
             };
             const buttons = {
                 artwork: document.getElementById('adminTabArtworkBtn'),
                 profile: document.getElementById('adminTabProfileBtn'),
+                store: document.getElementById('adminTabStoreBtn'),
                 contact: document.getElementById('adminTabContactBtn')
             };
 
@@ -2014,9 +2051,9 @@
             const lineEl = document.getElementById('contactLinkLine');
             const igEl = document.getElementById('contactLinkIg');
 
-            if (fbEl) fbEl.href = state.contactLinks.facebook || DEFAULT_CONTACT_LINKS.facebook;
-            if (lineEl) lineEl.href = state.contactLinks.line || DEFAULT_CONTACT_LINKS.line;
-            if (igEl) igEl.href = state.contactLinks.ig || DEFAULT_CONTACT_LINKS.ig;
+            if (fbEl) fbEl.href = state.contactLinks.facebook || STORE_CONFIG.defaultContactLinks.facebook;
+            if (lineEl) lineEl.href = state.contactLinks.line || STORE_CONFIG.defaultContactLinks.line;
+            if (igEl) igEl.href = state.contactLinks.ig || STORE_CONFIG.defaultContactLinks.ig;
         }
 
         function syncAdminContactInputs() {
@@ -2027,7 +2064,6 @@
             if (fbInput) fbInput.value = state.contactLinks.facebook || '';
             if (lineInput) lineInput.value = state.contactLinks.line || '';
             if (igInput) igInput.value = state.contactLinks.ig || '';
-            updateCloudConfigBadge();
         }
 
         function showAdminContactNotice(msg, isError = false) {
@@ -2040,25 +2076,21 @@
             el.classList.remove('hidden');
         }
 
-        async function saveContactLinksFromAdmin() {
+        function saveContactLinksFromAdmin() {
             const fbVal = (document.getElementById('adminContactFacebookInput')?.value || '').trim();
             const lineVal = (document.getElementById('adminContactLineInput')?.value || '').trim();
             const igVal = (document.getElementById('adminContactIgInput')?.value || '').trim();
 
             state.contactLinks = {
-                facebook: sanitizeHttpUrl(fbVal, DEFAULT_CONTACT_LINKS.facebook),
-                line: sanitizeHttpUrl(lineVal, DEFAULT_CONTACT_LINKS.line),
-                ig: sanitizeHttpUrl(igVal, DEFAULT_CONTACT_LINKS.ig)
+                facebook: sanitizeHttpUrl(fbVal, STORE_CONFIG.defaultContactLinks.facebook),
+                line: sanitizeHttpUrl(lineVal, STORE_CONFIG.defaultContactLinks.line),
+                ig: sanitizeHttpUrl(igVal, STORE_CONFIG.defaultContactLinks.ig)
             };
 
             syncAdminContactInputs();
             renderContactLinks();
-            const savedCloud = await persistStoreToFirestore();
-            showAdminContactNotice(
-                savedCloud
-                    ? 'บันทึกลิงก์ช่องทางการติดต่อและซิงก์ทุกเครื่องเรียบร้อยแล้วครับ'
-                    : 'บันทึกลิงก์ในเครื่องนี้แล้วครับ (ตั้งค่าฐานข้อมูลกลางด้านล่างเพื่อให้ทุกเครื่องตรงกัน)'
-            );
+            saveStoreState();
+            showAdminContactNotice('บันทึกลิงก์ติดต่อเรียบร้อยแล้วครับ');
         }
 
         function showAdminCategoryNotice(msg, isError = false) {
@@ -2117,128 +2149,18 @@
             }
         }
 
-        async function persistStoreToFirestore() {
-            saveLocalStateFallback(
-                state.categories,
-                state.artworks,
-                state.heroCardImage,
-                state.contactLinks,
-                state.profileCard,
-                state.featuredShowcase
-            );
-
-            if (!storeDocRef || !currentUser) {
-                setSyncStatus('บันทึกในเครื่อง', false);
-                return false;
-            }
-
-            try {
-                await setDoc(storeDocRef, {
-                    categories: state.categories,
-                    artworks: state.artworks,
-                    heroCardImage: state.heroCardImage || '',
-                    contactLinks: state.contactLinks,
-                    profileCard: state.profileCard,
-                    featuredShowcase: state.featuredShowcase,
-                    updatedAt: Date.now()
-                }, { merge: true });
-                setSyncStatus('ซิงก์ออนไลน์แล้ว', true);
-                return true;
-            } catch (err) {
-                console.error('Firestore write error:', err);
-                setSyncStatus('ซิงก์ไม่สำเร็จ (ไฟล์รูปอาจใหญ่เกิน)', false);
-                return false;
-            }
-        }
-
-        function attachStoreListener() {
-            if (unsubscribeStore) {
-                unsubscribeStore();
-                unsubscribeStore = null;
-            }
-            if (!storeDocRef || !currentUser) return;
-
-            unsubscribeStore = onSnapshot(
-                storeDocRef,
-                (snap) => {
-                    setSyncStatus('ซิงก์ออนไลน์แล้ว', true);
-                    if (snap.exists()) {
-                        applyCloudSnapshotData(snap.data());
-                    } else {
-                        const initial = normalizeStoreData({
-                            heroCardImage: state.heroCardImage,
-                            contactLinks: state.contactLinks,
-                            profileCard: state.profileCard,
-                            featuredShowcase: state.featuredShowcase
-                        });
-                        state.categories = initial.categories;
-                        state.artworks = initial.artworks;
-                        state.heroCardImage = initial.heroCardImage;
-                        state.contactLinks = initial.contactLinks;
-                        state.profileCard = initial.profileCard;
-                        state.featuredShowcase = initial.featuredShowcase;
-                        persistStoreToFirestore();
-                        refreshActiveViews();
-                    }
-                },
-                (err) => {
-                    console.error('Firestore snapshot error:', err);
-                    setSyncStatus('บันทึกในเครื่อง', false);
-                }
-            );
-        }
-
-        async function initFirebaseDatabase() {
-            refreshActiveViews();
-            try {
-                const appId = typeof __app_id !== 'undefined' && __app_id ? __app_id : 'jaomeow-store';
-                const loadedCfg = loadSavedFirebaseConfig();
-                if (!loadedCfg || !loadedCfg.config) {
-                    setSyncStatus('บันทึกในเครื่อง', false);
-                    return;
-                }
-
-                const firebaseConfig = loadedCfg.config;
-                const appName = loadedCfg.source === 'env' ? '[DEFAULT]' : 'JaoMeowCloudApp';
-                const existingApps = getApps();
-                const app = existingApps.some((a) => a.name === appName)
-                    ? getApp(appName)
-                    : initializeApp(firebaseConfig, appName);
-
-                auth = getAuth(app);
-                db = getFirestore(app);
-
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-
-                currentUser = auth.currentUser;
-                if (!currentUser) {
-                    setSyncStatus('บันทึกในเครื่อง', false);
-                    return;
-                }
-
-                storeDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'storeShowcase', 'main');
-                attachStoreListener();
-                await pullLatestCloudData();
-            } catch (err) {
-                console.error('Firebase init error:', err);
-                setSyncStatus('บันทึกในเครื่อง', false);
-            }
-        }
-
         function refreshActiveViews() {
             renderProfileCard();
             renderFeaturedShowcase();
             renderContactLinks();
             renderHeroCardBanner();
+            renderStoreDetailsModals();
             renderExampleModal();
             renderGroupModal();
             if (state.isAdminLoggedIn) {
                 syncAdminProfileInputs();
                 syncAdminShowcaseInputs();
+                syncAdminStoreDetailsInputs();
                 syncAdminContactInputs();
                 renderAdminCategoryControls();
                 renderAdminArtworkList();
@@ -2251,27 +2173,25 @@
             } else if (modalId === 'groupModal') {
                 state.selectedGroupSubcat = 'ทั้งหมด';
                 renderGroupModal();
+            } else if (modalId === 'queueModal' || modalId === 'pricingModal' || modalId === 'tosModal') {
+                renderStoreDetailsModals();
             } else if (modalId === 'adminPanelModal') {
                 switchAdminTab(state.activeAdminTab || 'artwork');
-                const contactFb = document.getElementById('adminContactFeedback');
-                if (contactFb) contactFb.classList.add('hidden');
-                const profileFb = document.getElementById('adminProfileFeedback');
-                if (profileFb) profileFb.classList.add('hidden');
-                const showcaseFb = document.getElementById('adminShowcaseFeedback');
-                if (showcaseFb) showcaseFb.classList.add('hidden');
-                const cfgFb = document.getElementById('adminCloudConfigFeedback');
-                if (cfgFb) cfgFb.classList.add('hidden');
+                ['adminContactFeedback', 'adminProfileFeedback', 'adminShowcaseFeedback', 'adminStoreDetailsFeedback', 'adminTransferFeedback'].forEach((id) => {
+                    const el = document.getElementById(id);
+                    if (el) el.classList.add('hidden');
+                });
                 syncAdminProfileInputs();
                 syncAdminShowcaseInputs();
+                syncAdminStoreDetailsInputs();
                 syncAdminContactInputs();
                 renderHeroCardBanner();
                 onAdminMainCatChange();
                 renderAdminArtworkList();
-                pullLatestCloudData();
             }
         };
 
-        async function handleAdminLogin(event) {
+        function handleAdminLogin(event) {
             if (event && typeof event.preventDefault === 'function') {
                 event.preventDefault();
             }
@@ -2280,8 +2200,8 @@
             const errEl = document.getElementById('adminLoginError');
 
             const normalizedUser = userInput.toLowerCase();
-            const validUsers = ['เจ้าเหมียว', 'jaomeow', 'jaomeowstore', 'admin'];
-            const validPasswords = ['01082546'];
+            const validUsers = (STORE_CONFIG.adminUsers || []).map((u) => String(u).toLowerCase());
+            const validPasswords = STORE_CONFIG.adminPasswords || [];
 
             if (validUsers.includes(normalizedUser) && validPasswords.includes(passInput)) {
                 state.isAdminLoggedIn = true;
@@ -2290,12 +2210,11 @@
                     errEl.textContent = '';
                     errEl.classList.add('hidden');
                 }
-                await pullLatestCloudData();
                 if (typeof window.openModal === 'function') {
                     window.openModal('adminPanelModal');
                 }
             } else if (errEl) {
-                errEl.textContent = 'ชื่อแอดมินหรือรหัสผ่านไม่ถูกต้องครับ (ตรวจสอบชื่อและรหัสผ่านอีกครั้ง)';
+                errEl.textContent = 'ชื่อแอดมินหรือรหัสผ่านไม่ถูกต้องครับ';
                 errEl.classList.remove('hidden');
             }
         }
@@ -2408,7 +2327,7 @@
             }
 
             containerEl.innerHTML = items.map((item) => {
-                const safeImg = item.image || 'https://placehold.co/400x400/FFE6F0/A85A7E?text=JaoMeow';
+                const safeImg = item.image || 'https://placehold.co/400x400/FFE6F0/A85A7E?text=Store';
                 const safeTitle = escapeHtml(item.title || '');
                 const safePrice = item.price ? escapeHtml(item.price) : '';
                 const safeLink = item.link ? escapeHtml(item.link) : '';
@@ -2420,7 +2339,7 @@
                     <div class="bg-white rounded-2xl border border-pink-100 p-2.5 shadow-2xs flex flex-col justify-between gap-2">
                         <div class="space-y-1.5">
                             <div class="aspect-square w-full rounded-xl overflow-hidden bg-[#FFF4F8]">
-                                <img src="${safeImg}" alt="${safeTitle || 'ผลงาน'}" onerror="this.src='https://placehold.co/400x400/FFE6F0/A85A7E?text=JaoMeow'" class="w-full h-full object-cover">
+                                <img src="${safeImg}" alt="${safeTitle || 'ผลงาน'}" onerror="this.src='https://placehold.co/400x400/FFE6F0/A85A7E?text=Store'" class="w-full h-full object-cover">
                             </div>
                             ${safeTitle ? `<div class="font-bold text-xs text-[#6B4257] line-clamp-1">${safeTitle}</div>` : ''}
                             ${safePrice ? `<div class="inline-block px-2 py-0.5 rounded-full bg-[#FFF0F6] border border-pink-100 text-[10px] font-bold text-[#D95C91]">${safePrice}</div>` : ''}
@@ -2503,7 +2422,7 @@
                 : `<span class="text-xs text-[#A5788E]">ยังไม่มีหมวดย่อย กรุณาเพิ่มหมวดด้านบน</span>`;
         }
 
-        async function addCustomCategory() {
+        function addCustomCategory() {
             const inputEl = document.getElementById('newSubCategoryInput');
             const mainCat = document.getElementById('adminMainCatSelect')?.value || 'example';
             const subcatSelect = document.getElementById('adminExampleSubcatSelect');
@@ -2534,10 +2453,10 @@
             renderAdminCategoryControls();
             refreshActiveViews();
             showAdminCategoryNotice(`เพิ่มหมวดย่อย "${newName}" เรียบร้อยแล้วครับ`);
-            await persistStoreToFirestore();
+            saveStoreState();
         }
 
-        async function deleteCustomCategory(mainCat, subCat, catName) {
+        function deleteCustomCategory(mainCat, subCat, catName) {
             if (mainCat === 'example') {
                 const list = state.categories.example?.[subCat];
                 if (Array.isArray(list)) {
@@ -2559,58 +2478,13 @@
             renderAdminCategoryControls();
             refreshActiveViews();
             showAdminCategoryNotice(`ลบหมวดย่อย "${catName}" เรียบร้อยแล้วครับ`);
-            await persistStoreToFirestore();
+            saveStoreState();
         }
 
-        function optimizeImageForSync(file, maxDimension = 900, quality = 0.82) {
+        function readFileAsDataUrl(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
-                reader.onload = () => {
-                    const rawDataUrl = String(reader.result || '');
-                    const img = new Image();
-                    img.onload = () => {
-                        let width = img.naturalWidth || img.width;
-                        let height = img.naturalHeight || img.height;
-                        if (width > maxDimension || height > maxDimension) {
-                            if (width >= height) {
-                                height = Math.round((height * maxDimension) / width);
-                                width = maxDimension;
-                            } else {
-                                width = Math.round((width * maxDimension) / height);
-                                height = maxDimension;
-                            }
-                        }
-
-                        const canvas = document.createElement('canvas');
-                        canvas.width = Math.max(1, width);
-                        canvas.height = Math.max(1, height);
-                        const ctx = canvas.getContext('2d');
-                        if (!ctx) {
-                            resolve(rawDataUrl);
-                            return;
-                        }
-
-                        const isPng = file.type === 'image/png';
-                        if (!isPng) {
-                            ctx.fillStyle = '#FFFFFF';
-                            ctx.fillRect(0, 0, canvas.width, canvas.height);
-                        }
-                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-                        const outputMime = isPng ? 'image/png' : 'image/jpeg';
-                        const compressed = isPng
-                            ? canvas.toDataURL('image/png')
-                            : canvas.toDataURL(outputMime, quality);
-
-                        if (!isPng && compressed.length > rawDataUrl.length) {
-                            resolve(rawDataUrl);
-                        } else {
-                            resolve(compressed);
-                        }
-                    };
-                    img.onerror = () => resolve(rawDataUrl);
-                    img.src = rawDataUrl;
-                };
+                reader.onload = () => resolve(String(reader.result || ''));
                 reader.onerror = () => reject(reader.error || new Error('File read error'));
                 reader.readAsDataURL(file);
             });
@@ -2622,14 +2496,12 @@
             if (!file) return;
 
             try {
-                const dataUrl = await optimizeImageForSync(file, 700, 0.82);
-                state.heroCardImage = dataUrl;
-                renderHeroCardBanner();
-                const savedCloud = await persistStoreToFirestore();
+                const rawDataUrl = await readFileAsDataUrl(file);
+                const optimizedDataUrl = await optimizeImageDataUrl(rawDataUrl, 900, 0.84);
+                state.heroCardImage = optimizedDataUrl;
+                saveStoreState();
                 if (statusEl) {
-                    statusEl.textContent = savedCloud
-                        ? 'อัปเดตรูปการ์ดแบนเนอร์และซิงก์ทุกเครื่องแล้วครับ'
-                        : 'อัปเดตรูปในเครื่องนี้แล้วครับ';
+                    statusEl.textContent = 'อัปเดตรูปแบนเนอร์และซิงก์ข้อมูลเรียบร้อยแล้วครับ';
                     statusEl.classList.remove('hidden');
                 }
             } catch (err) {
@@ -2669,10 +2541,14 @@
 
             try {
                 const results = await Promise.all(
-                    files.map(async (file) => ({
-                        name: file.name || 'image',
-                        dataUrl: await optimizeImageForSync(file, 850, 0.8)
-                    }))
+                    files.map(async (file) => {
+                        const rawUrl = await readFileAsDataUrl(file);
+                        const optimizedUrl = await optimizeImageDataUrl(rawUrl, 900, 0.84);
+                        return {
+                            name: file.name || 'image',
+                            dataUrl: optimizedUrl
+                        };
+                    })
                 );
                 const validItems = results.filter((r) => Boolean(r.dataUrl));
                 state.selectedBatchImages = validItems;
@@ -2710,7 +2586,7 @@
             }
         }
 
-        async function handleAddArtwork(event) {
+        function handleAddArtwork(event) {
             event.preventDefault();
             const errEl = document.getElementById('adminFormError');
             const okEl = document.getElementById('adminFormSuccess');
@@ -2763,7 +2639,6 @@
                 categories: selectedCats
             }));
 
-            const previousArtworks = [...state.artworks];
             state.artworks.unshift(...newItems);
             state.previewImageData = '';
             state.selectedBatchImages = [];
@@ -2774,44 +2649,21 @@
 
             renderAdminArtworkList();
             refreshActiveViews();
-            const savedCloud = await persistStoreToFirestore();
-
-            if (!savedCloud && currentUser && storeDocRef) {
-                state.artworks = previousArtworks;
-                saveLocalStateFallback(
-                    state.categories,
-                    state.artworks,
-                    state.heroCardImage,
-                    state.contactLinks,
-                    state.profileCard,
-                    state.featuredShowcase
-                );
-                renderAdminArtworkList();
-                refreshActiveViews();
-                if (errEl) {
-                    errEl.textContent = 'ขนาดรูปภาพรวมใหญ่เกินขีดจำกัดฐานข้อมูลออนไลน์ จึงไม่สามารถซิงก์ไปยังเครื่องอื่นได้ กรุณาลดจำนวนรูปหรือเลือกรูปขนาดเล็กลงครับ';
-                    errEl.classList.remove('hidden');
-                }
-                return;
-            }
+            saveStoreState();
 
             if (okEl) {
-                okEl.textContent = savedCloud
-                    ? (newItems.length > 1
-                        ? `บันทึกรูปภาพ ${newItems.length} รายการและซิงก์ทุกเครื่องเรียบร้อยแล้วครับ`
-                        : 'บันทึกรายการและซิงก์ทุกเครื่องเรียบร้อยแล้วครับ')
-                    : (newItems.length > 1
-                        ? `บันทึกรูปภาพ ${newItems.length} รายการในเครื่องนี้แล้วครับ`
-                        : 'บันทึกรายการในเครื่องนี้แล้วครับ');
+                okEl.textContent = newItems.length > 1
+                    ? `บันทึกรูปภาพ ${newItems.length} รายการเรียบร้อยแล้วครับ`
+                    : 'บันทึกรายการเรียบร้อยแล้วครับ';
                 okEl.classList.remove('hidden');
             }
         }
 
-        async function deleteArtwork(id) {
+        function deleteArtwork(id) {
             state.artworks = state.artworks.filter((item) => item.id !== id);
             renderAdminArtworkList();
             refreshActiveViews();
-            await persistStoreToFirestore();
+            saveStoreState();
         }
 
         function renderAdminArtworkList() {
@@ -2857,8 +2709,9 @@
             const detail = (document.getElementById('briefDetail')?.value || '').trim();
             const feedbackEl = document.getElementById('briefFeedback');
 
+            const storeName = state.profileCard.storeTitle || STORE_CONFIG.defaultProfileCard.storeTitle;
             const textToCopy = [
-                '【บรีฟงาน JaoMeowStore】',
+                `【บรีฟงาน ${storeName}】`,
                 `ผู้ติดต่อ: ${contact}`,
                 `ประเภทงาน: ${type}`,
                 `รายละเอียด: ${detail}`
@@ -2895,7 +2748,7 @@
                 .replace(/'/g, '&#39;');
         }
 
-        const MUSIC_VIDEO_ID = 'aoUX55g5iK0';
+        const MUSIC_VIDEO_ID = STORE_CONFIG.musicVideoId || 'aoUX55g5iK0';
         const RELAXED_DEFAULT_VOLUME = 20;
         let isMusicPlaying = false;
         let isMusicLooping = true;
@@ -3039,7 +2892,7 @@
                     ? `&origin=${encodeURIComponent(window.location.origin)}`
                     : '';
                 const loopParam = isMusicLooping ? `&loop=1&playlist=${MUSIC_VIDEO_ID}` : '';
-                hostEl.innerHTML = `<iframe id="jaomeowMusicFrame" width="200" height="120" src="https://www.youtube.com/embed/${MUSIC_VIDEO_ID}?enablejsapi=1&playsinline=1&start=0&autoplay=1&mute=0${loopParam}&rel=0${originParam}" title="Cute Bear Iced Latte & Cozy Pink Desk Lofi - lupi." allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+                hostEl.innerHTML = `<iframe id="jaomeowMusicFrame" width="200" height="120" src="https://www.youtube.com/embed/${MUSIC_VIDEO_ID}?enablejsapi=1&playsinline=1&start=0&autoplay=1&mute=0${loopParam}&rel=0${originParam}" title="Store Ambient Music" allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
             }
 
             if (window.YT && typeof window.YT.Player === 'function') {
@@ -3152,9 +3005,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            renderProfileCard();
-            renderFeaturedShowcase();
-            renderContactLinks();
+            refreshActiveViews();
             syncLoopButtonUi();
             bindFirstGestureAudioUnlock();
             ensureYouTubePlayer(true);
@@ -3175,15 +3026,15 @@
 
         window.handleAdminLogin = handleAdminLogin;
         window.handleAdminLogout = handleAdminLogout;
-        window.forceSyncAdminNow = forceSyncAdminNow;
         window.switchAdminTab = switchAdminTab;
         window.syncLiveProfilePreviewFromInputs = syncLiveProfilePreviewFromInputs;
         window.saveProfileCardFromAdmin = saveProfileCardFromAdmin;
         window.syncLiveShowcasePreviewFromInputs = syncLiveShowcasePreviewFromInputs;
         window.saveFeaturedShowcaseFromAdmin = saveFeaturedShowcaseFromAdmin;
+        window.saveStoreDetailsFromAdmin = saveStoreDetailsFromAdmin;
         window.saveContactLinksFromAdmin = saveContactLinksFromAdmin;
-        window.saveFirebaseConfigFromAdmin = saveFirebaseConfigFromAdmin;
-        window.clearFirebaseConfigFromAdmin = clearFirebaseConfigFromAdmin;
+        window.copyStoreBackupCode = copyStoreBackupCode;
+        window.importStoreBackupCode = importStoreBackupCode;
         window.selectExampleSubcat = selectExampleSubcat;
         window.selectExampleLeaf = selectExampleLeaf;
         window.selectGroupSubcat = selectGroupSubcat;
@@ -3202,8 +3053,6 @@
         window.restartMusicTrack = restartMusicTrack;
         window.skipMusicForward = skipMusicForward;
         window.toggleMusicLoop = toggleMusicLoop;
-
-        initFirebaseDatabase();
     </script>
 </body>
 </html>
