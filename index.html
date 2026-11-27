@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>JaoMeowStore — งานป้าย / sheet / website Commission</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,6 +35,7 @@
                     #F6C1D7 100%);
             min-height: 100vh;
             overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .font-display {
@@ -852,11 +853,11 @@
             <form id="adminLoginForm" onsubmit="handleAdminLogin(event)" class="p-5 space-y-3.5 text-sm bg-[#FFF9FB]/50">
                 <div>
                     <label class="block font-semibold text-[#6B4257] mb-1">Admin Name</label>
-                    <input id="adminUsernameInput" type="text" required placeholder="กรอกชื่อแอดมิน" autocomplete="off" class="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
+                    <input id="adminUsernameInput" type="text" required placeholder="กรอกชื่อแอดมิน" autocapitalize="none" autocorrect="off" autocomplete="username" class="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
                 </div>
                 <div>
                     <label class="block font-semibold text-[#6B4257] mb-1">Password</label>
-                    <input id="adminPasswordInput" type="password" required placeholder="กรอกรหัสผ่าน" class="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
+                    <input id="adminPasswordInput" type="password" required placeholder="กรอกรหัสผ่าน" autocomplete="current-password" class="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white focus:outline-none focus:border-pink-400">
                 </div>
                 <div id="adminLoginError" class="hidden text-xs text-rose-500 font-semibold bg-rose-50 p-2.5 rounded-xl border border-rose-200"></div>
                 <button type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#F48FB6] to-[#E86D9C] text-white font-bold shadow hover:opacity-95 transition cursor-pointer">
@@ -1232,7 +1233,7 @@
         </div>
     </div>
 
-    <!-- Immediate Global Modal Handlers -->
+    <!-- Immediate Global Modal Handlers (iPhone & Touch Safe) -->
     <script>
         window.__jaomeowAdminLoggedIn = false;
 
@@ -1314,6 +1315,7 @@
             target.classList.add('flex');
             target.style.display = 'flex';
             target.style.pointerEvents = 'auto';
+            target.style.zIndex = '9999';
 
             var card = target.querySelector('.modal-card');
             if (card) {
@@ -1341,9 +1343,13 @@
                 setTimeout(function () {
                     var userInput = document.getElementById('adminUsernameInput');
                     if (userInput && typeof userInput.focus === 'function') {
-                        userInput.focus();
+                        try {
+                            userInput.focus({ preventScroll: true });
+                        } catch (_) {
+                            userInput.focus();
+                        }
                     }
-                }, 60);
+                }, 120);
             }
         };
     </script>
@@ -1448,7 +1454,7 @@
 
         const LOCAL_STORAGE_KEY = `${STORE_CONFIG.storeKey}_state_v1`;
 
-        function optimizeImageDataUrl(dataUrl, maxDim = 900, quality = 0.82) {
+        function optimizeImageDataUrl(dataUrl, maxDim = 720, quality = 0.78) {
             return new Promise((resolve) => {
                 if (!dataUrl || typeof dataUrl !== 'string' || !dataUrl.startsWith('data:image/')) {
                     resolve(dataUrl || '');
@@ -1511,7 +1517,35 @@
                     pricingItems: payload.pricingItems || STORE_CONFIG.defaultPricingItems,
                     tosItems: payload.tosItems || STORE_CONFIG.defaultTosItems
                 }));
-            } catch (_) {}
+                return true;
+            } catch (err) {
+                console.warn('Local storage quota reached, trimming older images for fallback:', err);
+                try {
+                    const compactArtworks = (payload.artworks || []).map((art, index) => {
+                        if (index < 6) return art;
+                        return {
+                            ...art,
+                            image: art.image && art.image.startsWith('data:image/')
+                                ? 'https://placehold.co/400x400/FFE6F0/A85A7E?text=Store'
+                                : art.image
+                        };
+                    });
+                    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({
+                        categories: payload.categories,
+                        artworks: compactArtworks,
+                        heroCardImage: payload.heroCardImage || '',
+                        contactLinks: payload.contactLinks || STORE_CONFIG.defaultContactLinks,
+                        profileCard: payload.profileCard || STORE_CONFIG.defaultProfileCard,
+                        featuredShowcase: payload.featuredShowcase || STORE_CONFIG.defaultFeaturedShowcase,
+                        queueItems: payload.queueItems || STORE_CONFIG.defaultQueueItems,
+                        pricingItems: payload.pricingItems || STORE_CONFIG.defaultPricingItems,
+                        tosItems: payload.tosItems || STORE_CONFIG.defaultTosItems
+                    }));
+                    return true;
+                } catch (_) {
+                    return false;
+                }
+            }
         }
 
         const initialLocal = loadLocalStateFallback();
@@ -1750,9 +1784,9 @@
         }
 
         function saveStoreState() {
-            saveLocalStateFallback(state);
+            const saved = saveLocalStateFallback(state);
             refreshActiveViews();
-            setStatusBadge('อัปเดตตรงกันแล้ว');
+            setStatusBadge(saved ? 'อัปเดตตรงกันแล้ว' : 'บันทึกแล้ว');
         }
 
         function renderStoreDetailsModals() {
@@ -2200,8 +2234,8 @@
             const errEl = document.getElementById('adminLoginError');
 
             const normalizedUser = userInput.toLowerCase();
-            const validUsers = (STORE_CONFIG.adminUsers || []).map((u) => String(u).toLowerCase());
-            const validPasswords = STORE_CONFIG.adminPasswords || [];
+            const validUsers = (STORE_CONFIG.adminUsers || []).map((u) => String(u).trim().toLowerCase());
+            const validPasswords = (STORE_CONFIG.adminPasswords || []).map((p) => String(p).trim());
 
             if (validUsers.includes(normalizedUser) && validPasswords.includes(passInput)) {
                 state.isAdminLoggedIn = true;
@@ -2497,11 +2531,11 @@
 
             try {
                 const rawDataUrl = await readFileAsDataUrl(file);
-                const optimizedDataUrl = await optimizeImageDataUrl(rawDataUrl, 900, 0.84);
+                const optimizedDataUrl = await optimizeImageDataUrl(rawDataUrl, 720, 0.78);
                 state.heroCardImage = optimizedDataUrl;
                 saveStoreState();
                 if (statusEl) {
-                    statusEl.textContent = 'อัปเดตรูปแบนเนอร์และซิงก์ข้อมูลเรียบร้อยแล้วครับ';
+                    statusEl.textContent = 'อัปเดตรูปแบนเนอร์เรียบร้อยแล้วครับ';
                     statusEl.classList.remove('hidden');
                 }
             } catch (err) {
@@ -2543,7 +2577,7 @@
                 const results = await Promise.all(
                     files.map(async (file) => {
                         const rawUrl = await readFileAsDataUrl(file);
-                        const optimizedUrl = await optimizeImageDataUrl(rawUrl, 900, 0.84);
+                        const optimizedUrl = await optimizeImageDataUrl(rawUrl, 720, 0.78);
                         return {
                             name: file.name || 'image',
                             dataUrl: optimizedUrl
@@ -3004,7 +3038,7 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
+        function initStorefront() {
             refreshActiveViews();
             syncLoopButtonUi();
             bindFirstGestureAudioUnlock();
@@ -3022,7 +3056,13 @@
                     seekMusicBySlider(seekEl.value);
                 });
             }
-        });
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initStorefront);
+        } else {
+            initStorefront();
+        }
 
         window.handleAdminLogin = handleAdminLogin;
         window.handleAdminLogout = handleAdminLogout;
