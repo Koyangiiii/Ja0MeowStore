@@ -860,7 +860,7 @@
                 </div>
                 <div id="adminLoginError" class="hidden text-xs text-rose-500 font-semibold bg-rose-50 p-2.5 rounded-xl border border-rose-200"></div>
                 <button type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#F48FB6] to-[#E86D9C] text-white font-bold shadow hover:opacity-95 transition cursor-pointer">
-                    เข้าสู่ระบบและซิงก์ข้อมูลร้าน
+                    เข้าสู่ระบบร้าน
                 </button>
             </form>
         </div>
@@ -1105,7 +1105,7 @@
                                     </div>
                                     <div class="flex-1 min-w-0 space-y-1">
                                         <label class="block text-xs font-semibold text-[#8A5A72]">อัปโหลดรูปแบนเนอร์</label>
-                                        <input id="adminHeroCardFileInput" type="file" accept="image/*" onchange="handleHeroCardFileUpload(event)" class="w-full text-[11px] text-[#8A5A72] file:mr-2 file:py-1.5 file:px-2.5 file:rounded-xl file:border-0 file:text-[11px] file:font-bold file:bg-[#FFE6F0] file:text-[#B84D7B] hover:file:bg-[#FFD6E6] cursor-pointer">
+                                        <input id="adminHeroCardFileInput" type="file" accept="image/*" onchange="handleHeroCardFileUpload(event)" class="w-full text-[11px] text-[#8A5A72] file:mr-2 file:py-1.5 file:px-2.5 file:rounded-xl file:border-0 file:text-[11px] font-bold file:bg-[#FFE6F0] file:text-[#B84D7B] hover:file:bg-[#FFD6E6] cursor-pointer">
                                         <div id="adminHeroCardStatus" class="hidden text-[11px] font-semibold text-[#8F3E64]"></div>
                                     </div>
                                 </div>
@@ -1396,7 +1396,7 @@
                     window.openModal('adminPanelModal');
                 }
             } else if (errEl) {
-                errEl.textContent = 'ชื่อแอดมินหรือรหัสผ่านไม่ถูกต้องครับ (ลองใช้ admin / 01082546)';
+                errEl.textContent = 'ชื่อแอดมินหรือรหัสผ่านไม่ถูกต้องครับ';
                 errEl.classList.remove('hidden');
             }
         };
@@ -1511,25 +1511,10 @@
 
         function setActiveStoreId() {
             window.__jaomeowStoreId = STORE_CONFIG.defaultStoreId;
-            return STORE_CONFIG.defaultStoreId;
-        }
-                if (window.__jaomeowStoreId) {
-                    return String(window.__jaomeowStoreId).trim().toLowerCase().replace(/[^a-z0-9_-]/g, '') || STORE_CONFIG.defaultStoreId;
-                }
-                const saved = (localStorage.getItem(ACTIVE_STORE_STORAGE_KEY) || '').trim().toLowerCase().replace(/[^a-z0-9_-]/g, '');
-                return saved || STORE_CONFIG.defaultStoreId;
-            } catch (_) {
-                return STORE_CONFIG.defaultStoreId;
-            }
-        }
-
-        function setActiveStoreId(nextStoreId) {
-            const cleanId = (String(nextStoreId || '').trim().toLowerCase().replace(/[^a-z0-9_-]/g, '')) || STORE_CONFIG.defaultStoreId;
-            window.__jaomeowStoreId = cleanId;
             try {
-                localStorage.setItem(ACTIVE_STORE_STORAGE_KEY, cleanId);
+                localStorage.setItem(ACTIVE_STORE_STORAGE_KEY, STORE_CONFIG.defaultStoreId);
             } catch (_) {}
-            return cleanId;
+            return STORE_CONFIG.defaultStoreId;
         }
 
         function getLocalStorageKeyForStore(storeId = getActiveStoreId()) {
@@ -1540,6 +1525,116 @@
             const safeStore = encodeURIComponent(storeId);
             const safeBucket = encodeURIComponent(STORE_CONFIG.sharedBucketId);
             return `${STORE_CONFIG.sharedSyncEndpoint}/${safeBucket}/store_${safeStore}.json`;
+        }
+
+        function sanitizeHttpUrl(rawUrl, fallbackUrl = '') {
+            const trimmed = String(rawUrl || '').trim();
+            if (!trimmed) return fallbackUrl;
+            try {
+                const parsed = new URL(trimmed);
+                if (parsed.protocol === 'https:' || parsed.protocol === 'http:') {
+                    return parsed.toString();
+                }
+                return fallbackUrl;
+            } catch (_) {
+                return fallbackUrl;
+            }
+        }
+
+        function normalizeStoreData(raw) {
+            const src = raw && typeof raw === 'object' ? raw : {};
+
+            const defaultEx = STORE_CONFIG.defaultCategories.example;
+            const rawEx = src.categories?.example && typeof src.categories.example === 'object'
+                ? src.categories.example
+                : defaultEx;
+
+            const normalizedExample = {};
+            const exKeys = Object.keys(rawEx);
+            if (exKeys.length === 0) {
+                for (const k of Object.keys(defaultEx)) {
+                    normalizedExample[k] = [...defaultEx[k]];
+                }
+            } else {
+                for (const k of exKeys) {
+                    normalizedExample[k] = Array.isArray(rawEx[k])
+                        ? rawEx[k].map((x) => String(x || '').trim()).filter(Boolean)
+                        : [];
+                }
+            }
+
+            const normalizedGroup = Array.isArray(src.categories?.group)
+                ? src.categories.group.map((x) => String(x || '').trim()).filter(Boolean)
+                : [...STORE_CONFIG.defaultCategories.group];
+
+            const normalizedArtworks = Array.isArray(src.artworks)
+                ? src.artworks.map((item, idx) => ({
+                    id: String(item?.id || `art-sync-${idx}`),
+                    title: String(item?.title || '').trim(),
+                    price: String(item?.price || '').trim(),
+                    link: sanitizeHttpUrl(item?.link, ''),
+                    image: String(item?.image || '').trim(),
+                    mainCat: item?.mainCat === 'group' ? 'group' : 'example',
+                    subCat: item?.mainCat === 'group' ? '' : String(item?.subCat || Object.keys(normalizedExample)[0] || 'งานป้าย'),
+                    categories: Array.isArray(item?.categories)
+                        ? item.categories.map((c) => String(c || '').trim()).filter(Boolean)
+                        : []
+                }))
+                : JSON.parse(JSON.stringify(STORE_CONFIG.defaultArtworks));
+
+            const normalizedQueue = Array.isArray(src.queueItems) && src.queueItems.length > 0
+                ? src.queueItems.map((q) => ({
+                    title: String(q?.title || '').trim() || 'คิวงาน',
+                    detail: String(q?.detail || '').trim(),
+                    status: String(q?.status || '').trim() || 'รอคิว',
+                    highlight: Boolean(q?.highlight)
+                }))
+                : JSON.parse(JSON.stringify(STORE_CONFIG.defaultQueueItems));
+
+            const normalizedPricing = Array.isArray(src.pricingItems) && src.pricingItems.length > 0
+                ? src.pricingItems.map((p) => ({
+                    title: String(p?.title || '').trim() || 'รายการงาน',
+                    detail: String(p?.detail || '').trim(),
+                    price: String(p?.price || '').trim() || 'ตามบรีฟ',
+                    highlight: Boolean(p?.highlight)
+                }))
+                : JSON.parse(JSON.stringify(STORE_CONFIG.defaultPricingItems));
+
+            const normalizedTos = Array.isArray(src.tosItems) && src.tosItems.length > 0
+                ? src.tosItems.map((t) => String(t || '').trim()).filter(Boolean)
+                : [...STORE_CONFIG.defaultTosItems];
+
+            return {
+                updatedAt: Number(src.updatedAt || Date.now()),
+                categories: {
+                    example: normalizedExample,
+                    group: normalizedGroup
+                },
+                artworks: normalizedArtworks,
+                heroCardImage: typeof src.heroCardImage === 'string' ? src.heroCardImage : '',
+                contactLinks: {
+                    facebook: sanitizeHttpUrl(src.contactLinks?.facebook, STORE_CONFIG.defaultContactLinks.facebook),
+                    line: sanitizeHttpUrl(src.contactLinks?.line, STORE_CONFIG.defaultContactLinks.line),
+                    ig: sanitizeHttpUrl(src.contactLinks?.ig, STORE_CONFIG.defaultContactLinks.ig)
+                },
+                profileCard: {
+                    ribbon: String(src.profileCard?.ribbon || '').trim() || STORE_CONFIG.defaultProfileCard.ribbon,
+                    logoName: String(src.profileCard?.logoName || '').trim() || STORE_CONFIG.defaultProfileCard.logoName,
+                    logoSub: String(src.profileCard?.logoSub || '').trim() || STORE_CONFIG.defaultProfileCard.logoSub,
+                    storeTitle: String(src.profileCard?.storeTitle || '').trim() || STORE_CONFIG.defaultProfileCard.storeTitle,
+                    tagline: String(src.profileCard?.tagline || '').trim() || STORE_CONFIG.defaultProfileCard.tagline
+                },
+                featuredShowcase: {
+                    brand: String(src.featuredShowcase?.brand || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.brand,
+                    line1: String(src.featuredShowcase?.line1 || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.line1,
+                    line2: String(src.featuredShowcase?.line2 || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.line2,
+                    badgeIcon: String(src.featuredShowcase?.badgeIcon || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.badgeIcon,
+                    badge: String(src.featuredShowcase?.badge || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.badge
+                },
+                queueItems: normalizedQueue,
+                pricingItems: normalizedPricing,
+                tosItems: normalizedTos
+            };
         }
 
         function optimizeImageDataUrl(dataUrl, maxDim = 640, quality = 0.72) {
@@ -1596,7 +1691,7 @@
             const key = getLocalStorageKeyForStore(storeId);
             try {
                 localStorage.setItem(key, JSON.stringify({
-                    updatedAt: Date.now(),
+                    updatedAt: payload.updatedAt || Date.now(),
                     categories: payload.categories,
                     artworks: payload.artworks,
                     heroCardImage: payload.heroCardImage || '',
@@ -1621,7 +1716,7 @@
                         };
                     });
                     localStorage.setItem(key, JSON.stringify({
-                        updatedAt: Date.now(),
+                        updatedAt: payload.updatedAt || Date.now(),
                         categories: payload.categories,
                         artworks: compactArtworks,
                         heroCardImage: payload.heroCardImage || '',
@@ -1642,51 +1737,20 @@
         const currentStoreIdAtBoot = getActiveStoreId();
         window.__jaomeowStoreId = currentStoreIdAtBoot;
         const initialLocal = loadLocalStateFallback(currentStoreIdAtBoot);
+        const initialNormalized = normalizeStoreData(initialLocal || {});
 
         let state = {
             storeId: currentStoreIdAtBoot,
             updatedAt: Number(initialLocal?.updatedAt || 0),
-            categories: initialLocal?.categories
-                ? JSON.parse(JSON.stringify(initialLocal.categories))
-                : JSON.parse(JSON.stringify(STORE_CONFIG.defaultCategories)),
-            artworks: Array.isArray(initialLocal?.artworks) && initialLocal.artworks.length > 0
-                ? initialLocal.artworks
-                : JSON.parse(JSON.stringify(STORE_CONFIG.defaultArtworks)),
-            heroCardImage: typeof initialLocal?.heroCardImage === 'string' ? initialLocal.heroCardImage : '',
-            contactLinks: {
-                facebook: typeof initialLocal?.contactLinks?.facebook === 'string' && initialLocal.contactLinks.facebook.trim()
-                    ? initialLocal.contactLinks.facebook.trim()
-                    : STORE_CONFIG.defaultContactLinks.facebook,
-                line: typeof initialLocal?.contactLinks?.line === 'string' && initialLocal.contactLinks.line.trim()
-                    ? initialLocal.contactLinks.line.trim()
-                    : STORE_CONFIG.defaultContactLinks.line,
-                ig: typeof initialLocal?.contactLinks?.ig === 'string' && initialLocal.contactLinks.ig.trim()
-                    ? initialLocal.contactLinks.ig.trim()
-                    : STORE_CONFIG.defaultContactLinks.ig
-            },
-            profileCard: {
-                ribbon: String(initialLocal?.profileCard?.ribbon || '').trim() || STORE_CONFIG.defaultProfileCard.ribbon,
-                logoName: String(initialLocal?.profileCard?.logoName || '').trim() || STORE_CONFIG.defaultProfileCard.logoName,
-                logoSub: String(initialLocal?.profileCard?.logoSub || '').trim() || STORE_CONFIG.defaultProfileCard.logoSub,
-                storeTitle: String(initialLocal?.profileCard?.storeTitle || '').trim() || STORE_CONFIG.defaultProfileCard.storeTitle,
-                tagline: String(initialLocal?.profileCard?.tagline || '').trim() || STORE_CONFIG.defaultProfileCard.tagline
-            },
-            featuredShowcase: {
-                brand: String(initialLocal?.featuredShowcase?.brand || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.brand,
-                line1: String(initialLocal?.featuredShowcase?.line1 || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.line1,
-                line2: String(initialLocal?.featuredShowcase?.line2 || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.line2,
-                badgeIcon: String(initialLocal?.featuredShowcase?.badgeIcon || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.badgeIcon,
-                badge: String(initialLocal?.featuredShowcase?.badge || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.badge
-            },
-            queueItems: Array.isArray(initialLocal?.queueItems) && initialLocal.queueItems.length > 0
-                ? initialLocal.queueItems
-                : JSON.parse(JSON.stringify(STORE_CONFIG.defaultQueueItems)),
-            pricingItems: Array.isArray(initialLocal?.pricingItems) && initialLocal.pricingItems.length > 0
-                ? initialLocal.pricingItems
-                : JSON.parse(JSON.stringify(STORE_CONFIG.defaultPricingItems)),
-            tosItems: Array.isArray(initialLocal?.tosItems) && initialLocal.tosItems.length > 0
-                ? initialLocal.tosItems
-                : [...STORE_CONFIG.defaultTosItems],
+            categories: initialNormalized.categories,
+            artworks: initialNormalized.artworks,
+            heroCardImage: initialNormalized.heroCardImage,
+            contactLinks: initialNormalized.contactLinks,
+            profileCard: initialNormalized.profileCard,
+            featuredShowcase: initialNormalized.featuredShowcase,
+            queueItems: initialNormalized.queueItems,
+            pricingItems: initialNormalized.pricingItems,
+            tosItems: initialNormalized.tosItems,
             activeAdminTab: 'artwork',
             selectedExampleSubcat: 'งานป้าย',
             selectedExampleLeaf: 'ทั้งหมด',
@@ -1735,11 +1799,11 @@
                     body: JSON.stringify(payload)
                 });
                 if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                setStatusBadge('อัปเดตข้อมูลล่าสุดแล้ว');
+                setStatusBadge('ซิงก์ข้อมูลอัตโนมัติแล้ว');
                 return true;
             } catch (err) {
-                console.warn('Shared cloud push fallback to local:', err);
-                setStatusBadge('บันทึกและซิงก์อัตโนมัติแล้ว');
+                console.warn('Background cloud sync fallback to local:', err);
+                setStatusBadge('ซิงก์ข้อมูลอัตโนมัติ');
                 return false;
             }
         }
@@ -1751,7 +1815,7 @@
             if (isSyncInFlight) return false;
             isSyncInFlight = true;
             const sid = getActiveStoreId();
-            setActiveStoreId(sid);
+            setActiveStoreId();
             state.storeId = sid;
 
             try {
@@ -1769,7 +1833,7 @@
                         }
                         setStatusBadge('ซิงก์ข้อมูลอัตโนมัติแล้ว');
                         if (showNotice) {
-                            showTransferFeedback('ซิงก์ข้อมูลเรียบร้อยแล้วครับ');
+                            showTransferFeedback('อัปเดตข้อมูลล่าสุดเรียบร้อยแล้วครับ');
                         }
                         isSyncInFlight = false;
                         return true;
@@ -1789,7 +1853,7 @@
             refreshActiveViews();
             setStatusBadge('ซิงก์ข้อมูลอัตโนมัติ');
             if (showNotice) {
-                showTransferFeedback('ซิงก์ข้อมูลเรียบร้อยแล้วครับ');
+                showTransferFeedback('อัปเดตข้อมูลล่าสุดเรียบร้อยแล้วครับ');
             }
             isSyncInFlight = false;
             return false;
@@ -1816,14 +1880,393 @@
             });
         }
 
-        function renderContactLinks() {
-            const fbEl = document.getElementById('contactLinkFacebook');
         function saveStoreState() {
             state.updatedAt = Date.now();
             saveLocalStateFallback(state, state.storeId);
             refreshActiveViews();
-            setStatusBadge('กำลังซิงก์อัตโนมัติ...');
+            setStatusBadge('กำลังซิงก์ข้อมูลอัตโนมัติ...');
             pushStoreToCloud(state.storeId);
+        }
+
+        function switchAdminTab(tabName) {
+            state.activeAdminTab = tabName || 'artwork';
+            const tabs = [
+                { key: 'artwork', btnId: 'adminTabArtworkBtn', panelId: 'adminPanelTabArtwork' },
+                { key: 'profile', btnId: 'adminTabProfileBtn', panelId: 'adminPanelTabProfile' },
+                { key: 'store', btnId: 'adminTabStoreBtn', panelId: 'adminPanelTabStore' },
+                { key: 'contact', btnId: 'adminTabContactBtn', panelId: 'adminPanelTabContact' }
+            ];
+
+            for (const t of tabs) {
+                const isActive = t.key === state.activeAdminTab;
+                const btn = document.getElementById(t.btnId);
+                const panel = document.getElementById(t.panelId);
+                if (btn) {
+                    btn.className = isActive
+                        ? 'px-3 py-1.5 rounded-xl text-xs font-bold bg-[#EE7CA8] text-white cursor-pointer'
+                        : 'px-3 py-1.5 rounded-xl text-xs font-bold bg-[#FFF2F7] text-[#8A5A72] hover:bg-[#FFE3EE] cursor-pointer';
+                }
+                if (panel) {
+                    panel.classList.toggle('hidden', !isActive);
+                }
+            }
+        }
+
+        function renderProfileCard() {
+            const p = state.profileCard || STORE_CONFIG.defaultProfileCard;
+            const ribbonEl = document.getElementById('profileRibbonText');
+            const logoNameEl = document.getElementById('profileLogoName');
+            const logoSubEl = document.getElementById('profileLogoSub');
+            const storeTitleEl = document.getElementById('profileStoreTitle');
+            const taglineEl = document.getElementById('profileTaglineText');
+            const footerEl = document.getElementById('storeFooterText');
+            const musicTitleEl = document.getElementById('musicTrackTitleText');
+
+            if (ribbonEl) ribbonEl.textContent = p.ribbon || STORE_CONFIG.defaultProfileCard.ribbon;
+            if (logoNameEl) logoNameEl.textContent = p.logoName || STORE_CONFIG.defaultProfileCard.logoName;
+            if (logoSubEl) logoSubEl.textContent = p.logoSub || STORE_CONFIG.defaultProfileCard.logoSub;
+            if (storeTitleEl) storeTitleEl.textContent = p.storeTitle || STORE_CONFIG.defaultProfileCard.storeTitle;
+            if (taglineEl) taglineEl.textContent = p.tagline || STORE_CONFIG.defaultProfileCard.tagline;
+            if (footerEl) footerEl.textContent = `© 2026 ${p.storeTitle || STORE_CONFIG.defaultProfileCard.storeTitle} Studio All Rights Reserved ☁`;
+            if (musicTitleEl) musicTitleEl.textContent = STORE_CONFIG.musicTrackTitle;
+        }
+
+        function syncLiveProfilePreviewFromInputs() {
+            const ribbon = (document.getElementById('adminProfileRibbonInput')?.value || '').trim() || STORE_CONFIG.defaultProfileCard.ribbon;
+            const logoName = (document.getElementById('adminProfileLogoNameInput')?.value || '').trim() || STORE_CONFIG.defaultProfileCard.logoName;
+            const logoSub = (document.getElementById('adminProfileLogoSubInput')?.value || '').trim() || STORE_CONFIG.defaultProfileCard.logoSub;
+            const storeTitle = (document.getElementById('adminProfileStoreTitleInput')?.value || '').trim() || STORE_CONFIG.defaultProfileCard.storeTitle;
+            const tagline = (document.getElementById('adminProfileTaglineInput')?.value || '').trim() || STORE_CONFIG.defaultProfileCard.tagline;
+
+            const pRibbon = document.getElementById('livePreviewRibbon');
+            const pLogoName = document.getElementById('livePreviewLogoName');
+            const pLogoSub = document.getElementById('livePreviewLogoSub');
+            const pStoreTitle = document.getElementById('livePreviewStoreTitle');
+            const pTagline = document.getElementById('livePreviewTagline');
+
+            if (pRibbon) pRibbon.textContent = ribbon;
+            if (pLogoName) pLogoName.textContent = logoName;
+            if (pLogoSub) pLogoSub.textContent = logoSub;
+            if (pStoreTitle) pStoreTitle.textContent = storeTitle;
+            if (pTagline) pTagline.textContent = tagline;
+        }
+
+        function syncAdminProfileInputs() {
+            const p = state.profileCard || STORE_CONFIG.defaultProfileCard;
+            const rInput = document.getElementById('adminProfileRibbonInput');
+            const nInput = document.getElementById('adminProfileLogoNameInput');
+            const sInput = document.getElementById('adminProfileLogoSubInput');
+            const tInput = document.getElementById('adminProfileStoreTitleInput');
+            const gInput = document.getElementById('adminProfileTaglineInput');
+
+            if (rInput) rInput.value = p.ribbon || '';
+            if (nInput) nInput.value = p.logoName || '';
+            if (sInput) sInput.value = p.logoSub || '';
+            if (tInput) tInput.value = p.storeTitle || '';
+            if (gInput) gInput.value = p.tagline || '';
+            syncLiveProfilePreviewFromInputs();
+        }
+
+        function showAdminProfileNotice(msg, isError = false) {
+            const el = document.getElementById('adminProfileFeedback');
+            if (!el) return;
+            el.textContent = msg;
+            el.className = isError
+                ? 'text-xs font-semibold px-3 py-2 rounded-xl bg-rose-50 text-rose-500 border border-rose-200'
+                : 'text-xs font-semibold px-3 py-2 rounded-xl bg-[#FFF0F6] text-[#8F3E64] border border-pink-200';
+            el.classList.remove('hidden');
+        }
+
+        function saveProfileCardFromAdmin() {
+            const ribbon = (document.getElementById('adminProfileRibbonInput')?.value || '').trim() || STORE_CONFIG.defaultProfileCard.ribbon;
+            const logoName = (document.getElementById('adminProfileLogoNameInput')?.value || '').trim() || STORE_CONFIG.defaultProfileCard.logoName;
+            const logoSub = (document.getElementById('adminProfileLogoSubInput')?.value || '').trim() || STORE_CONFIG.defaultProfileCard.logoSub;
+            const storeTitle = (document.getElementById('adminProfileStoreTitleInput')?.value || '').trim() || STORE_CONFIG.defaultProfileCard.storeTitle;
+            const tagline = (document.getElementById('adminProfileTaglineInput')?.value || '').trim() || STORE_CONFIG.defaultProfileCard.tagline;
+
+            state.profileCard = {
+                ribbon,
+                logoName,
+                logoSub,
+                storeTitle,
+                tagline
+            };
+
+            syncAdminProfileInputs();
+            saveStoreState();
+            showAdminProfileNotice('บันทึกการ์ดโปรไฟล์เรียบร้อยแล้วครับ');
+        }
+
+        function renderFeaturedShowcase() {
+            const s = state.featuredShowcase || STORE_CONFIG.defaultFeaturedShowcase;
+            const brandEl = document.getElementById('showcaseBrandText');
+            const line1El = document.getElementById('showcaseLine1Text');
+            const line2El = document.getElementById('showcaseLine2Text');
+            const badgeIconEl = document.getElementById('showcaseBadgeIconText');
+            const badgeEl = document.getElementById('showcaseBadgeText');
+
+            if (brandEl) brandEl.textContent = s.brand || STORE_CONFIG.defaultFeaturedShowcase.brand;
+            if (line1El) line1El.textContent = s.line1 || STORE_CONFIG.defaultFeaturedShowcase.line1;
+            if (line2El) line2El.textContent = s.line2 || STORE_CONFIG.defaultFeaturedShowcase.line2;
+            if (badgeIconEl) badgeIconEl.textContent = s.badgeIcon || STORE_CONFIG.defaultFeaturedShowcase.badgeIcon;
+            if (badgeEl) badgeEl.textContent = s.badge || STORE_CONFIG.defaultFeaturedShowcase.badge;
+        }
+
+        function syncLiveShowcasePreviewFromInputs() {
+            const brand = (document.getElementById('adminShowcaseBrandInput')?.value || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.brand;
+            const line1 = (document.getElementById('adminShowcaseLine1Input')?.value || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.line1;
+            const line2 = (document.getElementById('adminShowcaseLine2Input')?.value || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.line2;
+            const badgeIcon = (document.getElementById('adminShowcaseBadgeIconInput')?.value || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.badgeIcon;
+            const badge = (document.getElementById('adminShowcaseBadgeInput')?.value || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.badge;
+
+            const pBrand = document.getElementById('livePreviewShowcaseBrand');
+            const pLine1 = document.getElementById('livePreviewShowcaseLine1');
+            const pLine2 = document.getElementById('livePreviewShowcaseLine2');
+            const pBadgeIcon = document.getElementById('livePreviewShowcaseBadgeIcon');
+            const pBadge = document.getElementById('livePreviewShowcaseBadge');
+
+            if (pBrand) pBrand.textContent = brand;
+            if (pLine1) pLine1.textContent = line1;
+            if (pLine2) pLine2.textContent = line2;
+            if (pBadgeIcon) pBadgeIcon.textContent = badgeIcon;
+            if (pBadge) pBadge.textContent = badge;
+        }
+
+        function syncAdminShowcaseInputs() {
+            const s = state.featuredShowcase || STORE_CONFIG.defaultFeaturedShowcase;
+            const bInput = document.getElementById('adminShowcaseBrandInput');
+            const l1Input = document.getElementById('adminShowcaseLine1Input');
+            const l2Input = document.getElementById('adminShowcaseLine2Input');
+            const biInput = document.getElementById('adminShowcaseBadgeIconInput');
+            const bgInput = document.getElementById('adminShowcaseBadgeInput');
+
+            if (bInput) bInput.value = s.brand || '';
+            if (l1Input) l1Input.value = s.line1 || '';
+            if (l2Input) l2Input.value = s.line2 || '';
+            if (biInput) biInput.value = s.badgeIcon || STORE_CONFIG.defaultFeaturedShowcase.badgeIcon;
+            if (bgInput) bgInput.value = s.badge || '';
+            syncLiveShowcasePreviewFromInputs();
+        }
+
+        function showAdminShowcaseNotice(msg, isError = false) {
+            const el = document.getElementById('adminShowcaseFeedback');
+            if (!el) return;
+            el.textContent = msg;
+            el.className = isError
+                ? 'text-xs font-semibold px-3 py-2 rounded-xl bg-rose-50 text-rose-500 border border-rose-200'
+                : 'text-xs font-semibold px-3 py-2 rounded-xl bg-white text-[#8F3E64] border border-pink-200';
+            el.classList.remove('hidden');
+        }
+
+        function saveFeaturedShowcaseFromAdmin() {
+            const brand = (document.getElementById('adminShowcaseBrandInput')?.value || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.brand;
+            const line1 = (document.getElementById('adminShowcaseLine1Input')?.value || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.line1;
+            const line2 = (document.getElementById('adminShowcaseLine2Input')?.value || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.line2;
+            const badgeIcon = (document.getElementById('adminShowcaseBadgeIconInput')?.value || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.badgeIcon;
+            const badge = (document.getElementById('adminShowcaseBadgeInput')?.value || '').trim() || STORE_CONFIG.defaultFeaturedShowcase.badge;
+
+            state.featuredShowcase = {
+                brand,
+                line1,
+                line2,
+                badgeIcon,
+                badge
+            };
+
+            syncAdminShowcaseInputs();
+            saveStoreState();
+            showAdminShowcaseNotice('บันทึก FEATURED SHOWCASE เรียบร้อยแล้วครับ');
+        }
+
+        function renderStoreDetailsModals() {
+            const qContainer = document.getElementById('queueListContainer');
+            const pContainer = document.getElementById('pricingListContainer');
+            const tContainer = document.getElementById('tosListContainer');
+
+            if (qContainer) {
+                qContainer.innerHTML = (state.queueItems || []).map((q) => {
+                    const cardClass = q.highlight
+                        ? 'p-3.5 rounded-2xl bg-[#FFF0F6] border border-pink-200 flex items-center justify-between gap-2'
+                        : 'p-3.5 rounded-2xl bg-white border border-pink-100 flex items-center justify-between gap-2';
+                    const badgeClass = q.highlight
+                        ? 'px-2.5 py-1 rounded-full bg-white text-[#D95C91] text-xs font-bold shrink-0'
+                        : 'px-2.5 py-1 rounded-full bg-[#FFF2F7] text-[#8E5B74] text-xs font-bold shrink-0';
+                    return `
+                        <div class="${cardClass}">
+                            <div class="min-w-0">
+                                <div class="font-bold text-[#6B4257] truncate">${escapeHtml(q.title)}</div>
+                                ${q.detail ? `<div class="text-xs text-[#9C6A82] truncate">${escapeHtml(q.detail)}</div>` : ''}
+                            </div>
+                            <span class="${badgeClass}">${escapeHtml(q.status)}</span>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            if (pContainer) {
+                pContainer.innerHTML = (state.pricingItems || []).map((p) => {
+                    const cardClass = p.highlight
+                        ? 'p-3.5 rounded-2xl bg-[#FFF0F6] border border-pink-200 flex items-center justify-between gap-2'
+                        : 'p-3.5 rounded-2xl bg-white border border-pink-100 flex items-center justify-between gap-2';
+                    return `
+                        <div class="${cardClass}">
+                            <div class="min-w-0">
+                                <div class="font-bold text-[#6B4257] truncate">${escapeHtml(p.title)}</div>
+                                ${p.detail ? `<div class="text-xs text-[#9C6A82] truncate">${escapeHtml(p.detail)}</div>` : ''}
+                            </div>
+                            <span class="font-display font-bold text-[#D95C91] shrink-0">${escapeHtml(p.price)}</span>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            if (tContainer) {
+                tContainer.innerHTML = (state.tosItems || []).map((line) => (
+                    `<p>${escapeHtml(line)}</p>`
+                )).join('');
+            }
+        }
+
+        function syncAdminStoreDetailsInputs() {
+            const qInput = document.getElementById('adminQueueEditorInput');
+            const pInput = document.getElementById('adminPricingEditorInput');
+            const tInput = document.getElementById('adminTosEditorInput');
+
+            if (qInput) {
+                qInput.value = (state.queueItems || [])
+                    .map((q) => `${q.title} | ${q.detail} | ${q.status}`)
+                    .join('\n');
+            }
+            if (pInput) {
+                pInput.value = (state.pricingItems || [])
+                    .map((p) => `${p.title} | ${p.detail} | ${p.price}`)
+                    .join('\n');
+            }
+            if (tInput) {
+                tInput.value = (state.tosItems || []).join('\n');
+            }
+        }
+
+        function saveStoreDetailsFromAdmin() {
+            const qRaw = (document.getElementById('adminQueueEditorInput')?.value || '').split('\n').map((l) => l.trim()).filter(Boolean);
+            const pRaw = (document.getElementById('adminPricingEditorInput')?.value || '').split('\n').map((l) => l.trim()).filter(Boolean);
+            const tRaw = (document.getElementById('adminTosEditorInput')?.value || '').split('\n').map((l) => l.trim()).filter(Boolean);
+
+            if (qRaw.length > 0) {
+                state.queueItems = qRaw.map((line, idx) => {
+                    const parts = line.split('|').map((s) => s.trim());
+                    return {
+                        title: parts[0] || `คิวที่ ${idx + 1}`,
+                        detail: parts[1] || '',
+                        status: parts[2] || 'รอคิว',
+                        highlight: idx === 0
+                    };
+                });
+            }
+
+            if (pRaw.length > 0) {
+                state.pricingItems = pRaw.map((line, idx) => {
+                    const parts = line.split('|').map((s) => s.trim());
+                    return {
+                        title: parts[0] || `รายการที่ ${idx + 1}`,
+                        detail: parts[1] || '',
+                        price: parts[2] || 'ตามบรีฟ',
+                        highlight: idx === 0
+                    };
+                });
+            }
+
+            if (tRaw.length > 0) {
+                state.tosItems = tRaw;
+            }
+
+            syncAdminStoreDetailsInputs();
+            saveStoreState();
+
+            const fb = document.getElementById('adminStoreDetailsFeedback');
+            if (fb) {
+                fb.textContent = 'บันทึกคิว / ราคา / กฎร้านเรียบร้อยแล้วครับ';
+                fb.className = 'text-xs font-semibold px-3 py-2 rounded-xl bg-[#FFF0F6] text-[#8F3E64] border border-pink-200';
+                fb.classList.remove('hidden');
+            }
+        }
+
+        function showTransferFeedback(msg, isError = false) {
+            const el = document.getElementById('adminTransferFeedback');
+            if (!el) return;
+            el.textContent = msg;
+            el.className = isError
+                ? 'text-xs font-semibold px-3 py-2 rounded-xl bg-rose-50 text-rose-500 border border-rose-200'
+                : 'text-xs font-semibold px-3 py-2 rounded-xl bg-[#FFF0F6] text-[#8F3E64] border border-pink-200';
+            el.classList.remove('hidden');
+        }
+
+        function copyStoreBackupCode() {
+            const payload = {
+                updatedAt: Date.now(),
+                categories: state.categories,
+                artworks: state.artworks,
+                heroCardImage: state.heroCardImage || '',
+                contactLinks: state.contactLinks,
+                profileCard: state.profileCard,
+                featuredShowcase: state.featuredShowcase,
+                queueItems: state.queueItems,
+                pricingItems: state.pricingItems,
+                tosItems: state.tosItems
+            };
+            const codeText = JSON.stringify(payload);
+            const transferInput = document.getElementById('adminStoreTransferInput');
+            if (transferInput) {
+                transferInput.value = codeText;
+            }
+
+            let copied = false;
+            try {
+                const ta = document.createElement('textarea');
+                ta.value = codeText;
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                copied = document.execCommand('copy');
+                document.body.removeChild(ta);
+            } catch (_) {}
+
+            showTransferFeedback(
+                copied
+                    ? 'คัดลอกรหัสร้านเรียบร้อยแล้วครับ นำไปวางที่อีกเครื่องได้เลย'
+                    : 'เตรียมรหัสร้านในช่องด้านล่างแล้วครับ สามารถคัดลอกนำไปวางได้เลย'
+            );
+        }
+
+        function importStoreBackupCode() {
+            const rawText = (document.getElementById('adminStoreTransferInput')?.value || '').trim();
+            if (!rawText) {
+                showTransferFeedback('กรุณาวางรหัสร้านก่อนกดนำเข้าครับ', true);
+                return;
+            }
+            try {
+                const parsed = JSON.parse(rawText);
+                const normalized = normalizeStoreData({
+                    ...parsed,
+                    updatedAt: Date.now()
+                });
+                applyNormalizedDataToState(normalized, state.storeId);
+                saveStoreState();
+                showTransferFeedback('นำเข้ารหัสข้อมูลร้านและอัปเดตเรียบร้อยแล้วครับ');
+            } catch (_) {
+                showTransferFeedback('รูปแบบรหัสร้านไม่ถูกต้องครับ กรุณาตรวจสอบอีกครั้ง', true);
+            }
+        }
+
+        function renderContactLinks() {
+            const fbEl = document.getElementById('contactLinkFacebook');
+            const lineEl = document.getElementById('contactLinkLine');
+            const igEl = document.getElementById('contactLinkIg');
+
+            if (fbEl) fbEl.href = sanitizeHttpUrl(state.contactLinks?.facebook, STORE_CONFIG.defaultContactLinks.facebook);
+            if (lineEl) lineEl.href = sanitizeHttpUrl(state.contactLinks?.line, STORE_CONFIG.defaultContactLinks.line);
+            if (igEl) igEl.href = sanitizeHttpUrl(state.contactLinks?.ig, STORE_CONFIG.defaultContactLinks.ig);
         }
 
         function syncAdminContactInputs() {
@@ -1961,6 +2404,18 @@
             }
         };
 
+        window.__onAdminAuthenticated = function () {
+            const cleanStoreId = setActiveStoreId();
+            state.storeId = cleanStoreId;
+            state.isAdminLoggedIn = true;
+            window.__jaomeowAdminLoggedIn = true;
+            syncStoreFromCloud(false).finally(() => {
+                if (typeof window.openModal === 'function') {
+                    window.openModal('adminPanelModal');
+                }
+            });
+        };
+
         function handleAdminLogin(event) {
             if (event && typeof event.preventDefault === 'function') {
                 event.preventDefault();
@@ -1974,52 +2429,15 @@
             const validPasswords = (STORE_CONFIG.adminPasswords || []).map((p) => String(p).trim());
 
             if (validUsers.includes(normalizedUser) && validPasswords.includes(passInput)) {
-                const cleanStoreId = setActiveStoreId();
-                state.storeId = cleanStoreId;
-                state.isAdminLoggedIn = true;
-                window.__jaomeowAdminLoggedIn = true;
                 if (errEl) {
                     errEl.textContent = '';
                     errEl.classList.add('hidden');
                 }
-                syncStoreFromCloud(false).finally(() => {
-                    if (typeof window.openModal === 'function') {
-                        window.openModal('adminPanelModal');
-                    }
-                });
+                window.__onAdminAuthenticated();
             } else if (errEl) {
                 errEl.textContent = 'ชื่อแอดมินหรือรหัสผ่านไม่ถูกต้องครับ';
                 errEl.classList.remove('hidden');
             }
-        };
-    </script>
-
-    <script type="module">
-                        refreshActiveViews();
-                        setStatusBadge(`รหัส: ${sid} · ซิงก์แล้ว`);
-                        if (showNotice) {
-                            showTransferFeedback(`ซิงก์ข้อมูลล่าสุดของ "${sid}" เรียบร้อยแล้วครับ`);
-                        }
-                        return true;
-                    }
-                }
-            } catch (err) {
-                console.warn('Cloud pull skipped, using local store state:', err);
-            }
-
-            const localSaved = loadLocalStateFallback(sid);
-            if (localSaved) {
-                const normalizedLocal = normalizeStoreData(localSaved);
-                applyNormalizedDataToState(normalizedLocal, sid);
-            } else {
-                applyNormalizedDataToState(normalizeStoreData({}), sid);
-            }
-            refreshActiveViews();
-            setStatusBadge(`รหัส: ${sid} · พร้อมใช้งาน`);
-            if (showNotice) {
-                showTransferFeedback(`อัปเดตข้อมูลของ "${sid}" เรียบร้อยแล้วครับ`);
-            }
-            return false;
         }
 
         function handleAdminLogout() {
@@ -2435,7 +2853,7 @@
                 id: `art-${nowStamp}-${idx}`,
                 title: imgEntry.title,
                 price: rawPrice,
-                link,
+                link: sanitizeHttpUrl(link, ''),
                 image: imgEntry.src,
                 mainCat,
                 subCat,
