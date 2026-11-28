@@ -897,6 +897,14 @@
                             <span class="text-[11px] text-[#A5788E]">กด × เพื่อลบหมวดย่อย</span>
                         </div>
 
+                        <div>
+                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">หมวดหลัก</label>
+                            <select id="adminMainCatSelect" onchange="onAdminMainCatChange()" class="w-full px-3 py-2 rounded-xl border border-pink-200 bg-white text-[#593E4D] font-semibold focus:outline-none focus:border-pink-400">
+                                <option value="example">ตัวอย่างงาน</option>
+                                <option value="group">ตัวอย่างกลุ่ม</option>
+                            </select>
+                        </div>
+
                         <div class="flex flex-col sm:flex-row gap-2 pt-1">
                             <input
                                 id="newSubCategoryInput"
@@ -921,23 +929,13 @@
                     <form id="adminArtworkForm" onsubmit="handleAddArtwork(event)" class="p-4 rounded-2xl bg-white border border-pink-100 space-y-3.5">
                         <div class="font-bold text-[#6B4257]">เพิ่มรูปภาพตัวอย่างงาน &amp; ตัวอย่างกลุ่ม</div>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div>
-                                <label class="block text-xs font-semibold text-[#8A5A72] mb-1">หมวดหลัก</label>
-                                <select id="adminMainCatSelect" onchange="onAdminMainCatChange()" class="w-full px-3 py-2 rounded-xl border border-pink-200 bg-[#FFFDFC] focus:outline-none">
-                                    <option value="example">ตัวอย่างงาน</option>
-                                    <option value="group">ตัวอย่างกลุ่ม</option>
-                                </select>
-                            </div>
-
-                            <div id="adminExampleSubcatWrapper">
-                                <label class="block text-xs font-semibold text-[#8A5A72] mb-1">หมวดย่อย (ตัวอย่างงาน)</label>
-                                <select id="adminExampleSubcatSelect" onchange="renderAdminCategoryControls()" class="w-full px-3 py-2 rounded-xl border border-pink-200 bg-[#FFFDFC] focus:outline-none">
-                                    <option value="งานป้าย">งานป้าย</option>
-                                    <option value="งานชีต">งานชีต</option>
-                                    <option value="website">website</option>
-                                </select>
-                            </div>
+                        <div id="adminExampleSubcatWrapper">
+                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">หมวดย่อย (ตัวอย่างงาน)</label>
+                            <select id="adminExampleSubcatSelect" onchange="renderAdminCategoryControls()" class="w-full px-3 py-2 rounded-xl border border-pink-200 bg-[#FFFDFC] focus:outline-none">
+                                <option value="งานป้าย">งานป้าย</option>
+                                <option value="งานชีต">งานชีต</option>
+                                <option value="website">website</option>
+                            </select>
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -2747,6 +2745,10 @@
             const labelEl = document.getElementById('multiCatLabel');
             if (!customListEl || !checkboxesEl) return;
 
+            const previouslyChecked = Array.from(
+                document.querySelectorAll('input[name="adminArtCat"]:checked')
+            ).map((cb) => cb.value);
+
             let availableCats = [];
             let activeSub = '';
 
@@ -2782,13 +2784,17 @@
                 )).join('')
                 : `<span class="text-xs text-[#A5788E]">ยังไม่มีหมวดย่อยในหมวดนี้ครับ</span>`;
 
+            const validPreviousChecks = previouslyChecked.filter((c) => availableCats.includes(c));
+            const shouldCheckDefaultFirst = validPreviousChecks.length === 0 && availableCats.length > 0;
+
             checkboxesEl.innerHTML = availableCats.length > 0
-                ? availableCats.map((catName, idx) => (
-                    `<label class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#FFF6F9] border border-pink-100 text-xs text-[#6B4257] cursor-pointer">
-                        <input type="checkbox" name="adminArtCat" value="${escapeHtml(catName)}" ${idx === 0 ? 'checked' : ''} class="rounded accent-[#EE7CA8]">
+                ? availableCats.map((catName, idx) => {
+                    const isChecked = validPreviousChecks.includes(catName) || (shouldCheckDefaultFirst && idx === 0);
+                    return `<label class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#FFF6F9] border border-pink-100 text-xs text-[#6B4257] cursor-pointer">
+                        <input type="checkbox" name="adminArtCat" value="${escapeHtml(catName)}" ${isChecked ? 'checked' : ''} class="rounded accent-[#EE7CA8]">
                         <span>${escapeHtml(catName)}</span>
-                    </label>`
-                )).join('')
+                    </label>`;
+                }).join('')
                 : `<span class="text-xs text-[#A5788E]">ยังไม่มีหมวดย่อย กรุณาเพิ่มหมวดด้านบน</span>`;
         }
 
@@ -3021,7 +3027,18 @@
             state.selectedBatchImages = [];
             updateAdminPreviewImage('');
             renderBatchPreviewStrip();
-            document.getElementById('adminArtworkForm')?.reset();
+
+            const titleInputEl = document.getElementById('artworkTitleInput');
+            const linkInputEl = document.getElementById('artworkLinkInput');
+            const priceInputEl = document.getElementById('artworkPriceInput');
+            const fileInputEl = document.getElementById('artworkFileInput');
+            const urlInputEl = document.getElementById('artworkImageUrlInput');
+            if (titleInputEl) titleInputEl.value = '';
+            if (linkInputEl) linkInputEl.value = '';
+            if (priceInputEl) priceInputEl.value = '';
+            if (fileInputEl) fileInputEl.value = '';
+            if (urlInputEl) urlInputEl.value = '';
+
             onAdminMainCatChange();
 
             renderAdminArtworkList();
