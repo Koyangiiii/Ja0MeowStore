@@ -948,6 +948,11 @@
                             </div>
                         </div>
 
+                        <div id="adminExampleExtraLinkWrapper">
+                            <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ลิงก์ตัวอย่างเพิ่มเติม (เฉพาะตัวอย่างงาน / ถ้ามี)</label>
+                            <input id="artworkExtraLinkInput" type="url" placeholder="https://..." class="w-full px-3.5 py-2 rounded-xl border border-pink-200 bg-[#FFFDFC] focus:outline-none focus:border-pink-400">
+                        </div>
+
                         <div id="adminGroupPriceWrapper" class="hidden">
                             <label class="block text-xs font-semibold text-[#8A5A72] mb-1">ค่าเข้าตัวอย่างกลุ่ม</label>
                             <div class="flex items-center rounded-xl border border-pink-200 bg-[#FFFDFC] overflow-hidden focus-within:border-pink-400">
@@ -1679,6 +1684,7 @@
                     title: String(item?.title || '').trim(),
                     price: String(item?.price || '').trim(),
                     link: sanitizeHttpUrl(item?.link, ''),
+                    extraLink: sanitizeHttpUrl(item?.extraLink, ''),
                     image: String(item?.image || '').trim(),
                     mainCat: item?.mainCat === 'group' ? 'group' : 'example',
                     subCat: item?.mainCat === 'group' ? '' : String(item?.subCat || Object.keys(normalizedExample)[0] || 'งานป้าย'),
@@ -2720,10 +2726,18 @@
                 const safeTitle = escapeHtml(item.title || '');
                 const safePrice = item.price ? escapeHtml(item.price) : '';
                 const safeLink = item.link ? escapeHtml(item.link) : '';
+                const safeExtraLink = (!isGroupCard && item.extraLink) ? escapeHtml(item.extraLink) : '';
                 const tagsText = Array.isArray(item.categories) && item.categories.length > 0
                     ? escapeHtml(item.categories.join(', '))
                     : '';
                 const isGroupCard = item.mainCat === 'group';
+                const extraLinkButtonHtml = safeExtraLink
+                    ? `<a href="${safeExtraLink}" target="_blank" rel="noopener noreferrer" class="group/extra inline-flex items-center justify-center gap-1 w-full py-1.5 px-2.5 rounded-full bg-gradient-to-r from-[#FFF5F9] to-[#FFE8F1] hover:from-[#FFE6F0] hover:to-[#FFD8E8] text-[#9E456E] border border-[#FFD4E6] text-[11px] font-bold transition-all duration-200 hover:-translate-y-0.5 active:scale-95">
+                        <span class="text-[10px] text-[#E86D9C]">✦</span>
+                        <span>ตัวอย่างเพิ่มเติม</span>
+                        <span class="text-[10px]">↗</span>
+                    </a>`
+                    : '';
                 const linkButtonHtml = safeLink
                     ? (isGroupCard
                         ? `<a href="${safeLink}" target="_blank" rel="noopener noreferrer" class="group/btn inline-flex items-center justify-center gap-1.5 w-full py-2 px-3 rounded-full bg-gradient-to-r from-[#FFECF4] via-[#FFF6FA] to-[#FFE2EE] hover:from-[#FFE0EC] hover:to-[#FFD4E6] text-[#A84774] border-2 border-white shadow-[0_6px_14px_-6px_rgba(216,112,158,0.45)] ring-1 ring-pink-200/80 text-xs font-bold tracking-wide transition-all duration-200 hover:-translate-y-0.5 active:scale-95">
@@ -2732,6 +2746,9 @@
                             <span class="text-[10px] text-[#D96B99] group-hover/btn:translate-x-0.5 transition-transform">♡</span>
                         </a>`
                         : `<a href="${safeLink}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-full py-1.5 rounded-xl bg-[#FFF0F6] hover:bg-[#FFE0EC] text-[#B84D7B] text-[11px] font-bold transition">เปิดลิงก์งาน ↗</a>`)
+                    : '';
+                const actionButtonsHtml = (extraLinkButtonHtml || linkButtonHtml)
+                    ? `<div class="space-y-1.5">${extraLinkButtonHtml}${linkButtonHtml}</div>`
                     : '';
 
                 return `
@@ -2744,7 +2761,7 @@
                             ${safePrice ? `<div class="inline-block px-2 py-0.5 rounded-full bg-[#FFF0F6] border border-pink-100 text-[10px] font-bold text-[#D95C91]">${safePrice}</div>` : ''}
                             ${tagsText ? `<div class="text-[10px] text-[#A87A90] line-clamp-1">${tagsText}</div>` : ''}
                         </div>
-                        ${linkButtonHtml}
+                        ${actionButtonsHtml}
                     </div>
                 `;
             }).join('');
@@ -2753,9 +2770,17 @@
         function onAdminMainCatChange() {
             const mainCat = document.getElementById('adminMainCatSelect')?.value || 'example';
             const subcatWrapper = document.getElementById('adminExampleSubcatWrapper');
+            const extraLinkWrapper = document.getElementById('adminExampleExtraLinkWrapper');
+            const extraLinkInput = document.getElementById('artworkExtraLinkInput');
             const groupPriceWrapper = document.getElementById('adminGroupPriceWrapper');
             if (subcatWrapper) {
                 subcatWrapper.classList.toggle('hidden', mainCat !== 'example');
+            }
+            if (extraLinkWrapper) {
+                extraLinkWrapper.classList.toggle('hidden', mainCat !== 'example');
+            }
+            if (mainCat !== 'example' && extraLinkInput) {
+                extraLinkInput.value = '';
             }
             if (groupPriceWrapper) {
                 groupPriceWrapper.classList.toggle('hidden', mainCat !== 'group');
@@ -2999,6 +3024,10 @@
 
             const rawTitle = (document.getElementById('artworkTitleInput')?.value || '').trim();
             const link = (document.getElementById('artworkLinkInput')?.value || '').trim();
+            const mainCat = document.getElementById('adminMainCatSelect')?.value || 'example';
+            const rawExtraLink = mainCat === 'example'
+                ? (document.getElementById('artworkExtraLinkInput')?.value || '').trim()
+                : '';
             const urlDirect = (document.getElementById('artworkImageUrlInput')?.value || '').trim();
             const mainCat = document.getElementById('adminMainCatSelect')?.value || 'example';
             const rawPriceInput = mainCat === 'group'
@@ -3044,6 +3073,7 @@
                 title: imgEntry.title,
                 price: rawPrice,
                 link: sanitizeHttpUrl(link, ''),
+                extraLink: mainCat === 'example' ? sanitizeHttpUrl(rawExtraLink, '') : '',
                 image: imgEntry.src,
                 mainCat,
                 subCat,
@@ -3058,11 +3088,13 @@
 
             const titleInputEl = document.getElementById('artworkTitleInput');
             const linkInputEl = document.getElementById('artworkLinkInput');
+            const extraLinkInputEl = document.getElementById('artworkExtraLinkInput');
             const priceInputEl = document.getElementById('artworkPriceInput');
             const fileInputEl = document.getElementById('artworkFileInput');
             const urlInputEl = document.getElementById('artworkImageUrlInput');
             if (titleInputEl) titleInputEl.value = '';
             if (linkInputEl) linkInputEl.value = '';
+            if (extraLinkInputEl) extraLinkInputEl.value = '';
             if (priceInputEl) priceInputEl.value = '';
             if (fileInputEl) fileInputEl.value = '';
             if (urlInputEl) urlInputEl.value = '';
