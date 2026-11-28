@@ -2726,11 +2726,11 @@
                 const safeTitle = escapeHtml(item.title || '');
                 const safePrice = item.price ? escapeHtml(item.price) : '';
                 const safeLink = item.link ? escapeHtml(item.link) : '';
+                const isGroupCard = item.mainCat === 'group';
                 const safeExtraLink = (!isGroupCard && item.extraLink) ? escapeHtml(item.extraLink) : '';
                 const tagsText = Array.isArray(item.categories) && item.categories.length > 0
                     ? escapeHtml(item.categories.join(', '))
                     : '';
-                const isGroupCard = item.mainCat === 'group';
                 const extraLinkButtonHtml = safeExtraLink
                     ? `<a href="${safeExtraLink}" target="_blank" rel="noopener noreferrer" class="group/extra inline-flex items-center justify-center gap-1 w-full py-1.5 px-2.5 rounded-full bg-gradient-to-r from-[#FFF5F9] to-[#FFE8F1] hover:from-[#FFE6F0] hover:to-[#FFD8E8] text-[#9E456E] border border-[#FFD4E6] text-[11px] font-bold transition-all duration-200 hover:-translate-y-0.5 active:scale-95">
                         <span class="text-[10px] text-[#E86D9C]">✦</span>
@@ -3029,7 +3029,6 @@
                 ? (document.getElementById('artworkExtraLinkInput')?.value || '').trim()
                 : '';
             const urlDirect = (document.getElementById('artworkImageUrlInput')?.value || '').trim();
-            const mainCat = document.getElementById('adminMainCatSelect')?.value || 'example';
             const rawPriceInput = mainCat === 'group'
                 ? (document.getElementById('artworkPriceInput')?.value || '').trim()
                 : '';
